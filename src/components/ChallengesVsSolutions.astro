@@ -1,0 +1,88 @@
+---
+const challenges = [
+  'GA4 pokazuje 60–70% rzeczywistych transakcji',
+  'Meta raportuje 50 konwersji — realnie było 80',
+  'Adblocki blokują dane u 30–40% użytkowników',
+  'ROAS wygląda źle — tnie budżet na kampanie, które działają',
+  'Agencja mówi „to przez iOS" — nie oferuje rozwiązania',
+  'Brak cross-channel attribution — nie wiesz, co działa',
+];
+
+const solutions = [
+  'Server-side tracking odzyskuje 95–100% danych',
+  'Meta CAPI z Event Match Quality 9+/10',
+  'Custom domain omija adblocki i ITP Safari',
+  'Algorytmy optymalizują na pełnych danych — ROAS rośnie',
+  'Mierzalny wynik: raport „przed vs po" z konkretnymi liczbami',
+  'Jeden punkt kontroli danych dla wszystkich platform',
+];
+---
+
+<section class="py-16 md:py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-2 gap-0 md:gap-0 rounded-2xl overflow-hidden card-brutal-static">
+      {/* Challenges */}
+      <div class="bg-red-50 p-8 md:p-10 relative">
+        <h3 class="text-xl font-bold mb-6 text-red-800">Czy te problemy kosztują Cię sprzedaż?</h3>
+        <ul id="challenges-list" class="space-y-4">
+          {challenges.map((item, i) => (
+            <li
+              class="flex items-start gap-3 opacity-0 translate-y-4 transition-all duration-500 ease-out"
+              style={`transition-delay: ${i * 100}ms`}
+              data-animate="fade-in"
+            >
+              <span class="text-red-500 font-bold text-lg mt-0.5 shrink-0">✗</span>
+              <span class="text-gray-700">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Separator - desktop only */}
+      <div class="hidden md:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center z-10 pointer-events-none" aria-hidden="true">
+        <div class="bg-white border border-gray-200 rounded-full w-10 h-10 flex items-center justify-center shadow-sm">
+          <span class="text-accent text-lg">→</span>
+        </div>
+      </div>
+
+      {/* Solutions */}
+      <div class="bg-emerald-50 p-8 md:p-10">
+        <h3 class="text-xl font-bold mb-6 text-emerald-800">Tak to naprawiam</h3>
+        <ul id="solutions-list" class="space-y-4">
+          {solutions.map((item, i) => (
+            <li
+              class="flex items-start gap-3 opacity-0 translate-y-4 transition-all duration-500 ease-out"
+              style={`transition-delay: ${(i + 6) * 100}ms`}
+              data-animate="fade-in"
+            >
+              <span class="text-emerald-500 font-bold text-lg mt-0.5 shrink-0">✓</span>
+              <span class="text-gray-700">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector('#challenges-list')?.closest('section');
+  if (section) {
+    const items = section.querySelectorAll('[data-animate="fade-in"]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            items.forEach((item) => {
+              (item as HTMLElement).style.opacity = '1';
+              (item as HTMLElement).style.transform = 'translateY(0)';
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(section);
+  }
+</script>

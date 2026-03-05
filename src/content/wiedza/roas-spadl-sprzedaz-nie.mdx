@@ -1,0 +1,123 @@
+---
+title: "Twój ROAS spadł, ale sprzedaż nie. Oto dlaczego."
+description: "Dlaczego wskaźnik ROAS w Meta Ads spada, mimo że realna sprzedaż rośnie? Poznaj 3 główne przyczyny i dowiedz się, jak to naprawić."
+date: 2026-02-10
+tags: ["ROAS", "Meta Ads", "utrata danych"]
+readingTime: "7 min czytania"
+---
+
+## Scenariusz, który znasz aż za dobrze
+
+Poniedziałek rano. Otwierasz Meta Ads Managera. Patrzysz na ROAS kampanii zakupowych — i widzisz **2,8**. W zeszłym miesiącu było 4,2. Dwa miesiące temu — 3,9. Trend spadkowy. Serce przyspiesza.
+
+Otwierasz panel Shopify (albo WooCommerce, albo PrestaShop — nieważne). Patrzysz na przychody z tego samego okresu. I widzisz… że **sprzedaż jest taka sama. Albo nawet wyższa.**
+
+Jak to możliwe? Wydajesz tyle samo na reklamy, sprzedaż rośnie, ale Meta mówi Ci, że kampanie działają gorzej?
+
+Jeśli rozpoznajesz ten scenariusz — nie jesteś sam. To jeden z najczęstszych problemów, z którymi zgłaszają się do mnie właściciele e-commerce. I odpowiedź jest prostsza (i bardziej frustrująca), niż myślisz: **Meta nie widzi części Twoich konwersji.** Nie dlatego, że kampanie są gorsze. Dlatego, że system trackingowy stracił zasięg.
+
+## ROAS to tylko wskaźnik — i jest tak dobry, jak dane, na których się opiera
+
+Zanim przejdziemy do przyczyn, ustalmy jedno. ROAS (Return on Ad Spend) to prosty wzór:
+
+**ROAS = przychód przypisany do reklam ÷ wydatki na reklamy**
+
+Jeśli wydajesz 10 000 zł i Meta raportuje 42 000 zł przychodu — ROAS wynosi 4,2. Proste.
+
+Ale co, jeśli Meta raportuje tylko 28 000 zł przychodu, bo **nie widzi** pozostałych 14 000 zł? Realny ROAS nadal wynosi 4,2 — ale w panelu Meta widzisz 2,8. Dane się nie zmieniły. Zmieniła się zdolność Meta do ich zobaczenia.
+
+To fundamentalna różnica. Twoje kampanie mogą działać tak samo dobrze jak wcześniej — a nawet lepiej — ale metryki raportowe tego nie pokazują, bo **system pomiarowy się degraduje**.
+
+Dlaczego tak się dzieje? Są trzy główne przyczyny.
+
+## Przyczyna 1: iOS App Tracking Transparency (ATT)
+
+W kwietniu 2021 roku Apple wprowadziło jedną z najbardziej przełomowych zmian w historii reklamy cyfrowej. Od iOS 14.5 każda aplikacja — w tym Facebook i Instagram — musi zapytać użytkownika o zgodę na śledzenie.
+
+Jak to wygląda? Wyskakuje okno z pytaniem: „Czy pozwalasz aplikacji Facebook na śledzenie Twojej aktywności w aplikacjach i witrynach innych firm?"
+
+**Ponad 80% użytkowników iPhone'ów odpowiada „Nie".**
+
+Co to oznacza w praktyce? Kiedy użytkownik kliknie Twoją reklamę na Instagramie, przejdzie na stronę sklepu i kupi produkt — Meta **nie może tego powiązać** z kliknięciem reklamy. Transakcja się odbyła, pieniądze wpłynęły na Twoje konto, ale z perspektywy Meta Ads ta konwersja nie istnieje.
+
+W Polsce iPhone'y stanowią około 25–30% ruchu mobilnego (w segmencie premium — nawet więcej). Jeśli 80% z tych użytkowników blokuje tracking, tracisz widoczność na **20–24% konwersji mobilnych** tylko z powodu ATT.
+
+I ta liczba rośnie. Coraz więcej osób kupuje iPhone'y. Coraz więcej osób świadomie odmawia śledzenia. Twój ROAS w panelu Meta będzie spadać dalej — niezależnie od jakości Twoich reklam.
+
+## Przyczyna 2: Adblocki — niewidzialna bariera
+
+W Polsce z adblocków korzysta **35–42% użytkowników internetu**. To jeden z najwyższych wskaźników w Europie. Popularność rozwiązań takich jak uBlock Origin, AdBlock Plus czy wbudowane blokady w przeglądarkach Brave i Opera systematycznie rośnie.
+
+Jak adblockery wpływają na tracking Meta? Piksel Facebooka (Meta Pixel) to skrypt JavaScript ładowany z domeny `connect.facebook.net`. Adblocki mają tę domenę na czarnej liście od lat. Kiedy użytkownik z adblockiem wchodzi na Twoją stronę, piksel **w ogóle się nie ładuje**. Żadne zdarzenie — PageView, AddToCart, Purchase — nie zostaje wysłane.
+
+Ale użytkownik nadal może kupić. Wchodzi na stronę, przegląda produkty, dodaje do koszyka, płaci — wszystko działa normalnie. Tylko Meta o tym nie wie.
+
+To nie jest marginalny problem. Jeśli 35% Twoich użytkowników korzysta z adblocków i choćby połowa z nich blokuje piksel Meta — tracisz widoczność na **15–20% konwersji** z tego jednego powodu.
+
+Połącz to z ATT i masz scenariusz, w którym Meta nie widzi **30–40% realnych konwersji**. A Twój raportowany ROAS? Spada proporcjonalnie.
+
+## Przyczyna 3: ITP Safari — ciasteczka, które żyją tydzień
+
+Intelligent Tracking Prevention (ITP) to mechanizm wbudowany w Safari, który **ogranicza czas życia cookies JavaScript do 7 dni**. W pewnych warunkach (tzw. bounce tracking) czas ten spada do 24 godzin.
+
+Co to oznacza dla Twojego ROAS? Wyobraź sobie ścieżkę zakupową:
+
+- **Poniedziałek:** Użytkownik klika reklamę Meta, trafia na stronę sklepu, ogląda produkty, wychodzi.
+- **Piątek:** Wraca bezpośrednio (wpisuje adres w przeglądarce) i kupuje.
+
+W normalnym modelu Meta powinna zobaczyć tę konwersję — cookie z poniedziałku łączy kliknięcie reklamy z zakupem w piątek. Ale jeśli użytkownik korzysta z Safari, a cookie wygasło po 7 dniach (lub — co gorsza — po 24 godzinach), Meta widzi ten zakup jako **organiczny**, niepowiązany z reklamą.
+
+W Polsce Safari to około 20% ruchu — więcej na urządzeniach mobilnych (każdy iPhone korzysta z silnika WebKit, czyli de facto Safari). ITP dodaje kolejne **5–10% utraconych atrybucji** do naszego rachunku.
+
+## Efekt kaskadowy: jak utrata danych niszczy Twoje kampanie
+
+Dotychczas mówiliśmy o raportach. Ale prawdziwy problem jest głębszy. Utrata danych nie tylko zaniża Twój ROAS w panelu — **aktywnie pogarasza wyniki kampanii**.
+
+Oto jak działa ten mechanizm:
+
+1. **Meta widzi mniej konwersji** — bo ATT, adblocki i ITP blokują dane.
+2. **Algorytm myśli, że kampania konwertuje gorzej** — bo dostaje mniej sygnałów sukcesu.
+3. **Algorytm obniża stawki w aukcji** — bo nie chce „przepłacać" za ruch, który (w jego ocenie) słabo konwertuje.
+4. **Niższe stawki = mniej wygranych aukcji = mniejszy zasięg** — Twoje reklamy docierają do mniejszej liczby osób.
+5. **Mniejszy zasięg = mniej realnych konwersji** — sprzedaż faktycznie zaczyna spadać.
+6. **Mniej konwersji = jeszcze gorsze dane** — i koło się zamyka.
+
+To jest **samospełniająca się przepowiednia**. Meta nie widzi konwersji → myśli, że kampania nie działa → ogranicza zasięg → kampania faktycznie zaczyna działać gorzej.
+
+Na początku tracisz tylko widoczność danych. Ale jeśli nic nie zrobisz, **w ciągu kilku tygodni zaczniesz tracić realną sprzedaż.** Algorytm zoptymalizuje się w dół — na podstawie niekompletnych danych.
+
+To dlatego nie wystarczy powiedzieć „OK, ROAS w panelu jest zaniżony, ale ja wiem, że sprzedaż jest dobra". Tak, dziś może być dobra. Ale algorytm Meta już teraz podejmuje gorsze decyzje na podstawie niepełnych danych. Efekty odczujesz za 2–4 tygodnie.
+
+## Rozwiązanie: oddaj Meta brakujące dane przez server-side tracking
+
+Jeśli problem polega na tym, że Meta nie widzi konwersji — rozwiązaniem jest **dać jej te dane inną drogą**. Tą drogą jest **Meta Conversions API (CAPI)** w połączeniu z **Google Tag Manager Server-Side**.
+
+Zamiast polegać wyłącznie na pikselu JavaScript w przeglądarce użytkownika (który jest blokowany przez adblocki, ITP i ATT), dane o konwersjach wysyłasz **z Twojego serwera bezpośrednio do Meta**.
+
+Jak to działa w praktyce:
+
+1. Użytkownik kupuje produkt w Twoim sklepie.
+2. Informacja o zakupie trafia na Twój serwer GTM (hostowany na Twojej subdomenie).
+3. Serwer GTM wysyła zdarzenie Purchase do Meta Conversions API — z pełnymi parametrami (wartość zamówienia, ID produktów, e-mail klienta, numer telefonu).
+4. Meta otrzymuje konwersję **niezależnie od tego, czy piksel w przeglądarce zadziałał**.
+
+Efekty, które widzę u klientów po wdrożeniu:
+
+- **Wzrost raportowanych konwersji w Meta Ads o 20–40%** — to konwersje, które wcześniej były „niewidzialne".
+- **Poprawa Event Match Quality z 4–5/10 do 8–9/10** — Meta lepiej dopasowuje konwersje do kliknięć.
+- **Stabilizacja ROAS** — koniec z nagłymi, nielogicznymi spadkami.
+- **Lepsza optymalizacja algorytmu** — więcej danych = lepsze decyzje = niższy CPA.
+
+Najważniejsze: **realna sprzedaż też rośnie**, bo algorytm wraca do pełnej efektywności. Klienci, u których wdrażam server-side tracking, raportują średnio **15–25% wzrost sprzedaży** w ciągu 4–6 tygodni od wdrożenia — nie dlatego, że zmieniamy reklamy, ale dlatego, że algorytm wreszcie widzi prawdziwy obraz.
+
+## Co powinieneś zrobić teraz
+
+Jeśli Twój ROAS w Meta Ads spada, a sprzedaż w sklepie mówi co innego — **nie panikuj i nie wyłączaj kampanii**. To niemal na pewno problem z danymi, nie z reklamami.
+
+Trzy kroki na start:
+
+1. **Porównaj dane** — zestawiaj przychody z Meta Ads Managera z danymi ze sklepu (Shopify, WooCommerce, PrestaShop) za ostatnie 90 dni. Rozbieżność powyżej 20% to sygnał alarmowy.
+2. **Sprawdź Event Match Quality** — w Meta Events Manager znajdziesz wskaźnik EMQ. Jeśli jest poniżej 6/10, Meta ma problem z dopasowaniem konwersji do użytkowników.
+3. **Rozważ server-side tracking** — to jedyne rozwiązanie, które adresuje wszystkie trzy przyczyny jednocześnie: ATT, adblocki i ITP.
+
+> **Chcesz sprawdzić, ile tracisz?** [Umów bezpłatną diagnozę](/kontakt)

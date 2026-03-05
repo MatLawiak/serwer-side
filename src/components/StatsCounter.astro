@@ -1,0 +1,86 @@
+---
+const stats = [
+  { value: 35, suffix: '%', prefix: '30–40', label: 'danych traconych bez server-side', display: '30–40%' },
+  { value: 9.2, suffix: '/10', prefix: '', label: 'Event Match Quality po wdrożeniu', display: '9.2/10' },
+  { value: 14, suffix: '', prefix: '', label: 'dni — czas wdrożenia od startu do efektów', display: '14 dni' },
+  { value: 95, suffix: '%+', prefix: '', label: 'dokładność śledzenia konwersji', display: '95%+' },
+];
+---
+
+<section class="py-16 md:py-20 bg-slate-900 text-white border-y-2 border-slate-700" id="stats-counter">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <p
+            class="text-4xl md:text-5xl font-bold text-accent mb-2"
+            data-counter
+            data-target={stat.value}
+            data-suffix={stat.suffix}
+            data-display={stat.display}
+          >
+            {stat.display}
+          </p>
+          <p class="text-sm text-slate-300">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.getElementById('stats-counter');
+  if (section) {
+    const counters = section.querySelectorAll('[data-counter]');
+    let animated = false;
+
+    const animateCounter = (el: HTMLElement) => {
+      const target = parseFloat(el.dataset.target || '0');
+      const suffix = el.dataset.suffix || '';
+      const display = el.dataset.display || '';
+      const isDecimal = target % 1 !== 0;
+      const duration = 2000;
+      const startTime = performance.now();
+
+      // Special displays that don't animate numerically
+      if (display.includes('–')) {
+        el.textContent = display;
+        return;
+      }
+
+      const step = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+        const current = target * eased;
+
+        if (isDecimal) {
+          el.textContent = current.toFixed(1) + suffix;
+        } else {
+          el.textContent = Math.round(current) + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+
+      el.textContent = isDecimal ? '0.0' + suffix : '0' + suffix;
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            counters.forEach((counter) => animateCounter(counter as HTMLElement));
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(section);
+  }
+</script>

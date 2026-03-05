@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DataFlowDiagram from '../components/DataFlowDiagram.astro';
+---
+
+<Layout
+  title="Server-Side Tracking — Czym jest i jak działa | server-side.pl"
+  description="Kompletny przewodnik po server-side tracking. Dowiedz się, jak działa, dlaczego jest potrzebny i jakie rozwiązania wybrać dla swojego biznesu."
+>
+  {/* Hero */}
+  <section class="bg-primary text-white py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Server-Side Tracking</h1>
+      <p class="text-gray-300 text-lg">
+        Kompletny przewodnik: czym jest, jak działa i&nbsp;dlaczego Twój biznes go potrzebuje.
+      </p>
+    </div>
+  </section>
+
+  {/* Czym jest */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Czym jest server-side tracking</h2>
+      <p class="text-gray-600 text-lg mb-10">
+        Server-side tracking to model śledzenia danych, w którym informacje o&nbsp;zachowaniu użytkownika
+        przechodzą przez Twój serwer zanim trafią do narzędzi analitycznych i&nbsp;reklamowych.
+        W odróżnieniu od tradycyjnego client-side tracking — gdzie dane lecą bezpośrednio z przeglądarki —
+        Ty masz pełną kontrolę nad tym, co i komu przekazujesz.
+      </p>
+
+      {/* Schemat porównawczy — komponent DataFlowDiagram */}
+      <DataFlowDiagram />
+    </div>
+  </section>
+
+  {/* Dlaczego teraz */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Dlaczego właśnie teraz</h2>
+      <p class="text-gray-600 mb-10">
+        Server-side tracking nie jest nowinką — ale trzy fale zmian sprawiły, że stał się koniecznością.
+      </p>
+
+      <div class="space-y-8">
+        {/* Fala 1 */}
+        <div class="flex gap-4 md:gap-6">
+          <div class="shrink-0 w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">2021 — iOS 14.5 i App Tracking Transparency</h3>
+            <p class="text-gray-600">
+              Apple dał użytkownikom iPhone'ów możliwość odmowy śledzenia. Ponad 80% odmówiło.
+              Meta straciła miliardowe przychody, a reklamodawcy — dane o konwersjach z iOS.
+              To był moment, w którym server-side API (jak Meta CAPI) stały się koniecznością.
+            </p>
+          </div>
+        </div>
+
+        {/* Fala 2 */}
+        <div class="flex gap-4 md:gap-6">
+          <div class="shrink-0 w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">2023 — Obowiązkowe przejście na GA4</h3>
+            <p class="text-gray-600">
+              Google wyłączył Universal Analytics i wymusił migrację na GA4. Nowy system domyślnie
+              traci więcej danych niż stary UA — bo opiera się na zdarzeniach i sesji client-side.
+              Firmy, które nie wdrożyły server-side tracking, nagle zobaczyły ogromne luki w danych.
+            </p>
+          </div>
+        </div>
+
+        {/* Fala 3 */}
+        <div class="flex gap-4 md:gap-6">
+          <div class="shrink-0 w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
+          <div>
+            <h3 class="font-bold text-lg mb-2">2024–2025 — Adblocki, ITP i koniec third-party cookies</h3>
+            <p class="text-gray-600">
+              Przeglądarki coraz agresywniej blokują tracking. Chrome wprowadza Bounce Tracking Mitigations,
+              Safari i Firefox ograniczają cookies do 24h. Adblocki stały się normą. Client-side tracking
+              traci skuteczność z każdym miesiącem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Co tracisz */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Co tracisz bez server-side tracking</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="text-center p-6 rounded-xl bg-red-50 border-2 border-red-200 shadow-[3px_3px_0px_rgba(220,38,38,0.1)]">
+          <p class="text-4xl font-extrabold text-red-600 mb-2">30–40%</p>
+          <p class="text-sm text-gray-700">transakcji niewidocznych w GA4</p>
+        </div>
+        <div class="text-center p-6 rounded-xl bg-red-50 border-2 border-red-200 shadow-[3px_3px_0px_rgba(220,38,38,0.1)]">
+          <p class="text-4xl font-extrabold text-red-600 mb-2">20–35%</p>
+          <p class="text-sm text-gray-700">konwersji utraconych w Google Ads</p>
+        </div>
+        <div class="text-center p-6 rounded-xl bg-red-50 border-2 border-red-200 shadow-[3px_3px_0px_rgba(220,38,38,0.1)]">
+          <p class="text-4xl font-extrabold text-red-600 mb-2">25–45%</p>
+          <p class="text-sm text-gray-700">danych Meta utraconych po iOS 14.5</p>
+        </div>
+        <div class="text-center p-6 rounded-xl bg-red-50 border-2 border-red-200 shadow-[3px_3px_0px_rgba(220,38,38,0.1)]">
+          <p class="text-4xl font-extrabold text-red-600 mb-2">7 dni</p>
+          <p class="text-sm text-gray-700">max. życie cookie w Safari (ITP)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Typy rozwiązań */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center">Typy rozwiązań server-side</h2>
+      <p class="text-gray-500 text-center mb-12">Od najprostszego do najbardziej zaawansowanego</p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {/* Plugin */}
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Poziom 1</div>
+          <h3 class="font-bold text-lg mb-2">Plugin e-commerce</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            Wtyczka w platformie (np. WooCommerce, Shopify) wysyłająca dane server-side
+            bez GTM Server-Side.
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-gray-500">Złożoność:</span> <span class="font-medium">Niska</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Kontrola:</span> <span class="font-medium">Ograniczona</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Koszt:</span> <span class="font-medium">0–500 zł/mies.</span></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-4">Dobre na start, ale ograniczone możliwości konfiguracji.</p>
+        </div>
+
+        {/* Stape + GTM SS */}
+        <div class="bg-white rounded-xl p-6 card-brutal-accent relative">
+          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
+            Rekomendowany
+          </span>
+          <div class="text-sm font-bold text-accent uppercase tracking-wider mb-3">Poziom 2</div>
+          <h3 class="font-bold text-lg mb-2">Stape + GTM Server-Side</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            GTM Server-Side hostowany na Stape.io z custom domain.
+            Pełna konfiguracja GA4, Meta CAPI, Google Ads EC.
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-gray-500">Złożoność:</span> <span class="font-medium">Średnia</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Kontrola:</span> <span class="font-medium">Wysoka</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Koszt:</span> <span class="font-medium">100–300 zł/mies.</span></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-4">Najlepszy stosunek efektów do kosztów. Polecam dla większości firm.</p>
+        </div>
+
+        {/* GCP */}
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Poziom 3</div>
+          <h3 class="font-bold text-lg mb-2">Własna infrastruktura (GCP)</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            GTM Server-Side na Google Cloud Platform z App Engine lub Cloud Run.
+            Pełna kontrola i skalowalność.
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-gray-500">Złożoność:</span> <span class="font-medium">Wysoka</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Kontrola:</span> <span class="font-medium">Pełna</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Koszt:</span> <span class="font-medium">300–1000+ zł/mies.</span></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-4">Dla dużych firm z wysokim ruchem i wymaganiami compliance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-16 md:py-20 bg-primary text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        Sprawdź, czy tracisz dane
+      </h2>
+      <p class="text-gray-300 mb-8">
+        Bezpłatny audyt pokaże Ci dokładnie, ile danych traci Twoja obecna konfiguracja
+        i&nbsp;jakie rozwiązanie server-side będzie dla Ciebie optymalne.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
+      >
+        Zamów audyt danych
+      </a>
+    </div>
+  </section>
+</Layout>

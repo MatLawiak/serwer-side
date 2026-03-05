@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="O mnie — Specjalista server-side tracking | server-side.pl"
+  description="Specjalizuję się we wdrożeniach server-side tracking: GTM Server-Side, GA4, Meta CAPI, Google Ads Enhanced Conversions."
+>
+  {/* Header */}
+  <section class="bg-primary text-white py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">O mnie</h1>
+      <p class="text-gray-300 text-lg">
+        Specjalista server-side tracking i&nbsp;analityki internetowej.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <img src="/logo-512.png" alt="server-side.pl mascot" class="w-32 h-32 mx-auto mb-6" />
+
+      {/* Intro */}
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Kim jestem</h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Pomagam firmom odzyskiwać dane o konwersjach, które tracą przez ograniczenia
+          przeglądarek, adblocki i regulacje prywatności. Specjalizuję się we wdrożeniach
+          GTM Server-Side, konfiguracji GA4, Meta Conversions API i Google Ads Enhanced Conversions.
+        </p>
+      </div>
+
+      {/* Dlaczego server-side */}
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Dlaczego server-side tracking</h2>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Przez lata pracowałem z analityką internetową i reklamami online. Widziałem,
+          jak firmy podejmują decyzje budżetowe na podstawie danych, które są niekompletne —
+          czasem nawet o 40%. Kiedy server-side tracking zaczął nabierać znaczenia, zrozumiałem,
+          że to jest przyszłość śledzenia danych w sieci.
+        </p>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Zdecydowałem się wyspecjalizować w tej dziedzinie, bo wierzę, że lepsze dane =
+          lepsze decyzje = lepsze wyniki. Nie chodzi o zbieranie danych dla samych danych —
+          chodzi o to, żeby Twoje algorytmy reklamowe miały pełny obraz i mogły efektywnie
+          wydawać Twój budżet.
+        </p>
+        <p class="text-gray-600 leading-relaxed">
+          Pracuję głównie z Google Tag Manager Server-Side na platformie Stape.io —
+          to stabilne, sprawdzone rozwiązanie, które nie wymaga od Ciebie zarządzania
+          infrastrukturą.
+        </p>
+      </div>
+
+      {/* Certyfikaty */}
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Certyfikaty i partnerstwa</h2>
+        <div class="bg-stone-50 rounded-xl p-6 card-brutal-static">
+          <p class="text-gray-600">
+            🎓 W trakcie certyfikacji <strong>Stape Partner</strong>
+          </p>
+        </div>
+      </div>
+
+      {/* LinkedIn */}
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Znajdź mnie online</h2>
+        <a
+          href="https://www.linkedin.com/in/mateuszlawiak/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-accent hover:underline font-medium"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+
+      {/* CTA */}
+      <div class="p-6 md:p-8 bg-stone-50 rounded-xl card-brutal-static text-center">
+        <h3 class="text-xl font-bold mb-2">Porozmawiajmy o Twoich danych</h3>
+        <p class="text-gray-600 mb-4">
+          Pierwsza rozmowa diagnostyczna (30 min) jest bezpłatna.
+        </p>
+        <a
+          href="/kontakt"
+          class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal"
+        >
+          Umów rozmowę
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

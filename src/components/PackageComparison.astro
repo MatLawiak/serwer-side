@@ -1,0 +1,121 @@
+---
+type Feature = {
+  name: string;
+  audyt: boolean | string;
+  basic: boolean | string;
+  pro: boolean | string;
+};
+
+type Category = {
+  name: string;
+  features: Feature[];
+};
+
+const categories: Category[] = [
+  {
+    name: 'Diagnostyka',
+    features: [
+      { name: 'Audyt GA4 (konfiguracja, zdarzenia, e-commerce)', audyt: true, basic: true, pro: true },
+      { name: 'Audyt Meta Pixel / Events Manager', audyt: true, basic: true, pro: true },
+      { name: 'Raport „co tracisz i ile"', audyt: true, basic: true, pro: true },
+      { name: 'Rekomendacja rozwiązania', audyt: true, basic: true, pro: true },
+    ],
+  },
+  {
+    name: 'Wdrożenie server-side',
+    features: [
+      { name: 'GTM Server Container (Stape)', audyt: false, basic: true, pro: true },
+      { name: 'Custom domain (omijanie adblockerów)', audyt: false, basic: true, pro: true },
+      { name: 'GA4 przez server-side', audyt: false, basic: true, pro: true },
+      { name: 'Meta CAPI', audyt: false, basic: true, pro: true },
+      { name: 'Google Ads Enhanced Conversions', audyt: false, basic: false, pro: 'PRO' },
+      { name: 'TikTok Events API', audyt: false, basic: false, pro: 'PRO' },
+      { name: 'Consent Mode v2', audyt: false, basic: false, pro: 'PRO' },
+    ],
+  },
+  {
+    name: 'Wsparcie',
+    features: [
+      { name: 'Dokumentacja konfiguracji', audyt: false, basic: true, pro: true },
+      { name: 'Debug i weryfikacja zdarzeń', audyt: false, basic: true, pro: true },
+      { name: 'Raport „przed vs po" (30 dni)', audyt: false, basic: true, pro: true },
+      { name: 'Szkolenie (1h video call)', audyt: false, basic: false, pro: 'PRO' },
+    ],
+  },
+];
+---
+
+<section class="py-16 md:py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">Porównaj pakiety szczegółowo</h2>
+
+    <div class="overflow-x-auto rounded-xl card-brutal-static">
+      <table class="w-full min-w-[600px] text-sm">
+        <thead>
+          <tr class="sticky top-0 bg-white z-10 border-b-2 border-gray-200">
+            <th class="text-left py-4 px-3 font-semibold text-gray-700 w-2/5">Funkcja</th>
+            <th class="text-center py-4 px-3 font-semibold text-gray-700">Audyt</th>
+            <th class="text-center py-4 px-3 font-semibold text-gray-700">BASIC</th>
+            <th class="text-center py-4 px-3 font-semibold border-t-4 border-cyan-500 bg-cyan-50/50 rounded-t-lg text-cyan-800">PRO</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map((category) => (
+            <tr>
+              <td colspan="4" class="p-0">
+                <details open class="group">
+                  <summary class="flex items-center gap-2 py-3 px-3 bg-stone-50 font-semibold text-gray-800 cursor-pointer hover:bg-stone-100 transition-colors select-none">
+                    <svg
+                      class="w-4 h-4 text-gray-400 transition-transform group-open:rotate-90 shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                    {category.name}
+                  </summary>
+                  <table class="w-full">
+                    <tbody>
+                      {category.features.map((f, i) => (
+                        <tr class:list={[i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50']}>
+                          <td class="py-3 px-3 text-gray-600 w-2/5">{f.name}</td>
+                          <td class="py-3 px-3 text-center">
+                            {f.audyt === true ? (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                            ) : (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
+                            )}
+                          </td>
+                          <td class="py-3 px-3 text-center">
+                            {f.basic === true ? (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                            ) : (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
+                            )}
+                          </td>
+                          <td class="py-3 px-3 text-center bg-cyan-50/30">
+                            {f.pro === true ? (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                            ) : typeof f.pro === 'string' ? (
+                              <span class="inline-flex items-center gap-1">
+                                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                                <span class="bg-cyan-100 text-cyan-700 text-xs px-2 py-0.5 rounded-full font-medium">{f.pro}</span>
+                              </span>
+                            ) : (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </details>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

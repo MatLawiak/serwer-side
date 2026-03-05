@@ -1,0 +1,81 @@
+---
+---
+
+<div class="grid md:grid-cols-2 gap-8 my-10">
+  {/* Client-side diagram */}
+  <div class="rounded-xl border-2 border-red-200 bg-red-50/50 p-6 shadow-[4px_4px_0px_rgba(220,38,38,0.15)]">
+    <h3 class="font-bold text-lg mb-6 text-red-700 text-center">Client-side (standardowy)</h3>
+    <div class="space-y-2">
+      {/* Browser */}
+      <div class="bg-white rounded-lg p-3 text-center text-sm font-medium border border-red-100 shadow-sm">
+        🧑‍💻 Przeglądarka użytkownika
+      </div>
+      <div class="text-center text-red-400 text-2xl">↓</div>
+
+      {/* Scripts */}
+      <div class="bg-white rounded-lg p-3 text-center text-sm border border-red-100 shadow-sm">
+        <span class="font-medium">gtm.js / analytics.js / fbevents.js</span>
+      </div>
+      <div class="text-center text-red-400 text-2xl">↓</div>
+
+      {/* Destinations - branching */}
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-red-100 shadow-sm font-medium">
+          📊 GA4
+        </div>
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-red-100 shadow-sm font-medium">
+          📘 Meta Pixel
+        </div>
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-red-100 shadow-sm font-medium">
+          🔍 Google Ads
+        </div>
+      </div>
+    </div>
+
+    {/* Alert */}
+    <div class="mt-4 p-3 bg-red-100 rounded-lg border border-red-200">
+      <p class="text-sm text-red-700 font-medium">
+        ⚠️ Adblocker / ITP = blokada na etapie przeglądarki. Dane NIE docierają.
+      </p>
+    </div>
+  </div>
+
+  {/* Server-side diagram */}
+  <div class="rounded-xl border-2 border-emerald-200 bg-emerald-50/50 p-6 shadow-[4px_4px_0px_rgba(16,185,129,0.2)]">
+    <h3 class="font-bold text-lg mb-6 text-emerald-700 text-center">Server-side</h3>
+    <div class="space-y-2">
+      {/* Browser */}
+      <div class="bg-white rounded-lg p-3 text-center text-sm font-medium border border-emerald-100 shadow-sm">
+        🧑‍💻 Przeglądarka użytkownika
+      </div>
+      <div class="text-center text-emerald-500 text-2xl">↓</div>
+
+      {/* Server */}
+      <div class="bg-white rounded-lg p-4 text-center border-2 border-emerald-300 shadow-md ring-2 ring-emerald-200">
+        <span class="font-bold text-sm">🖥️ Twój serwer</span>
+        <span class="block text-xs text-emerald-600 mt-0.5">t.twojadomena.pl (GTM SS)</span>
+      </div>
+      <div class="text-center text-emerald-500 text-2xl">↓</div>
+
+      {/* Destinations - branching */}
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-emerald-100 shadow-sm font-medium">
+          📊 GA4
+        </div>
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-emerald-100 shadow-sm font-medium">
+          📘 Meta CAPI
+        </div>
+        <div class="bg-white rounded-lg p-2 text-center text-xs border border-emerald-100 shadow-sm font-medium">
+          🔍 Google Ads EC
+        </div>
+      </div>
+    </div>
+
+    {/* Alert */}
+    <div class="mt-4 p-3 bg-emerald-100 rounded-lg border border-emerald-200">
+      <p class="text-sm text-emerald-700 font-medium">
+        ✅ Dane idą przez Twój serwer. Adblocker nie widzi. Pełna kontrola.
+      </p>
+    </div>
+  </div>
+</div>

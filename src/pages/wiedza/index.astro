@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('wiedza')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout
+  title="Wiedza — Blog o server-side tracking | server-side.pl"
+  description="Artykuły eksperckie o server-side tracking, GA4, GTM Server-Side, Meta CAPI i analityce internetowej."
+>
+  <section class="bg-primary text-white py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Wiedza</h1>
+      <p class="text-gray-300 text-lg">
+        Praktyczne artykuły o server-side tracking, analityce i&nbsp;optymalizacji danych.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      {posts.length === 0 ? (
+        <p class="text-gray-500 text-center">Wkrótce pojawią się artykuły.</p>
+      ) : (
+        <div class="space-y-8">
+          {posts.map((post) => (
+            <a
+              href={`/wiedza/${post.id.replace(/\.mdx?$/, '')}`}
+              class="block bg-white rounded-xl card-brutal p-6 md:p-8 group"
+            >
+              <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                <time datetime={post.data.date.toISOString().split('T')[0]}>
+                  {post.data.date.toLocaleDateString('pl-PL', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span>·</span>
+                <span>{post.data.readingTime}</span>
+              </div>
+              <h2 class="text-xl md:text-2xl font-bold mb-2 group-hover:text-accent transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="text-gray-600">{post.data.description}</p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                {post.data.tags.map((tag) => (
+                  <span class="bg-stone-100 text-gray-600 text-xs px-2 py-1 rounded-md border border-stone-200">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

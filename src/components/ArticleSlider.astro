@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('wiedza'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<section class="py-16 md:py-20 bg-stone-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold">Najnowsze artykuły</h2>
+        <p class="text-gray-500 mt-1">Praktyczna wiedza o server-side tracking</p>
+      </div>
+      <a href="/wiedza" class="hidden sm:inline-flex items-center gap-1 text-accent font-semibold text-sm hover:underline shrink-0">
+        Wszystkie artykuły
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      </a>
+    </div>
+
+    {/* Slider container */}
+    <div
+      class="flex gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
+      id="article-slider"
+      role="list"
+    >
+      {posts.map((post) => (
+        <a
+          href={`/wiedza/${post.id.replace(/\.mdx?$/, '')}`}
+          class="group snap-start shrink-0 w-[300px] md:w-[340px] bg-white rounded-xl card-brutal overflow-hidden flex flex-col"
+          role="listitem"
+        >
+          {/* Color bar */}
+          <div class="h-1.5 bg-accent" />
+
+          <div class="p-5 flex flex-col flex-1">
+            {/* Tags */}
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              {post.data.tags.slice(0, 2).map((tag) => (
+                <span class="bg-cyan-50 text-cyan-700 text-xs px-2 py-0.5 rounded-full font-medium border border-cyan-200">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            {/* Title */}
+            <h3 class="font-bold text-primary leading-snug mb-2 group-hover:text-accent transition-colors line-clamp-3">
+              {post.data.title}
+            </h3>
+
+            {/* Description */}
+            <p class="text-gray-500 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+              {post.data.description}
+            </p>
+
+            {/* Footer */}
+            <div class="flex items-center justify-between text-xs text-gray-400 pt-3 border-t border-gray-100">
+              <time datetime={post.data.date.toISOString().split('T')[0]}>
+                {post.data.date.toLocaleDateString('pl-PL', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </time>
+              <span>{post.data.readingTime}</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {/* Scroll indicators (dots) */}
+    <div class="flex justify-center gap-2 mt-4 md:hidden" id="slider-dots" aria-hidden="true">
+      {posts.map((_, i) => (
+        <button
+          class:list={['w-2 h-2 rounded-full transition-colors', i === 0 ? 'bg-accent' : 'bg-gray-300']}
+          data-dot={i}
+          aria-label={`Artykuł ${i + 1}`}
+        />
+      ))}
+    </div>
+
+    {/* Mobile "see all" link */}
+    <div class="text-center mt-4 sm:hidden">
+      <a href="/wiedza" class="text-accent font-semibold text-sm hover:underline">
+        Wszystkie artykuły →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  const slider = document.getElementById('article-slider');
+  const dots = document.querySelectorAll('#slider-dots button');
+
+  if (slider && dots.length > 0) {
+    const updateDots = () => {
+      const scrollLeft = slider.scrollLeft;
+      const cardWidth = 320; // approx card width + gap
+      const activeIndex = Math.round(scrollLeft / cardWidth);
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-accent', i === activeIndex);
+        dot.classList.toggle('bg-gray-300', i !== activeIndex);
+      });
+    };
+
+    slider.addEventListener('scroll', updateDots, { passive: true });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        slider.scrollTo({ left: i * 320, behavior: 'smooth' });
+      });
+    });
+  }
+</script>

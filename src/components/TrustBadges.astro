@@ -1,0 +1,32 @@
+---
+interface Props {
+  variant?: 'light' | 'dark';
+  delay?: string;
+}
+
+const { variant = 'dark', delay = '0s' } = Astro.props;
+const textColor = variant === 'light' ? 'text-gray-300/80' : 'text-slate-500';
+
+const badges = [
+  { icon: '🛡️', text: 'Gwarancja mierzalnych wyników' },
+  { icon: '📊', text: 'Raport przed vs po w cenie' },
+  { icon: '🔒', text: 'Zgodność z RODO' },
+  { icon: '⚡', text: 'Wdrożenie w 14 dni' },
+];
+---
+
+<div
+  class:list={[
+    'flex flex-wrap justify-center gap-x-6 gap-y-3',
+    textColor,
+    delay !== '0s' && 'animate-fade-in-up',
+  ]}
+  style={delay !== '0s' ? `animation-delay: ${delay}` : undefined}
+>
+  {badges.map((badge) => (
+    <span class="flex items-center gap-1.5 text-sm">
+      <span aria-hidden="true">{badge.icon}</span>
+      <span>{badge.text}</span>
+    </span>
+  ))}
+</div>

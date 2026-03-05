@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getEntry, render } from 'astro:content';
+
+const { slug } = Astro.params;
+const post = await getEntry('wiedza', slug!);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(post);
+---
+
+<Layout
+  title={`${post.data.title} | server-side.pl`}
+  description={post.data.description}
+  ogType="article"
+>
+  <article class="py-12 md:py-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      {/* Article header */}
+      <header class="mb-10">
+        <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
+          <time datetime={post.data.date.toISOString().split('T')[0]}>
+            {post.data.date.toLocaleDateString('pl-PL', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          <span>·</span>
+          <span>{post.data.readingTime}</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-4">
+          {post.data.title}
+        </h1>
+        <p class="text-lg text-gray-600">{post.data.description}</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map((tag) => (
+            <span class="bg-stone-100 text-gray-600 text-xs px-2 py-1 rounded-md border border-stone-200">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </header>
+
+      {/* Article content */}
+      <div class="prose prose-lg max-w-none prose-headings:text-primary prose-a:text-accent prose-a:no-underline hover:prose-a:underline prose-strong:text-primary">
+        <Content />
+      </div>
+
+      {/* CTA */}
+      <div class="mt-12 p-6 md:p-8 bg-stone-50 rounded-xl card-brutal-static text-center">
+        <h3 class="text-xl font-bold mb-2">Chcesz odzyskać utracone dane?</h3>
+        <p class="text-gray-600 mb-4">
+          Umów się na bezpłatną 30-minutową rozmowę diagnostyczną.
+        </p>
+        <a
+          href="/kontakt"
+          class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal"
+        >
+          Umów diagnozę
+        </a>
+      </div>
+
+      {/* Back link */}
+      <div class="mt-8">
+        <a href="/wiedza" class="text-accent hover:underline font-medium">
+          ← Wróć do wszystkich artykułów
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>

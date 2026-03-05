@@ -1,0 +1,31 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-primary text-gray-400 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-center md:text-left">
+        <a href="/" class="flex items-center gap-2 justify-center md:justify-start">
+          <img src="/logo-server-side.png" alt="server-side.pl" class="h-8 w-auto opacity-80" />
+          <span class="text-sm text-slate-400">server-side.pl</span>
+        </a>
+        <p class="text-sm mt-1">Ekspert server-side tracking</p>
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/kontakt" class="hover:text-accent transition-colors">Kontakt</a>
+        <a
+          href="https://www.linkedin.com/in/mateuszlawiak/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-accent transition-colors"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <div class="border-t border-white/10 mt-6 pt-6 text-center text-xs">
+      <p>&copy; {currentYear} server-side.pl. Wszystkie prawa zastrzeżone.</p>
+    </div>
+  </div>
+</footer>

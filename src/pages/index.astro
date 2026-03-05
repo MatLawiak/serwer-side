@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import ArticleSlider from '../components/ArticleSlider.astro';
+import ChallengesVsSolutions from '../components/ChallengesVsSolutions.astro';
+import LossCalculator from '../components/LossCalculator.tsx';
+import StatsCounter from '../components/StatsCounter.astro';
+import Testimonials from '../components/Testimonials.astro';
+---
+
+<Layout
+  title="Server-Side Tracking — Odzyskaj utracone dane konwersji | server-side.pl"
+  description="Specjalista server-side tracking. Wdrażam GTM Server-Side, GA4, Meta CAPI i Google Ads Enhanced Conversions. Odzyskaj 30-40% utraconych danych."
+>
+  {/* 1. Hero z animacjami fade-in */}
+  <section class="bg-primary text-white py-20 md:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+        Twoje kampanie optymalizują się na&nbsp;60–70% danych.
+        <span class="text-accent"> Naprawiam&nbsp;to.</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.2s">
+        Wdrażam server-side tracking, który odzyskuje utracone konwersje
+        i&nbsp;daje Twoim algorytmom reklamowym pełny obraz sprzedaży.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg animate-fade-in-up btn-brutal-light"
+        style="animation-delay: 0.4s"
+      >
+        Umów bezpłatną diagnozę
+      </a>
+      <div class="mt-8">
+        <TrustBadges variant="light" delay="0.6s" />
+      </div>
+    </div>
+  </section>
+
+  {/* 2. Slider artykułów (NOWE — zamiast "Czy to dotyczy") */}
+  <ArticleSlider />
+
+  {/* 3. Challenges vs Solutions */}
+  <ChallengesVsSolutions />
+
+  {/* 4. Kalkulator strat danych (React island) */}
+  <LossCalculator client:visible />
+
+  {/* 5. Animowane liczniki statystyk */}
+  <StatsCounter />
+
+  {/* 6. Pakiety cenowe — skrót */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
+        Pakiety wdrożeniowe
+      </h2>
+      <p class="text-gray-500 text-center mb-12">
+        Wybierz zakres dopasowany do Twojego biznesu
+      </p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-8 card-brutal">
+          <h3 class="text-lg font-bold mb-2">Audyt danych</h3>
+          <p class="text-accent font-extrabold text-2xl mb-4">2 000–4 000 zł</p>
+          <ul class="text-gray-600 text-sm space-y-2 mb-6">
+            <li>✓ Diagnoza GA4, Meta, GTM</li>
+            <li>✓ Raport z rekomendacjami</li>
+            <li>✓ Realizacja: 3–5 dni</li>
+          </ul>
+          <a href="/uslugi" class="text-accent font-semibold text-sm hover:underline">Szczegóły →</a>
+        </div>
+        <div class="bg-white rounded-xl p-8 card-brutal">
+          <h3 class="text-lg font-bold mb-2">BASIC</h3>
+          <p class="text-accent font-extrabold text-2xl mb-4">5 000–8 000 zł</p>
+          <ul class="text-gray-600 text-sm space-y-2 mb-6">
+            <li>✓ GTM Server-Side</li>
+            <li>✓ GA4 + Meta CAPI</li>
+            <li>✓ Hosting Stape + custom domain</li>
+            <li>✓ Realizacja: 5–10 dni</li>
+          </ul>
+          <a href="/uslugi" class="text-accent font-semibold text-sm hover:underline">Szczegóły →</a>
+        </div>
+        <div class="bg-white rounded-xl p-8 card-brutal-accent relative">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
+            Najpopularniejszy
+          </span>
+          <h3 class="text-lg font-bold mb-2">PRO</h3>
+          <p class="text-accent font-extrabold text-2xl mb-4">8 000–14 000 zł</p>
+          <ul class="text-gray-600 text-sm space-y-2 mb-6">
+            <li>✓ Wszystko z BASIC</li>
+            <li>✓ Google Ads Enhanced Conversions</li>
+            <li>✓ TikTok Events API</li>
+            <li>✓ Consent Mode v2</li>
+            <li>✓ Realizacja: 10–14 dni</li>
+          </ul>
+          <a href="/uslugi" class="text-accent font-semibold text-sm hover:underline">Szczegóły →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 7. Testimoniale */}
+  <Testimonials />
+
+  {/* 8. Czy to dotyczy Twojego biznesu (przesunięte niżej) */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">
+        Czy to dotyczy Twojego biznesu?
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
+          <div class="text-4xl mb-4">📉</div>
+          <h3 class="text-lg font-bold mb-3">GA4 traci 30% transakcji</h3>
+          <p class="text-gray-600 text-sm">
+            Adblocki, ITP i ograniczenia przeglądarek sprawiają, że Google Analytics
+            nie widzi nawet co trzeciej sprzedaży w Twoim sklepie.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
+          <div class="text-4xl mb-4">🔇</div>
+          <h3 class="text-lg font-bold mb-3">Meta i Google nie widzą Twoich konwersji</h3>
+          <p class="text-gray-600 text-sm">
+            Pixel Facebooka i tag Google Ads tracą sygnały. Algorytmy reklamowe
+            optymalizują kampanie na niepełnych danych — i przepalają budżet.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
+          <div class="text-4xl mb-4">⚠️</div>
+          <h3 class="text-lg font-bold mb-3">Algorytmy optymalizują na złych danych</h3>
+          <p class="text-gray-600 text-sm">
+            Mniej danych = gorsze targetowanie = wyższy koszt pozyskania klienta.
+            To błędne koło, które kosztuje Cię tysiące złotych miesięcznie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 9. Dla kogo */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-12">Dla kogo pracuję</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
+          <div class="text-4xl mb-4">🛒</div>
+          <h3 class="font-bold mb-2">E-commerce</h3>
+          <p class="text-gray-600 text-sm">
+            Sklepy internetowe, które chcą widzieć prawdziwe dane sprzedażowe
+            i&nbsp;optymalizować kampanie na pełnych danych.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
+          <div class="text-4xl mb-4">📋</div>
+          <h3 class="font-bold mb-2">Lead generation</h3>
+          <p class="text-gray-600 text-sm">
+            Firmy usługowe i B2B, które polegają na formularzach kontaktowych
+            i&nbsp;potrzebują dokładnego śledzenia leadów.
+          </p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
+          <div class="text-4xl mb-4">🏢</div>
+          <h3 class="font-bold mb-2">Agencje marketingowe</h3>
+          <p class="text-gray-600 text-sm">
+            Agencje, które chcą oferować klientom wyższy standard trackingu
+            i&nbsp;lepsze wyniki kampanii.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* 10. CTA końcowe */}
+  <section class="py-16 md:py-20 bg-primary text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        Sprawdź, ile tracisz
+      </h2>
+      <p class="text-gray-300 mb-8">
+        Bezpłatna 30-minutowa rozmowa diagnostyczna. Pokażę Ci, ile danych
+        traci Twoja obecna konfiguracja i&nbsp;co możesz z&nbsp;tym zrobić.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
+      >
+        Umów bezpłatną diagnozę
+      </a>
+    </div>
+  </section>
+</Layout>
