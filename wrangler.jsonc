@@ -1,5 +1,8 @@
 {
-  "name": "server-side-pl",
+  "name": "serwer-side",
   "compatibility_date": "2026-03-05",
-  "pages_build_output_dir": "./dist"
+  "main": "dist/_worker.js",
+  "assets": {
+    "directory": "./dist"
+  }
 }
