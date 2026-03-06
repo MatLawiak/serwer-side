@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  site: 'https://server-side.pl',
+  site: 'https://serwer-side.pl',
   output: 'server',
   adapter: cloudflare({ imageService: 'compile' }),
   integrations: [
