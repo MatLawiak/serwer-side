@@ -180,8 +180,7 @@ import Layout from '../layouts/Layout.astro';
       });
 
       if (res.ok) {
-        successMsg.classList.remove('hidden');
-        form.reset();
+        window.location.href = '/wiadomosc-wyslana';
       } else {
         errorMsg.classList.remove('hidden');
       }

@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Wiadomość wysłana — serwer-side.pl"
+  description="Dziękuję za kontakt. Odezwę się w ciągu 24 godzin."
+>
+  <section class="min-h-[70vh] flex items-center justify-center py-20">
+    <div class="max-w-lg mx-auto px-4 text-center">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h1 class="text-3xl font-extrabold text-primary mb-4">Wiadomość wysłana!</h1>
+      <p class="text-gray-600 text-lg mb-8">
+        Dziękuję za kontakt. Odezwę się w ciągu <strong>24 godzin</strong>.
+      </p>
+      <a
+        href="/"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-3 rounded-lg btn-brutal"
+      >
+        Wróć na stronę główną
+      </a>
+    </div>
+  </section>
+</Layout>
