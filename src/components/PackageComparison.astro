@@ -1,9 +1,9 @@
 ---
 type Feature = {
   name: string;
-  audyt: boolean | string;
-  basic: boolean | string;
-  pro: boolean | string;
+  formularz: boolean | string;
+  traffic: boolean | string;
+  ecom: boolean | string;
 };
 
 type Category = {
@@ -13,33 +13,57 @@ type Category = {
 
 const categories: Category[] = [
   {
-    name: 'Diagnostyka',
+    name: 'Infrastruktura',
     features: [
-      { name: 'Audyt GA4 (konfiguracja, zdarzenia, e-commerce)', audyt: true, basic: true, pro: true },
-      { name: 'Audyt Meta Pixel / Events Manager', audyt: true, basic: true, pro: true },
-      { name: 'Raport „co tracisz i ile"', audyt: true, basic: true, pro: true },
-      { name: 'Rekomendacja rozwiązania', audyt: true, basic: true, pro: true },
+      { name: 'Dedykowany VPS (PL/DE)', formularz: true, traffic: true, ecom: true },
+      { name: 'GTM Server-Side container', formularz: true, traffic: true, ecom: true },
+      { name: 'Custom subdomena + SSL', formularz: true, traffic: true, ecom: true },
+      { name: 'First-party cookies server-side', formularz: true, traffic: true, ecom: true },
+      { name: 'Monitoring uptime i healthchecki', formularz: true, traffic: true, ecom: true },
     ],
   },
   {
-    name: 'Wdrożenie server-side',
+    name: 'Meta Conversions API — eventy',
     features: [
-      { name: 'GTM Server Container (Stape)', audyt: false, basic: true, pro: true },
-      { name: 'Custom domain (omijanie adblockerów)', audyt: false, basic: true, pro: true },
-      { name: 'GA4 przez server-side', audyt: false, basic: true, pro: true },
-      { name: 'Meta CAPI', audyt: false, basic: true, pro: true },
-      { name: 'Google Ads Enhanced Conversions', audyt: false, basic: false, pro: 'PRO' },
-      { name: 'TikTok Events API', audyt: false, basic: false, pro: 'PRO' },
-      { name: 'Consent Mode v2', audyt: false, basic: false, pro: 'PRO' },
+      { name: 'PageView (cały ruch)', formularz: false, traffic: true, ecom: true },
+      { name: 'Lead / CompleteRegistration', formularz: true, traffic: true, ecom: true },
+      { name: 'Contact (telefon, e-mail, messenger)', formularz: 'opcja', traffic: true, ecom: true },
+      { name: 'ViewContent (strona produktu)', formularz: false, traffic: false, ecom: true },
+      { name: 'AddToCart', formularz: false, traffic: false, ecom: true },
+      { name: 'InitiateCheckout', formularz: false, traffic: false, ecom: true },
+      { name: 'AddPaymentInfo', formularz: false, traffic: false, ecom: true },
+      { name: 'Purchase (z value, currency, contents)', formularz: false, traffic: false, ecom: true },
+      { name: 'Refund events (zwroty)', formularz: false, traffic: false, ecom: true },
     ],
   },
   {
-    name: 'Wsparcie',
+    name: 'Jakość danych',
     features: [
-      { name: 'Dokumentacja konfiguracji', audyt: false, basic: true, pro: true },
-      { name: 'Debug i weryfikacja zdarzeń', audyt: false, basic: true, pro: true },
-      { name: 'Raport „przed vs po" (30 dni)', audyt: false, basic: true, pro: true },
-      { name: 'Szkolenie (1h video call)', audyt: false, basic: false, pro: 'PRO' },
+      { name: 'Deduplikacja event_id (Pixel + CAPI)', formularz: true, traffic: true, ecom: true },
+      { name: 'Enhanced Matching: email, phone (hashed)', formularz: true, traffic: true, ecom: true },
+      { name: 'FBC / FBP cookies server-side', formularz: true, traffic: true, ecom: true },
+      { name: 'external_id (ID klienta z CRM)', formularz: 'opcja', traffic: true, ecom: true },
+      { name: 'IP + User-Agent server-side', formularz: true, traffic: true, ecom: true },
+      { name: 'Validation vs DSA (value, VAT)', formularz: false, traffic: false, ecom: true },
+    ],
+  },
+  {
+    name: 'Integracje dodatkowe',
+    features: [
+      { name: 'GA4 server-side (w pakiecie)', formularz: false, traffic: true, ecom: true },
+      { name: 'Meta Product Catalog sync', formularz: false, traffic: false, ecom: true },
+      { name: 'Consent Mode v2', formularz: 'opcja', traffic: 'opcja', ecom: 'opcja' },
+      { name: 'Google Ads / TikTok CAPI', formularz: 'opcja', traffic: 'opcja', ecom: 'opcja' },
+    ],
+  },
+  {
+    name: 'Wsparcie i walidacja',
+    features: [
+      { name: 'Testy w Meta Events Manager', formularz: true, traffic: true, ecom: true },
+      { name: 'Raport EMQ (Event Match Quality)', formularz: true, traffic: true, ecom: true },
+      { name: 'Dokumentacja konfiguracji', formularz: true, traffic: true, ecom: true },
+      { name: 'Raport „przed vs po" (30 dni)', formularz: false, traffic: true, ecom: true },
+      { name: 'Szkolenie z obsługi (1h video call)', formularz: false, traffic: false, ecom: true },
     ],
   },
 ];
@@ -47,16 +71,19 @@ const categories: Category[] = [
 
 <section class="py-16 md:py-20 bg-white">
   <div class="max-w-5xl mx-auto px-4 sm:px-6">
-    <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">Porównaj pakiety szczegółowo</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">Porównaj warianty szczegółowo</h2>
+    <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+      Zakres każdego wariantu Meta Power VPS. Oznaczenie „opcja" oznacza, że mogę dodać to w zakresie za dopłatą.
+    </p>
 
     <div class="overflow-x-auto rounded-xl card-brutal-static">
-      <table class="w-full min-w-[600px] text-sm">
+      <table class="w-full min-w-[700px] text-sm">
         <thead>
           <tr class="sticky top-0 bg-white z-10 border-b-2 border-gray-200">
             <th class="text-left py-4 px-3 font-semibold text-gray-700 w-2/5">Funkcja</th>
-            <th class="text-center py-4 px-3 font-semibold text-gray-700">Audyt</th>
-            <th class="text-center py-4 px-3 font-semibold text-gray-700">BASIC</th>
-            <th class="text-center py-4 px-3 font-semibold border-t-4 border-cyan-500 bg-cyan-50/50 rounded-t-lg text-cyan-800">PRO</th>
+            <th class="text-center py-4 px-3 font-semibold text-gray-700">Formularz</th>
+            <th class="text-center py-4 px-3 font-semibold border-t-4 border-cyan-500 bg-cyan-50/50 rounded-t-lg text-cyan-800">Cały ruch + konwersja</th>
+            <th class="text-center py-4 px-3 font-semibold text-gray-700">E-commerce</th>
           </tr>
         </thead>
         <tbody>
@@ -81,27 +108,28 @@ const categories: Category[] = [
                         <tr class:list={[i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50']}>
                           <td class="py-3 px-3 text-gray-600 w-2/5">{f.name}</td>
                           <td class="py-3 px-3 text-center">
-                            {f.audyt === true ? (
+                            {f.formularz === true ? (
                               <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
-                            ) : (
-                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
-                            )}
-                          </td>
-                          <td class="py-3 px-3 text-center">
-                            {f.basic === true ? (
-                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                            ) : typeof f.formularz === 'string' ? (
+                              <span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-medium">{f.formularz}</span>
                             ) : (
                               <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
                             )}
                           </td>
                           <td class="py-3 px-3 text-center bg-cyan-50/30">
-                            {f.pro === true ? (
+                            {f.traffic === true ? (
                               <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
-                            ) : typeof f.pro === 'string' ? (
-                              <span class="inline-flex items-center gap-1">
-                                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
-                                <span class="bg-cyan-100 text-cyan-700 text-xs px-2 py-0.5 rounded-full font-medium">{f.pro}</span>
-                              </span>
+                            ) : typeof f.traffic === 'string' ? (
+                              <span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-medium">{f.traffic}</span>
+                            ) : (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
+                            )}
+                          </td>
+                          <td class="py-3 px-3 text-center">
+                            {f.ecom === true ? (
+                              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold">✓</span>
+                            ) : typeof f.ecom === 'string' ? (
+                              <span class="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-medium">{f.ecom}</span>
                             ) : (
                               <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-400 text-xs">✗</span>
                             )}

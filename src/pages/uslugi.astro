@@ -1,42 +1,44 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
-import PackageComparison from '../components/PackageComparison.astro';
 
 const faq = [
   {
-    q: 'Ile trwa wdrożenie server-side tracking?',
-    a: 'W zależności od pakietu — od 3 dni (audyt) do 14 dni roboczych (pakiet PRO). Czas zależy też od złożoności Twojego stacku technologicznego i szybkości dostarczenia dostępów.',
+    q: 'Co daje server-side na własnym VPS-ie w porównaniu z pudełkowym stackiem SaaS?',
+    a: 'Dokładnie to, co realnie potrzebujesz: pełne dane konwersji, własną infrastrukturę i brak abonamentów za każdy element osobno. Typowy pudełkowy stack (newsletter, automation, chatbot, integracje, raporty) to 1 500 do 3 000 zł/mies. tylko za tooling. Jeden VPS (25 do 130 zł/mies.) hostuje sGTM (Meta, Google, GA4), n8n (automatyzacje), Listmonk (newsletter) i chatbot. Wszystko naraz. Płacisz za serwer, nie za licencje.',
   },
   {
-    q: 'Czy server-side tracking jest zgodny z RODO?',
-    a: 'Tak. Server-side tracking daje Ci większą kontrolę nad danymi niż tracking client-side. W połączeniu z Consent Mode v2 możesz w pełni respektować zgody użytkowników, jednocześnie odzyskując dane modelowane.',
+    q: 'Czy muszę wziąć wszystkie 3 usługi?',
+    a: 'Nie. Możesz zacząć od samego Meta Power VPS, a Google Power i Automation dołożyć później. Jeśli bierzesz komplet od razu, dostajesz rabat (dopłata zamiast pełnej ceny standalone), bo infrastruktura już stoi.',
   },
   {
-    q: 'Czy potrzebuję swojego serwera?',
-    a: 'Nie. W pakietach BASIC i PRO wykorzystuję Stape.io jako hosting GTM Server-Side. To zarządzana usługa — nie musisz konfigurować żadnej infrastruktury. Konfiguruję też custom domain na Twojej domenie.',
+    q: 'Czy wdrożenie idzie przez Google Tag Manager?',
+    a: 'Tak. Wszystko konfiguruję w GTM: Web Container (twoja strona) i Server Container (VPS). Nie dotykam Twojego kodu strony, jeśli masz GTM, masz kontrolę. Tagi, triggery, zmienne: pełna transparentność dla Ciebie lub Twojej agencji.',
   },
   {
-    q: 'Jaki budżet reklamowy uzasadnia wdrożenie?',
-    a: 'Jeśli wydajesz na reklamy więcej niż 5 000 zł miesięcznie, strata 30–40% danych konwersji realnie wpływa na Twój ROAS. Im wyższy budżet, tym większy sens wdrożenia.',
+    q: 'Czy to zgodne z RODO?',
+    a: 'Tak. VPS stawiam u europejskiego dostawcy (Mikrus w PL, Hostinger w LT/NL/DE). Dane nie opuszczają EOG do momentu, aż sam Meta lub Google je odbierze. Integruję Consent Mode v2, żeby respektować zgody z banera cookies.',
   },
   {
-    q: 'Co jeśli nie wiem, który pakiet wybrać?',
-    a: 'Zacznij od bezpłatnej rozmowy diagnostycznej. W 30 minut ocenimy, na jakim etapie jest Twój tracking i jaki zakres wdrożenia da Ci najlepsze efekty.',
+    q: 'Co, jeśli kiedyś się rozstaniemy?',
+    a: 'VPS jest kupiony na Twoje dane, zostaje przy Tobie. Daję dostępy, dokumentację konfiguracji i eksport workflows n8n. Możesz zatrudnić innego admina lub przenieść się gdziekolwiek. Zero vendor lock-inu.',
   },
 ];
 ---
 
 <Layout
-  title="Usługi — Wdrożenia server-side tracking | serwer-side.pl"
-  description="Pakiety wdrożeniowe server-side tracking: audyt danych, GTM Server-Side, GA4, Meta CAPI, Google Ads Enhanced Conversions, TikTok Events API."
+  title="Usługi: Meta Power VPS, Google Power VPS, Automatyzacje | serwer-side.pl"
+  description="3 usługi dla firm reklamujących się online: Meta CAPI, GA4 + Google Ads server-side, automatyzacje na n8n. Jeden VPS, cały marketing tech stack, pełna własność danych."
 >
-  {/* Header */}
+  {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Usługi i pakiety wdrożeniowe</h1>
-      <p class="text-gray-300 text-lg">
-        Od diagnozy po pełne wdrożenie server-side tracking z&nbsp;opieką.
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Jeden VPS, cały marketing tech stack</h1>
+      <p class="text-gray-300 text-lg md:text-xl mb-2">
+        3 usługi dla firm reklamujących się online. Wybierz jedną, dwie albo wszystkie. Infrastruktura jest współdzielona.
+      </p>
+      <p class="text-gray-400 text-sm mt-4">
+        Wdrożenie od <strong class="text-white">300 zł</strong> · Abonament od <strong class="text-white">25 zł/mies.</strong> · Pełna własność danych i infrastruktury
       </p>
     </div>
   </section>
@@ -48,146 +50,119 @@ const faq = [
     </div>
   </section>
 
-  {/* Pakiety */}
+  {/* 3 usługi — karty */}
   <section class="py-16 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="grid md:grid-cols-2 gap-8">
-        {/* Audyt */}
-        <div class="bg-white rounded-xl p-8 card-brutal">
-          <h2 class="text-xl font-bold mb-1">Audyt danych</h2>
-          <p class="text-accent font-extrabold text-3xl mb-4">2 000–4 000 zł</p>
-          <p class="text-gray-500 text-sm mb-6">Czas realizacji: 3–5 dni roboczych</p>
-          <ul class="text-gray-700 space-y-3 mb-6">
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Pełna diagnoza konfiguracji GA4</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Analiza tagów Meta Pixel / Google Ads</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Przegląd konfiguracji GTM</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Raport z rekomendacjami naprawczymi</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Szacunek utraty danych</span>
-            </li>
-          </ul>
-          <p class="text-gray-500 text-xs">Idealne na start — dowiedz się, ile danych tracisz.</p>
-        </div>
+      <div class="text-center mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">3 usługi, jeden serwer</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Kliknij kartę, żeby zobaczyć pełny opis: mechanikę, zyski, dla kogo, i cennik z 3 wariantami.
+        </p>
+      </div>
 
-        {/* BASIC */}
-        <div class="bg-white rounded-xl p-8 card-brutal">
-          <h2 class="text-xl font-bold mb-1">BASIC</h2>
-          <p class="text-accent font-extrabold text-3xl mb-4">5 000–8 000 zł</p>
-          <p class="text-gray-500 text-sm mb-6">Czas realizacji: 5–10 dni roboczych</p>
-          <ul class="text-gray-700 space-y-3 mb-6">
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>GTM Server-Side container</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>GA4 server-side z deduplikacją</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Meta Conversions API (CAPI)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Hosting Stape.io + custom domain</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Konfiguracja server-side cookies</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Testy i walidacja danych</span>
-            </li>
-          </ul>
-          <p class="text-gray-500 text-xs">Dla firm, które chcą odzyskać dane z GA4 i Meta.</p>
-        </div>
+      <div class="grid md:grid-cols-3 gap-8">
 
-        {/* PRO */}
-        <div class="bg-white rounded-xl p-8 card-brutal-accent relative">
+        {/* Meta Power VPS */}
+        <a href="/uslugi/meta-power-vps" class="group bg-white rounded-xl p-8 card-brutal-accent relative flex flex-col hover:shadow-lg transition-shadow">
           <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
-            Najpopularniejszy
+            Główna oferta
           </span>
-          <h2 class="text-xl font-bold mb-1">PRO</h2>
-          <p class="text-accent font-extrabold text-3xl mb-4">8 000–14 000 zł</p>
-          <p class="text-gray-500 text-sm mb-6">Czas realizacji: 10–14 dni roboczych</p>
-          <ul class="text-gray-700 space-y-3 mb-6">
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Wszystko z pakietu BASIC</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Google Ads Enhanced Conversions</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>TikTok Events API</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Consent Mode v2 (pełna konfiguracja)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Zaawansowany event matching</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Dokumentacja techniczna wdrożenia</span>
-            </li>
+          <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Usługa 1</p>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Meta Power VPS</h3>
+          <p class="text-gray-600 text-sm mb-4">Dedykowany Meta CAPI + Pixel server-side. Odzyskuje 30–50% konwersji gubionych przez iOS 14+, ITP i adblockery.</p>
+          <p class="text-accent font-extrabold text-3xl mb-1">od 300 zł</p>
+          <p class="text-gray-500 text-sm mb-6">+ abonament 25–130 zł/mies.</p>
+          <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Meta Conversions API z deduplikacją</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Enhanced Matching (hashed PII)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>First-party cookies na Twojej subdomenie</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Raport EMQ po wdrożeniu</span></li>
           </ul>
-          <p class="text-gray-500 text-xs">Pełne wdrożenie dla firm z&nbsp;poważnym budżetem reklamowym.</p>
-        </div>
+          <span class="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+            Zobacz szczegóły →
+          </span>
+        </a>
 
-        {/* Opieka */}
-        <div class="bg-white rounded-xl p-8 card-brutal">
-          <h2 class="text-xl font-bold mb-1">Opieka miesięczna</h2>
-          <p class="text-accent font-extrabold text-3xl mb-4">800–2 000 zł<span class="text-lg font-normal text-gray-500">/mies.</span></p>
-          <p class="text-gray-500 text-sm mb-6">Ciągły monitoring i wsparcie</p>
-          <ul class="text-gray-700 space-y-3 mb-6">
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Monitoring poprawności danych</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Alerty o problemach z trackingiem</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Miesięczny raport jakości danych</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Debugging i naprawa problemów</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="text-accent font-bold mt-0.5">✓</span>
-              <span>Aktualizacje tagów i konfiguracji</span>
-            </li>
+        {/* Google Power VPS */}
+        <a href="/uslugi/google-power-vps" class="group bg-white rounded-xl p-8 card-brutal flex flex-col hover:shadow-lg transition-shadow">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Usługa 2</p>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Google Power VPS</h3>
+          <p class="text-gray-600 text-sm mb-4">GA4 Measurement Protocol + Google Ads Enhanced Conversions na tym samym VPS-ie. Bez miesięcznych abonamentów.</p>
+          <p class="text-accent font-extrabold text-3xl mb-1">od 200 zł</p>
+          <p class="text-gray-500 text-sm mb-6">dopłata do Meta PVS · 400 zł standalone</p>
+          <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 server-side (Measurement Protocol)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Zero dodatkowego abonamentu (ten sam sGTM)</span></li>
           </ul>
-          <p class="text-gray-500 text-xs">Spokój ducha — Twój tracking działa bez przerw.</p>
+          <span class="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+            Zobacz szczegóły →
+          </span>
+        </a>
+
+        {/* Automation VPS */}
+        <a href="/uslugi/automatyzacje-vps" class="group bg-white rounded-xl p-8 card-brutal flex flex-col hover:shadow-lg transition-shadow">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Usługa 3</p>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Dedykowane automatyzacje VPS</h3>
+          <p class="text-gray-600 text-sm mb-4">n8n na Twoim VPS-ie: newsletter, cart recovery, raporty, AI. Zamiast Klaviyo, Mailchimpa, Zapiera.</p>
+          <p class="text-accent font-extrabold text-3xl mb-1">od 500 zł</p>
+          <p class="text-gray-500 text-sm mb-6">jednorazowo · bez abonamentów zewnętrznych</p>
+          <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Własny newsletter (zamiast Mailchimpa)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Cart recovery (zamiast Klaviyo)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Automatyczne raporty tygodniowe</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>AI lead qualification (Claude/GPT)</span></li>
+          </ul>
+          <span class="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+            Zobacz szczegóły →
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Synergia */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">Dlaczego jeden VPS = cały stack</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Trzy usługi, jedna infrastruktura. Im więcej bierzesz, tym taniej wychodzi każda następna.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 text-sm text-gray-700">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">1 abonament</div>
+          <p>Zamiast płacić 5 różnym firmom za hosting, newsletter, automatyzacje, chatbot i raporty, płacisz jeden rachunek za VPS z obsługą. Typowa oszczędność: <strong>1 500 do 3 000 zł/mies.</strong></p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">1 domena</div>
+          <p>Wszystko na Twojej subdomenie: cookies, webhooki, endpointy API. Adblockery i ITP widzą „swoją" domenę i puszczają ruch.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">0 vendor lock-in</div>
+          <p>VPS i dane są Twoje. Workflows n8n eksportujesz w JSON, sGTM masz w GTM. Gdy zmieniasz dostawcę usług, infrastruktura zostaje.</p>
         </div>
       </div>
     </div>
   </section>
 
-  {/* Porównanie pakietów */}
-  <PackageComparison />
+  {/* Audyt danych */}
+  <section class="py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-xl p-8 card-brutal text-center">
+        <span class="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-3">Opcjonalny start</span>
+        <h3 class="text-xl font-bold mb-2">Audyt danych przed wdrożeniem</h3>
+        <p class="text-accent font-extrabold text-2xl mb-2">2 000–4 000 zł</p>
+        <p class="text-gray-600 text-sm mb-4">3–5 dni roboczych</p>
+        <p class="text-gray-600 text-sm max-w-2xl mx-auto mb-4">
+          Zanim zainwestujesz w wdrożenie, robimy pełną diagnozę Twojego GA4, Meta Pixela, Google Ads i GTM. Dostajesz raport: <em>ile tracisz, dlaczego, co zrobić najpierw</em>. Koszt audytu odlicza się od ceny wdrożenia.
+        </p>
+      </div>
+    </div>
+  </section>
 
   {/* FAQ */}
   <section class="py-16 md:py-20 bg-stone-50">
@@ -222,10 +197,13 @@ const faq = [
   <section class="py-16 md:py-20 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-bold mb-4">
-        Nie wiesz, który pakiet? Zacznij od rozmowy
+        Nie wiesz, od czego zacząć? Porozmawiajmy
       </h2>
-      <p class="text-gray-300 mb-8">
-        W 30 minut ocenimy Twój obecny tracking i dobierzemy optymalny zakres wdrożenia.
+      <p class="text-gray-300 mb-2">
+        W 30 minut ocenimy Twój obecny tracking, EMQ kampanii Meta i Google, i dobierzemy usługi dopasowane do Twojego biznesu.
+      </p>
+      <p class="text-gray-400 text-sm mb-8">
+        Bezpłatna rozmowa · Bez zobowiązań · Otrzymujesz konkretną propozycję zakresu
       </p>
       <a
         href="/kontakt"

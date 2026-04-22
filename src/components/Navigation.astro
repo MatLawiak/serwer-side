@@ -1,13 +1,21 @@
 ---
 const currentPath = Astro.url.pathname;
 
+const uslugiSubmenu = [
+  { href: '/uslugi/meta-power-vps', label: 'Meta Power VPS' },
+  { href: '/uslugi/google-power-vps', label: 'Google Power VPS' },
+  { href: '/uslugi/automatyzacje-vps', label: 'Dedykowane automatyzacje VPS' },
+];
+
 const links = [
   { href: '/', label: 'Strona główna' },
-  { href: '/uslugi', label: 'Usługi' },
+  { href: '/uslugi', label: 'Usługi', hasSubmenu: true },
   { href: '/wiedza', label: 'Wiedza' },
   { href: '/o-mnie', label: 'O mnie' },
   { href: '/kontakt', label: 'Kontakt' },
 ];
+
+const isUslugiActive = currentPath === '/uslugi' || currentPath.startsWith('/uslugi/');
 ---
 
 <div id="nav-sentinel" class="absolute top-0 h-[50px] w-full pointer-events-none" aria-hidden="true"></div>
@@ -26,17 +34,52 @@ const links = [
       {/* Desktop navigation */}
       <div class="hidden md:flex items-center gap-6">
         {links.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              'nav-link text-sm font-medium transition-colors hover:text-accent',
-              currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-                ? 'text-accent'
-                : 'text-gray-300',
-            ]}
-          >
-            {link.label}
-          </a>
+          link.hasSubmenu ? (
+            <div class="relative group">
+              <a
+                href={link.href}
+                class:list={[
+                  'nav-link text-sm font-medium transition-colors hover:text-accent inline-flex items-center gap-1',
+                  isUslugiActive ? 'text-accent' : 'text-gray-300',
+                ]}
+              >
+                {link.label}
+                <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+              {/* Dropdown */}
+              <div class="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 min-w-[280px]">
+                <div class="bg-white rounded-lg shadow-xl border-2 border-primary/10 py-2">
+                  {uslugiSubmenu.map((sub) => (
+                    <a
+                      href={sub.href}
+                      class:list={[
+                        'block px-4 py-2 text-sm transition-colors',
+                        currentPath === sub.href
+                          ? 'text-accent font-semibold bg-accent/5'
+                          : 'text-gray-700 hover:bg-stone-50 hover:text-accent',
+                      ]}
+                    >
+                      {sub.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.href}
+              class:list={[
+                'nav-link text-sm font-medium transition-colors hover:text-accent',
+                currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+                  ? 'text-accent'
+                  : 'text-gray-300',
+              ]}
+            >
+              {link.label}
+            </a>
+          )
         ))}
       </div>
 
@@ -59,19 +102,46 @@ const links = [
 
   {/* Mobile menu */}
   <div id="mobile-menu" class="hidden md:hidden border-t border-white/10">
-    <div class="px-4 py-3 space-y-2">
+    <div class="px-4 py-3 space-y-1">
       {links.map((link) => (
-        <a
-          href={link.href}
-          class:list={[
-            'block px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-white/10',
-            currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-              ? 'text-accent'
-              : 'text-gray-300',
-          ]}
-        >
-          {link.label}
-        </a>
+        link.hasSubmenu ? (
+          <details class="group">
+            <summary class:list={[
+              'flex items-center justify-between px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-white/10 cursor-pointer list-none',
+              isUslugiActive ? 'text-accent' : 'text-gray-300',
+            ]}>
+              <span>{link.label}</span>
+              <svg class="w-4 h-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="pl-4 mt-1 space-y-1 border-l-2 border-white/10">
+              {uslugiSubmenu.map((sub) => (
+                <a
+                  href={sub.href}
+                  class:list={[
+                    'block px-3 py-2 rounded-md text-sm transition-colors hover:bg-white/10',
+                    currentPath === sub.href ? 'text-accent font-semibold' : 'text-gray-300',
+                  ]}
+                >
+                  {sub.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <a
+            href={link.href}
+            class:list={[
+              'block px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-white/10',
+              currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+                ? 'text-accent'
+                : 'text-gray-300',
+            ]}
+          >
+            {link.label}
+          </a>
+        )
       ))}
     </div>
   </div>

@@ -1,0 +1,338 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TrustBadges from '../../components/TrustBadges.astro';
+---
+
+<Layout
+  title="Google Power VPS - czysty GA4 i skuteczny Google Ads | serwer-side.pl"
+  description="GA4 i Google Ads Enhanced Conversions server-side na Twoim VPS. Pełny obraz ścieżki użytkownika, Consent Mode v2, pełna własność danych. Wdrożenie od 200 zł."
+>
+  {/* Hero */}
+  <section class="bg-primary text-white py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Usługa 2 · Google Power VPS</span>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Google Power VPS</h1>
+      <p class="text-gray-300 text-lg md:text-xl mb-4">
+        Czysty GA4, skuteczny Google Ads, Consent Mode v2 bez bólu głowy. Na Twoim VPS-ie, bez miesięcznych abonamentów.
+      </p>
+      <p class="text-gray-400 text-sm mt-4">
+        Wdrożenie od <strong class="text-white">200 zł</strong> jako dopłata do Meta PVS (lub <strong class="text-white">400 zł</strong> standalone)
+      </p>
+    </div>
+  </section>
+
+  {/* Trust Badges */}
+  <section class="py-8 bg-stone-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <TrustBadges variant="dark" />
+    </div>
+  </section>
+
+  {/* Czy to dla Ciebie? — sygnały problemu */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Czy to dla Ciebie?</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">6 sygnałów, że Twój GA4 i Google Ads szwankują</h2>
+      <p class="text-gray-600 mb-8 max-w-3xl">
+        Jeśli rozpoznajesz choć 2 z poniższych sytuacji, Twój Google stack pracuje na niepełnych danych. Google Power VPS załatwia wszystkie naraz.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">1</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">GA4 pokazuje mniej użytkowników niż sklep</h3>
+              <p class="text-sm text-gray-600">Twój sklep ma 10 000 odwiedzin, a GA4 pokazuje 6 500. Brakujące 35% to klienci, których algorytmy Google nigdy nie „zobaczą" przy optymalizacji kampanii.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">2</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Google Ads ma status Enhanced Conversions „Good" zamiast „Excellent"</h3>
+              <p class="text-sm text-gray-600">Google wprost mówi, że Twoje dane mogą być lepsze. Niższy status oznacza słabszą optymalizację Performance Max i wyższy koszt pozyskania klienta.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">3</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Od marca 2024 zgubiłeś sporo danych</h3>
+              <p class="text-sm text-gray-600">Consent Mode v2 jest obowiązkowy w EOG. Jeśli nie wdrożyłeś go poprawnie, Google nie może modelować konwersji i remarketing dla użytkowników, którzy odmówili zgody.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">4</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Performance Max „dziwnie się uczy"</h3>
+              <p class="text-sm text-gray-600">Kampanie PMax wymagają dużej ilości sygnałów konwersji. Gdy dostają niekompletne dane, faza uczenia ciągnie się tygodniami, a wyniki są poniżej oczekiwań.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">5</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Koszty Twojego trackingu rosną z ruchem</h3>
+              <p class="text-sm text-gray-600">Typowe hostowane rozwiązania sGTM liczą opłatę od liczby requestów. Im większy ruch, tym wyższa faktura. Własny VPS ma stały koszt, niezależny od wolumenu. Przy 1 mln requestów miesięcznie różnica to 300 do 400 zł/mies.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">6</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Atrybucja w GA4 „nie ma sensu"</h3>
+              <p class="text-sm text-gray-600">Raporty źródeł ruchu pokazują 40% jako „(not set)" lub „direct". To dane, których GA4 nie potrafi przypisać, bo zgubił sesję po drodze. Server-side to naprawia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Jak to działa — mechanika z miejscem na infografiki */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Jak to działa</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">Ten sam serwer co Meta Power VPS, dodatkowe tagi</h2>
+      <p class="text-gray-600 mb-10 max-w-3xl">
+        Google Power VPS wykorzystuje tę samą infrastrukturę, co Meta Power VPS. Dokładam tagi GA4 i Google Ads do istniejącego kontenera. Jeśli zaczynasz od Google, stawiam VPS od zera (tak samo jak dla Meta).
+      </p>
+
+      {/* Infografika 1: Przepływ danych Google */}
+      <figure class="mb-10">
+        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
+          <img
+            src="/infografiki/google-power-vps-przeplyw.jpeg"
+            alt="Schemat przepływu danych GA4 i Google Ads przez serwer VPS"
+            class="mx-auto max-w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="text-center text-sm text-gray-500 mt-3">
+          Infografika 1: Jak dane trafiają z Twojej strony przez VPS do GA4 i Google Ads.
+        </figcaption>
+      </figure>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">GA4</div>
+          <h3 class="font-bold text-primary mb-2">Measurement Protocol server-side</h3>
+          <p class="text-sm text-gray-600">Zamiast polegać na przeglądarce, GA4 dostaje dane z Twojego serwera. Sesje nie urywają się, atrybucja jest pełna, raport „Źródło ruchu" mówi prawdę.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">Ads</div>
+          <h3 class="font-bold text-primary mb-2">Enhanced Conversions server-to-server</h3>
+          <p class="text-sm text-gray-600">Zaszyfrowane dane klienta (email, telefon) idą bezpośrednio do Google Ads. Algorytm precyzyjniej dopasowuje konwersje do użytkowników i optymalizuje kampanie.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">CM v2</div>
+          <h3 class="font-bold text-primary mb-2">Consent Mode v2 advanced</h3>
+          <p class="text-sm text-gray-600">Gotowa zgoda z Twoim banerem cookies. Google dostaje sygnał nawet od użytkowników, którzy odmówili, i modeluje ich konwersje, zamiast zgubić.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">0 zł</div>
+          <h3 class="font-bold text-primary mb-2">Bez dodatkowego abonamentu</h3>
+          <p class="text-sm text-gray-600">Jeśli masz już Meta PVS, Google działa na tym samym serwerze. Żadnego dodatkowego rachunku miesięcznego. Płacisz raz za wdrożenie tagów.</p>
+        </div>
+      </div>
+
+      {/* Infografika 2: Consent Mode v2 */}
+      <figure>
+        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
+          <img
+            src="/infografiki/google-consent-mode-v2.jpeg"
+            alt="Schemat działania Consent Mode v2 z sygnalizacją zgody do Google"
+            class="mx-auto max-w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="text-center text-sm text-gray-500 mt-3">
+          Infografika 2: Jak Consent Mode v2 pozwala modelować konwersje nawet od użytkowników, którzy odmówili zgody.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  {/* Co zyskujesz */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Co zyskujesz</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Konkretne korzyści</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">+20 do 40%</div>
+          <h3 class="font-bold text-primary mb-2">Więcej widocznych konwersji w Google Ads</h3>
+          <p class="text-sm text-gray-600">Enhanced Conversions + server-side odzyskuje konwersje gubione w blokadach cookies i ITP. Algorytm Performance Max uczy się na pełnych danych.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">Pełny</div>
+          <h3 class="font-bold text-primary mb-2">Obraz ścieżki w GA4</h3>
+          <p class="text-sm text-gray-600">Koniec z 40% ruchu w kategorii „(not set)" i „direct". Raporty źródeł ruchu, lejków i atrybucji zaczynają mieć sens, a decyzje oparte są na prawdziwych liczbach.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">2 400 zł</div>
+          <h3 class="font-bold text-primary mb-2">Rocznie oszczędności na hostingu</h3>
+          <p class="text-sm text-gray-600">Typowy hostowany sGTM przy średnim ruchu to 300 do 400 zł/mies., czyli 3 600 do 4 800 zł rocznie. Google Power VPS to jednorazowe 200 do 800 zł plus ten sam VPS, który masz pod Meta. Różnica sama się policzy.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-3xl mb-2">DSA</div>
+          <h3 class="font-bold text-primary mb-2">Zgodność z prawem bez stresu</h3>
+          <p class="text-sm text-gray-600">Consent Mode v2 jest obowiązkowy. Wdrażam go poprawnie z pierwszego razu. Twoje kampanie remarketingowe działają, a audyty RODO nie mają się czego przyczepić.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Dla kogo */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Dla kogo</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Google Power VPS ma sens, jeśli...</h2>
+
+      <div class="space-y-3">
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Prowadzisz kampanie Google Ads:</strong> Search, Performance Max, Display, Demand Gen. Wszystkie korzystają z Enhanced Conversions i modelu atrybucji data-driven.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Używasz GA4 do raportowania biznesowego.</strong> Jeśli GA4 to podstawa decyzji marketingowych, musi mieć czyste dane. Server-side zamyka luki.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Masz już Meta Power VPS.</strong> Najlepszy moment na dołożenie Google. Ten sam serwer, ten sam sGTM, tylko dodatkowe tagi. Dopłata 200 do 800 zł zamiast pełnej ceny.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Chcesz własną infrastrukturę, zamiast hostowanej u zewnętrznego dostawcy.</strong> VPS zostaje Twój, dane zostają u Ciebie, abonament nie rośnie wraz z ruchem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Cennik — 3 warianty */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4">3 warianty zależnie od lejka</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          <strong>Dopłata</strong> dla klientów z Meta Power VPS (ten sam VPS i sGTM). <strong>Standalone</strong> dla startujących od Google.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 1</p>
+          <h3 class="text-lg font-bold mb-1">Formularz</h3>
+          <p class="text-gray-500 text-sm mb-3">GA4 Lead + Google Ads Conv.</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">+200 zł</p>
+          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
+          <p class="text-gray-600 text-sm mb-1">lub <strong>400 zł</strong> standalone</p>
+          <p class="text-gray-500 text-xs mb-4">2 dni robocze</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 event <code class="bg-stone-100 px-1 rounded text-xs">generate_lead</code></span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions (1 akcja)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 basic</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Walidacja w GA4 DebugView</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Kampanie Google Search i PMax lead-gen</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal-accent relative flex flex-col">
+          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Najczęściej wybierany</span>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 2</p>
+          <h3 class="text-lg font-bold mb-1">Cały ruch z konwersją</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełny GA4 + Google Ads</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">+400 zł</p>
+          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
+          <p class="text-gray-600 text-sm mb-1">lub <strong>800 zł</strong> standalone</p>
+          <p class="text-gray-500 text-xs mb-4">3 do 4 dni roboczych</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Pełny GA4 server-side (PageView, scroll, engagement)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads: konwersje i remarketing audiences</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 advanced</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>User-ID stitching (dla zalogowanych)</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">SaaS, portale, edukacja z długim lejkiem</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 3</p>
+          <h3 class="text-lg font-bold mb-1">E-commerce</h3>
+          <p class="text-gray-500 text-sm mb-3">GA4 Enhanced Ecom + GAds</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">+800 zł</p>
+          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
+          <p class="text-gray-600 text-sm mb-1">lub <strong>1 600 zł</strong> standalone</p>
+          <p class="text-gray-500 text-xs mb-4">5 do 8 dni roboczych</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 Enhanced Ecommerce (pełen lejek)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads dynamic remarketing i Merchant Center</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Product feed sync (id, cena, dostępność)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Eventy zwrotów i anulowań</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Raport „przed i po" w GA4</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Sklepy z Performance Max i Shopping</p>
+        </div>
+      </div>
+
+      <div class="bg-stone-50 rounded-xl p-6 text-center">
+        💡 <strong>Kluczowa informacja:</strong> Google Power VPS <strong>nie zwiększa</strong> abonamentu miesięcznego, jeśli jest dokładany do Meta Power VPS. Ten sam serwer, ten sam sGTM. Płacisz tylko raz za wdrożenie tagów.
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-16 md:py-20 bg-primary text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        Chcesz czysty GA4 i skuteczny Google Ads na własnej infrastrukturze?
+      </h2>
+      <p class="text-gray-300 mb-2">
+        W 30 minut sprawdzimy stan Twojego GA4, Consent Mode i Enhanced Conversions. Dobierzemy wariant Google Power VPS lub pakiet z Meta PVS.
+      </p>
+      <p class="text-gray-400 text-sm mb-8">
+        Bezpłatna rozmowa, bez zobowiązań. Dostajesz konkretną propozycję zakresu.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
+      >
+        Przejdź do formularza kontaktowego →
+      </a>
+      <div class="mt-8 pt-8 border-t border-white/10 grid md:grid-cols-3 gap-4 text-sm">
+        <a href="/uslugi/meta-power-vps" class="text-gray-300 hover:text-accent transition-colors">
+          ← Zobacz też: Meta Power VPS
+        </a>
+        <a href="/uslugi" class="text-gray-300 hover:text-accent transition-colors">
+          Wszystkie usługi
+        </a>
+        <a href="/uslugi/automatyzacje-vps" class="text-gray-300 hover:text-accent transition-colors">
+          Zobacz też: Automatyzacje VPS →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

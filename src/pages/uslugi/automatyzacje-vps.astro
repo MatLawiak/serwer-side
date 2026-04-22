@@ -1,0 +1,422 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TrustBadges from '../../components/TrustBadges.astro';
+---
+
+<Layout
+  title="Dedykowane automatyzacje VPS - zamień 5 abonamentów na 1 serwer | serwer-side.pl"
+  description="n8n, Listmonk, cart recovery, AI chatbot na Twoim VPS. Koniec z miesięcznymi opłatami za Klaviyo, Mailchimpa i Zapiera. Oszczędzasz 1 500 do 3 000 zł/mies."
+>
+  {/* Hero */}
+  <section class="bg-primary text-white py-16 md:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Usługa 3 · Dedykowane automatyzacje VPS</span>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Dedykowane automatyzacje VPS</h1>
+      <p class="text-gray-300 text-lg md:text-xl mb-4">
+        Zamień 5 drogich abonamentów na 1 własny serwer. Newsletter, cart recovery, chatbot, raporty. Wszystko razem, na Twoim VPS, bez vendor lock-inu.
+      </p>
+      <p class="text-gray-400 text-sm mt-4">
+        Wdrożenie od <strong class="text-white">500 zł</strong> · Oszczędność <strong class="text-white">1 500 do 3 000 zł/mies.</strong> vs pudełkowe narzędzia
+      </p>
+    </div>
+  </section>
+
+  {/* Trust Badges */}
+  <section class="py-8 bg-stone-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <TrustBadges variant="dark" />
+    </div>
+  </section>
+
+  {/* Czy to dla Ciebie? — sygnały problemu */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Czy to dla Ciebie?</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">6 sygnałów, że przepłacasz za marketing tech stack</h2>
+      <p class="text-gray-600 mb-8 max-w-3xl">
+        Jeśli rozpoznajesz choć 2 z poniższych sytuacji, prawdopodobnie co miesiąc tracisz 1 500 do 3 000 zł, które mógłbyś zainwestować gdzie indziej.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">1</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Płacisz Mailchimpowi lub Klaviyo kilka stówek miesięcznie</h3>
+              <p class="text-sm text-gray-600">Faktura rośnie z każdą nową listą i segmentem. 300 zł, 500 zł, 1 000 zł. Im większy biznes, tym boleśniejszy rachunek. A funkcjonalność dostaniesz też na własnym serwerze.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">2</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Zapier lub Make „zjada" 300 do 400 zł/mies.</h3>
+              <p class="text-sm text-gray-600">Każda nowa automatyzacja to kolejny task w licznikach. Przekroczenie limitu i masz wyższy plan. n8n na własnym VPS nie liczy Ci tasków, możesz puścić milion na godzinę.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">3</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Abandoned carty wracają w 1 na 20 przypadków</h3>
+              <p class="text-sm text-gray-600">Bo nie masz cart recovery albo płacisz 800 zł/mies. Klaviyo za tę jedną funkcję. Na własnym VPS-ie ten sam mechanizm dostajesz przy okazji, bez dodatkowego rachunku.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">4</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Handlowcy gubią gorące leady</h3>
+              <p class="text-sm text-gray-600">Formularz przychodzi rano, handlowiec zobaczy po południu, lead wystygł. Automatyczne oceny leadów i alerty na Slack lub Telegram sprawiają, że nic nie spada z radaru.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">5</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Raporty marketingowe robicie ręcznie co tydzień</h3>
+              <p class="text-sm text-gray-600">2 godziny pracy człowieka, który mógłby robić coś ważniejszego. Automatyzacja raportu z GA4, Meta Ads i Google Ads to raz wdrożona rzecz, która działa sama w nieskończoność.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">6</div>
+            <div>
+              <h3 class="font-bold text-primary mb-1">Chatbot Intercom kosztuje więcej niż Ty sam</h3>
+              <p class="text-sm text-gray-600">800 do 3 000 zł/mies. za chat, który odpowiada na FAQ. Własny bot z Claude lub GPT kosztuje kilkadziesiąt złotych miesięcznie i obsługuje Twoją konkretną bazę wiedzy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Jak to działa */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Jak to działa</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">Jeden serwer, 4 narzędzia, zero abonamentów</h2>
+      <p class="text-gray-600 mb-10 max-w-3xl">
+        Na Twoim VPS-ie stawiam 4 otwartoźródłowe narzędzia, które razem zastępują 5 płatnych SaaS-ów. Koszty licencji: 0 zł. Koszt serwera: ten sam, co dla Meta i Google Power VPS.
+      </p>
+
+      {/* Infografika 1: 5 abonamentów → 1 VPS */}
+      <figure class="mb-10">
+        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
+          <img
+            src="/infografiki/automatyzacje-vps-5-w-1.jpeg"
+            alt="Schemat zamiany 5 abonamentów (Klaviyo, Mailchimp, Zapier, Intercom, Supermetrics) na 1 serwer VPS"
+            class="mx-auto max-w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="text-center text-sm text-gray-500 mt-3">
+          Infografika 1: Zamiast 5 abonamentów, płacisz raz za wdrożenie i masz wszystko na własnym VPS.
+        </figcaption>
+      </figure>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">n8n</div>
+          <h3 class="font-bold text-primary mb-2">Zamiast Zapiera i Make</h3>
+          <p class="text-sm text-gray-600">Silnik automatyzacji. Łączy CRM, sklep, formularze, email, Slack. Bez limitów tasków. Panel webowy do edycji workflows przeglądarką.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">Listmonk</div>
+          <h3 class="font-bold text-primary mb-2">Zamiast Mailchimpa i Klaviyo</h3>
+          <p class="text-sm text-gray-600">Manager newsletterów. Listy, segmenty, kampanie, analityka otwarć i kliknięć. Wysyłka przez Amazon SES (ok. 0,01 USD za 1 000 maili) lub Brevo.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">AI</div>
+          <h3 class="font-bold text-primary mb-2">Zamiast Intercoma i Drifta</h3>
+          <p class="text-sm text-gray-600">Claude lub GPT jako chatbot na Twojej stronie. Karmimy go Twoją bazą wiedzy (FAQ, produkty, polityki). Koszt skaluje się z użyciem, nie ma stałego abonamentu.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal">
+          <div class="text-accent font-extrabold text-2xl mb-2">PDF</div>
+          <h3 class="font-bold text-primary mb-2">Zamiast Supermetrics</h3>
+          <p class="text-sm text-gray-600">n8n ściąga dane z GA4, Meta Ads, Google Ads. Generuje raport PDF, wysyła mailem. Co tydzień, automatycznie. Za pierwszy raport płacisz raz, potem działa sam.</p>
+        </div>
+      </div>
+
+      {/* Infografika 2: Stack architektury */}
+      <figure>
+        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
+          <img
+            src="/infografiki/automatyzacje-vps-architektura.jpeg"
+            alt="Schemat architektury stacku: VPS z kontenerami n8n, Listmonk, chatbot AI, sGTM"
+            class="mx-auto max-w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+        <figcaption class="text-center text-sm text-gray-500 mt-3">
+          Infografika 2: Wszystkie narzędzia w kontenerach Docker na jednym VPS-ie.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  {/* Co zyskujesz — porównanie kosztów */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Co zyskujesz</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Twarde liczby: ile oszczędzasz</h2>
+
+      <div class="bg-white rounded-xl p-8 card-brutal mb-8">
+        <h3 class="text-xl font-bold mb-6">Typowy stack e-commerce: pudełkowy vs Twój VPS</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[500px] text-sm">
+            <thead>
+              <tr class="border-b-2 border-gray-200">
+                <th class="text-left py-3 px-3 font-semibold text-gray-700">Narzędzie</th>
+                <th class="text-left py-3 px-3 font-semibold text-gray-500">Do czego</th>
+                <th class="text-right py-3 px-3 font-semibold text-gray-700">Koszt / mies.</th>
+                <th class="text-right py-3 px-3 font-semibold border-t-4 border-cyan-500 bg-cyan-50/50 rounded-t-lg text-cyan-800">Automatyzacje VPS</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700">
+              <tr class="border-b border-gray-100">
+                <td class="py-3 px-3">Klaviyo</td>
+                <td class="py-3 px-3 text-gray-500">Newsletter i automation</td>
+                <td class="py-3 px-3 text-right">300 do 2 000 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-bold">0 zł</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="py-3 px-3">Mailchimp</td>
+                <td class="py-3 px-3 text-gray-500">Email marketing</td>
+                <td class="py-3 px-3 text-right">100 do 600 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-bold">0 zł</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-3 px-3">Zapier lub Make</td>
+                <td class="py-3 px-3 text-gray-500">Integracje między aplikacjami</td>
+                <td class="py-3 px-3 text-right">80 do 400 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-bold">0 zł</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="py-3 px-3">Intercom lub Drift</td>
+                <td class="py-3 px-3 text-gray-500">Chatbot i live chat</td>
+                <td class="py-3 px-3 text-right">800 do 3 000 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-bold">0 zł</td>
+              </tr>
+              <tr class="border-b-2 border-gray-300">
+                <td class="py-3 px-3">Supermetrics</td>
+                <td class="py-3 px-3 text-gray-500">Automatyczne raporty</td>
+                <td class="py-3 px-3 text-right">200 do 800 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-bold">0 zł</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-bold text-primary">Razem miesięcznie</td>
+                <td class="py-3 px-3"></td>
+                <td class="py-3 px-3 text-right font-bold text-gray-700">1 480 do 6 800 zł</td>
+                <td class="py-3 px-3 text-right bg-cyan-50/30 text-emerald-700 font-extrabold text-lg">0 zł</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs text-gray-500 mt-4">
+          Koszty po stronie klienta: 0 zł/mies. (poza SMTP ok. 20 do 30 zł dla newslettera). Po 12 miesiącach oszczędność 17 000 do 80 000 zł.
+        </p>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4">10 automatyzacji, które możesz mieć od ręki</h3>
+      <p class="text-gray-600 mb-6">
+        Zamiast płacić abonament Klaviyo, Mailchimpa, Zapiera, Intercoma, płacisz raz za wdrożenie. Oto najpopularniejsze.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">1. Własny newsletter</p>
+          <p class="text-gray-600">50 tys. maili/mies. za ok. 20 zł SMTP zamiast 500 do 2 000 zł Mailchimpa.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">2. Cart recovery</p>
+          <p class="text-gray-600">Koszyk porzucony po 1 h to automatyczny email z kodem. Bez Klaviyo.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">3. Offline conversions do Meta i Google</p>
+          <p class="text-gray-600">CRM zamknął sprzedaż, n8n wysyła sygnał. Algorytmy optymalizują na prawdziwych pieniądzach.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">4. Raport tygodniowy PDF</p>
+          <p class="text-gray-600">n8n ściąga dane, generuje PDF, wysyła w każdy poniedziałek rano.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">5. AI lead qualification</p>
+          <p class="text-gray-600">Formularz, AI ocenia lead (hot, warm, cold), Slack handlowca tylko dla hot.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">6. WhatsApp i SMS potwierdzenia</p>
+          <p class="text-gray-600">Potwierdzenie zamówienia, reminder płatności, follow-up po dostawie.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">7. Social auto-posting</p>
+          <p class="text-gray-600">Baza produktów, GPT pisze posty, publikacja na IG, FB, LinkedIn.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">8. Monitor recenzji</p>
+          <p class="text-gray-600">Google, Opineo, Facebook. Alert na Slack przy negatywnej recenzji.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">9. Alerty sprzedażowe</p>
+          <p class="text-gray-600">Każda sprzedaż, powiadomienie na kanale zespołu. Motywacja i insight na żywo.</p>
+        </div>
+        <div class="border-l-2 border-accent pl-4 py-2 bg-white rounded-r-xl p-4 card-brutal">
+          <p class="font-semibold text-primary mb-1">10. AI chatbot z bazą wiedzy</p>
+          <p class="text-gray-600">Claude lub GPT 24/7 na stronie zamiast Intercoma (800+ zł/mies.).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Dla kogo */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Dla kogo</span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Automatyzacje VPS mają sens, jeśli...</h2>
+
+      <div class="space-y-3">
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Płacisz już 1 000 zł i więcej miesięcznie za tooling.</strong> Klaviyo, Mailchimp, Zapier, Intercom, Supermetrics. Sumują się szybko. Po 3 miesiącach wariant 1 się zwraca.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Prowadzisz e-commerce.</strong> Cart recovery, offline conversions, reminder płatności, alerty o stanie magazynu. Największy potencjał oszczędności.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Masz zespół marketing lub sales.</strong> Zamiast kupować każdemu osobną subskrypcję, dostajesz jeden panel n8n z workflowami dla całego zespołu.</p>
+        </div>
+        <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
+          <span class="text-emerald-500 font-bold text-xl">✓</span>
+          <p class="text-gray-700"><strong>Masz już Meta lub Google Power VPS.</strong> n8n idzie na ten sam serwer. Zero kosztu dodatkowej infrastruktury, płacisz tylko za wdrożenie workflows.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-6">
+        <p class="text-sm text-amber-900">
+          <strong>Kiedy to nie ma sensu:</strong> jeśli dopiero zaczynasz biznes i nie masz ruchu, leadów ani bazy klientów. Automatyzacje nie mają czego automatyzować. Zacznij od core'u biznesu, potem wracaj.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Cennik */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4">3 warianty zależnie od złożoności stacku</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Cena skaluje się z liczbą workflows i złożonością integracji. Im więcej automatyzacji, tym większa oszczędność vs pudełkowy stack.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 1</p>
+          <h3 class="text-lg font-bold mb-1">Prosta automatyzacja</h3>
+          <p class="text-gray-500 text-sm mb-3">1 workflow n8n</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">500 zł</p>
+          <p class="text-gray-500 text-xs mb-4">jednorazowo, 2 do 4 dni, bez dodatkowego abonamentu</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>1 z: newsletter, cart recovery, lead scoring, raport</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>n8n i Listmonk (jeśli newsletter)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Integracja z formularzem, CRM, platformą</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Dokumentacja i szkolenie (30 min)</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Dla startujących, jeden konkretny cel biznesowy</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal-accent relative flex flex-col">
+          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Najczęściej wybierany</span>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 2</p>
+          <h3 class="text-lg font-bold mb-1">Średni stack</h3>
+          <p class="text-gray-500 text-sm mb-3">3 do 5 workflows</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">1 500 zł</p>
+          <p class="text-gray-500 text-xs mb-4">jednorazowo, 5 do 8 dni, bez abonamentu</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Newsletter (Listmonk z SMTP)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Integracja CRM i lead routing</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Raporty tygodniowe PDF</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Alerty sprzedażowe (Slack, Telegram)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Szkolenie 1 h video call</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Dla firm z zespołem marketing/sales</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 3</p>
+          <h3 class="text-lg font-bold mb-1">Zaawansowany stack</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełen custom suite</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">3 000 zł</p>
+          <p class="text-gray-500 text-xs mb-4">jednorazowo, 10 do 15 dni, może wymagać większego VPS</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wszystko z wariantu 2</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Cart recovery i win-back emails</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>AI lead qualification i chatbot</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Offline conversions do Meta i Google</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>WhatsApp i SMS automation</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Social auto-posting i monitor recenzji</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Dla e-commerce i SaaS, zastępuje 5+ SaaS</p>
+        </div>
+      </div>
+
+      <div class="bg-stone-50 rounded-xl p-6 text-center">
+        💡 <strong>Warto wiedzieć:</strong> jeśli masz już Meta lub Google Power VPS, n8n stawiam na tym samym serwerze. Warianty 1 i 2 nie zwiększą abonamentu miesięcznego. Wariant 3 może wymagać mocniejszego VPS (z Mikrus 3.0 na Mikrus Pro), wtedy abonament rośnie o ok. 45 zł/mies.
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-16 md:py-20 bg-primary text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">
+        Chcesz zamienić 5 abonamentów na 1 VPS?
+      </h2>
+      <p class="text-gray-300 mb-2">
+        W 30 minut przejdziemy Twój obecny stack (Klaviyo, Mailchimp, Zapier...) i policzymy, ile odzyskasz przenosząc automatyzacje na własny VPS.
+      </p>
+      <p class="text-gray-400 text-sm mb-8">
+        Bezpłatna rozmowa, bez zobowiązań. Dostajesz kalkulację oszczędności.
+      </p>
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
+      >
+        Przejdź do formularza kontaktowego →
+      </a>
+      <div class="mt-8 pt-8 border-t border-white/10 grid md:grid-cols-3 gap-4 text-sm">
+        <a href="/uslugi/meta-power-vps" class="text-gray-300 hover:text-accent transition-colors">
+          ← Zobacz też: Meta Power VPS
+        </a>
+        <a href="/uslugi" class="text-gray-300 hover:text-accent transition-colors">
+          Wszystkie usługi
+        </a>
+        <a href="/uslugi/google-power-vps" class="text-gray-300 hover:text-accent transition-colors">
+          Zobacz też: Google Power VPS →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
