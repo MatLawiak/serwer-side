@@ -1,0 +1,443 @@
+{
+  "updatedAt": "2026-04-24T15:09:52.630Z",
+  "createdAt": "2026-04-24T15:09:52.630Z",
+  "id": "ChuaHuBqDLmDhG2m",
+  "name": "[SERWER-SIDE] WF4 - Publikuj posty z artykulow (Draft)",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "wf4-trigger",
+      "name": "Co 15 minut",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1600,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "32cb80c840ae816789c9e46a2afb39f1",
+          "mode": "id"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Typ|select",
+              "condition": "equals",
+              "selectValue": "Artykuł"
+            },
+            {
+              "key": "Wygeneruj|checkbox",
+              "condition": "equals",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wf4-notion-get",
+      "name": "Pobierz artykuly do publikacji",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1400,
+        0
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "USneShBtp18Qh37x",
+          "name": "Notion Serwer-Side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-has-items",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "wf4-if",
+      "name": "Czy sa wpisy?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1200,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "wf4-split",
+      "name": "Loop artykuly",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1000,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-pageid",
+              "name": "pageId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "set-tytul",
+              "name": "tytul",
+              "value": "={{ $json.properties['Tytul roboczy'].rich_text[0]?.plain_text || $json.properties.Transkrypcja.title[0]?.plain_text || 'serwer-side.pl' }}",
+              "type": "string"
+            },
+            {
+              "id": "set-teaser",
+              "name": "teaser",
+              "value": "={{ $json.properties.LinkedIn.rich_text[0]?.plain_text?.slice(0,140) || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "set-url",
+              "name": "url_artykulu",
+              "value": "={{ $json.properties['URL artykułu'].url || 'serwer-side.pl' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wf4-set",
+      "name": "Wyciagnij dane",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -800,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d = $input.first().json;\nconst title = d.tytul || 'serwer-side.pl';\nconst teaser = (d.teaser || '').slice(0, 140);\nconst urlArt = d.url_artykulu || 'serwer-side.pl';\n\nlet urlDomain = urlArt.replace(/^https?:\\/\\//, '').replace(/\\/$/, '');\nif (urlDomain.length > 42) urlDomain = urlDomain.slice(0, 39) + '...';\n\nconst ROBOT = 'https://serwer-side.pl/robot-mascot-nobg.png';\n\n// split tytul na 2 linie jesli > 4 slowa\nconst words = title.split(' ');\nlet l1 = title, l2 = '';\nif (words.length > 4) {\n  const mid = Math.ceil(words.length / 2);\n  l1 = words.slice(0, mid).join(' ');\n  l2 = words.slice(mid).join(' ');\n}\nconst fs = words.length <= 3 ? 84 : words.length <= 5 ? 72 : 62;\n\nconst FONTS = '<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link href=\"https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap\" rel=\"stylesheet\">';\n\nconst CSS = '* { margin:0; padding:0; box-sizing:border-box; } body { width:1080px; height:1080px; background:#0f172a; font-family:Inter,sans-serif; position:relative; overflow:hidden; } .border { position:absolute; inset:24px; border:3px solid #fff; box-shadow:8px 8px 0 #06b6d4; } .stripe { position:absolute; top:24px; left:24px; right:24px; height:6px; background:#06b6d4; } .tag { position:absolute; top:52px; left:56px; background:#06b6d4; color:#0f172a; font-weight:900; font-size:18px; letter-spacing:.12em; text-transform:uppercase; padding:6px 18px; box-shadow:3px 3px 0 rgba(255,255,255,.4); } .url { position:absolute; bottom:52px; color:rgba(255,255,255,.3); font-size:16px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }';\n\nfunction chrome(side) {\n  const s = side === 'left' ? 'left:72px' : 'right:72px';\n  return '<div class=\"stripe\"></div><div class=\"border\"></div><div class=\"tag\">serwer-side.pl</div><span class=\"url\" style=\"' + s + '\">czytaj artykul</span>';\n}\n\n// COVER: tytul po lewej, teaser pod spodem, robot w prawym dolnym rogu\nconst coverBody =\n  chrome('left') +\n  '<img src=\"' + ROBOT + '\" style=\"position:absolute;right:40px;bottom:40px;width:320px;height:320px;object-fit:contain\"/>' +\n  '<div style=\"position:absolute;left:72px;top:50%;transform:translateY(-50%);max-width:640px\">' +\n    '<span style=\"display:block;color:#fff;font-size:' + fs + 'px;font-weight:900;line-height:1;letter-spacing:-.025em\">' + l1 + '</span>' +\n    (l2 ? '<span style=\"display:block;color:#06b6d4;font-size:' + fs + 'px;font-weight:900;line-height:1;letter-spacing:-.025em;margin-top:8px\">' + l2 + '</span>' : '') +\n    (teaser ? '<div style=\"margin-top:36px;color:rgba(255,255,255,.85);font-size:26px;font-weight:700;line-height:1.4;max-width:620px\">' + teaser + '</div>' : '') +\n  '</div>';\n\nconst coverHtml = '<html><head>' + FONTS + '<style>' + CSS + '</style></head><body>' + coverBody + '</body></html>';\n\n// CTA: robot po lewej, \"Czytaj pelny artykul\" + domena po prawej\nconst ctaBody =\n  chrome('right') +\n  '<img src=\"' + ROBOT + '\" style=\"position:absolute;left:40px;bottom:40px;width:380px;height:380px;object-fit:contain\"/>' +\n  '<div style=\"position:absolute;right:72px;top:50%;transform:translateY(-50%);max-width:580px;text-align:right\">' +\n    '<span style=\"display:block;color:#06b6d4;font-size:32px;font-weight:900;letter-spacing:.08em;text-transform:uppercase\">Czytaj caly</span>' +\n    '<span style=\"display:block;color:#fff;font-size:108px;font-weight:900;line-height:1;letter-spacing:-.03em;margin-top:8px\">ARTYKUL</span>' +\n    '<div style=\"margin-top:40px;color:rgba(255,255,255,.75);font-size:26px;font-weight:700\">' + urlDomain + '</div>' +\n  '</div>';\n\nconst ctaHtml = '<html><head>' + FONTS + '<style>' + CSS + '</style></head><body>' + ctaBody + '</body></html>';\n\nreturn [{ json: {\n  pageId: d.pageId,\n  tytul: title,\n  teaser: teaser,\n  url_artykulu: urlArt,\n  cover_html: coverHtml,\n  cta_html: ctaHtml\n}}];\n"
+      },
+      "id": "wf4-code",
+      "name": "Buduj HTML Cover + CTA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hcti.io/v1/image",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic MDFLTUZSUzlKREJEOFRCNzdLREdXOERQRUI6MDE5ZDFmOGMtYTY0ZC03Y2ZhLWFlN2ItNWU2Njk4YTdlZGY1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "html",
+              "value": "={{ $json.cover_html }}"
+            },
+            {
+              "name": "viewport_width",
+              "value": "1080"
+            },
+            {
+              "name": "viewport_height",
+              "value": "1080"
+            },
+            {
+              "name": "device_scale_factor",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wf4-hcti-cover",
+      "name": "Renderuj Cover (hcti.io)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hcti.io/v1/image",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic MDFLTUZSUzlKREJEOFRCNzdLREdXOERQRUI6MDE5ZDFmOGMtYTY0ZC03Y2ZhLWFlN2ItNWU2Njk4YTdlZGY1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "html",
+              "value": "={{ $('Buduj HTML Cover + CTA').item.json.cta_html }}"
+            },
+            {
+              "name": "viewport_width",
+              "value": "1080"
+            },
+            {
+              "name": "viewport_height",
+              "value": "1080"
+            },
+            {
+              "name": "device_scale_factor",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wf4-hcti-cta",
+      "name": "Renderuj CTA (hcti.io)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -200,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Wyciagnij dane').item.json.pageId }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Cover|url",
+              "urlValue": "={{ $('Renderuj Cover (hcti.io)').item.json.url }}"
+            },
+            {
+              "key": "CTA|url",
+              "urlValue": "={{ $json.url }}"
+            },
+            {
+              "key": "Wygeneruj|checkbox",
+              "checkboxValue": false
+            },
+            {
+              "key": "Status|status",
+              "statusValue": "In progress"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "wf4-notion-update",
+      "name": "Zapisz Cover/CTA w Notion",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        -100
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "USneShBtp18Qh37x",
+          "name": "Notion Serwer-Side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "wf4-noop",
+      "name": "Brak artykulow",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1000,
+        100
+      ]
+    }
+  ],
+  "connections": {
+    "Co 15 minut": {
+      "main": [
+        [
+          {
+            "node": "Pobierz artykuly do publikacji",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pobierz artykuly do publikacji": {
+      "main": [
+        [
+          {
+            "node": "Czy sa wpisy?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Czy sa wpisy?": {
+      "main": [
+        [
+          {
+            "node": "Loop artykuly",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Brak artykulow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop artykuly": {
+      "main": [
+        [
+          {
+            "node": "Wyciagnij dane",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wyciagnij dane": {
+      "main": [
+        [
+          {
+            "node": "Buduj HTML Cover + CTA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buduj HTML Cover + CTA": {
+      "main": [
+        [
+          {
+            "node": "Renderuj Cover (hcti.io)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Renderuj Cover (hcti.io)": {
+      "main": [
+        [
+          {
+            "node": "Renderuj CTA (hcti.io)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Renderuj CTA (hcti.io)": {
+      "main": [
+        [
+          {
+            "node": "Zapisz Cover/CTA w Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "f64bd550-9b44-45ea-82f1-816c81b3b3d1",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-04-24T15:09:52.643Z",
+      "createdAt": "2026-04-24T15:09:52.643Z",
+      "role": "workflow:owner",
+      "workflowId": "ChuaHuBqDLmDhG2m",
+      "projectId": "7agkmtZBjMmTEA1r",
+      "project": {
+        "updatedAt": "2026-02-24T18:30:28.409Z",
+        "createdAt": "2026-02-24T18:29:03.483Z",
+        "id": "7agkmtZBjMmTEA1r",
+        "name": "Mateusz Ławiak <mat.lawiak7195@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "0163abca-f24c-466a-b61e-39b1213cbc88"
+      }
+    }
+  ],
+  "tags": [],
+  "parentFolder": null,
+  "activeVersion": null
+}
