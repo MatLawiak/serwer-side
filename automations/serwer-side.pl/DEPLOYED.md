@@ -29,7 +29,7 @@ Przed aktywacją skonfiguruj credentials w n8n:
    - API Key z platform.openai.com
 
 3. **Notion — serwer-side.pl** (type: notionApi)
-   - Internal Integration Token: `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`
+   - Internal Integration Token: [zapisz lokalnie, nie commituj]
 
 ### Po skonfigurowaniu credentials
 1. Otwórz każdy workflow w n8n
