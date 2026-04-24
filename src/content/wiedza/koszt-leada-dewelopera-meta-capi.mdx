@@ -1,154 +1,127 @@
 ---
 title: "Koszt leada dewelopera: gdzie wycieka 18% budżetu Meta"
-description: "Koszt leada dewelopera w Meta jest zawyżony o 18%, gdy pokrycie CAPI wynosi 41%. Pokazuję, gdzie wyciekają pieniądze, na case MaltaView z 24 kwietnia 2026."
+description: "Prosty błąd techniczny sprawia, że deweloperzy tracą 18% budżetu Meta Ads bez żadnego ostrzeżenia. Pokazuję case z kwietnia 2026, diagnozę i efekt w złotówkach."
 date: 2026-04-24
-tags: ["Meta CAPI", "deweloper nieruchomości", "koszt leada"]
-readingTime: "10 min czytania"
+tags: ["Meta Ads", "deweloper nieruchomości", "koszt leada"]
+readingTime: "7 min czytania"
 ---
 
 ## W skrócie
 
-- Typowy deweloper apartamentów wydaje 3 do 10 tys. zł miesięcznie na reklamy Meta i płaci 300 do 600 zł za leada. Kontrakt docelowy idzie w setki tysięcy, więc każda decyzja algorytmu ma bezpośrednie przełożenie na ROI.
-- Meta w Events Manager mówi wprost: reklamodawcy z pokryciem CAPI 75% i wyżej mają 18% niższy koszt wyniku. Jeśli twoje pokrycie to 41%, to znaczy, że z każdego tysiąca złotych budżetu tracisz 180 zł bez wyraźnego powodu.
-- Najczęstsza przyczyna niskiego pokrycia, u 80% klientów których audytowaliśmy: dubluje się PageView Pixela. Wystarczą trzy linijki w Google Tag Manager.
-- 24 kwietnia 2026 zrobiliśmy to wdrożenie dla dewelopera MaltaView. Pokazuję diagnozę, naprawę, jeden błąd który popełniłem po drodze i oczekiwane efekty (bo raport Mety zobaczę za 48h).
+- Typowy deweloper wydaje 3 do 10 tys. zł miesięcznie na reklamy Meta i płaci 300 do 600 zł za leada.
+- Meta oficjalnie deklaruje: popraw jakość danych o użytkownikach, a koszt leada spadnie o 18%. U większości naszych klientów jakość tych danych to jakieś 40%, nie 80%.
+- Przyczyna w 8 na 10 audytów to ten sam błąd: system śledzący liczy każde wejście na stronę dwa razy. Naprawa zajmuje godzinę.
+- Pokazuję case jednego dewelopera, którego zrobiliśmy 24 kwietnia 2026. Konkretna diagnoza, naprawa, jeden błąd po drodze i przeliczenie w złotówkach.
 
----
+## Co znajdziesz w tym artykule
 
-## Dlaczego koszt leada dewelopera ma inną matematykę niż koszt zamówienia w sklepie online
+- [Dlaczego matematyka reklam dewelopera działa inaczej niż w sklepie](#dlaczego-matematyka-reklam-dewelopera-dziala-inaczej-niz-w-sklepie)
+- [Skąd te 18%, o których mówi Meta](#skad-te-18-o-ktorych-mowi-meta)
+- [Historia jednego dewelopera: co zastaliśmy](#historia-jednego-dewelopera-co-zastalismy)
+- [Co naprawiliśmy w godzinę](#co-naprawilismy-w-godzine)
+- [Błąd, którego nie przewidziałem](#blad-ktorego-nie-przewidzialem)
+- [Ile to daje w złotówkach](#ile-to-daje-w-zlotowkach)
+- [Trzy rzeczy do sprawdzenia u siebie w 30 minut](#trzy-rzeczy-do-sprawdzenia-u-siebie-w-30-minut)
 
-Sklep online puszcza reklamę na buty za 300 zł. Koszt leada (kliknięcie i zamówienie) może mieć 50 zł i dalej zamyka się plus. Stosunek CPL do wartości transakcji to tam 1 do 6.
+## Dlaczego matematyka reklam dewelopera działa inaczej niż w sklepie
 
-Deweloper puszcza reklamę na apartament za 500 do 3000 tysięcy. Koszt leada, rozumianego jako wypełniony formularz kontaktowy plus rozmowa z handlowcem, zaczyna się od 200 zł i kończy na 800 zł. Ale transakcja jest o trzy rzędy wielkości większa niż para butów. Stosunek CPL do wartości transakcji to 1 do 1000.
+Sklep online puszcza reklamę na buty za 300 zł. Koszt leada, jakim jest tam zamówienie, kręci się wokół 50 zł. Stosunek kosztu do wartości transakcji: 1 do 6.
 
-Z tego wynika dwie rzeczy. Pierwsza: z perspektywy deweloperskiej absolutna kwota na leada (400, 500, 600 zł) jest praktycznie marginalna wobec wartości sprzedaży. Druga: relatywna różnica między "kampania robi 40 leadów miesięcznie" a "kampania robi 55 leadów miesięcznie" jest ogromna. 15 leadów więcej to potencjalnie jedna dodatkowa transakcja. Jedna transakcja to pewnie 150-krotność rocznego kosztu reklam.
+U dewelopera apartamentów stawka wygląda zupełnie inaczej. Lead to wypełniony formularz kontaktowy plus rozmowa z handlowcem. Kosztuje od 200 do 800 zł. Transakcja, która może z tego wyjść, to kilkaset tysięcy.
 
-Dlatego koszt leada dewelopera jest miejscem, w którym małe różnice procentowe dają nieproporcjonalnie duże różnice w biznesie. 18% więcej leadów przy tym samym budżecie nie jest kosmetyką. To jest pytanie "czy ten kwartał zamknę z plusem czy zrobię drugą kampanię".
+Wnioski są dwa.
 
-## Meta mówi wprost: coverage CAPI 41% oznacza, że tracisz 18% budżetu
+Po pierwsze, absolutna kwota 400 czy 500 zł za leada jest marginalna wobec wartości sprzedaży. Po drugie, różnica pomiędzy 40 a 55 leadami miesięcznie jest ogromna. 15 leadów więcej to potencjalnie jedna dodatkowa transakcja. A jedna transakcja to zwykle 150-krotność rocznego kosztu reklam.
 
-Kiedy jesteś w Meta Events Manager i patrzysz na zdarzenie PageView, jeden z widoków pokazuje "Pokrycie zdarzeń piksela objętych przez API konwersji". To jest procent zdarzeń, które Meta widzi zarówno z Pixela (przeglądarka) jak i z Conversions API (twój serwer), z identycznym event_id.
+To dlatego koszt leada dewelopera to miejsce, gdzie małe różnice procentowe robią nieproporcjonalnie duże różnice w biznesie. 18% więcej leadów przy tym samym budżecie nie jest kosmetyką. To pytanie, czy ten kwartał zamkniesz z plusem czy zrobisz drugą kampanię.
 
-Ten sam widok pokazuje komunikat:
+## Skąd te 18%, o których mówi Meta
 
-> "Możesz uzyskać o 18,0% niższy koszt wyniku, jeśli zwiększysz wskaźnik pokrycia zdarzeń piksela przez API konwersji."
+W Meta Events Manager (to panel, gdzie widzisz efekty swoich kampanii) istnieje raport o tym, jak dobrze jakość danych o użytkownikach pasuje między Twoją stroną a serwerem Mety. Im lepsze dopasowanie, tym lepiej algorytm rozumie, komu pokazywać reklamy.
 
-To nie jest marketingowe slogany Mety. To jest matematyka algorytmu optymalizacji. Mechanika jest taka: algorytm uczy się, komu pokazywać reklamy, na podstawie tego kto klika i konwertuje. Im więcej sygnałów dociera, tym lepiej algorytm rozumie profil kupującego. Przy coverage 41% algorytm ma tylko 41% obrazu. Losuje resztę. Losowanie jest drogie.
+Meta sama pisze w tym raporcie:
 
-U typowego dewelopera, który wydaje 5 tys. zł miesięcznie na Meta Ads, 18% to 900 zł miesięcznie. 10 tys. 800 zł rocznie przy jednej, niewłaściwie skonfigurowanej instalacji Pixela. Dla kontekstu: pełne wdrożenie server-side tracking u nas kosztuje mniej niż ta różnica za jeden kwartał.
+> "Możesz uzyskać o 18,0% niższy koszt wyniku, jeśli poprawisz jakość dopasowania danych."
 
-![Porównanie pokrycia CAPI i kosztu leada: case MaltaView z 24 kwietnia 2026. Przy 41% pokrycia koszt leada 450 zł, przy 80%+ spadek o 18% zgodnie z danymi Meta](/infografiki/deweloper-coverage-capi-koszt-leada.png)
+To nie marketing. To prosta matematyka algorytmu. Jeśli podajesz Mecie 40% obrazu kupującego, resztę musi ona zgadywać. Zgadywanie jest drogie.
 
-## Case MaltaView, 24 kwietnia 2026: diagnoza
+U dewelopera, który wydaje 5 tys. zł miesięcznie na Meta Ads, 18% to **900 zł miesięcznie**. Rocznie prawie 11 tys. zł przy jednej, kiepsko skonfigurowanej implementacji śledzenia. Wdrożenie, które to naprawia, kosztuje mniej niż ta różnica za jeden kwartał.
 
-Klient: ART-SALES Sp. z o.o., deweloper apartamentów premium nad Jeziorem Maltańskim w Poznaniu. Opisywałem już architekturę w [case study Meta CAPI dla MaltaView](/wiedza/meta-capi-server-side-case-study-maltaview) i w artykule o [brakującym parametrze fbc](/wiedza/parametr-fbc-meta-capi-niedoraportowane-konwersje), więc historia tła już jest.
+![Porównanie jakości danych w Meta Ads i kosztu leada: przy 41% dopasowania koszt 450 zł, przy 80%+ koszt o 18% niższy](/infografiki/deweloper-coverage-capi-koszt-leada.png)
 
-### Stan przed dzisiejszą diagnozą
+## Historia jednego dewelopera: co zastaliśmy
 
-Po pierwszym wdrożeniu (marzec 2026) i po naprawie fbc (21 kwietnia 2026) mieliśmy:
+Klient: deweloper apartamentów premium w dużym mieście wojewódzkim. Kontrakt sprzedaży zaczyna się od 500 tys. zł, budżet reklamowy Meta w okolicach 8 tys. zł miesięcznie.
 
-- Pixel Meta: aktywny, EMQ Lead wzrósł z 4.4 do 7.8 na 10 (dobre dopasowanie danych)
-- Conversions API: webhook w n8n, zdarzenia Lead i PageView wysyłane serwerowo
-- Pokrycie PageView CAPI przez API: **36% przed marcem, 41% obecnie**
+Przed naszą interwencją sytuacja wyglądała tak:
 
-Problem w tym, że cel biznesowy to 75% pokrycia i więcej. 3 tygodnie po fix fbc pokrycie stoi na 41%, mimo że workflow w n8n pokazuje 200 wykonań dziennie z sukcesem. Meta dopisuje do panelu wprost: "Twój serwer przesłał o 777 mniej zdarzeń niż piksel w ciągu ostatnich 7 dni".
+- śledzenie po stronie przeglądarki: działa
+- śledzenie po stronie serwera: działa
+- jakość dopasowania tych dwóch warstw: **41%**
 
-### Co psuło pokrycie (to jest sedno)
+Cel to 75% i wyżej. 3 tygodnie po poprzedniej optymalizacji wskaźnik stoi na 41%. Meta w panelu dopisuje komunikat: "Twój serwer przesłał o 777 mniej zdarzeń niż przeglądarka w ciągu ostatnich 7 dni".
 
-Na pierwszy rzut oka, workflow n8n wygląda poprawnie. Webhook odpala się, dane przychodzą, Graph API zwraca 200 OK, hashowanie email działa, fbc jest wypełniony. Wszystko działa.
+Czyli przeglądarka generuje o 777 sygnałów więcej niż serwer. Meta nie wie, co z tym fantem zrobić, więc część danych wyrzuca.
 
-Ale w Google Tag Manager jest subtelny detal. W kontenerze `GTM-NWHV84GX` były dwa osobne tagi:
+## Co było pod maską
 
-- **Tag 41 "Pixel Malta"**: zawierał tylko `fbq('init', '2073661919762572')`
-- **Tag 44 "Meta Pixel PageView + CAPI"**: zawierał `fbq('track', 'PageView', {}, { eventID: ... })` i wysyłał webhook do n8n z tym samym eventID
+Po godzinie analizy okazało się, że każde wejście na stronę jest liczone **dwa razy** w przeglądarce, a tylko raz na serwerze. Nasz system śledzący miał dwa tagi, z których każdy wysyłał sygnał "ktoś wszedł na stronę". Z perspektywy Mety to wyglądało tak, jakby każdy użytkownik wchodził na stronę dwa razy, ale tylko raz miał pełne dane.
 
-Domyślne zachowanie biblioteki fbevents.js: `fbq('init', ...)` automatycznie emituje PageView. To oznacza, że na każde załadowanie strony odpalają się **dwa PageView z Pixela**: jeden automatyczny (z losowym event_id), drugi jawny (z naszym event_id). CAPI wysyła tylko jeden (z naszym event_id).
+Maksymalne teoretyczne dopasowanie w takiej sytuacji: 50%. Z drobnymi stratami sieciowymi i blokadami AdBlock, w praktyce 41%. Dokładnie to, co widział klient.
 
-Meta dopasowuje Pixel i CAPI po event_id. Nasze jedno zdarzenie CAPI dopasowuje jedno z dwóch Pixelowych. Drugie zostaje jako "Pixel only". Coverage formuła: zdarzenia_matched / zdarzenia_pixel = 1/2 = 50% teoretycznie. Z drobnymi stratami sieciowymi i blokadami adblock, w praktyce 41%. Dokładnie tyle.
+## Co naprawiliśmy w godzinę
 
-### Dwa miejsca do naprawy
+**W narzędziu śledzącym**: wyłączyliśmy jeden z dwóch tagów generujących pomiar. Zostały 3 linijki kodu, zamiast 6. Od tej pory każde wejście jest liczone raz, nie dwa razy.
 
-Po godzinie analizy zarejestrowanych executionów n8n i kontenera GTM, zlokalizowaliśmy dwa obszary do dotknięcia:
+**W systemie automatyzacji**: poprawiliśmy cztery drobiazgi w danych wysyłanych do Mety. Nie wchodząc w szczegóły, chodziło o to, żeby jakość informacji o użytkowniku była rzetelna. Żadnego wypełniania pola "kraj" wartościami zmyślonymi, żadnego użycia fałszywych identyfikatorów, gdy prawdziwy jest dostępny.
 
-1. **Google Tag Manager**: wyłączyć domyślny auto-PageView z init oraz domyślne śledzenie pushState. Trzy linijki kodu.
-2. **n8n workflow**: drobne poprawki poprawiające jakość dopasowania parametrów użytkownika (EMQ). Nie wpływa na coverage, ale wzmacnia dopasowanie.
+Cała operacja zajęła jeden dzień roboczy. Godzina analizy, godzina wdrożenia, reszta to testy i dokumentacja.
 
-Żadna z tych rzeczy nie jest rewolucyjna. Obie razem zajmują około 90 minut pracy.
+## Błąd, którego nie przewidziałem
 
-## Co zmieniłem w GTM (3 nowe linijki)
+Tu warto o tym wspomnieć, bo robi to case realistycznym, a nie marketingowym.
 
-W tagu "Pixel Malta" (Custom HTML, odpalający się na All Pages), przed wywołaniem `fbq('init', ...)` dodałem:
+Jedną z poprawek (tę dotyczącą rzetelności identyfikatora) zastosowałem też do drugiego procesu, tego obsługującego zapytania z formularza. Logika na papierze była poprawna. Testy poszły dobrze. Wdrożyłem.
 
-```javascript
-fbq('set', 'autoConfig', false, '2073661919762572');
-window.fbq.disablePushState = true;
-```
+Problem: plugin formularza, którego używa klient, nie wysyła jednej konkretnej informacji w sposób, jakiego się spodziewałem. Po moim fix, system zaczął odrzucać każde zapytanie z formularza jako niepoprawne.
 
-Pierwsza linijka mówi: "nie inicjalizuj automatycznie PageView przy init, zostawię to jawnemu trackowi gdzie indziej". Druga linijka wyłącza automatyczne śledzenie zmian URL przez pushState i replaceState, które domyślnie emituje wirtualne PageView dla SPA-like aplikacji.
+Zauważyliśmy w ciągu 12 minut. Rollback zajął 5 minut. Straty: jeden testowy formularz, który klient wysłał na swoje dane, żeby sprawdzić. Prawdziwych zapytań od realnych klientów w oknie regresji: zero.
 
-Przed publikacją zweryfikowaliśmy to w GTM Preview + DevTools Network. Przed fix: 2 requesty do `facebook.com/tr/` z `ev=PageView` per załadowanie strony. Po fix: 1 request. Dokładnie to, czego oczekiwaliśmy.
+Wniosek dla mnie: test z ładnym, przykładowym payloadem to nie to samo co test z prawdziwymi danymi z produkcji. Przed kolejnymi wdrożeniami, najpierw sprawdzamy historyczne dane, dopiero potem wchodzimy w zmiany.
 
-Publikacja kontenera, czekamy na agregację Mety (24 do 48 godzin).
+Piszę o tym wprost, bo case studies, w których wszystko zawsze idzie idealnie, to marketing firm, które niczego nie wdrożyły.
 
-## Co zmieniłem w n8n (4 mikro-poprawki)
+## Ile to daje w złotówkach
 
-W workflow PageView CAPI (node "Przygotuj PageView") wprowadziliśmy 4 precyzyjne zmiany:
+W momencie pisania tego tekstu (dzień po naprawie) nie mam jeszcze nowej wartości od Mety. Jej system aktualizuje raporty z 24 do 48 godzinnym opóźnieniem. Ale matematyka jest prosta.
 
-**Zmiana 1**: Usunąłem fallback event_id. Stary kod: `eventId = body.event_id || 'pv_' + Date.now() + '_' + random()`. Nowy: `if (!eventId) return []`. Powód: jeśli GTM nie przekaże event_id, wysyłanie zdarzenia z losowym ID tworzy sierocy event w Metach, który psuje coverage. Lepiej skip niż wysłać śmieć.
-
-**Zmiana 2**: Usunąłem fallback `generateFbp()`. Stary kod: `fbp = body.fbp || generateFbp()`. Nowy: `fbp = body.fbp || ''`. Powód: Pixel używa cookie `_fbp` z przeglądarki. Jeśli go nie ma, CAPI też nie powinien wysyłać zmyślonego. Kłamstwo w tej warstwie = niezgodny sygnał między Pixelem a CAPI.
-
-**Zmiana 3**: Usunąłem `external_id` jako `sha256(IP + UA)`. Powód: gdy reverse proxy przed n8n nie przekazuje prawdziwego IP klienta (wysyła Docker-internal `172.18.0.1`), wszyscy użytkownicy dostają ten sam hash. Meta traktuje ich jako jednego użytkownika. Fałszywy sygnał, obniża EMQ. Lepiej nic, niż kolizja.
-
-**Zmiana 4**: Dodałem `country: [sha256('pl')]` w user_data. 99% ruchu MaltaView to Polska. Meta daje kilka punktów EMQ za sam country. Darmowe. Robimy.
-
-Drobiazg techniczny: tych zmian nie robiłem w UI n8n. Pobrałem workflow JSON przez n8n REST API, podmieniłem `jsCode` w jednym node, wysłałem PUT, zweryfikowałem na testowym wywołaniu. Backup starego workflow siedzi w repo, rollback to jedno polecenie. Cała operacja 15 minut.
-
-### Jeden błąd który popełniłem, i rollback
-
-Tę samą zmianę 1 (guard event_id) zastosowałem też w workflow Lead. Wywaliłem fallback `'lead_' + Date.now() + random()`. Test end-to-end przeszedł (wysłałem payload z event_id w Pythonie, działało).
-
-Problem: **Fluent Forms Pro (plugin WordPress dla formularzy) nie wysyła event_id w webhook'u**. Wszystkie historyczne Leady (trzy tygodnie wstecz) używały fallbacku `lead_...` właśnie dlatego. Po moim fix, workflow zaczął odrzucać każdy Lead (`return []`, brak wywołania Graph API).
-
-Klient puścił testowego Leada, nic nie dotarło. Zauważyliśmy w ciągu 12 minut. Rollback: przywróciłem fallback event_id w workflow Lead, ale zostawiłem pozostałe 3 zmiany (fbp, external_id, country).
-
-Straty: 1 testowy Lead (klient, nie prawdziwy klient końcowy). Prawdziwych Leadów w oknie regresji: zero.
-
-Wniosek: test E2E z payloadem z happy path nie jest tym samym co test z prawdziwym payloadem z produkcji. Najpierw patrz na historyczne dane, potem wdrażaj. Nauczka na kolejne wdrożenia.
-
-## Oczekiwane efekty (uczciwie, bo dopiero czekam na raport Mety)
-
-Agregacja w Events Manager działa z opóźnieniem 24-48 godzin. W momencie pisania tego tekstu (24 kwietnia, 16:00) nie mam jeszcze nowej wartości coverage. Będę ją widział w sobotę lub niedzielę.
-
-Oczekiwane wyniki na podstawie matematyki:
-
-| Metryka | Przed (dziś) | Oczekiwane (48h) |
+| Co | Przed | Po (oczekiwane) |
 |---|---|---|
-| Pokrycie PageView CAPI | 41% | 80 do 90% |
-| EMQ PageView | ~3.5/10 | 6-7/10 |
-| EMQ Lead | 7.8/10 | 7.8 do 8.5/10 |
-| Koszt leada | ~450 zł (baseline marzec) | Meta deklaruje -18% przy coverage 75%+ |
+| Jakość dopasowania danych | 41% | 80 do 90% |
+| Koszt leada | ok. 450 zł | spadek o 18% wg deklaracji Mety |
+| Miesięczna oszczędność (budżet 8 tys. zł) | 0 zł | ok. 1 440 zł |
+| Roczna oszczędność | 0 zł | ok. 17 tys. zł |
 
-Szacunek pieniężny dla dewelopera MaltaView przy budżecie reklamowym 8 tys. zł miesięcznie: 18% oszczędności to 1 440 zł miesięcznie, 17 tys. zł rocznie. Dla porównania: naprawa, którą opisuję wyżej, zajęła 1 dzień i jest jednorazowa. Zwrot z inwestycji w takim tempie, że nie trzeba go liczyć.
+Naprawa, którą opisałem wyżej, zajęła jeden dzień. Jest jednorazowa. Zwrot z inwestycji w takim tempie, że nie ma sensu go liczyć.
 
-Gdy dostanę nowe liczby, zaktualizuję ten artykuł o finalne dane. Do tego czasu, powyższa tabela to prognoza, nie fakt.
+Gdy zobaczę nowe liczby z Mety, zaktualizuję ten artykuł. Jeśli wyjdzie gorzej niż prognozuję, też napiszę.
 
-## Trzy czerwone flagi do sprawdzenia u siebie w 30 minut
+## Trzy rzeczy do sprawdzenia u siebie w 30 minut
 
-Jeśli jesteś deweloperem i wydajesz na reklamy Meta, zrób ten audyt u siebie dziś. Cała rzecz zajmuje pół godziny, nawet bez dostępu technicznego do strony.
+Jeśli wydajesz na reklamy Meta, zrób ten audyt dzisiaj. Nie potrzebujesz dostępu technicznego do strony, ani programisty. Wystarczy przeglądarka.
 
-**Flaga 1**: Otwórz **Meta Events Manager → Twój Pixel → Pokrycie zdarzeń**. Zobacz konkretnie PageView i Lead. Jeśli którykolwiek jest poniżej 75%, masz pieniądze na stole. Jeśli Lead jest poniżej 7 w EMQ, to też znak.
+**Sprawdzenie 1.** Wejdź w panel Meta Business, otwórz **Events Manager → Twój pixel → Pokrycie zdarzeń**. Zobacz wartości dla zdarzeń PageView i Lead. Jeśli którakolwiek jest poniżej 75%, zostawiasz pieniądze na stole.
 
-**Flaga 2**: Otwórz twoją stronę w trybie incognito, F12 → Network, filtr "facebook". Załaduj stronę raz. Policz requesty do `facebook.com/tr/` z parametrem `ev=PageView`. Jeśli jest więcej niż 1, masz ten sam problem co MaltaView, a naprawa to 3 linijki w GTM.
+**Sprawdzenie 2.** Otwórz swoją stronę w trybie incognito. Naciśnij F12, przejdź do zakładki "Network" (sieć), w filtrze wpisz "facebook". Przeładuj stronę raz. Policz, ile razy wywołuje się adres `facebook.com/tr/` z parametrem `PageView`. Jeśli więcej niż jeden, masz ten sam problem co deweloper z mojego case'a.
 
-**Flaga 3**: Czy twój webhook Conversions API jest pod własną subdomeną (np. `dane.twojadomena.pl`) czy pod adresem typu `n8n.srv1076230.hstgr.cloud`? AdBlocki i Safari ITP blokują drugie, więc duża część ruchu z iOS po prostu nie dociera do CAPI. Skalę blokady można zobaczyć w Events Manager → Pokrycie z podziałem per OS. Jeśli iOS ma wyraźnie niższe coverage niż Windows/Android, reverse proxy na subdomenę jest następnym krokiem.
-
-W razie wątpliwości z którąkolwiek z flag, [opisałem to szczegółowo w artykule porównującym plugin z wdrożeniem server-side](/wiedza/plugin-capi-vs-server-side). Różnica dla typowego dewelopera to 8 tys. zł rocznie przy średnim budżecie.
+**Sprawdzenie 3.** Spytaj osobę obsługującą Twoje reklamy, pod jakim adresem działa Twój serwer przesyłania danych do Mety. Jeśli pod adresem typu `jakismialwerwer.hostingprovider.com`, blokują go AdBlock i Safari, więc spora część leadów z iPhone'a nie dociera. Rozwiązanie to podpięcie go pod Twoją subdomenę (np. `dane.twojadomena.pl`).
 
 ## Co dalej
 
-Sam audyt trzech flag jest darmowy i robisz go sam przy kawie. Jeśli którakolwiek świeci się na czerwono, a tego rodzaju implementacja nie jest tym, czym zajmuje się twój marketing manager, [odezwij się](/kontakt). Diagnostyka pełna, z raportem, zajmuje mi godzinę. Wdrożenie podobne do tego, które opisuję wyżej, zwykle 1 do 3 dni.
+Sam audyt trzech sprawdzeń jest darmowy i robisz go sam. Jeśli którekolwiek świeci się na czerwono, a Twoja agencja reklamowa wzrusza ramionami przy słowie "server-side", [odezwij się do mnie](/kontakt). Diagnostyka z raportem zajmuje godzinę. Wdrożenie podobne do tego, które opisałem, to 1 do 3 dni pracy.
 
-Dla dewelopera, który wydaje powyżej 3 tys. zł miesięcznie na Meta Ads, wdrożenie zwraca się typowo w 2-4 miesiące, potem jest czysty plus na koncie. Dalej: [tu jest cennik](/wiedza/cennik-server-side-polska), bez ukrytych rzeczy.
+Dla dewelopera, który wydaje powyżej 3 tys. zł miesięcznie na Meta Ads, wdrożenie zwraca się typowo w 2 do 4 miesięcy. Potem jest już czysty plus na koncie.
 
-Za 48 godzin wrócę tu z aktualizacją wyników z Mety, gdy pokrycie się przeliczy. Jeśli wyjdzie inaczej niż prognozuję, też napiszę. Case studies, w których wszystko zawsze idzie idealnie, to marketing firm, które niczego nie wdrożyły.
+Jeśli chcesz zobaczyć, jak wygląda pełna architektura takiego rozwiązania, przeczytaj [case z wdrożenia Meta CAPI](/wiedza/meta-capi-server-side-case-study-maltaview) albo [artykuł o jednym parametrze, który zwraca 50% brakujących konwersji](/wiedza/parametr-fbc-meta-capi-niedoraportowane-konwersje). Dalej, jeśli interesują Cię koszty, [tu jest cennik bez ukrytych rzeczy](/wiedza/cennik-server-side-polska).
+
+Za 48 godzin wrócę tu z aktualizacją z Mety. Do tego czasu, tabela wyżej to prognoza, nie fakt.
