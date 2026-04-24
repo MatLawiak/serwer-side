@@ -11,7 +11,9 @@ readingTime: "10 min czytania"
 - Większość formularzy kontaktowych wysyła maila do firmy i na tym kończy. To jest ekonomia jednego zdarzenia, a powinna być ekonomia pięciu.
 - Algorytmy reklamowe uczą się na tym, co im mówisz. Jeśli nie mówisz nic poza "ktoś wysłał formularz", algorytm losuje, komu pokazywać reklamy dalej.
 - 14 punktów niżej to różnica między formularzem, który zbiera 40 leadów miesięcznie przy CPL 400 zł, a takim, który zbiera 80 leadów miesięcznie przy CPL 200 zł.
-- Case: formularz "Zapytaj o Apartament" dla dewelopera nieruchomości MaltaView. Te same reklamy, ten sam ruch, lepszy formularz. Efekt liczymy w konkretnych liczbach.
+- Case: formularz "Zapytaj o Apartament" dla dewelopera apartamentów premium w dużym mieście wojewódzkim. Te same reklamy, ten sam ruch, lepszy formularz. Efekt liczymy w konkretnych liczbach.
+
+![Checklista poprawnego zbierania danych z formularza kontaktowego, obejmująca UX, tracking i integrację z CRM](/infografiki/formularz-14-punktow-hero.png)
 
 ---
 
@@ -88,7 +90,7 @@ Kiedy user klika "Wyślij", dwie rzeczy powinny się wydarzyć równocześnie:
 
 Ten sam eventID to sygnał dla Meta: "to jedno zdarzenie, nie licz go dwa razy". Bez tego, Meta policzy lead podwójnie, a ty zobaczysz w raportach fałszywie zawyżone konwersje. Algorytm optymalizuje się na bzdurach.
 
-To jest temat na osobny artykuł, ale dla szybkiej orientacji: [Meta CAPI server-side case study MaltaView](/wiedza/meta-capi-server-side-case-study-maltaview) pokazuje realne wdrożenie tego mechanizmu.
+To jest temat na osobny artykuł, ale dla szybkiej orientacji: [case study wdrożenia Meta CAPI](/wiedza/meta-capi-server-side-case-study-maltaview) pokazuje realne wdrożenie tego mechanizmu.
 
 ### 8. Hash PII zanim coś wyjdzie na zewnątrz
 
@@ -154,18 +156,16 @@ Autoresponder natychmiastowy (przez webhook z n8n lub prostszy przez plugin), wy
 
 Treść autorespondera to nie uprzejmościowe "dziękujemy za kontakt". To jest budowanie wyprzedzenia w czasie zaufania. Pokazujesz, że firma działa. Pokazujesz ekspertyzę. Kupujesz sobie czas na prawdziwą rozmowę z handlowcem.
 
-![Checklista poprawnego zbierania danych z formularza kontaktowego, obejmująca UX, tracking i integrację z CRM](/infografiki/formularz-14-punktow-hero.png)
-
 ---
 
-## Case: formularz MaltaView (deweloper apartamentów)
+## Case: formularz dewelopera apartamentów premium
 
 Klient sprzedaje apartamenty premium nad Jeziorem Maltańskim w Poznaniu. Model biznesowy klasyczny dla dewelopera: klient zostawia kontakt, handlowiec dzwoni i umawia prezentację. Każdy lead kosztuje 300 do 600 zł z reklamy, a wartość transakcji liczy się w setkach tysięcy, więc precyzja ma znaczenie.
 
 Przed wdrożeniem:
 - Formularz Fluent Forms, 4 pola (imię, telefon, email, treść)
 - Pixel Meta w Google Tag Manager, bez eventID
-- Maila lecą na hello@maltaview.pl, handlowiec przepisuje do Excela
+- Maila lecą na skrzynkę firmową klienta, handlowiec przepisuje do Excela
 - EMQ w Meta: 4.4 na 10 (słabe)
 - Koszt leada: średnio 450 zł
 
@@ -180,7 +180,7 @@ Po wdrożeniu 14 punktów (trwało 3 dni pracy):
 
 Efekt po 30 dniach: EMQ wzrosło do 7.8 na 10, koszt leada spadł o około 22 procent, spam zniknął.
 
-Szczegóły techniczne wdrożenia Meta CAPI w tym projekcie opisałem w [case study MaltaView](/wiedza/meta-capi-server-side-case-study-maltaview). Tam jest techniczna strona. Tutaj jest biznesowa.
+Szczegóły techniczne wdrożenia Meta CAPI w tym projekcie opisałem w [pełnym case study](/wiedza/meta-capi-server-side-case-study-maltaview). Tam jest techniczna strona. Tutaj jest biznesowa.
 
 ---
 
