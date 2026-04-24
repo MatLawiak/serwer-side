@@ -1,0 +1,295 @@
+{
+  "name": "[SERWER-SIDE] WF2 — Generuj treści LinkedIn + Instagram",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "minutes", "minutesInterval": 10}]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-2400, 200],
+      "id": "b1c2d3e4-0001-0001-0001-100000000001",
+      "name": "Co 10 minut"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "32cb80c840ae816789c9e46a2afb39f1",
+          "mode": "id"
+        },
+        "returnAll": false,
+        "limit": 10,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Wygeneruj|checkbox",
+              "condition": "equals",
+              "value": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [-2160, 200],
+      "id": "b1c2d3e4-0002-0002-0002-100000000002",
+      "name": "Pobierz wpisy do generowania",
+      "credentials": {
+        "notionApi": {
+          "id": "NOTION_CREDENTIAL_ID",
+          "name": "Notion — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "check-has-items",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-1920, 200],
+      "id": "b1c2d3e4-0003-0003-0003-100000000003",
+      "name": "Są wpisy?"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-1680, 80],
+      "id": "b1c2d3e4-0004-0004-0004-100000000004",
+      "name": "Loop — każdy wpis"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-page-id",
+              "name": "pageId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "set-transkrypcja",
+              "name": "transkrypcja",
+              "value": "={{ $json.properties.Transkrypcja.title[0].plain_text }}",
+              "type": "string"
+            },
+            {
+              "id": "set-tytul",
+              "name": "tytul_roboczy",
+              "value": "={{ $json.properties['Tytuł roboczy'].rich_text[0]?.plain_text || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1440, 80],
+      "id": "b1c2d3e4-0005-0005-0005-100000000005",
+      "name": "Wyciągnij dane"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Tytuł roboczy: {{ $json.tytul_roboczy }}\n\nTranskrypcja notatki głosowej:\n{{ $json.transkrypcja }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Jesteś ekspertem od content marketingu dla marki serwer-side.pl. Tworzysz posty social media zgodne z brandbookiem tej marki.\n\n## BRANDBOOK — TOŻSAMOŚĆ MARKI\nSerwer-side.pl = jeden ekspert od technologii serwerowych w marketingu (server-side tracking, GTM server-side, analityka). Nie agencja. Jeden człowiek, który wie co robi i mówi wprost.\n\n## GŁOS MARKI\n- Fachowy ale ludzki — jak rozmowa przy kawie, nie boardmeeting\n- Bezpośredni — krótkie zdania, zero wody\n- Ironiczny wobec branżowego bullshitu (GA4, agencje obiecujące złote góry)\n- Z humorem — sytuacyjny i techniczny, nigdy personalny\n- Zawsze konkretny — liczby, fakty, przykłady\n- Pisany w pierwszej osobie\n\n## CZEGO NIE PISAĆ\n- NIE: 'Zapraszam do zapoznania się...'\n- NIE: ogólniki ('wysoka jakość', 'kompleksowe podejście')\n- NIE: korporacyjny język\n- NIE: emotikonki przy każdym zdaniu\n- NIE: pisanie w 3. osobie\n\n## CONTENT PILLARY\n1. Edukacja techniczna: server-side, GTM, GA4, cookies, Consent Mode v2\n2. Dane i statystyki: 'Twój GA4 traci X% danych', ROAS przed/po\n3. Case studies: konkretne liczby, przed/po wdrożeniu\n4. AI w marketingu serwerowym: narzędzia i aplikacje na danych serwerowych\n5. Hot takes: branżowe mity, odważne opinie, ironia wobec 'ekspertów'\n6. Za kulisami: osobiste, luźne, autentyczne\n\n## FORMAT LINKEDIN\n- Zacznij od UDERZAJĄCEGO zdania — liczba, teza lub pytanie, które zatrzymuje scroll\n- 150-400 słów\n- Krótkie akapity, aktywne zdania\n- Punkty jeśli lista ma sens\n- CTA na końcu (pytanie do dyskusji, link, zaproszenie)\n- 3-5 hashtagów na końcu: #serverside #tracking #gtm #analytics #ecommerce #roas #serwersidepl\n\n## FORMAT INSTAGRAM\n- Hook w PIERWSZYM zdaniu (zatrzymuje scroll — może być prowokacyjny lub zaskakujący)\n- 80-150 słów widocznych\n- Krótkie zdania, można używać punktów\n- CTA: 'Zapisz jeśli...', 'Taguj kogoś kto...', 'Napisz w komentarzu...'\n- Na końcu 10-15 hashtagów (oddzielone od tekstu spacją)\n\n## PRZYKŁADOWE DOBRE NAGŁÓWKI\n- 'Twój GA4 kłamie. I to nie jest jego wina.'\n- 'ROAS 2.1 → 3.8. Jeden klient. Dwa tygodnie. Zero magii.'\n- 'Jak tracisz 30% danych reklamowych i nawet tego nie wiesz.'\n- 'AI nie działa bez danych. A dane bez serwera to połowa prawdy.'\n\nNa podstawie podanej transkrypcji notatki głosowej napisz post LinkedIn i post Instagram. Odpowiedź TYLKO w formacie JSON:\n{\n  \"tytul_roboczy\": \"ew. ulepszony tytuł roboczy lub ten sam (max 80 znaków)\",\n  \"linkedin\": \"pełna treść posta LinkedIn zgodna z formatem\",\n  \"instagram\": \"pełna treść posta Instagram zgodna z formatem\"\n}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [-1200, 80],
+      "id": "b1c2d3e4-0006-0006-0006-100000000006",
+      "name": "Generuj LinkedIn + Instagram"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [-1200, 300],
+      "id": "b1c2d3e4-0007-0007-0007-100000000007",
+      "name": "OpenAI GPT-4.1",
+      "credentials": {
+        "openAiApi": {
+          "id": "OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"tytul_roboczy\": \"GA4 traci 30% danych — i nikt tego nie sprawdza\",\n  \"linkedin\": \"Twój GA4 traci 30% danych.\\n\\nI nie mówię o jakimś edge case. Mówię o każdym sklepie, który ma blokery reklam na odwiedzającym...\",\n  \"instagram\": \"Twój GA4 kłamie. 🤫\\n\\nNie złośliwie — po prostu nie widzi co najmniej 30% Twoich użytkowników...\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [-960, 300],
+      "id": "b1c2d3e4-0008-0008-0008-100000000008",
+      "name": "Parser treści"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Wyciągnij dane').item.json.pageId }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Tytuł roboczy|rich_text",
+              "textContent": "={{ $json.output.tytul_roboczy }}"
+            },
+            {
+              "key": "Treść LinkedIn|rich_text",
+              "textContent": "={{ $json.output.linkedin }}"
+            },
+            {
+              "key": "Treść Instagram|rich_text",
+              "textContent": "={{ $json.output.instagram }}"
+            },
+            {
+              "key": "Wygeneruj|checkbox",
+              "checkboxValue": false
+            },
+            {
+              "key": "Status|status",
+              "statusValue": "In progress"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [-720, 80],
+      "id": "b1c2d3e4-0009-0009-0009-100000000009",
+      "name": "Zapisz treści w Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "NOTION_CREDENTIAL_ID",
+          "name": "Notion — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [-1680, 320],
+      "id": "b1c2d3e4-0010-0010-0010-100000000010",
+      "name": "Brak wpisów — koniec"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Co 10 minut": {
+      "main": [
+        [{"node": "Pobierz wpisy do generowania", "type": "main", "index": 0}]
+      ]
+    },
+    "Pobierz wpisy do generowania": {
+      "main": [
+        [{"node": "Są wpisy?", "type": "main", "index": 0}]
+      ]
+    },
+    "Są wpisy?": {
+      "main": [
+        [{"node": "Loop — każdy wpis", "type": "main", "index": 0}],
+        [{"node": "Brak wpisów — koniec", "type": "main", "index": 0}]
+      ]
+    },
+    "Loop — każdy wpis": {
+      "main": [
+        [],
+        [{"node": "Wyciągnij dane", "type": "main", "index": 0}]
+      ]
+    },
+    "Wyciągnij dane": {
+      "main": [
+        [{"node": "Generuj LinkedIn + Instagram", "type": "main", "index": 0}]
+      ]
+    },
+    "Generuj LinkedIn + Instagram": {
+      "main": [
+        [{"node": "Zapisz treści w Notion", "type": "main", "index": 0}]
+      ]
+    },
+    "OpenAI GPT-4.1": {
+      "ai_languageModel": [
+        [{"node": "Generuj LinkedIn + Instagram", "type": "ai_languageModel", "index": 0}]
+      ]
+    },
+    "Parser treści": {
+      "ai_outputParser": [
+        [{"node": "Generuj LinkedIn + Instagram", "type": "ai_outputParser", "index": 0}]
+      ]
+    },
+    "Zapisz treści w Notion": {
+      "main": [
+        [{"node": "Loop — każdy wpis", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "serwer-side-wf2-v1",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "serwer-side-pl"
+  },
+  "tags": ["serwer-side.pl", "notion", "linkedin", "instagram", "content"]
+}

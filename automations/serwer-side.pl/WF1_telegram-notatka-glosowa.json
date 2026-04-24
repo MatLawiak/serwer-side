@@ -1,0 +1,339 @@
+{
+  "name": "[SERWER-SIDE] WF1 — Telegram Notatka Głosowa → Notion",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["message"],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [-2400, 200],
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Nowa wiadomość Telegram",
+      "webhookId": "serwer-side-telegram-voice-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "rule-audio-exists"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "notExists",
+                      "singleValue": true
+                    },
+                    "id": "rule-audio-not-exists"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tekst"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [-2160, 200],
+      "id": "a1b2c3d4-0002-0002-0002-000000000002",
+      "name": "Typ wiadomości?"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-1920, 80],
+      "id": "a1b2c3d4-0003-0003-0003-000000000003",
+      "name": "Pobierz audio",
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {
+          "language": "pl"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [-1680, 80],
+      "id": "a1b2c3d4-0004-0004-0004-000000000004",
+      "name": "Transkrypcja Whisper",
+      "credentials": {
+        "openAiApi": {
+          "id": "OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-transcript-text",
+              "name": "transkrypcja",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1440, 80],
+      "id": "a1b2c3d4-0005-0005-0005-000000000005",
+      "name": "Set transkrypcja (audio)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-text-message",
+              "name": "transkrypcja",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-1440, 320],
+      "id": "a1b2c3d4-0006-0006-0006-000000000006",
+      "name": "Set transkrypcja (tekst)"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Notatka głosowa (transkrypcja): {{ $json.transkrypcja }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Jesteś asystentem tworzącym tytuły robocze dla postów social media marki serwer-side.pl.\n\nMarka serwer-side.pl: ekspert od server-side trackingu i technologii serwerowych w marketingu. Ton: fachowy, bezpośredni, z ironią, bez korporacyjnego żargonu.\n\nNa podstawie transkrypcji notatki głosowej:\n1. Wygeneruj krótki, chwytliwy TYTUŁ ROBOCZY (max 80 znaków) — ma oddawać główną myśl, może być odważny lub z ironią\n2. Napisz PODSUMOWANIE transkrypcji (2-3 zdania) — co jest głównym tematem/przekazem\n\nOdpowiedź TYLKO w formacie JSON:\n{\n  \"tytul_roboczy\": \"Tytuł max 80 znaków\",\n  \"podsumowanie\": \"Krótkie podsumowanie treści 2-3 zdania.\"\n}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [-1200, 200],
+      "id": "a1b2c3d4-0007-0007-0007-000000000007",
+      "name": "Generuj tytuł roboczy"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [-1200, 420],
+      "id": "a1b2c3d4-0008-0008-0008-000000000008",
+      "name": "OpenAI Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"tytul_roboczy\": \"GA4 traci 30% danych — i nikt tego nie sprawdza\",\n  \"podsumowanie\": \"Notatka dotyczy problemu utraty danych w GA4 przez blokery reklam. Autor wskazuje, że server-side tracking rozwiązuje ten problem i podaje przykład klienta z e-commerce.\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [-960, 420],
+      "id": "a1b2c3d4-0009-0009-0009-000000000009",
+      "name": "Parser tytułu"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "32cb80c840ae816789c9e46a2afb39f1",
+          "mode": "id"
+        },
+        "title": "={{ $json.output.tytul_roboczy }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Transkrypcja|title",
+              "title": "={{ $('Set transkrypcja (audio)').item ? $('Set transkrypcja (audio)').item.json.transkrypcja : $('Set transkrypcja (tekst)').item.json.transkrypcja }}"
+            },
+            {
+              "key": "Tytuł roboczy|rich_text",
+              "textContent": "={{ $json.output.tytul_roboczy }}"
+            },
+            {
+              "key": "Status|status",
+              "statusValue": "Not started"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [-720, 200],
+      "id": "a1b2c3d4-0010-0010-0010-000000000010",
+      "name": "Utwórz wpis w Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "NOTION_CREDENTIAL_ID",
+          "name": "Notion — serwer-side.pl"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Nowa wiadomość Telegram').item.json.message.chat.id }}",
+        "text": "=✅ Transkrypcja zapisana!\n\n*Tytuł roboczy:* {{ $('Generuj tytuł roboczy').item.json.output.tytul_roboczy }}\n\nZaznacz checkbox 'Wygeneruj' w Notion, żeby wygenerować posty LinkedIn i Instagram.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [-480, 200],
+      "id": "a1b2c3d4-0011-0011-0011-000000000011",
+      "name": "Potwierdź w Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram — serwer-side.pl"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Nowa wiadomość Telegram": {
+      "main": [
+        [{"node": "Typ wiadomości?", "type": "main", "index": 0}]
+      ]
+    },
+    "Typ wiadomości?": {
+      "main": [
+        [{"node": "Pobierz audio", "type": "main", "index": 0}],
+        [{"node": "Set transkrypcja (tekst)", "type": "main", "index": 0}]
+      ]
+    },
+    "Pobierz audio": {
+      "main": [
+        [{"node": "Transkrypcja Whisper", "type": "main", "index": 0}]
+      ]
+    },
+    "Transkrypcja Whisper": {
+      "main": [
+        [{"node": "Set transkrypcja (audio)", "type": "main", "index": 0}]
+      ]
+    },
+    "Set transkrypcja (audio)": {
+      "main": [
+        [{"node": "Generuj tytuł roboczy", "type": "main", "index": 0}]
+      ]
+    },
+    "Set transkrypcja (tekst)": {
+      "main": [
+        [{"node": "Generuj tytuł roboczy", "type": "main", "index": 0}]
+      ]
+    },
+    "Generuj tytuł roboczy": {
+      "main": [
+        [{"node": "Utwórz wpis w Notion", "type": "main", "index": 0}]
+      ]
+    },
+    "OpenAI Model": {
+      "ai_languageModel": [
+        [{"node": "Generuj tytuł roboczy", "type": "ai_languageModel", "index": 0}]
+      ]
+    },
+    "Parser tytułu": {
+      "ai_outputParser": [
+        [{"node": "Generuj tytuł roboczy", "type": "ai_outputParser", "index": 0}]
+      ]
+    },
+    "Utwórz wpis w Notion": {
+      "main": [
+        [{"node": "Potwierdź w Telegram", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "serwer-side-wf1-v1",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "serwer-side-pl"
+  },
+  "tags": ["serwer-side.pl", "telegram", "notion", "transkrypcja"]
+}

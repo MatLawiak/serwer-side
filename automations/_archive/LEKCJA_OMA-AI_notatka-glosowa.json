@@ -1,0 +1,704 @@
+{
+  "name": "[LEKCJA][OMA-AI] Notatka głosowa (BONUS)",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "chatIds": "7905320902"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2672,
+        208
+      ],
+      "id": "67cc9395-b6e4-42a2-a64b-7b713bcd5742",
+      "name": "Nowa wiadomość",
+      "webhookId": "55356157-884d-4cb2-bc72-521b464e84be",
+      "credentials": {
+        "telegramApi": {
+          "id": "RhZOcCSpkLqAzn9R",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "87ed8690-fae8-49eb-afda-e80d6b2dbff1"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e548c07a-4df0-40a1-9f1f-8a267a934b21",
+                    "leftValue": "={{ $json.message.voice }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "object",
+                      "operation": "notExists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tekst"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        -2448,
+        208
+      ],
+      "id": "faa1afd3-f0ad-48f6-ab3d-fb5febca24de",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1440,
+        464
+      ],
+      "id": "59890f93-6395-4eb7-8a2a-4cf7abf376b2",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "rg6HH4fr9ybF9Pyx",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.voice.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2192,
+        96
+      ],
+      "id": "800fa8ee-55b1-476e-8675-9322fd63d95b",
+      "name": "Pobierz audio",
+      "webhookId": "ac639747-2808-4984-b6d3-84b8c5ae4119",
+      "credentials": {
+        "telegramApi": {
+          "id": "RhZOcCSpkLqAzn9R",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9acec95d-f088-4b8f-b47f-7956bc7abeb0",
+              "name": "=message.text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1744,
+        96
+      ],
+      "id": "09b58314-f071-44e9-8774-d29815caae23",
+      "name": "Set \"message\""
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1968,
+        96
+      ],
+      "id": "d92bf589-43f0-4053-a6db-e34003c6219d",
+      "name": "Transkrypt",
+      "credentials": {
+        "openAiApi": {
+          "id": "rg6HH4fr9ybF9Pyx",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "29abb99f-2b88-81f3-8751-edbd6cace32f",
+          "mode": "list",
+          "cachedResultName": "Baza wiedzy",
+          "cachedResultUrl": "https://www.notion.so/29abb99f2b8881f38751edbd6cace32f"
+        },
+        "title": "={{ $json.output.tytul }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Nazwa|title",
+              "title": "={{ $json.output.tytul }}"
+            },
+            {
+              "key": "Typ wsadu|select",
+              "selectValue": "Notatka"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1072,
+        224
+      ],
+      "id": "6eea1d12-9dc0-4dc6-af4e-bb60f16f3d2d",
+      "name": "Utwórz wpis",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dc51e036-8a19-427d-af5c-930fff8a237f",
+              "name": "pageID",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        224
+      ],
+      "id": "7c09e093-22ef-4565-8dc6-4a99d73d3bf0",
+      "name": "Set \"pageID\""
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Notatka użytkownika: {{ $json.message.text }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=<task>\n  <description>\n    Otrzymasz nieustrukturyzowaną notatkę w języku polskim, którą musisz przekształcić w uporządkowaną, zredagowaną wersję przydatną do tworzenia contentu w social media.\n  </description>\n\n  <instructions>\n    Twoim zadaniem jest:\n    1. Uporządkować treść tematycznie — pogrupuj powiązane myśli i tematy razem.\n    2. Uczynić tekst klarownym i zrozumiałym — popraw składnię, gramatykę i logiczny przepływ myśli.\n    3. Sformatować treść tak, aby była gotowa do wykorzystania przy tworzeniu postów w social media.\n    4. Zachować oryginalny przekaz — nie zmieniaj głównych idei ani tonu autora.\n\n    Podczas redagowania:\n    - Zachowaj wszystkie ważne informacje z oryginalnej notatki.\n    - Popraw błędy językowe i składniowe.\n    - Uporządkuj chronologię lub logikę wywodu.\n    - Dodaj odpowiednie akapity i strukturę.\n    - Jeśli to konieczne, dodaj krótkie nagłówki lub punkty dla lepszej czytelności.\n    - Nie dodawaj swoich wtrąceń i nie zaczynaj notatki od tytułu np. \"Arena automatyzacji\".\n  </instructions>\n\n  <output_format>\n    Odpowiedź powinna być w formacie JSON z trzema polami:\n    - \"tytul\": krótki, chwytliwy tytuł pasujący do treści (maks. 80 znaków),\n    - \"podsumowanie\": zwięzłe streszczenie treści (2–3 zdania),\n    - \"zredagowana_notatka\": pełna zredagowana treść notatki w języku polskim.\n\n    Przykład:\n    {\n      \"tytul\": \"Tytuł notatki\",\n      \"podsumowanie\": \"Krótki opis tego, o czym jest notatka.\",\n      \"zredagowana_notatka\": \"<zredagowana_notatka>Treść po redakcji...</zredagowana_notatka>\"\n    }\n  </output_format>\n\n  <special_case>\n    Jeśli oryginalna notatka jest zbyt chaotyczna lub niejasna, aby ją sensownie zredagować, dodaj klucz \"uwaga\" z krótkim wyjaśnieniem problemu i podaj najlepszą możliwą wersję.\n  </special_case>\n</task>"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -1408,
+        224
+      ],
+      "id": "63806ccc-b132-4536-b877-9781b7388610",
+      "name": "Redaktor"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"tytul\": \"Seria postów: Jak uporządkować chaotyczne notatki do social media\",\n  \"podsumowanie\": \"Zredagowana notatka prezentuje proces przekształcania surowych myśli w klarowny szkic contentu: od grupowania tematów, przez dopracowanie języka, po gotowe sekcje do publikacji. Zawiera przykładowe nagłówki, listy punktowane i propozycje CTA.\",\n  \"zredagowana_notatka\": \"<zredagowana_notatka>\\n## Kontekst\\nCelem jest szybkie przekształcenie chaotycznych notatek w treści gotowe do publikacji w social media, bez zmiany tonu i kluczowych idei autora.\\n\\n## Kluczowe idee (uporządkowane tematycznie)\\n- Uporządkowanie myśli w bloki tematyczne (problem → rozwiązanie → korzyść).\\n- Prostota języka i krótkie akapity dla lepszej czytelności.\\n- Stała struktura postów, aby przyspieszyć produkcję contentu.\\n- Zachowanie oryginalnego przekazu i intencji autora.\\n\\n## Struktura do wykorzystania w postach\\n1. **Hook**: 1–2 zdania przyciągające uwagę (pytanie, statystyka, obietnica).\\n2. **Problem**: krótki opis wyzwania odbiorcy.\\n3. **Rozwiązanie**: 2–4 konkretne kroki lub wskazówki.\\n4. **Korzyść**: co odbiorca zyska po wdrożeniu.\\n5. **CTA**: jasne wezwanie do działania (komentarz, zapis, udostępnienie).\\n\\n## Przykładowe mini-formaty\\n- **Karuzela**: Każdy slajd = 1 krok procesu, ostatni slajd = CTA.\\n- **Reel/Short**: 15–30 s, jeden główny tip + szybki przykład.\\n- **Post tekstowy**: 3–5 punktów + pytanie na końcu.\\n\\n## Checklista językowa\\n- Zdania krótkie i aktywne.\\n- Unikanie żargonu; jeśli konieczny, wyjaśnić w nawiasie.\\n- Jedna idea na akapit.\\n\\n## Przykładowy szkic posta\\n**Hook**: \\\"Twoje notatki są chaotyczne? Oto 3 kroki, które zamienią je w posty.\\\"\\n**Kroki**:\\n- Zgrupuj myśli: problem, rozwiązanie, korzyść.\\n- Uporządkuj: po 1 idei na akapit.\\n- Dodaj CTA i gotowe.\\n**CTA**: \\\"Zapisz ten post i użyj przy kolejnej notatce.\\\"\\n\\n## CTA końcowe\\nChcesz szablon w Notion? Napisz \\\"SZABLON\\\" w komentarzu.\\n</zredagowana_notatka>\"\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1216,
+        464
+      ],
+      "id": "fb8be9d7-bc93-4e44-a15c-c4870c1d2588",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "538475ea-bfbb-48ca-82ce-45b3483f845f",
+              "leftValue": "={{ +(($('Redaktor').item.json.output.zredagowana_notatka || '').length) }}",
+              "rightValue": 2000,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -656,
+        224
+      ],
+      "id": "029ca3f8-2455-407f-866c-31f84d020c30",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "={{ $json.pageID }}",
+          "mode": "id"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $('Redaktor').item.json.output.zredagowana_notatka }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        496
+      ],
+      "id": "15157b4f-b850-437c-a85d-cf11c4e31cdd",
+      "name": "Aktualizuj treść",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -224,
+        144
+      ],
+      "id": "23173cb8-7bd7-409f-8463-1b929304e0f1",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "96359ed5-38b0-4660-b02f-ddb48c16d026",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "jsCode": "// filename: n8n-code-chunk-text.js\n/**\n * Podział tekstu na chunki o maksymalnej długości znaków z preferencją końców zdań.\n *\n * Wejście (n8n Code node):\n * - Tekst: $('Redaktor').item.json.output.zredagowana_notatka\n * - Opcjonalnie: $('Redaktor').item.json.maxLen (liczba), domyślnie 2000\n *\n * Wyjście:\n * - Tablica items: [{ json: { chunk, index, part, total, length } }, ...]\n *\n * Zasada podziału:\n * 1) Granice zdań (. ! ? ; : … — -) z opcjonalnym cudzysłowem/nawiasem po znaku.\n * 2) Fallback: ostatnia spacja w oknie.\n * 3) Ostatecznie: twarde cięcie na limicie.\n *\n * Edge cases:\n * - Bardzo długie słowa > maxLen będą cięte twardo.\n * - Nadmiarowe białe znaki są redukowane dla stabilnego cięcia.\n */\n\nfunction chunkTextSmart(text, maxLen = 2000) {\n  if (typeof text !== 'string') return [];\n  if (!text.trim()) return [];\n\n  // Normalizacja białych znaków dla stabilnego podziału\n  const normalized = text\n    .replace(/\\r\\n/g, '\\n')           // CRLF -> LF\n    .replace(/[ \\t]+\\n/g, '\\n')       // spacje przed newline\n    .replace(/\\n{3,}/g, '\\n\\n')       // maks 2 nowe linie z rzędu\n    .replace(/[ \\t]{2,}/g, ' ')       // wielokrotne spacje -> pojedyncza\n    .trim();\n\n  // Granice zdań, uwzględniając możliwy cudzysłów/prawy nawias po znaku\n  const endSentenceRegex = /[\\.!?;:…—-](?:[\"'”’)\\]]|\\s|$)/g;\n\n  const chunks = [];\n  let start = 0;\n\n  while (start < normalized.length) {\n    const remaining = normalized.length - start;\n    const limit = Math.min(maxLen, remaining);\n    const windowText = normalized.slice(start, start + limit);\n\n    // a) Najdalszy koniec zdania w oknie\n    let splitIndex = -1;\n    let match;\n    endSentenceRegex.lastIndex = 0;\n    while ((match = endSentenceRegex.exec(windowText)) !== null) {\n      splitIndex = match.index + match[0].length; // tnij za dopasowaniem\n    }\n\n    // b) Jeśli brak końca zdania, tnij po ostatniej spacji\n    if (splitIndex === -1) {\n      const lastSpace = windowText.lastIndexOf(' ');\n      if (lastSpace > 0) {\n        splitIndex = lastSpace + 1; // tnij po spacji\n      }\n    }\n\n    // c) Jeśli brak spacji, twarde cięcie\n    if (splitIndex === -1) {\n      splitIndex = limit;\n    }\n\n    let chunk = normalized.slice(start, start + splitIndex).trim();\n    if (chunk.length > 0) {\n      chunks.push(chunk);\n    }\n\n    // Przesuń start i omiń nadmiarowe białe znaki na początku kolejnego okna\n    start += splitIndex;\n    while (start < normalized.length && /\\s/.test(normalized[start])) {\n      start++;\n    }\n  }\n\n  return chunks;\n}\n\n// Pobranie źródła z node'a \"Redaktor\"\nconst redaktorItem = $('Redaktor').item;\nconst srcText = String(redaktorItem?.json?.output?.zredagowana_notatka ?? '');\nconst maxLen = Number(redaktorItem?.json?.maxLen ?? 2000);\n\n// Podział na chunki\nconst chunks = chunkTextSmart(srcText, maxLen);\nconst total = chunks.length;\n\n// Zwracamy każdy chunk jako osobny item (przyjazne do \"Loop Over Items\")\nreturn chunks.map((chunk, index) => ({\n  json: {\n    chunk,\n    index,           // 0-based\n    part: index + 1, // 1-based\n    total,\n    length: chunk.length,\n  },\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        144
+      ],
+      "id": "bb02607e-095f-457b-b5e1-92e2748175e3",
+      "name": "Chunking"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Set \"pageID\"').item.json.pageID }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Przetworzony"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "ce07af3b-fa24-4b6b-9bcc-a6bc10f497c7",
+      "name": "Aktualizuj",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "block",
+        "blockId": {
+          "__rl": true,
+          "value": "={{ $('Set \"pageID\"').item.json.pageID }}",
+          "mode": "id"
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $json.chunk }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        192
+      ],
+      "id": "d7c73e36-7223-4307-8b0c-770b4a7d64c8",
+      "name": "aktualizuj treść",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Set \"pageID\"').item.json.pageID }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Status|status",
+              "statusValue": "Przetworzony"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        496
+      ],
+      "id": "addf685d-a80a-438c-b0e7-cfd8ce7952b9",
+      "name": "aktualizuj",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Nowa wiadomość": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Pobierz audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Redaktor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Redaktor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pobierz audio": {
+      "main": [
+        [
+          {
+            "node": "Transkrypt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set \"message\"": {
+      "main": [
+        [
+          {
+            "node": "Redaktor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transkrypt": {
+      "main": [
+        [
+          {
+            "node": "Set \"message\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Utwórz wpis": {
+      "main": [
+        [
+          {
+            "node": "Set \"pageID\"",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set \"pageID\"": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redaktor": {
+      "main": [
+        [
+          {
+            "node": "Utwórz wpis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Redaktor",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Chunking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aktualizuj treść",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aktualizuj treść": {
+      "main": [
+        [
+          {
+            "node": "aktualizuj",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "aktualizuj treść",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Aktualizuj",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chunking": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "aktualizuj treść": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4932677a-c5e5-4fc5-8877-1617f7805cc2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fafedde3a00440e63ffd62ebea98cb1c2e99da16a24f242bc0528b289eba1b95"
+  },
+  "id": "5bHbML942mYqoSbz",
+  "tags": []
+}

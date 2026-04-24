@@ -1,0 +1,495 @@
+{
+  "name": "[LEKCJA][DZIEŃ 9] Grafiki z AI",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "get",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        }
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1248,
+        176
+      ],
+      "id": "0fb373e9-48c6-451c-aee4-5892be441cac",
+      "name": "Pobierz dane",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Pobierz dane').item.json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Grafika|files",
+              "fileUrls": {
+                "fileUrl": [
+                  {
+                    "name": "={{ $json.name }}",
+                    "url": "={{ $json.webViewLink }}"
+                  }
+                ]
+              }
+            },
+            {
+              "key": "Do wygenerowania|checkbox"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        176
+      ],
+      "id": "61fde6ae-86a4-44b6-9a3e-05986b1da049",
+      "name": "Aktualizuj",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "29abb99f-2b88-81d7-ad2b-c3c8de2507a5",
+          "mode": "list",
+          "cachedResultName": "Repozytorium treści",
+          "cachedResultUrl": "https://www.notion.so/29abb99f2b8881d7ad2bc3c8de2507a5"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1696,
+        176
+      ],
+      "id": "472a5933-6dae-4c98-a63d-7b83b2d9a754",
+      "name": "Znajdź rekordy",
+      "credentials": {
+        "notionApi": {
+          "id": "bulcZnGx9m9Cig12",
+          "name": "Notion - Twisted Pixel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ca519414-7f44-4f7a-b684-585c0be832ce",
+              "leftValue": "={{ $json.property_do_wygenerowania }}",
+              "rightValue": "Generowanie grafiki",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -1472,
+        176
+      ],
+      "id": "19c0aa6b-f853-4b61-a865-7f0fe8e469a9",
+      "name": "Generowanie grafiki"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Treść posta, na bazie której masz przygotować prompta do wygenerowania grafki: {{ $json.Tresc_posta }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Jesteś wyspecjalizowanym asystentem AI, którego jedynym zadaniem jest transformacja treści posta w gotowy do użycia prompt graficzny, który następnie zostanie wykorzystany do wygenerowania atrakcyjnej, ciekawej i przyciągającej uwagę wzrok grafiki. \n\n### STRATEGIA MARKI I WYTYCZNE WIZUALNE:\n\n1.  **Wytyczne brandu:** {{ $json.Strategia_marki }}\n\n2. **Styl graficzny:** Dynamiczny Glitch Noir\n\nEstetyka \"Glitchu\" i Cyfrowej Fragmentacji:\n\n- To jest serce tego stylu. Zamiast idealnie gładkich hologramów, mamy obrazy, które migoczą, rozpadają się -i drżą.\n\n- Postacie i obiekty częściowo rozpadają się na piksele, geometryczne artefakty lub kolorowe paski (efekt \"pixel sorting\" lub \"data moshing\").\n\n- Wprowadzenie linii skanujących (scanlines), jak na starych monitorach CRT, oraz aberracji chromatycznej (rozszczepienia kolorów na krawędziach), co potęguje wrażenie patrzenia przez cyfrową soczewkę.\n\nEnergia i Dynamika:\n\n- Sceny są pełne widocznych linii energii, smug światła i efektów ruchu (motion blur). To nadaje kompozycji dynamiki i sprawia wrażenie, że wszystko jest w ciągłym, szybkim przepływie.\n\n- Postacie nie są statyczne. Nawet jeśli siedzą, otacza je wirująca energia, strumienie danych lub świetlne obwody, które podkreślają ich intensywną aktywność umysłową.\n\nKontrast Tekstur i Technik:\n\n- Łączymy miękki, malarski styl z oryginalnych grafik (szczególnie w renderowaniu postaci i tła) z ostrymi, graficznymi i wektorowymi elementami.\n\n- Na malarską postać mogą nachodzić ostre linie siatki, okna z kodem, komunikaty o błędach (ERROR) czy proste, geometryczne kształty. Ten kontrast między \"organicznym\" a \"syntetycznym\" jest wizualnie bardzo pociągający.\n\nPaleta Kolorów z Agresywnym Akcentem:\n\n- Zachowujemy bazę: Głębokie, ciemne tła i dominujące światło w odcieniach cyjanu i turkusu.\n\n- Dodajemy \"toksyczny\" akcent: Elementy glitchu i błędy systemowe są idealną okazją do wprowadzenia jaskrawego, kontrastującego koloru, takiego jak magenta, neonowy żółty lub cyfrowa czerwień. Używany oszczędnie, ten kolor \"rozrywa\" spokojną paletę i natychmiast przyciąga wzrok.\n\nWytyczne do Stworzenia Grafik w Tym Stylu:\n\n- Deformuj Rzeczywistość: Nie bój się \"psuć\" obrazu. Dodaj zakłócenia, przesunięcia warstw, losowe piksele. Pokaż technologię jako siłę, która nagina i łamie znaną nam rzeczywistość.\n\n- Wizualizuj Przepływ: Zamiast statycznego hologramu, pokaż go w trakcie renderowania, z widocznymi błędami i smugami światła. Pokaż dane jako pędzące autostrady energii.\n\n- Połącz Stare z Nowym: Mieszaj estetykę retro-tech (scanlines, prosty pixel art) z futurystyczną tematyką.\n\n- Używaj słów-kluczy: \"Glitch art\", \"cyberpunk\", \"cyfrowa dekonstrukcja\", \"aberracja chromatyczna\", \"linie skanujące\", \"dynamiczne smugi światła\", \"neon noir\" (nie umieszczaj ich na grafice!).\n\n### PROCES MYŚLOWY:\n\n1.  **Analiza:** Zrozum kluczowy temat, emocje i metaforę w dostarczonym tekście posta.\n2.  **Koncepcja:** Stwórz unikalną,  koncepcję wizualną, która łączy temat posta (znajdziesz go w user message) ze strategią marki.\n3.  **Formułowanie:** Przekształć koncepcję w zwięzły, ale opisowy prompt.\n\n### ŚCISŁE WYMAGANIA DOTYCZĄCE WYNIKU (OUTPUT):\n\n1.  **Format Wyjściowy:** Twoim JEDYNYM I ABSOLUTNYM wynikiem musi być pojedynczy, prawidłowy obiekt JSON. Twoja odpowiedź musi zaczynać się od `{` i kończyć na `}`.\n2.  **Struktura JSON:** JSON musi zawierać jeden klucz: `\"prompt\"`. Wartością tego klucza musi być wygenerowany przez Ciebie prompt graficzny.\n    * Przykład: `{\"prompt\": \"A dynamic, abstract visualization of data streams...\"}`\n3.  **Język Promptu:** Wartość klucza `\"prompt\"` MUSI być w języku ANGIELSKIM.\n4.  **Proporcje Obrazu:** Prompt powinien opisywać scenę pasującą do kwadratowego formatu (proporcje 1:1), idealnego dla LinkedIn (1200x1200 px).\n5.  **Brak Dodatkowego Tekstu:** NIE umieszczaj żadnych wyjaśnień, komentarzy, wstępów ani żadnego tekstu poza wymaganą strukturą JSON."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        -352,
+        176
+      ],
+      "id": "5e71b3b1-0e17-4bcd-8341-3bcfcea0c153",
+      "name": "Kreator konceptu graficznego"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "1JABSzWfeFHxVJkORbVOxfoMua06F7DDu"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1024,
+        176
+      ],
+      "id": "44f8eba2-15e7-4c11-acc7-44dcea80aa3b",
+      "name": "Strategia marki",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "KQM3ecGbvmooxd1f",
+          "name": "Twisted Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        176
+      ],
+      "id": "60a946ee-5fac-429b-af8b-a42052142b8e",
+      "name": "PDF -> Tekst"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cbd468bc-bed5-4110-9a4e-f4d3b9626103",
+              "name": "Strategia_marki",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "818df165-2151-41f7-bb05-70ad63f778ee",
+              "name": "Tresc_posta",
+              "value": "={{ $('Pobierz dane').item.json.property_tre }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -576,
+        176
+      ],
+      "id": "ef3b30d2-d48b-435b-90bd-abdbff00fc4d",
+      "name": "Set"
+    },
+    {
+      "parameters": {
+        "name": "=Post {{ $('Pobierz dane').item.json.name }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1eJTvldoWTJjUCc8GQhHIl3474h9oqjRZ",
+          "mode": "list",
+          "cachedResultName": "GENERATOR GRAFIK",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1eJTvldoWTJjUCc8GQhHIl3474h9oqjRZ"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        224,
+        176
+      ],
+      "id": "681520af-ffcc-4a09-9af1-8a9586ff510c",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "KQM3ecGbvmooxd1f",
+          "name": "Twisted Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "model": "gpt-image-1",
+        "prompt": "={{ $json.text }}",
+        "options": {
+          "quality": "high",
+          "size": "1024x1024"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -16,
+        512
+      ],
+      "id": "47a04aae-aacf-4333-ad65-1f4148a18406",
+      "name": "GPT Image 1",
+      "credentials": {
+        "openAiApi": {
+          "id": "rg6HH4fr9ybF9Pyx",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        384
+      ],
+      "id": "5f0feba3-61d1-43b6-bad9-3d81019096aa",
+      "name": "gpt-5-mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "rg6HH4fr9ybF9Pyx",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "67adb90b-7433-43bd-bb28-3c890c065114",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1952,
+        256
+      ],
+      "id": "d4ef0aa7-15f1-4ad6-9f9f-ce33d75f55ee",
+      "name": "Webhook",
+      "webhookId": "67adb90b-7433-43bd-bb28-3c890c065114"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3-pro-image-preview",
+          "mode": "id"
+        },
+        "prompt": "={{ $json.text }}",
+        "options": {
+          "sampleCount": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c59a10fd-21fe-4d3c-be6a-b3d14a060f42",
+      "name": "Nano Banana Pro",
+      "retryOnFail": true,
+      "maxTries": 2,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "PbA6hpkYl7ldrvnf",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Pobierz dane": {
+      "main": [
+        [
+          {
+            "node": "Strategia marki",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Znajdź rekordy": {
+      "main": [
+        [
+          {
+            "node": "Generowanie grafiki",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generowanie grafiki": {
+      "main": [
+        [
+          {
+            "node": "Pobierz dane",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kreator konceptu graficznego": {
+      "main": [
+        [
+          {
+            "node": "Nano Banana Pro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Strategia marki": {
+      "main": [
+        [
+          {
+            "node": "PDF -> Tekst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PDF -> Tekst": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Kreator konceptu graficznego",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "node": "Aktualizuj",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT Image 1": {
+      "main": [
+        []
+      ]
+    },
+    "gpt-5-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Kreator konceptu graficznego",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Znajdź rekordy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nano Banana Pro": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": true
+  },
+  "versionId": "a06b8ef5-c87a-4482-bea4-8b436946845d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fafedde3a00440e63ffd62ebea98cb1c2e99da16a24f242bc0528b289eba1b95"
+  },
+  "id": "xRe6SOThXtER47Tg",
+  "tags": []
+}
