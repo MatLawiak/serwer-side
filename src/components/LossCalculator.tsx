@@ -14,22 +14,22 @@ export default function LossCalculator() {
   const roi = yearlyLoss / 5000;
 
   return (
-    <section className="py-16 md:py-20">
+    <section className="py-16 md:py-20 bg-[#0f172a]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Ile tracisz bez server-side tracking?</h2>
-          <p className="text-gray-500">Wprowadź dane, żeby zobaczyć szacowane straty</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-white">Ile tracisz bez server-side tracking?</h2>
+          <p className="text-gray-400">Wprowadź dane, żeby zobaczyć szacowane straty</p>
         </div>
 
-        <div className="bg-slate-50 rounded-2xl border-2 border-primary/15 p-6 md:p-8" style={{boxShadow: '4px 4px 0px rgba(15,23,42,0.12)'}}>
+        <div className="bg-white/5 backdrop-blur rounded-2xl border border-white/10 p-6 md:p-8">
           {/* Sliders */}
           <div className="space-y-8 mb-10">
             <div>
               <div className="flex justify-between items-baseline mb-2">
-                <label htmlFor="budget" className="text-sm font-medium text-gray-700">
+                <label htmlFor="budget" className="text-sm font-medium text-gray-300">
                   Miesięczny budżet reklamowy
                 </label>
-                <span className="text-lg font-bold text-primary">{formatPLN(budget)}</span>
+                <span className="text-lg font-bold text-accent">{formatPLN(budget)}</span>
               </div>
               <input
                 type="range"
@@ -39,9 +39,9 @@ export default function LossCalculator() {
                 step={5000}
                 value={budget}
                 onChange={(e) => setBudget(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-400"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-600 mt-1">
                 <span>5 000 zł</span>
                 <span>100 000 zł</span>
               </div>
@@ -49,10 +49,10 @@ export default function LossCalculator() {
 
             <div>
               <div className="flex justify-between items-baseline mb-2">
-                <label htmlFor="loss" className="text-sm font-medium text-gray-700">
+                <label htmlFor="loss" className="text-sm font-medium text-gray-300">
                   Średni % utraty danych
                 </label>
-                <span className="text-lg font-bold text-primary">{lossPercent}%</span>
+                <span className="text-lg font-bold text-accent">{lossPercent}%</span>
               </div>
               <input
                 type="range"
@@ -62,9 +62,9 @@ export default function LossCalculator() {
                 step={1}
                 value={lossPercent}
                 onChange={(e) => setLossPercent(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-400"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-600 mt-1">
                 <span>15%</span>
                 <span>50%</span>
               </div>
@@ -72,10 +72,10 @@ export default function LossCalculator() {
 
             <div>
               <div className="flex justify-between items-baseline mb-2">
-                <label htmlFor="roas" className="text-sm font-medium text-gray-700">
+                <label htmlFor="roas" className="text-sm font-medium text-gray-300">
                   Średni ROAS
                 </label>
-                <span className="text-lg font-bold text-primary">{roas.toFixed(1)}x</span>
+                <span className="text-lg font-bold text-accent">{roas.toFixed(1)}x</span>
               </div>
               <input
                 type="range"
@@ -85,9 +85,9 @@ export default function LossCalculator() {
                 step={0.5}
                 value={roas}
                 onChange={(e) => setRoas(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-400"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-600 mt-1">
                 <span>2x</span>
                 <span>10x</span>
               </div>
@@ -96,31 +96,30 @@ export default function LossCalculator() {
 
           {/* Results */}
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl p-5 border-2 border-primary/10" style={{boxShadow: '3px 3px 0px rgba(15,23,42,0.08)'}}>
+            <div className="bg-white/5 rounded-xl p-5 border border-red-500/20">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Niewidoczne konwersje / mies.</p>
-              <p className="text-2xl font-bold text-red-600">{formatPLN(monthlyLoss)}</p>
+              <p className="text-2xl font-bold text-red-400">{formatPLN(monthlyLoss)}</p>
             </div>
-            <div className="bg-white rounded-xl p-5 border-2 border-red-200" style={{boxShadow: '3px 3px 0px rgba(220,38,38,0.1)'}}>
+            <div className="bg-white/5 rounded-xl p-5 border border-red-500/30">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Potencjalna strata roczna</p>
-              <p className="text-3xl font-extrabold text-red-600">{formatPLN(yearlyLoss)}</p>
+              <p className="text-3xl font-extrabold text-red-400">{formatPLN(yearlyLoss)}</p>
             </div>
-            <div className="bg-white rounded-xl p-5 border-2 border-emerald-200" style={{boxShadow: '3px 3px 0px rgba(16,185,129,0.12)'}}>
+            <div className="bg-white/5 rounded-xl p-5 border border-emerald-500/20">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Koszt wdrożenia server-side</p>
-              <p className="text-2xl font-bold text-emerald-600">od 5 000 zł</p>
+              <p className="text-2xl font-bold text-emerald-400">od 5 000 zł</p>
             </div>
-            <div className="bg-white rounded-xl p-5 border-2 border-emerald-200" style={{boxShadow: '3px 3px 0px rgba(16,185,129,0.12)'}}>
+            <div className="bg-white/5 rounded-xl p-5 border border-emerald-500/20">
               <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">ROI wdrożenia</p>
-              <p className="text-2xl font-bold text-emerald-600">{roi.toFixed(0)}× zwrot w skali roku</p>
+              <p className="text-2xl font-bold text-emerald-400">{roi.toFixed(0)}× zwrot w skali roku</p>
             </div>
           </div>
 
           {/* CTA */}
           <div className="text-center mt-8">
-            <p className="text-gray-600 mb-4">Te liczby dotyczą Twojego biznesu?</p>
+            <p className="text-gray-400 mb-4">Te liczby dotyczą Twojego biznesu?</p>
             <a
               href="/kontakt"
-              className="inline-block bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-6 py-3 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 border-2 border-primary/15 hover:translate-x-[2px] hover:translate-y-[2px]"
-              style={{boxShadow: '3px 3px 0px rgba(15,23,42,0.15)'}}
+              className="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               Umów diagnozę →
             </a>
