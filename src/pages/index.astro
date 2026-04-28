@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
-import WhenPYSStops from '../components/WhenPYSStops.astro';
+import ConversionsAPIIntro from '../components/ConversionsAPIIntro.astro';
 import ModularStack from '../components/ModularStack.astro';
 import PYSComparison from '../components/PYSComparison.astro';
-import TCOCalculator from '../components/TCOCalculator.tsx';
+import LossCalculator from '../components/LossCalculator.tsx';
 import MigrationFromPYS from '../components/MigrationFromPYS.astro';
 import Testimonials from '../components/Testimonials.astro';
 ---
@@ -17,18 +17,17 @@ import Testimonials from '../components/Testimonials.astro';
   <section class="bg-primary text-white py-20 md:py-28">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
       <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider animate-fade-in-up">
-        Dla sklepów WordPress, które wyrosły z wtyczek
+        Server-side tracking dla WordPress
       </span>
       <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
-        Wyrosłeś z PixelYourSite?<br/>
-        <span class="text-accent">Tu zaczyna się prawdziwy server-side.</span>
+        Twoje kampanie wyciągają z budżetu<br/>
+        tylko <span class="text-accent">70% mocy</span>.
       </h1>
       <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4 animate-fade-in-up" style="animation-delay: 0.2s">
-        Meta Power VPS to dedykowany serwer pod Meta CAPI, sGTM i automatyzacje.
-        WordPress tylko wysyła sygnał. Reszta dzieje się na Twoim VPS-ie.
+        To nie kwestia budżetu. To kwestia konfiguracji.
       </p>
       <p class="text-base text-gray-400 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.3s">
-        Bez limitów eventów. Bez rocznej subskrypcji. Twoja własność, Twoje dane, Twój sufit.
+        Poznaj rozwiązanie: prawdziwy server-side na Twoim dedykowanym serwerze.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.4s">
@@ -67,8 +66,8 @@ import Testimonials from '../components/Testimonials.astro';
     </div>
   </section>
 
-  {/* 2. Kiedy PYS przestaje wystarczać */}
-  <WhenPYSStops />
+  {/* 2. Czym jest API konwersji / server-side */}
+  <ConversionsAPIIntro />
 
   {/* 3. Modułowy stack */}
   <ModularStack />
@@ -76,8 +75,8 @@ import Testimonials from '../components/Testimonials.astro';
   {/* 4. Porównanie PYS vs Meta Power VPS */}
   <PYSComparison />
 
-  {/* 5. TCO Calculator (interactive) */}
-  <TCOCalculator client:visible />
+  {/* 5. Kalkulator strat / ROI z wdrożenia */}
+  <LossCalculator client:visible />
 
   {/* 6. Migracja z PYS */}
   <MigrationFromPYS />
