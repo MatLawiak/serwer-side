@@ -1,61 +1,98 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
-import ArticleSlider from '../components/ArticleSlider.astro';
-import ChallengesVsSolutions from '../components/ChallengesVsSolutions.astro';
-import LossCalculator from '../components/LossCalculator.tsx';
-import StatsCounter from '../components/StatsCounter.astro';
+import WhenPYSStops from '../components/WhenPYSStops.astro';
+import ModularStack from '../components/ModularStack.astro';
+import PYSComparison from '../components/PYSComparison.astro';
+import TCOCalculator from '../components/TCOCalculator.tsx';
+import MigrationFromPYS from '../components/MigrationFromPYS.astro';
 import Testimonials from '../components/Testimonials.astro';
 ---
 
 <Layout
-  title="Server-Side Tracking: Odzyskaj utracone dane konwersji | serwer-side.pl"
-  description="Specjalista server-side tracking. Wdrażam GTM Server-Side, GA4, Meta CAPI i Google Ads Enhanced Conversions. Odzyskaj 30-40% utraconych danych."
+  title="Meta Power VPS - prawdziwy server-side dla WordPressa | serwer-side.pl"
+  description="Wyrosłeś z wtyczki Pixel Your Site? Meta Power VPS to dedykowany serwer pod Meta CAPI, sGTM i automatyzacje. Bez limitów, bez subskrypcji, Twoja własność."
 >
-  {/* 1. Hero z animacjami fade-in */}
+  {/* 1. Hero */}
   <section class="bg-primary text-white py-20 md:py-28">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 animate-fade-in-up">
-        Twoje kampanie optymalizują się na&nbsp;60–70% danych.
-        <span class="text-accent"> Naprawiam&nbsp;to.</span>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider animate-fade-in-up">
+        Dla sklepów WordPress, które wyrosły z wtyczek
+      </span>
+      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
+        Wyrosłeś z PixelYourSite?<br/>
+        <span class="text-accent">Tu zaczyna się prawdziwy server-side.</span>
       </h1>
-      <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.2s">
-        Wdrażam server-side tracking, który odzyskuje utracone konwersje
-        i&nbsp;daje Twoim algorytmom reklamowym pełny obraz sprzedaży.
+      <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4 animate-fade-in-up" style="animation-delay: 0.2s">
+        Meta Power VPS to dedykowany serwer pod Meta CAPI, sGTM i automatyzacje.
+        WordPress tylko wysyła sygnał. Reszta dzieje się na Twoim VPS-ie.
       </p>
-      <a
-        href="/kontakt"
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg animate-fade-in-up btn-brutal-light"
-        style="animation-delay: 0.4s"
-      >
-        Umów bezpłatną diagnozę
-      </a>
-      <div class="mt-8">
+      <p class="text-base text-gray-400 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.3s">
+        Bez limitów eventów. Bez rocznej subskrypcji. Twoja własność, Twoje dane, Twój sufit.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.4s">
+        <a
+          href="/kontakt"
+          class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light w-full sm:w-auto"
+        >
+          Bezpłatny audyt EMQ
+        </a>
+        <a
+          href="/uslugi/meta-power-vps"
+          class="inline-block bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-8 py-4 rounded-lg text-lg w-full sm:w-auto transition-colors"
+        >
+          Zobacz Meta Power VPS →
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-sm animate-fade-in-up" style="animation-delay: 0.5s">
+        <div class="flex items-center justify-center gap-2 text-gray-300">
+          <span class="text-accent text-xl">✓</span>
+          <span>Niezależność od WordPressa</span>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-gray-300">
+          <span class="text-accent text-xl">✓</span>
+          <span>TCO 3x niższe niż PYS Agency</span>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-gray-300">
+          <span class="text-accent text-xl">✓</span>
+          <span>Moduły, nie tylko tracking</span>
+        </div>
+      </div>
+
+      <div class="mt-10">
         <TrustBadges variant="light" delay="0.6s" />
       </div>
     </div>
   </section>
 
-  {/* 2. Slider artykułów (NOWE — zamiast "Czy to dotyczy") */}
-  <ArticleSlider />
+  {/* 2. Kiedy PYS przestaje wystarczać */}
+  <WhenPYSStops />
 
-  {/* 3. Challenges vs Solutions */}
-  <ChallengesVsSolutions />
+  {/* 3. Modułowy stack */}
+  <ModularStack />
 
-  {/* 4. Kalkulator strat danych (React island) */}
-  <LossCalculator client:visible />
+  {/* 4. Porównanie PYS vs Meta Power VPS */}
+  <PYSComparison />
 
-  {/* 5. Animowane liczniki statystyk */}
-  <StatsCounter />
+  {/* 5. TCO Calculator (interactive) */}
+  <TCOCalculator client:visible />
 
-  {/* 6. Pakiety cenowe */}
-  <section class="py-16 md:py-20 bg-stone-50">
+  {/* 6. Migracja z PYS */}
+  <MigrationFromPYS />
+
+  {/* 7. Pakiety cenowe (skrót) */}
+  <section class="py-16 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-4">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
+      </div>
       <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
-        Pakiety wdrożeniowe
+        Trzy moduły, jeden serwer
       </h2>
       <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">
-        Wybierz zakres dopasowany do Twojego biznesu. Trzy usługi, jeden serwer, wspólna infrastruktura.
+        Zaczynasz od Meta Power VPS. Dokładasz Google albo automatyzacje wtedy kiedy potrzebujesz. Wszystko na tym samym serwerze.
       </p>
       <div class="grid md:grid-cols-3 gap-8">
 
@@ -111,92 +148,26 @@ import Testimonials from '../components/Testimonials.astro';
     </div>
   </section>
 
-  {/* 7. Testimoniale */}
+  {/* 8. Testimoniale */}
   <Testimonials />
 
-  {/* 8. Czy to dotyczy Twojego biznesu (przesunięte niżej) */}
-  <section class="py-16 md:py-20 bg-stone-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">
-        Czy to dotyczy Twojego biznesu?
-      </h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
-          <div class="text-4xl mb-4">📉</div>
-          <h3 class="text-lg font-bold mb-3">GA4 traci 30% transakcji</h3>
-          <p class="text-gray-600 text-sm">
-            Adblocki, ITP i ograniczenia przeglądarek sprawiają, że Google Analytics
-            nie widzi nawet co trzeciej sprzedaży w Twoim sklepie.
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
-          <div class="text-4xl mb-4">🔇</div>
-          <h3 class="text-lg font-bold mb-3">Meta i Google nie widzą Twoich konwersji</h3>
-          <p class="text-gray-600 text-sm">
-            Pixel Facebooka i tag Google Ads tracą sygnały. Algorytmy reklamowe
-            optymalizują kampanie na niepełnych danych — i przepalają budżet.
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-8 card-brutal-static text-center">
-          <div class="text-4xl mb-4">⚠️</div>
-          <h3 class="text-lg font-bold mb-3">Algorytmy optymalizują na złych danych</h3>
-          <p class="text-gray-600 text-sm">
-            Mniej danych = gorsze targetowanie = wyższy koszt pozyskania klienta.
-            To błędne koło, które kosztuje Cię tysiące złotych miesięcznie.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* 9. Dla kogo */}
-  <section class="py-16 md:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-2xl md:text-3xl font-bold mb-12">Dla kogo pracuję</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
-          <div class="text-4xl mb-4">🛒</div>
-          <h3 class="font-bold mb-2">E-commerce</h3>
-          <p class="text-gray-600 text-sm">
-            Sklepy internetowe, które chcą widzieć prawdziwe dane sprzedażowe
-            i&nbsp;optymalizować kampanie na pełnych danych.
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
-          <div class="text-4xl mb-4">📋</div>
-          <h3 class="font-bold mb-2">Lead generation</h3>
-          <p class="text-gray-600 text-sm">
-            Firmy usługowe i B2B, które polegają na formularzach kontaktowych
-            i&nbsp;potrzebują dokładnego śledzenia leadów.
-          </p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal-static text-center">
-          <div class="text-4xl mb-4">🏢</div>
-          <h3 class="font-bold mb-2">Agencje marketingowe</h3>
-          <p class="text-gray-600 text-sm">
-            Agencje, które chcą oferować klientom wyższy standard trackingu
-            i&nbsp;lepsze wyniki kampanii.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* 10. CTA końcowe */}
+  {/* 9. CTA końcowe */}
   <section class="py-16 md:py-20 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-bold mb-4">
-        Sprawdź, ile tracisz
+        Sprawdź jak wypada Twój obecny tracking
       </h2>
-      <p class="text-gray-300 mb-8">
-        Bezpłatna 30-minutowa rozmowa diagnostyczna. Pokażę Ci, ile danych
-        traci Twoja obecna konfiguracja i&nbsp;co możesz z&nbsp;tym zrobić.
+      <p class="text-gray-300 mb-2">
+        Bezpłatna 30-minutowa rozmowa diagnostyczna. Sprawdzę EMQ Twoich kampanii, pokrycie zdarzeń, deduplikację Pixel/CAPI.
+      </p>
+      <p class="text-gray-400 text-sm mb-8">
+        Konkretny raport. Konkretne propozycje. Bez zobowiązań.
       </p>
       <a
         href="/kontakt"
         class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
       >
-        Umów bezpłatną diagnozę
+        Umów bezpłatny audyt EMQ
       </a>
     </div>
   </section>

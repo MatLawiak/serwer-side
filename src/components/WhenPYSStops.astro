@@ -1,0 +1,67 @@
+---
+const signals = [
+  {
+    num: 1,
+    title: 'Sklep zwolnił po dodaniu wtyczki',
+    desc: 'PYS działa wewnątrz WordPressa. Każdy event wykorzystuje CPU, RAM i MySQL Twojego sklepu. Im więcej eventów, tym wolniejszy checkout.',
+    icon: '🐌',
+  },
+  {
+    num: 2,
+    title: 'Eventy nie dochodzą do Meta',
+    desc: 'PHP timeout na shared hostingu obcina requesty. Hosting blokuje zewnętrzne API. Eventy giną w polowie drogi, a Ty nie wiesz dlaczego.',
+    icon: '🚧',
+  },
+  {
+    num: 3,
+    title: 'EMQ poniżej 7 mimo PYS Pro',
+    desc: 'Wtyczka nie pozwala na własną logikę deduplikacji ani enrichment. Jeśli Meta mówi "Poor" lub "Needs Work", masz sufit możliwości PYS.',
+    icon: '📉',
+  },
+  {
+    num: 4,
+    title: 'Subskrypcja drożeje z każdym rokiem',
+    desc: 'Personal $94/y → Pro $244/y → Agency $544/y. Plus dodatki. Plus odnowienie. W 3 lata wydasz tyle, co na własny serwer raz na zawsze.',
+    icon: '💸',
+  },
+  {
+    num: 5,
+    title: 'Chcesz robić więcej niż tracking',
+    desc: 'Newsletter, cart abandonment, lead notifications, AI, własne dashboardy. PYS robi jedną rzecz. Twój własny VPS może robić wszystko, co potrzebujesz.',
+    icon: '🧱',
+  },
+];
+---
+
+<section class="py-16 md:py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="mb-4">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Diagnoza</span>
+    </div>
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">5 sygnałów, że wyrosłeś z Pixel Your Site</h2>
+    <p class="text-gray-600 mb-10 max-w-3xl">
+      PYS to dobra wtyczka na start. Dla mikrosklepu z budżetem 1-2 tys. zł/mc Meta Ads jest wystarczająca. Ale jeśli rozpoznajesz choć 2 z poniższych sytuacji, plugin osiągnął sufit.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      {signals.map((s) => (
+        <div class="bg-white rounded-xl p-6 card-brutal flex gap-4">
+          <div class="shrink-0 text-3xl">{s.icon}</div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs font-bold text-accent">{`#${s.num}`}</span>
+              <h3 class="font-bold text-primary">{s.title}</h3>
+            </div>
+            <p class="text-sm text-gray-600">{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-8 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-6">
+      <p class="text-sm text-amber-900">
+        <strong>Jeśli rozpoznajesz 2 lub więcej sygnałów:</strong> nie potrzebujesz nowej wtyczki. Potrzebujesz prawdziwego server-side. <a href="/uslugi/meta-power-vps" class="underline font-semibold">Zobacz Meta Power VPS</a>.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,156 @@
+---
+const rows = [
+  {
+    feature: 'Architektura',
+    pys: 'Plugin w WordPress (PHP)',
+    vps: 'Dedykowany serwer poza WP',
+    winner: 'vps',
+    note: 'Prawdziwy server-side wymaga osobnego serwera, nie pluginu.',
+  },
+  {
+    feature: 'Wpływ na sklep',
+    pys: 'Obciąża CPU i MySQL WP',
+    vps: 'Zero - WP tylko triggeruje',
+    winner: 'vps',
+    note: 'Twój sklep działa szybciej.',
+  },
+  {
+    feature: 'Niezawodność',
+    pys: 'WP padnie → tracking pada',
+    vps: 'Niezależny od WP',
+    winner: 'vps',
+    note: 'Eventy lecą do Mety nawet gdy sklep ma awarię.',
+  },
+  {
+    feature: 'Setup',
+    pys: '5 minut, no-code',
+    vps: '2-10 dni, z ekspertem',
+    winner: 'pys',
+    note: 'PYS wygrywa szybkością startu.',
+  },
+  {
+    feature: 'Multi-platform',
+    pys: 'Meta + Google + TikTok + Pin + Bing + Snap + LinkedIn',
+    vps: 'Meta (osobno Google jako moduł)',
+    winner: 'pys',
+    note: 'PYS obsługuje więcej platform out of the box.',
+  },
+  {
+    feature: 'Custom logika dedup',
+    pys: 'Niemożliwe',
+    vps: 'Pełna kontrola (root, custom code)',
+    winner: 'vps',
+    note: 'Możesz pisać własne reguły.',
+  },
+  {
+    feature: 'Limit eventów',
+    pys: 'Per plan + PHP timeout',
+    vps: 'Brak limitów (skala liniowa ze sprzętem)',
+    winner: 'vps',
+    note: 'Czarny piątek nie wywali Ci trackingu.',
+  },
+  {
+    feature: 'Modułowość',
+    pys: 'Tylko tracking',
+    vps: 'Tracking + n8n + dashboardy + newsletter + AI',
+    winner: 'vps',
+    note: 'Jeden serwer zastępuje 5-7 SaaS-ów.',
+  },
+  {
+    feature: 'Własność',
+    pys: 'Wtyczka aktywna póki płacisz',
+    vps: 'VPS Twój na zawsze',
+    winner: 'vps',
+    note: 'Zero vendor lock-in.',
+  },
+  {
+    feature: 'TCO 3 lata (Pro plan)',
+    pys: 'PYS Pro: ~3 200 zł',
+    vps: 'Wariant 2: ~2 120 zł',
+    winner: 'vps',
+    note: 'Po 12-18 miesiącach VPS jest tańszy.',
+  },
+  {
+    feature: 'GDPR / RODO',
+    pys: 'Sygnały przez 3rd party',
+    vps: 'Bezpośrednio Twój VPS → Meta',
+    winner: 'vps',
+    note: 'Dane nie wychodzą poza Twoją infrastrukturę.',
+  },
+];
+
+const pysWins = rows.filter(r => r.winner === 'pys').length;
+const vpsWins = rows.filter(r => r.winner === 'vps').length;
+---
+
+<section class="py-16 md:py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-4">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Porównanie</span>
+    </div>
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
+      Pixel Your Site vs Meta Power VPS
+    </h2>
+    <p class="text-gray-600 text-center mb-10 max-w-3xl mx-auto">
+      Uczciwe porównanie. PYS to szybszy start. Meta Power VPS to wyższy sufit i niższy TCO. Wybierz świadomie.
+    </p>
+
+    <div class="bg-white rounded-2xl card-brutal overflow-hidden">
+      <div class="grid grid-cols-3 bg-stone-50 border-b-2 border-gray-200">
+        <div class="p-4 font-bold text-sm text-gray-600">Wymiar</div>
+        <div class="p-4 font-bold text-center border-l border-gray-200">
+          <div class="text-sm text-gray-700">Pixel Your Site Pro</div>
+          <div class="text-xs text-gray-400 mt-1">{pysWins} wygranych</div>
+        </div>
+        <div class="p-4 font-bold text-center border-l border-gray-200 bg-accent/5">
+          <div class="text-sm text-accent">Meta Power VPS</div>
+          <div class="text-xs text-accent/70 mt-1">{vpsWins} wygranych</div>
+        </div>
+      </div>
+
+      {rows.map((r, i) => (
+        <div class={`grid grid-cols-3 border-b border-gray-100 ${i % 2 === 1 ? 'bg-gray-50/50' : ''}`}>
+          <div class="p-4 text-sm font-semibold text-gray-700">
+            {r.feature}
+            <p class="text-xs text-gray-400 font-normal mt-1">{r.note}</p>
+          </div>
+          <div class={`p-4 text-sm border-l border-gray-100 ${r.winner === 'pys' ? 'bg-emerald-50/40' : ''}`}>
+            <div class="flex items-start gap-2">
+              {r.winner === 'pys' && <span class="text-emerald-500 font-bold mt-0.5">✓</span>}
+              {r.winner === 'vps' && <span class="text-gray-300 mt-0.5">○</span>}
+              <span class="text-gray-700">{r.pys}</span>
+            </div>
+          </div>
+          <div class={`p-4 text-sm border-l border-gray-100 ${r.winner === 'vps' ? 'bg-accent/5' : ''}`}>
+            <div class="flex items-start gap-2">
+              {r.winner === 'vps' && <span class="text-accent font-bold mt-0.5">✓</span>}
+              {r.winner === 'pys' && <span class="text-gray-300 mt-0.5">○</span>}
+              <span class="text-gray-700">{r.vps}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <div class="bg-stone-50 rounded-xl p-6 card-brutal">
+        <h3 class="font-bold text-primary mb-2">Wybierz PYS jeśli...</h3>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>• Wydajesz mniej niż 2 tys. zł/mc na Meta Ads</li>
+          <li>• Nie masz zespołu technicznego</li>
+          <li>• Potrzebujesz szybkiego rozwiązania na "teraz"</li>
+          <li>• Chcesz Meta + Google + TikTok + Pin w jednym kliknięciu</li>
+        </ul>
+      </div>
+      <div class="bg-accent/5 rounded-xl p-6 card-brutal-accent">
+        <h3 class="font-bold text-accent mb-2">Wybierz Meta Power VPS jeśli...</h3>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>• Wydajesz powyżej 5 tys. zł/mc na Meta Ads</li>
+          <li>• Zauważasz że PYS osiąga sufit (limity, timeouty, EMQ)</li>
+          <li>• Chcesz robić więcej niż tracking (newsletter, AI, dashboardy)</li>
+          <li>• Nie chcesz vendor lock-in i rocznej subskrypcji</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

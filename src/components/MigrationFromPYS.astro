@@ -1,0 +1,83 @@
+---
+const steps = [
+  {
+    num: 1,
+    day: 'Dzień 1',
+    title: 'Audyt obecnej konfiguracji',
+    desc: 'Sprawdzam Twój PYS, EMQ w Meta Events Manager, listę aktywnych eventów. Identyfikuję co działa, co kuleje, co przeniesiemy 1:1.',
+    icon: '🔍',
+  },
+  {
+    num: 2,
+    day: 'Dzień 2-3',
+    title: 'Stawiamy VPS równolegle',
+    desc: 'Zamawiam serwer (Mikrus / Hostinger), stawiam sGTM, podpinam pod subdomenę dane.twojsklep.pl. PYS dalej działa - nic nie ruszamy.',
+    icon: '🖥️',
+  },
+  {
+    num: 3,
+    day: 'Dzień 4-5',
+    title: 'Konfiguracja eventów',
+    desc: 'Replikuje wszystkie eventy z PYS na VPS. Lead, Purchase, ViewContent, AddToCart - dokładnie tak samo. Plus moja wartość dodana: deduplikacja, country hash, smart IP.',
+    icon: '⚙️',
+  },
+  {
+    num: 4,
+    day: 'Dzień 6',
+    title: 'Test równoległy',
+    desc: 'Przez 24h Meta dostaje eventy z dwóch źródeł - PYS i VPS. Porównuję EMQ, coverage, deduplikację. Validacja w Meta Test Events.',
+    icon: '🧪',
+  },
+  {
+    num: 5,
+    day: 'Dzień 7',
+    title: 'Wyłączenie PYS, pełne przejście na VPS',
+    desc: 'Jak wszystko gra, wyłączamy PYS Pro w panelu wtyczki. Płacisz za PYS jeszcze do końca cyklu rozliczeniowego, potem free. VPS pracuje samodzielnie.',
+    icon: '🎯',
+  },
+];
+---
+
+<section class="py-16 md:py-20 bg-stone-50">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-4">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Migracja z PYS</span>
+    </div>
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
+      Migracja z Pixel Your Site bez ryzyka
+    </h2>
+    <p class="text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      Nie wyłączam PYS na początku. Stawiamy VPS równolegle. Testujemy 24h. Jak wszystko gra, dopiero wtedy przepinamy. 7 dni od zera do działającego stacku, bez przestoju w trackingu.
+    </p>
+
+    <div class="space-y-4">
+      {steps.map((s) => (
+        <div class="bg-white rounded-xl p-6 card-brutal flex items-start gap-5">
+          <div class="shrink-0 text-4xl">{s.icon}</div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="bg-accent/15 text-accent text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                {s.day}
+              </span>
+              <span class="text-xs font-bold text-gray-400">Krok {s.num} z 5</span>
+            </div>
+            <h3 class="font-bold text-primary text-lg mb-1">{s.title}</h3>
+            <p class="text-sm text-gray-600">{s.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 bg-emerald-50 border-l-4 border-emerald-400 rounded-r-xl p-6">
+      <div class="flex items-start gap-4">
+        <span class="text-3xl">✅</span>
+        <div>
+          <h4 class="font-bold text-emerald-900 mb-2">Gwarancja zero przestoju</h4>
+          <p class="text-sm text-emerald-800">
+            Twój tracking nigdy nie staje. PYS pracuje aż do momentu, w którym VPS jest zwalidowany. Jeśli coś poszłoby nie tak (nigdy nie poszło, ale teoretycznie), możesz wrócić na PYS jednym kliknięciem - nic nie usuwamy w pierwszych 30 dniach.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
