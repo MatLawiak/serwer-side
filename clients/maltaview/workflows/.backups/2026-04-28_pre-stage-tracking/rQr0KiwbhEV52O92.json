@@ -1,0 +1,387 @@
+{
+  "updatedAt": "2026-04-20T14:55:43.665Z",
+  "createdAt": "2026-04-20T14:33:24.269Z",
+  "id": "rQr0KiwbhEV52O92",
+  "name": "Maltaview CAPI - Weekly Report",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 5"
+            }
+          ]
+        }
+      },
+      "id": "trigger-weekly",
+      "name": "Piatek 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "periodDays",
+              "value": 7,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-period",
+      "name": "Okres 7 dni",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTA4MjU4My0wMTgwLTQ4YWQtOWNlNy03NGRjMDhjYjYwMzIiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzczMDkwMjY2LCJleHAiOjE3ODA3ODMyMDB9.Ga1QYtgGYQVF08sSTUO3LhCBPtMiNUiUMYEk6dM1bNk';\nconst HOST = 'n8n.srv1076230.hstgr.cloud';\nconst WF_PAGEVIEW = 'rkvyZWct7TVyfu4S';\nconst WF_LEAD = 'yhPDszmBJ4dASAeV';\nconst PERIOD_DAYS = $input.first().json.periodDays || 7;\n\nasync function fetchJson(path) {\n  return await this.helpers.httpRequest({\n    url: 'https://' + HOST + path, method: 'GET',\n    headers: { 'X-N8N-API-KEY': API_KEY }, json: true\n  });\n}\nasync function fetchExecutions(id, limit) {\n  return (await fetchJson('/api/v1/executions?workflowId=' + id + '&limit=' + limit + '&includeData=true')).data || [];\n}\nasync function fetchWorkflow(id) { return await fetchJson('/api/v1/workflows/' + id); }\n\nfunction analyze(executions, since) {\n  let total = 0, success = 0, errors = 0;\n  let withFbc = 0, withFbp = 0, withEmail = 0, withPhone = 0;\n  let metaReceived = 0;\n  const errorList = [];\n\n  for (const ex of executions) {\n    const t = new Date(ex.startedAt).getTime();\n    if (t < since) continue;\n    total++;\n    if (ex.status === 'success') success++; else errors++;\n\n    const rd = ex.data && ex.data.resultData && ex.data.resultData.runData;\n    if (!rd) continue;\n\n    const pk = Object.keys(rd).find(k => k.includes('Przygotuj'));\n    if (pk) {\n      const out = rd[pk][0] && rd[pk][0].data && rd[pk][0].data.main && rd[pk][0].data.main[0] && rd[pk][0].data.main[0][0] && rd[pk][0].data.main[0][0].json;\n      const ud = out && out.capiData && out.capiData.data && out.capiData.data[0] && out.capiData.data[0].user_data;\n      if (ud) {\n        if (ud.fbc) withFbc++;\n        if (ud.fbp) withFbp++;\n        if (ud.em) withEmail++;\n        if (ud.ph) withPhone++;\n      }\n    }\n    const ck = Object.keys(rd).find(k => k.includes('CAPI'));\n    if (ck) {\n      const r = rd[ck][0] && rd[ck][0].data && rd[ck][0].data.main && rd[ck][0].data.main[0] && rd[ck][0].data.main[0][0] && rd[ck][0].data.main[0][0].json;\n      if (r && typeof r.events_received === 'number') metaReceived += r.events_received;\n      if (rd[ck][0] && rd[ck][0].error) errorList.push({ time: new Date(ex.startedAt).toISOString(), msg: rd[ck][0].error.message });\n    }\n  }\n\n  const pct = (a, b) => b > 0 ? Math.round(100 * a / b) : 0;\n\n  // Quality score = weighted avg parametrow match\n  // Dla Lead najwazniejsze: em, ph, fbc, fbp (kazdy po 25%)\n  // Dla PageView: fbp 40%, fbc 40%, external_id 20% (external_id zawsze jest wiec +20)\n  const qualityLead = total > 0 ? Math.round((25*withEmail + 25*withPhone + 25*withFbc + 25*withFbp) / total) : 0;\n  const qualityPv = total > 0 ? Math.round((40*withFbc + 40*withFbp + 20*total) / total) : 0;\n\n  return {\n    total, success, errors,\n    successRate: pct(success, total),\n    withFbc, withFbp, withEmail, withPhone,\n    fbcRate: pct(withFbc, total),\n    fbpRate: pct(withFbp, total),\n    emailRate: pct(withEmail, total),\n    phoneRate: pct(withPhone, total),\n    metaReceived,\n    qualityLead, qualityPv,\n    errorList: errorList.slice(0, 10)\n  };\n}\n\nconst now = Date.now();\nconst sinceCurrent = now - PERIOD_DAYS * 24 * 60 * 60 * 1000;\nconst sincePrev = now - 2 * PERIOD_DAYS * 24 * 60 * 60 * 1000;\n\nconst pvWf = await fetchWorkflow(WF_PAGEVIEW);\nconst leadWf = await fetchWorkflow(WF_LEAD);\n\nconst pvExecs = await fetchExecutions(WF_PAGEVIEW, 250);\nconst leadExecs = await fetchExecutions(WF_LEAD, 100);\n\nconst pvCurrent = analyze.call(this, pvExecs, sinceCurrent);\nconst pvAll = analyze.call(this, pvExecs, sincePrev);\nconst pvPrev = {\n  total: pvAll.total - pvCurrent.total,\n  success: pvAll.success - pvCurrent.success,\n  withFbc: pvAll.withFbc - pvCurrent.withFbc,\n  fbcRate: (pvAll.total - pvCurrent.total) > 0 ? Math.round(100*(pvAll.withFbc - pvCurrent.withFbc)/(pvAll.total - pvCurrent.total)) : 0\n};\n\nconst leadCurrent = analyze.call(this, leadExecs, sinceCurrent);\nconst leadAll = analyze.call(this, leadExecs, sincePrev);\nconst leadPrev = {\n  total: leadAll.total - leadCurrent.total,\n  success: leadAll.success - leadCurrent.success,\n  withFbc: leadAll.withFbc - leadCurrent.withFbc,\n  fbcRate: (leadAll.total - leadCurrent.total) > 0 ? Math.round(100*(leadAll.withFbc - leadCurrent.withFbc)/(leadAll.total - leadCurrent.total)) : 0\n};\n\n// ===== WARTOSC DODANA CAPI =====\n// \"Odzyskane eventy\" = te z fbc (ruch z reklam Meta ktorego przegladarkowe cookies 3rd-party juz nie dopasuja)\nconst recoveredPageView = pvCurrent.withFbc;\nconst recoveredLead = leadCurrent.withFbc;\n\n// Szacunkowy wzrost raportowanych konwersji wg deklaracji Mety:\n// - PageView z fbc: median +100% raportowanych konwersji\n// - Lead z em+ph+fbc: median +150% (pelne dopasowanie)\nconst estimatedExtraConversions = recoveredLead; // 1:1 approximation (konserwatywne)\n\n// Alerts\nconst alerts = [];\nif (!pvWf.active) alerts.push('Workflow PageView CAPI NIEAKTYWNY');\nif (!leadWf.active) alerts.push('Workflow Lead CAPI NIEAKTYWNY');\nif (pvCurrent.total === 0) alerts.push('ZERO wykonan PageView w ostatnich ' + PERIOD_DAYS + ' dniach!');\nif (pvPrev.total > 10 && pvCurrent.total < pvPrev.total * 0.5) alerts.push('Spadek PageView o ' + Math.round(100 - 100*pvCurrent.total/pvPrev.total) + '% vs poprzedni tydzien');\nif (pvCurrent.errors > 0) alerts.push(pvCurrent.errors + ' bledow PageView');\nif (leadCurrent.errors > 0) alerts.push(leadCurrent.errors + ' bledow Lead');\n\nconst deltaPct = (a, b) => b > 0 ? Math.round((a - b) / b * 100) : 0;\n\nreturn [{\n  json: {\n    periodDays: PERIOD_DAYS,\n    generatedAt: new Date().toLocaleString('pl-PL'),\n    pageview: {\n      active: pvWf.active, current: pvCurrent, prev: pvPrev,\n      deltaPct: deltaPct(pvCurrent.total, pvPrev.total)\n    },\n    lead: {\n      active: leadWf.active, current: leadCurrent, prev: leadPrev,\n      deltaPct: deltaPct(leadCurrent.total, leadPrev.total)\n    },\n    value: {\n      recoveredPageView,\n      recoveredLead,\n      estimatedExtraConversions,\n      totalCapiEvents: pvCurrent.total + leadCurrent.total,\n      leadWithFullMatch: leadCurrent.withEmail > 0 ? Math.min(leadCurrent.withEmail, leadCurrent.withPhone) : 0\n    },\n    alerts,\n    hasAlerts: alerts.length > 0\n  }\n}];\n"
+      },
+      "id": "aggregate",
+      "name": "Agregacja wykonan",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d = $input.first().json;\nconst color = d.hasAlerts ? '#d32f2f' : '#2e7d32';\nconst isWeekly = d.periodDays >= 7;\n\nfunction bar(val, max) {\n  const pct = max > 0 ? Math.round(100 * val / max) : 0;\n  return '<div style=\"background:#eee;border-radius:3px;overflow:hidden;height:14px;width:100px;display:inline-block;vertical-align:middle\"><div style=\"background:#1976d2;height:14px;width:' + pct + '%\"></div></div>';\n}\nfunction arrow(pct) {\n  if (pct > 5) return '<span style=\"color:#2e7d32\">&#9650; +' + pct + '%</span>';\n  if (pct < -5) return '<span style=\"color:#d32f2f\">&#9660; ' + pct + '%</span>';\n  return '<span style=\"color:#666\">&rarr; ' + pct + '%</span>';\n}\n\nconst alertsHtml = d.alerts.length\n  ? '<div style=\"background:#ffebee;border-left:4px solid #d32f2f;padding:12px;margin-bottom:20px\"><strong style=\"color:#d32f2f\">&#9888; ALERTY:</strong><ul style=\"margin:6px 0\">' + d.alerts.map(a => '<li>' + a + '</li>').join('') + '</ul></div>'\n  : '<div style=\"background:#e8f5e9;border-left:4px solid #2e7d32;padding:12px;margin-bottom:20px;color:#2e7d32\"><strong>&#10003; Brak alertow - wszystko dziala poprawnie</strong></div>';\n\nconst errorsHtml = (title, list) => list.length\n  ? '<h4 style=\"color:#d32f2f;margin-top:20px\">Bledy - ' + title + '</h4><ul style=\"font-size:12px;color:#666\">' + list.map(e => '<li>' + e.time + ' - ' + e.msg + '</li>').join('') + '</ul>'\n  : '';\n\n// ===== SEKCJA WARTOSC DODANA CAPI =====\nconst valueHtml = isWeekly ? `\n<div style=\"background:linear-gradient(135deg,#1976d2 0%,#1565c0 100%);color:white;padding:24px;border-radius:8px;margin:20px 0\">\n  <h2 style=\"margin:0 0 12px 0;color:white;font-size:20px\">Wartosc dodana CAPI w tym tygodniu</h2>\n  <p style=\"margin:0 0 20px 0;opacity:0.9;font-size:13px\">Co CAPI zrobilo dla Ciebie - eventy ktore Meta by nie dopasowala bez naszego rozwiazania</p>\n\n  <table style=\"width:100%;color:white\">\n    <tr>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.recoveredPageView}</div>\n        <div style=\"font-size:12px;opacity:0.9\">PageView z reklam Meta<br>odzyskanych przez CAPI</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.recoveredLead}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Leady z reklam Meta<br>z pelnym dopasowaniem (fbc)</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.leadWithFullMatch}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Leady z email+telefon<br>SHA256 (max dopasowanie)</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.totalCapiEvents}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Wszystkie eventy<br>wyslane przez CAPI</div>\n      </td>\n    </tr>\n  </table>\n\n  <div style=\"background:rgba(255,255,255,0.1);padding:12px;border-radius:6px;margin-top:16px;font-size:13px\">\n    <strong>Interpretacja:</strong> Kazdy event z parametrem fbc to uzytkownik ktory przyszedl z reklamy Meta.\n    Bez CAPI, po wygasnieciu 3rd-party cookies, Meta nie przypisalaby tej konwersji do kampanii.\n    Wg deklaracji Mety, sredni wzrost raportowanych dodatkowych konwersji dla PageView z fbc: <strong>+100% median</strong>.\n  </div>\n</div>` : '';\n\nconst html = `<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;max-width:720px;margin:0 auto;color:#333;padding:20px\">\n<h2 style=\"color:${color};border-bottom:2px solid ${color};padding-bottom:8px\">\n  Maltaview CAPI - ${isWeekly ? 'Raport Tygodniowy' : 'Alert Health Check'}\n</h2>\n<p style=\"color:#666;font-size:13px\">Wygenerowany: ${d.generatedAt} | Okres: ostatnie ${d.periodDays} dni</p>\n\n${alertsHtml}\n${valueHtml}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">PageView CAPI ${d.pageview.active ? '' : '<span style=\"color:#d32f2f\">(NIEAKTYWNY!)</span>'}</h3>\n<table style=\"width:100%;border-collapse:collapse\">\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Wykonania</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.total} <span style=\"color:#999;font-size:12px\">(poprz: ${d.pageview.prev.total}) ${arrow(d.pageview.deltaPct)}</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Sukces</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.success} / ${d.pageview.current.total} (${d.pageview.current.successRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Bledy</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee;${d.pageview.current.errors > 0 ? 'color:#d32f2f' : ''}\">${d.pageview.current.errors}</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Eventy z fbc (ruch z reklam)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.pageview.current.withFbc, d.pageview.current.total)} ${d.pageview.current.withFbc} (${d.pageview.current.fbcRate}%) <span style=\"color:#999;font-size:11px\">poprz: ${d.pageview.prev.fbcRate}%</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Eventy z fbp</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.pageview.current.withFbp, d.pageview.current.total)} ${d.pageview.current.withFbp} (${d.pageview.current.fbpRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Jakosc danych (Quality Score)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong style=\"color:${d.pageview.current.qualityPv >= 70 ? '#2e7d32' : d.pageview.current.qualityPv >= 40 ? '#f57c00' : '#d32f2f'}\">${d.pageview.current.qualityPv}/100</strong></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Meta events_received</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.metaReceived}</td></tr>\n</table>\n${errorsHtml('PageView', d.pageview.current.errorList)}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">Lead CAPI ${d.lead.active ? '' : '<span style=\"color:#d32f2f\">(NIEAKTYWNY!)</span>'}</h3>\n<table style=\"width:100%;border-collapse:collapse\">\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Wykonania</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.total} <span style=\"color:#999;font-size:12px\">(poprz: ${d.lead.prev.total}) ${arrow(d.lead.deltaPct)}</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Sukces</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.success} / ${d.lead.current.total} (${d.lead.current.successRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Bledy</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee;${d.lead.current.errors > 0 ? 'color:#d32f2f' : ''}\">${d.lead.current.errors}</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z fbc (z reklam)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withFbc, d.lead.current.total)} ${d.lead.current.withFbc} (${d.lead.current.fbcRate}%) <span style=\"color:#999;font-size:11px\">poprz: ${d.lead.prev.fbcRate}%</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z email (SHA256)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withEmail, d.lead.current.total)} ${d.lead.current.withEmail} (${d.lead.current.emailRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z telefonem (SHA256)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withPhone, d.lead.current.total)} ${d.lead.current.withPhone} (${d.lead.current.phoneRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Jakosc danych (Quality Score)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong style=\"color:${d.lead.current.qualityLead >= 75 ? '#2e7d32' : d.lead.current.qualityLead >= 50 ? '#f57c00' : '#d32f2f'}\">${d.lead.current.qualityLead}/100</strong></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Meta events_received</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.metaReceived}</td></tr>\n</table>\n${errorsHtml('Lead', d.lead.current.errorList)}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">Linki</h3>\n<ul>\n  <li><a href=\"https://business.facebook.com/events_manager2/list/pixel/2073661919762572/overview\">Meta Events Manager - Pixel Maltaview</a></li>\n  <li><a href=\"https://n8n.srv1076230.hstgr.cloud/workflow/rkvyZWct7TVyfu4S\">n8n - PageView CAPI</a></li>\n  <li><a href=\"https://n8n.srv1076230.hstgr.cloud/workflow/yhPDszmBJ4dASAeV\">n8n - Lead CAPI</a></li>\n</ul>\n\n<p style=\"color:#999;font-size:11px;margin-top:30px;border-top:1px solid #eee;padding-top:10px\">\nAutomatyczny raport z n8n. Weekly: piatek 08:00. Health check: co 6h.<br>\nTwisted Pixel | CAPI Monitoring v2\n</p>\n</body></html>`;\n\nreturn [{ json: { html, subject: (d.hasAlerts ? '[ALERT] ' : '') + 'Maltaview CAPI - ' + (isWeekly ? 'Raport Tygodniowy' : 'Health Check'), hasAlerts: d.hasAlerts, periodDays: d.periodDays } }];\n"
+      },
+      "id": "build-html",
+      "name": "Buduj HTML raportu",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@twistedpixel.pl",
+        "toEmail": "mateusz@twistedpixel.pl",
+        "subject": "={{ $json.subject }}",
+        "emailFormat": "html",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "email-send",
+      "name": "Wyslij raport",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1120,
+        300
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "J5F272cacotW8z9V",
+          "name": "SMTP account - twistedpixeldocs@gmail.com"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Piatek 08:00": {
+      "main": [
+        [
+          {
+            "node": "Okres 7 dni",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Okres 7 dni": {
+      "main": [
+        [
+          {
+            "node": "Agregacja wykonan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agregacja wykonan": {
+      "main": [
+        [
+          {
+            "node": "Buduj HTML raportu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buduj HTML raportu": {
+      "main": [
+        [
+          {
+            "node": "Wyslij raport",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": {
+    "node:Piatek 08:00": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": null,
+  "pinData": null,
+  "versionId": "08e44000-a102-4b95-8873-4f6bd48470e8",
+  "activeVersionId": "08e44000-a102-4b95-8873-4f6bd48470e8",
+  "versionCounter": 12,
+  "triggerCount": 1,
+  "shared": [
+    {
+      "updatedAt": "2026-04-20T14:33:24.271Z",
+      "createdAt": "2026-04-20T14:33:24.271Z",
+      "role": "workflow:owner",
+      "workflowId": "rQr0KiwbhEV52O92",
+      "projectId": "CZ14xGXI3u9A3KEX",
+      "project": {
+        "updatedAt": "2025-10-21T09:23:02.408Z",
+        "createdAt": "2025-10-21T09:20:10.146Z",
+        "id": "CZ14xGXI3u9A3KEX",
+        "name": "Helllo Twisted <twistedpixeldocs@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "5e082583-0180-48ad-9ce7-74dc08cb6032",
+        "projectRelations": [
+          {
+            "updatedAt": "2025-10-21T09:20:10.146Z",
+            "createdAt": "2025-10-21T09:20:10.146Z",
+            "userId": "5e082583-0180-48ad-9ce7-74dc08cb6032",
+            "projectId": "CZ14xGXI3u9A3KEX",
+            "user": {
+              "updatedAt": "2026-04-27T22:00:09.000Z",
+              "createdAt": "2025-10-21T09:20:09.774Z",
+              "id": "5e082583-0180-48ad-9ce7-74dc08cb6032",
+              "email": "twistedpixeldocs@gmail.com",
+              "firstName": "Helllo",
+              "lastName": "Twisted",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-10-21T09:23:38.462Z",
+                "personalization_survey_n8n_version": "1.115.3",
+                "companySize": "<20",
+                "companyType": "digital-agency",
+                "automationGoalSm": [],
+                "role": "sales-and-marketing",
+                "reportedSource": "youtube"
+              },
+              "settings": {
+                "userActivated": true,
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "INXFNoFpOP9S9WVz",
+                "userActivatedAt": 1761671131938,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1761986541329
+                }
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-04-27",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": {
+    "updatedAt": "2026-04-20T14:55:43.666Z",
+    "createdAt": "2026-04-20T14:55:43.666Z",
+    "versionId": "08e44000-a102-4b95-8873-4f6bd48470e8",
+    "workflowId": "rQr0KiwbhEV52O92",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "0 8 * * 5"
+              }
+            ]
+          }
+        },
+        "id": "trigger-weekly",
+        "name": "Piatek 08:00",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          240,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "assignments": {
+            "assignments": [
+              {
+                "id": "a1",
+                "name": "periodDays",
+                "value": 7,
+                "type": "number"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "id": "set-period",
+        "name": "Okres 7 dni",
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          460,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTA4MjU4My0wMTgwLTQ4YWQtOWNlNy03NGRjMDhjYjYwMzIiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzczMDkwMjY2LCJleHAiOjE3ODA3ODMyMDB9.Ga1QYtgGYQVF08sSTUO3LhCBPtMiNUiUMYEk6dM1bNk';\nconst HOST = 'n8n.srv1076230.hstgr.cloud';\nconst WF_PAGEVIEW = 'rkvyZWct7TVyfu4S';\nconst WF_LEAD = 'yhPDszmBJ4dASAeV';\nconst PERIOD_DAYS = $input.first().json.periodDays || 7;\n\nasync function fetchJson(path) {\n  return await this.helpers.httpRequest({\n    url: 'https://' + HOST + path, method: 'GET',\n    headers: { 'X-N8N-API-KEY': API_KEY }, json: true\n  });\n}\nasync function fetchExecutions(id, limit) {\n  return (await fetchJson('/api/v1/executions?workflowId=' + id + '&limit=' + limit + '&includeData=true')).data || [];\n}\nasync function fetchWorkflow(id) { return await fetchJson('/api/v1/workflows/' + id); }\n\nfunction analyze(executions, since) {\n  let total = 0, success = 0, errors = 0;\n  let withFbc = 0, withFbp = 0, withEmail = 0, withPhone = 0;\n  let metaReceived = 0;\n  const errorList = [];\n\n  for (const ex of executions) {\n    const t = new Date(ex.startedAt).getTime();\n    if (t < since) continue;\n    total++;\n    if (ex.status === 'success') success++; else errors++;\n\n    const rd = ex.data && ex.data.resultData && ex.data.resultData.runData;\n    if (!rd) continue;\n\n    const pk = Object.keys(rd).find(k => k.includes('Przygotuj'));\n    if (pk) {\n      const out = rd[pk][0] && rd[pk][0].data && rd[pk][0].data.main && rd[pk][0].data.main[0] && rd[pk][0].data.main[0][0] && rd[pk][0].data.main[0][0].json;\n      const ud = out && out.capiData && out.capiData.data && out.capiData.data[0] && out.capiData.data[0].user_data;\n      if (ud) {\n        if (ud.fbc) withFbc++;\n        if (ud.fbp) withFbp++;\n        if (ud.em) withEmail++;\n        if (ud.ph) withPhone++;\n      }\n    }\n    const ck = Object.keys(rd).find(k => k.includes('CAPI'));\n    if (ck) {\n      const r = rd[ck][0] && rd[ck][0].data && rd[ck][0].data.main && rd[ck][0].data.main[0] && rd[ck][0].data.main[0][0] && rd[ck][0].data.main[0][0].json;\n      if (r && typeof r.events_received === 'number') metaReceived += r.events_received;\n      if (rd[ck][0] && rd[ck][0].error) errorList.push({ time: new Date(ex.startedAt).toISOString(), msg: rd[ck][0].error.message });\n    }\n  }\n\n  const pct = (a, b) => b > 0 ? Math.round(100 * a / b) : 0;\n\n  // Quality score = weighted avg parametrow match\n  // Dla Lead najwazniejsze: em, ph, fbc, fbp (kazdy po 25%)\n  // Dla PageView: fbp 40%, fbc 40%, external_id 20% (external_id zawsze jest wiec +20)\n  const qualityLead = total > 0 ? Math.round((25*withEmail + 25*withPhone + 25*withFbc + 25*withFbp) / total) : 0;\n  const qualityPv = total > 0 ? Math.round((40*withFbc + 40*withFbp + 20*total) / total) : 0;\n\n  return {\n    total, success, errors,\n    successRate: pct(success, total),\n    withFbc, withFbp, withEmail, withPhone,\n    fbcRate: pct(withFbc, total),\n    fbpRate: pct(withFbp, total),\n    emailRate: pct(withEmail, total),\n    phoneRate: pct(withPhone, total),\n    metaReceived,\n    qualityLead, qualityPv,\n    errorList: errorList.slice(0, 10)\n  };\n}\n\nconst now = Date.now();\nconst sinceCurrent = now - PERIOD_DAYS * 24 * 60 * 60 * 1000;\nconst sincePrev = now - 2 * PERIOD_DAYS * 24 * 60 * 60 * 1000;\n\nconst pvWf = await fetchWorkflow(WF_PAGEVIEW);\nconst leadWf = await fetchWorkflow(WF_LEAD);\n\nconst pvExecs = await fetchExecutions(WF_PAGEVIEW, 250);\nconst leadExecs = await fetchExecutions(WF_LEAD, 100);\n\nconst pvCurrent = analyze.call(this, pvExecs, sinceCurrent);\nconst pvAll = analyze.call(this, pvExecs, sincePrev);\nconst pvPrev = {\n  total: pvAll.total - pvCurrent.total,\n  success: pvAll.success - pvCurrent.success,\n  withFbc: pvAll.withFbc - pvCurrent.withFbc,\n  fbcRate: (pvAll.total - pvCurrent.total) > 0 ? Math.round(100*(pvAll.withFbc - pvCurrent.withFbc)/(pvAll.total - pvCurrent.total)) : 0\n};\n\nconst leadCurrent = analyze.call(this, leadExecs, sinceCurrent);\nconst leadAll = analyze.call(this, leadExecs, sincePrev);\nconst leadPrev = {\n  total: leadAll.total - leadCurrent.total,\n  success: leadAll.success - leadCurrent.success,\n  withFbc: leadAll.withFbc - leadCurrent.withFbc,\n  fbcRate: (leadAll.total - leadCurrent.total) > 0 ? Math.round(100*(leadAll.withFbc - leadCurrent.withFbc)/(leadAll.total - leadCurrent.total)) : 0\n};\n\n// ===== WARTOSC DODANA CAPI =====\n// \"Odzyskane eventy\" = te z fbc (ruch z reklam Meta ktorego przegladarkowe cookies 3rd-party juz nie dopasuja)\nconst recoveredPageView = pvCurrent.withFbc;\nconst recoveredLead = leadCurrent.withFbc;\n\n// Szacunkowy wzrost raportowanych konwersji wg deklaracji Mety:\n// - PageView z fbc: median +100% raportowanych konwersji\n// - Lead z em+ph+fbc: median +150% (pelne dopasowanie)\nconst estimatedExtraConversions = recoveredLead; // 1:1 approximation (konserwatywne)\n\n// Alerts\nconst alerts = [];\nif (!pvWf.active) alerts.push('Workflow PageView CAPI NIEAKTYWNY');\nif (!leadWf.active) alerts.push('Workflow Lead CAPI NIEAKTYWNY');\nif (pvCurrent.total === 0) alerts.push('ZERO wykonan PageView w ostatnich ' + PERIOD_DAYS + ' dniach!');\nif (pvPrev.total > 10 && pvCurrent.total < pvPrev.total * 0.5) alerts.push('Spadek PageView o ' + Math.round(100 - 100*pvCurrent.total/pvPrev.total) + '% vs poprzedni tydzien');\nif (pvCurrent.errors > 0) alerts.push(pvCurrent.errors + ' bledow PageView');\nif (leadCurrent.errors > 0) alerts.push(leadCurrent.errors + ' bledow Lead');\n\nconst deltaPct = (a, b) => b > 0 ? Math.round((a - b) / b * 100) : 0;\n\nreturn [{\n  json: {\n    periodDays: PERIOD_DAYS,\n    generatedAt: new Date().toLocaleString('pl-PL'),\n    pageview: {\n      active: pvWf.active, current: pvCurrent, prev: pvPrev,\n      deltaPct: deltaPct(pvCurrent.total, pvPrev.total)\n    },\n    lead: {\n      active: leadWf.active, current: leadCurrent, prev: leadPrev,\n      deltaPct: deltaPct(leadCurrent.total, leadPrev.total)\n    },\n    value: {\n      recoveredPageView,\n      recoveredLead,\n      estimatedExtraConversions,\n      totalCapiEvents: pvCurrent.total + leadCurrent.total,\n      leadWithFullMatch: leadCurrent.withEmail > 0 ? Math.min(leadCurrent.withEmail, leadCurrent.withPhone) : 0\n    },\n    alerts,\n    hasAlerts: alerts.length > 0\n  }\n}];\n"
+        },
+        "id": "aggregate",
+        "name": "Agregacja wykonan",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          680,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "\nconst d = $input.first().json;\nconst color = d.hasAlerts ? '#d32f2f' : '#2e7d32';\nconst isWeekly = d.periodDays >= 7;\n\nfunction bar(val, max) {\n  const pct = max > 0 ? Math.round(100 * val / max) : 0;\n  return '<div style=\"background:#eee;border-radius:3px;overflow:hidden;height:14px;width:100px;display:inline-block;vertical-align:middle\"><div style=\"background:#1976d2;height:14px;width:' + pct + '%\"></div></div>';\n}\nfunction arrow(pct) {\n  if (pct > 5) return '<span style=\"color:#2e7d32\">&#9650; +' + pct + '%</span>';\n  if (pct < -5) return '<span style=\"color:#d32f2f\">&#9660; ' + pct + '%</span>';\n  return '<span style=\"color:#666\">&rarr; ' + pct + '%</span>';\n}\n\nconst alertsHtml = d.alerts.length\n  ? '<div style=\"background:#ffebee;border-left:4px solid #d32f2f;padding:12px;margin-bottom:20px\"><strong style=\"color:#d32f2f\">&#9888; ALERTY:</strong><ul style=\"margin:6px 0\">' + d.alerts.map(a => '<li>' + a + '</li>').join('') + '</ul></div>'\n  : '<div style=\"background:#e8f5e9;border-left:4px solid #2e7d32;padding:12px;margin-bottom:20px;color:#2e7d32\"><strong>&#10003; Brak alertow - wszystko dziala poprawnie</strong></div>';\n\nconst errorsHtml = (title, list) => list.length\n  ? '<h4 style=\"color:#d32f2f;margin-top:20px\">Bledy - ' + title + '</h4><ul style=\"font-size:12px;color:#666\">' + list.map(e => '<li>' + e.time + ' - ' + e.msg + '</li>').join('') + '</ul>'\n  : '';\n\n// ===== SEKCJA WARTOSC DODANA CAPI =====\nconst valueHtml = isWeekly ? `\n<div style=\"background:linear-gradient(135deg,#1976d2 0%,#1565c0 100%);color:white;padding:24px;border-radius:8px;margin:20px 0\">\n  <h2 style=\"margin:0 0 12px 0;color:white;font-size:20px\">Wartosc dodana CAPI w tym tygodniu</h2>\n  <p style=\"margin:0 0 20px 0;opacity:0.9;font-size:13px\">Co CAPI zrobilo dla Ciebie - eventy ktore Meta by nie dopasowala bez naszego rozwiazania</p>\n\n  <table style=\"width:100%;color:white\">\n    <tr>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.recoveredPageView}</div>\n        <div style=\"font-size:12px;opacity:0.9\">PageView z reklam Meta<br>odzyskanych przez CAPI</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.recoveredLead}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Leady z reklam Meta<br>z pelnym dopasowaniem (fbc)</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.leadWithFullMatch}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Leady z email+telefon<br>SHA256 (max dopasowanie)</div>\n      </td>\n      <td style=\"padding:12px 8px;border-bottom:1px solid rgba(255,255,255,0.2)\">\n        <div style=\"font-size:28px;font-weight:bold\">${d.value.totalCapiEvents}</div>\n        <div style=\"font-size:12px;opacity:0.9\">Wszystkie eventy<br>wyslane przez CAPI</div>\n      </td>\n    </tr>\n  </table>\n\n  <div style=\"background:rgba(255,255,255,0.1);padding:12px;border-radius:6px;margin-top:16px;font-size:13px\">\n    <strong>Interpretacja:</strong> Kazdy event z parametrem fbc to uzytkownik ktory przyszedl z reklamy Meta.\n    Bez CAPI, po wygasnieciu 3rd-party cookies, Meta nie przypisalaby tej konwersji do kampanii.\n    Wg deklaracji Mety, sredni wzrost raportowanych dodatkowych konwersji dla PageView z fbc: <strong>+100% median</strong>.\n  </div>\n</div>` : '';\n\nconst html = `<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;max-width:720px;margin:0 auto;color:#333;padding:20px\">\n<h2 style=\"color:${color};border-bottom:2px solid ${color};padding-bottom:8px\">\n  Maltaview CAPI - ${isWeekly ? 'Raport Tygodniowy' : 'Alert Health Check'}\n</h2>\n<p style=\"color:#666;font-size:13px\">Wygenerowany: ${d.generatedAt} | Okres: ostatnie ${d.periodDays} dni</p>\n\n${alertsHtml}\n${valueHtml}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">PageView CAPI ${d.pageview.active ? '' : '<span style=\"color:#d32f2f\">(NIEAKTYWNY!)</span>'}</h3>\n<table style=\"width:100%;border-collapse:collapse\">\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Wykonania</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.total} <span style=\"color:#999;font-size:12px\">(poprz: ${d.pageview.prev.total}) ${arrow(d.pageview.deltaPct)}</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Sukces</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.success} / ${d.pageview.current.total} (${d.pageview.current.successRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Bledy</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee;${d.pageview.current.errors > 0 ? 'color:#d32f2f' : ''}\">${d.pageview.current.errors}</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Eventy z fbc (ruch z reklam)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.pageview.current.withFbc, d.pageview.current.total)} ${d.pageview.current.withFbc} (${d.pageview.current.fbcRate}%) <span style=\"color:#999;font-size:11px\">poprz: ${d.pageview.prev.fbcRate}%</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Eventy z fbp</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.pageview.current.withFbp, d.pageview.current.total)} ${d.pageview.current.withFbp} (${d.pageview.current.fbpRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Jakosc danych (Quality Score)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong style=\"color:${d.pageview.current.qualityPv >= 70 ? '#2e7d32' : d.pageview.current.qualityPv >= 40 ? '#f57c00' : '#d32f2f'}\">${d.pageview.current.qualityPv}/100</strong></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Meta events_received</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.pageview.current.metaReceived}</td></tr>\n</table>\n${errorsHtml('PageView', d.pageview.current.errorList)}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">Lead CAPI ${d.lead.active ? '' : '<span style=\"color:#d32f2f\">(NIEAKTYWNY!)</span>'}</h3>\n<table style=\"width:100%;border-collapse:collapse\">\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Wykonania</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.total} <span style=\"color:#999;font-size:12px\">(poprz: ${d.lead.prev.total}) ${arrow(d.lead.deltaPct)}</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Sukces</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.success} / ${d.lead.current.total} (${d.lead.current.successRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Bledy</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee;${d.lead.current.errors > 0 ? 'color:#d32f2f' : ''}\">${d.lead.current.errors}</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z fbc (z reklam)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withFbc, d.lead.current.total)} ${d.lead.current.withFbc} (${d.lead.current.fbcRate}%) <span style=\"color:#999;font-size:11px\">poprz: ${d.lead.prev.fbcRate}%</span></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z email (SHA256)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withEmail, d.lead.current.total)} ${d.lead.current.withEmail} (${d.lead.current.emailRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Lead z telefonem (SHA256)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${bar(d.lead.current.withPhone, d.lead.current.total)} ${d.lead.current.withPhone} (${d.lead.current.phoneRate}%)</td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Jakosc danych (Quality Score)</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong style=\"color:${d.lead.current.qualityLead >= 75 ? '#2e7d32' : d.lead.current.qualityLead >= 50 ? '#f57c00' : '#d32f2f'}\">${d.lead.current.qualityLead}/100</strong></td></tr>\n  <tr><td style=\"padding:6px;border-bottom:1px solid #eee\"><strong>Meta events_received</strong></td><td style=\"padding:6px;border-bottom:1px solid #eee\">${d.lead.current.metaReceived}</td></tr>\n</table>\n${errorsHtml('Lead', d.lead.current.errorList)}\n\n<h3 style=\"background:#f5f5f5;padding:8px;margin-top:30px\">Linki</h3>\n<ul>\n  <li><a href=\"https://business.facebook.com/events_manager2/list/pixel/2073661919762572/overview\">Meta Events Manager - Pixel Maltaview</a></li>\n  <li><a href=\"https://n8n.srv1076230.hstgr.cloud/workflow/rkvyZWct7TVyfu4S\">n8n - PageView CAPI</a></li>\n  <li><a href=\"https://n8n.srv1076230.hstgr.cloud/workflow/yhPDszmBJ4dASAeV\">n8n - Lead CAPI</a></li>\n</ul>\n\n<p style=\"color:#999;font-size:11px;margin-top:30px;border-top:1px solid #eee;padding-top:10px\">\nAutomatyczny raport z n8n. Weekly: piatek 08:00. Health check: co 6h.<br>\nTwisted Pixel | CAPI Monitoring v2\n</p>\n</body></html>`;\n\nreturn [{ json: { html, subject: (d.hasAlerts ? '[ALERT] ' : '') + 'Maltaview CAPI - ' + (isWeekly ? 'Raport Tygodniowy' : 'Health Check'), hasAlerts: d.hasAlerts, periodDays: d.periodDays } }];\n"
+        },
+        "id": "build-html",
+        "name": "Buduj HTML raportu",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          900,
+          300
+        ]
+      },
+      {
+        "parameters": {
+          "fromEmail": "noreply@twistedpixel.pl",
+          "toEmail": "mateusz@twistedpixel.pl",
+          "subject": "={{ $json.subject }}",
+          "emailFormat": "html",
+          "html": "={{ $json.html }}",
+          "options": {}
+        },
+        "id": "email-send",
+        "name": "Wyslij raport",
+        "type": "n8n-nodes-base.emailSend",
+        "typeVersion": 2.1,
+        "position": [
+          1120,
+          300
+        ],
+        "credentials": {
+          "smtp": {
+            "id": "J5F272cacotW8z9V",
+            "name": "SMTP account - twistedpixeldocs@gmail.com"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Piatek 08:00": {
+        "main": [
+          [
+            {
+              "node": "Okres 7 dni",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Okres 7 dni": {
+        "main": [
+          [
+            {
+              "node": "Agregacja wykonan",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Agregacja wykonan": {
+        "main": [
+          [
+            {
+              "node": "Buduj HTML raportu",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Buduj HTML raportu": {
+        "main": [
+          [
+            {
+              "node": "Wyslij raport",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Helllo Twisted",
+    "name": null,
+    "description": null,
+    "autosaved": false,
+    "workflowPublishHistory": [
+      {
+        "createdAt": "2026-04-20T14:55:43.734Z",
+        "id": 145,
+        "workflowId": "rQr0KiwbhEV52O92",
+        "versionId": "08e44000-a102-4b95-8873-4f6bd48470e8",
+        "event": "activated",
+        "userId": "5e082583-0180-48ad-9ce7-74dc08cb6032"
+      }
+    ]
+  }
+}
