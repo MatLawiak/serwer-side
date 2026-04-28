@@ -45,7 +45,7 @@ const modules = [
 ];
 ---
 
-<section class="py-16 md:py-20 bg-stone-50">
+<section class="py-16 md:py-20 bg-primary text-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-4">
       <span class="text-xs font-bold text-accent uppercase tracking-wider">Modułowy stack</span>
@@ -53,49 +53,48 @@ const modules = [
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
       Jeden serwer. Wszystkie automatyzacje. Bez 7 abonamentów.
     </h2>
-    <p class="text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-      Twój VPS to nie tylko tracking. Na tym samym serwerze hostujesz Meta CAPI, GA4 server-side, n8n, newsletter, dashboardy i AI. PYS robi jedną rzecz. Twój VPS robi wszystko.
+    <p class="text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+      Twój VPS to nie tylko tracking. Na tym samym serwerze hostujesz Meta CAPI, GA4 server-side, n8n, newsletter, dashboardy i AI. Plugin robi jedną rzecz. Twój VPS robi wszystko.
     </p>
 
-    <div class="bg-white rounded-2xl card-brutal p-6 md:p-10">
+    <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 md:p-10">
       <div class="text-center mb-8">
-        <div class="inline-flex items-center gap-3 bg-primary text-white px-6 py-3 rounded-xl font-bold">
-          <span class="text-2xl">🖥️</span>
+        <div class="inline-flex items-center gap-3 bg-accent text-white px-6 py-3 rounded-xl font-bold">
           <span>Twój dedykowany VPS</span>
-          <span class="text-xs bg-accent px-2 py-0.5 rounded-full">subdomena.twojsklep.pl</span>
+          <span class="text-xs bg-white/20 px-2 py-0.5 rounded-full">subdomena.twojsklep.pl</span>
         </div>
-        <p class="text-sm text-gray-500 mt-3">Mikrus / Hostinger / DigitalOcean. Twoje konto, Twoja własność, dostęp root.</p>
+        <p class="text-sm text-gray-400 mt-3">Mikrus / Hostinger / DigitalOcean. Twoje konto, Twoja własność, dostęp root.</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-4">
         {modules.map((m) => (
           <a
             href={m.href}
-            class={`block bg-stone-50 rounded-xl p-5 card-brutal transition-all hover:translate-x-[1px] hover:translate-y-[1px] ${m.available ? '' : 'opacity-60'}`}
+            class={`block bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-5 transition-all ${m.available ? '' : 'opacity-50'}`}
           >
             <div class="flex items-start justify-between mb-2">
-              <h3 class="font-bold text-primary">{m.name}</h3>
-              <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${m.available ? 'bg-accent/15 text-accent' : 'bg-gray-200 text-gray-500'}`}>
+              <h3 class="font-bold text-white">{m.name}</h3>
+              <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${m.available ? 'bg-accent/20 text-accent' : 'bg-white/10 text-gray-400'}`}>
                 {m.label}
               </span>
             </div>
-            <p class="text-sm text-gray-600">{m.desc}</p>
+            <p class="text-sm text-gray-300">{m.desc}</p>
           </a>
         ))}
       </div>
 
-      <div class="mt-8 pt-8 border-t border-gray-200">
+      <div class="mt-8 pt-8 border-t border-white/10">
         <div class="grid md:grid-cols-2 gap-6 items-center">
           <div>
-            <h4 class="font-bold text-primary mb-2">Stack rośnie z Tobą</h4>
-            <p class="text-sm text-gray-600">
-              Zaczynasz od Meta Power VPS. Za miesiąc dodajesz GA4. Za pół roku potrzebujesz newslettera bo Klaviyo skoczył do 99$ - dokładamy moduł na ten sam serwer. Zero migracji, zero nowych abonamentów.
+            <h4 class="font-bold text-white mb-2">Stack rośnie z Tobą</h4>
+            <p class="text-sm text-gray-300">
+              Zaczynasz od Meta Power VPS. Za miesiąc dodajesz GA4. Za pół roku potrzebujesz newslettera bo Klaviyo skoczył do 99$, dokładamy moduł na ten sam serwer. Zero migracji, zero nowych abonamentów.
             </p>
           </div>
-          <div class="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200">
-            <p class="text-xs text-emerald-700 uppercase tracking-wider font-bold mb-1">Średnia oszczędność roczna</p>
-            <p class="text-3xl font-extrabold text-emerald-700">5 000 - 8 000 zł</p>
-            <p class="text-xs text-emerald-700 mt-1">vs 5-7 osobnych SaaS-ów (PYS Pro, Klaviyo, Mailchimp, Cookiebot, n8n cloud)</p>
+          <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
+            <p class="text-xs text-accent uppercase tracking-wider font-bold mb-1">Średnia oszczędność roczna</p>
+            <p class="text-3xl font-extrabold text-accent">5 000 - 8 000 zł</p>
+            <p class="text-xs text-gray-300 mt-1">vs 5-7 osobnych SaaS-ów (PYS Pro, Klaviyo, Mailchimp, Cookiebot, n8n cloud)</p>
           </div>
         </div>
       </div>

@@ -82,7 +82,7 @@ import Testimonials from '../components/Testimonials.astro';
   <MigrationFromPYS />
 
   {/* 7. Pakiety cenowe (skrót) */}
-  <section class="py-16 md:py-20">
+  <section class="py-16 md:py-20 bg-primary text-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-4">
         <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
@@ -90,20 +90,20 @@ import Testimonials from '../components/Testimonials.astro';
       <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
         Trzy moduły, jeden serwer
       </h2>
-      <p class="text-gray-500 text-center mb-12 max-w-2xl mx-auto">
-        Zaczynasz od Meta Power VPS. Dokładasz Google albo automatyzacje wtedy kiedy potrzebujesz. Wszystko na tym samym serwerze.
+      <p class="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+        Zaczynasz od Meta Power VPS. Dokładasz Google albo automatyzacje wtedy, kiedy potrzebujesz. Wszystko na tym samym serwerze.
       </p>
       <div class="grid md:grid-cols-3 gap-8">
 
-        <a href="/uslugi/meta-power-vps" class="group bg-white rounded-xl p-8 card-brutal-accent relative flex flex-col hover:shadow-lg transition-shadow">
+        <a href="/uslugi/meta-power-vps" class="group bg-white/5 backdrop-blur border-2 border-accent rounded-xl p-8 relative flex flex-col hover:bg-white/10 transition-colors">
           <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
             Główna oferta
           </span>
-          <h3 class="text-lg font-bold mb-1 group-hover:text-accent transition-colors">Meta Power VPS</h3>
-          <p class="text-gray-500 text-sm mb-3">Meta CAPI na dedykowanym serwerze</p>
+          <h3 class="text-lg font-bold mb-1 text-white">Meta Power VPS</h3>
+          <p class="text-gray-300 text-sm mb-3">Meta CAPI na dedykowanym serwerze</p>
           <p class="text-accent font-extrabold text-2xl mb-1">od 300 zł</p>
-          <p class="text-gray-500 text-xs mb-4">+ abonament 25 zł/mies.</p>
-          <ul class="text-gray-600 text-sm space-y-2 mb-6 flex-grow">
+          <p class="text-gray-400 text-xs mb-4">+ abonament 25 zł/mies.</p>
+          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
             <li>✓ Odzyskasz 30-50% konwersji</li>
             <li>✓ Pełna własność infrastruktury</li>
             <li>✓ Pełna własność danych, bez abonamentów</li>
@@ -111,25 +111,25 @@ import Testimonials from '../components/Testimonials.astro';
           <span class="text-accent font-semibold text-sm">Zobacz szczegóły →</span>
         </a>
 
-        <a href="/uslugi/google-power-vps" class="group bg-white rounded-xl p-8 card-brutal flex flex-col hover:shadow-lg transition-shadow">
-          <h3 class="text-lg font-bold mb-1 group-hover:text-accent transition-colors">Google Power VPS</h3>
-          <p class="text-gray-500 text-sm mb-3">GA4 i Google Ads Enhanced</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">od 200 zł</p>
-          <p class="text-gray-500 text-xs mb-4">dopłata do Meta PVS</p>
-          <ul class="text-gray-600 text-sm space-y-2 mb-6 flex-grow">
+        <a href="/uslugi/google-power-vps" class="group bg-white/5 backdrop-blur border border-white/10 rounded-xl p-8 flex flex-col hover:bg-white/10 transition-colors opacity-90">
+          <h3 class="text-lg font-bold mb-1 text-white">Google Power VPS</h3>
+          <p class="text-gray-300 text-sm mb-3">GA4 i Google Ads Enhanced</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">Wkrótce</p>
+          <p class="text-gray-400 text-xs mb-4">w przygotowaniu</p>
+          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
             <li>✓ Pełen obraz ścieżki w GA4</li>
             <li>✓ Enhanced Conversions w Google Ads</li>
             <li>✓ Consent Mode v2 gotowy</li>
           </ul>
-          <span class="text-accent font-semibold text-sm">Zobacz szczegóły →</span>
+          <span class="text-accent font-semibold text-sm">Zostaw kontakt na liście →</span>
         </a>
 
-        <a href="/uslugi/automatyzacje-vps" class="group bg-white rounded-xl p-8 card-brutal flex flex-col hover:shadow-lg transition-shadow">
-          <h3 class="text-lg font-bold mb-1 group-hover:text-accent transition-colors">Automatyzacje VPS</h3>
-          <p class="text-gray-500 text-sm mb-3">n8n, newsletter, cart recovery, AI</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">od 500 zł</p>
-          <p class="text-gray-500 text-xs mb-4">bez abonamentów zewnętrznych</p>
-          <ul class="text-gray-600 text-sm space-y-2 mb-6 flex-grow">
+        <a href="/uslugi/automatyzacje-vps" class="group bg-white/5 backdrop-blur border border-white/10 rounded-xl p-8 flex flex-col hover:bg-white/10 transition-colors">
+          <h3 class="text-lg font-bold mb-1 text-white">Automatyzacje VPS</h3>
+          <p class="text-gray-300 text-sm mb-3">n8n, newsletter, cart recovery, AI</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">Indywidualnie</p>
+          <p class="text-gray-400 text-xs mb-4">wycena po rozmowie</p>
+          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
             <li>✓ Koniec z haraczem Mailchimpa i Klaviyo</li>
             <li>✓ Oszczędność 1 500 do 3 000 zł/mies.</li>
             <li>✓ Własny stack, zero vendor lock-in</li>
