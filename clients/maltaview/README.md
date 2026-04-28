@@ -84,3 +84,20 @@ Reverse proxy (Traefik/Nginx) przed n8n na VPS klienta w części requestów nie
 **2026-04-28 - mitygacja w n8n:** Workflow PageView CAPI (`Przygotuj PageView`) dostał funkcję `extractClientIp(headers, body)` z kolejnością `cf-connecting-ip` > `x-forwarded-for` (pierwszy publiczny z listy) > `x-real-ip` > `true-client-ip` + filtr `isPrivateIp` (RFC1918, Docker bridge, loopback, link-local, CGNAT). Audyt 30 executions: 27/30 (90%) leci z publicznym IP, 3/30 (10%) ma w XFF tylko `172.18.0.1` - tam pole `client_ip_address` jest pomijane w payload do Mety (lepsze niż wysyłanie śmiecia, bo nie psuje EMQ kolizjami).
 
 **Pozostałe TODO** (wymaga dostępu do serwera klienta): konfiguracja reverse proxy (Traefik/Nginx) żeby ZAWSZE przekazywał prawdziwy IP klienta w `X-Forwarded-For`. Bez tego wciąż 10% requestów leci bez IP. Najprościej: dodać `set_real_ip_from` w Nginx lub `forwardedHeaders.insecure: true` + `trustedIPs` w Traefik z zakresem Docker.
+
+### Stage 3 (2026-04-28) - server-side fbp generation
+
+Panel Meta pokazywał `fbp` (Identyfikator przeglądarki, cookie `_fbp`) tylko w 60.78% PageView eventów. Przyczyna: Safari ITP, AdBlock, brak zgody marketingowej blokują ustawienie cookie `_fbp` przez Pixel w przeglądarce. Tag GTM próbował odczytać cookie i nie znajdował go.
+
+**Naprawa w n8n** (`Przygotuj PageView`):
+
+```js
+// Stage 3: fbp z cookie _fbp lub generowany serwerowo
+const fbp = isValidFbp(body.fbp) ? body.fbp : generateFbp();
+```
+
+Funkcja `generateFbp()` produkuje wartość w formacie Pixela `fb.1.{timestamp_ms}.{random_10_digits}`. Walidator `isValidFbp()` sprawdza format `^fb\.1\.\d+\.\d+$`. Browser fbp ma priorytet, server-side jest fallbackiem.
+
+Spójność per-user przez 90 dni (Meta attribution window) **nie jest zachowana** dla server-generated fbp. Akceptowalny trade-off, bo Meta deduplikuje events po `event_id` (browser PageView + CAPI PageView z różnymi fbp ale tym samym eventID są mergowane w jeden event z połączonymi danymi).
+
+Po 24-48h sprawdzić w Events Manager czy wskaźnik fbp wzrósł z 60.78% w okolice 95%+. Jeśli EMQ spadnie zamiast wzrosnąć (znaczek że Meta nie lubi randomowych fbp), rollback do `body.fbp || ''`.
