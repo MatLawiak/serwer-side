@@ -79,4 +79,8 @@ Dopiero wtedy Lead CAPI ↔ Pixel Lead będą deduplikowane i coverage Lead wzro
 
 ### IP `172.18.0.1` w części executions
 
-Reverse proxy (Traefik/Nginx) przed n8n na VPS klienta w części requestów nie przekazuje prawdziwego IP klienta (widać Docker-internal `172.18.0.1` zamiast realnego IP z internetu). Wpływa na EMQ (jakość dopasowania), ale nie na coverage. Naprawa: konfiguracja `X-Forwarded-For` / `X-Real-IP` w proxy. Wymaga dostępu do serwera.
+Reverse proxy (Traefik/Nginx) przed n8n na VPS klienta w części requestów nie przekazuje prawdziwego IP klienta (widać Docker-internal `172.18.0.1` zamiast realnego IP z internetu).
+
+**2026-04-28 - mitygacja w n8n:** Workflow PageView CAPI (`Przygotuj PageView`) dostał funkcję `extractClientIp(headers, body)` z kolejnością `cf-connecting-ip` > `x-forwarded-for` (pierwszy publiczny z listy) > `x-real-ip` > `true-client-ip` + filtr `isPrivateIp` (RFC1918, Docker bridge, loopback, link-local, CGNAT). Audyt 30 executions: 27/30 (90%) leci z publicznym IP, 3/30 (10%) ma w XFF tylko `172.18.0.1` - tam pole `client_ip_address` jest pomijane w payload do Mety (lepsze niż wysyłanie śmiecia, bo nie psuje EMQ kolizjami).
+
+**Pozostałe TODO** (wymaga dostępu do serwera klienta): konfiguracja reverse proxy (Traefik/Nginx) żeby ZAWSZE przekazywał prawdziwy IP klienta w `X-Forwarded-For`. Bez tego wciąż 10% requestów leci bez IP. Najprościej: dodać `set_real_ip_from` w Nginx lub `forwardedHeaders.insecure: true` + `trustedIPs` w Traefik z zakresem Docker.
