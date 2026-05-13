@@ -1,0 +1,187 @@
+---
+title: "Deduplikacja Meta CAPI Pixel: 3 parametry, które ją robią"
+description: "Browser pixel i server-side CAPI wysyłają te same zdarzenia, ale algorytm Mety widzi je jak różne. Pokazuję trzy parametry, dzięki którym deduplikacja działa."
+date: 2026-05-13
+tags: ["deduplikacja", "Meta CAPI", "Meta Pixel", "EMQ"]
+readingTime: "7 min czytania"
+---
+
+## W skrócie
+
+- Każde zdarzenie konwersyjne, które wysyłasz do Mety, leci **dwa razy**: raz z przeglądarki (Pixel), raz z serwera (CAPI). To celowe i tak ma być.
+- Meta deduplikuje te dwa sygnały, ale tylko jeśli oba mają **te same trzy parametry**. Bez nich liczy każdą konwersję dwa razy i traci pewność, kim jest użytkownik.
+- Efekt: koszt leada wyższy o **15 do 25%**, gorsza optymalizacja kampanii, niedokładne raportowanie ROAS.
+- Pokazuję, co konkretnie musi być wspólne między Pixel a CAPI, gdzie najczęściej leży problem i jak to sprawdzić w panelu Mety w 5 minut.
+
+---
+
+## Co znajdziesz w tym artykule
+
+- [Dlaczego Meta dostaje każde zdarzenie dwa razy](#dlaczego-meta-dostaje-kazde-zdarzenie-dwa-razy)
+- [Trzy parametry, które robią deduplikację](#trzy-parametry-ktore-robia-deduplikacje)
+- [event_id: ten sam identyfikator po obu stronach](#event_id-ten-sam-identyfikator-po-obu-stronach)
+- [event_time: zegarek przeglądarki, nie serwera](#event_time-zegarek-przegladarki-nie-serwera)
+- [fbp i fbc: kim jest ten użytkownik](#fbp-i-fbc-kim-jest-ten-uzytkownik)
+- [Jak sprawdzić deduplikację w panelu Mety](#jak-sprawdzic-deduplikacje-w-panelu-mety)
+- [Co zrobić, gdy widzisz poniżej 75%](#co-zrobic-gdy-widzisz-ponizej-75)
+
+---
+
+## Dlaczego Meta dostaje każde zdarzenie dwa razy
+
+Standardowa konfiguracja server-side tracking wysyła każde zdarzenie konwersyjne **dwoma kanałami**:
+
+1. **Browser Pixel**: kod w przeglądarce użytkownika strzela `fbq('track', 'Purchase')` przy zakupie.
+2. **Conversions API (CAPI)**: Twój serwer wysyła to samo zdarzenie do Meta Graph API z backendu.
+
+To **nie błąd**, to świadoma redundancja. Browser Pixel daje pełen kontekst sesji (cookies, UA, referrer), ale jest blokowany przez **AdBlock, iOS Safari i Brave**. Server-side leci zawsze, ale ma mniej danych o przeglądarce.
+
+Razem dają **pełen obraz**. Pod warunkiem, że Meta umie je połączyć.
+
+Jeśli algorytm nie wie, że browser-side `Purchase` i server-side `Purchase` to **to samo zdarzenie**, traktuje je jak dwie różne konwersje. To psuje wszystko: licznik konwersji jest zawyżony, ROAS niedokładny, optymalizacja gorsza, **koszt leada wyższy**.
+
+> Meta sama pisze w panelu: *"Możesz uzyskać o 22,9% niższy koszt wyniku, jeśli zwiększysz wskaźnik pokrycia zdarzeń pikselowych przez API konwersji."*
+
+To nie marketing. To algorytm karzący niedopasowanie.
+
+<!-- INFOGRAFIKA: Schemat browser Pixel + server CAPI lecące do Mety. Strzałka z napisem "event_id + event_time" łączy oba kanały w jeden event po stronie Mety. Po lewej dwa osobne, po prawej jeden zdedukowany. -->
+
+---
+
+## Trzy parametry, które robią deduplikację
+
+Meta porównuje browser event i server event po **trzech kluczach**:
+
+| Parametr | Co robi | Gdzie najczęściej zawodzi |
+|---|---|---|
+| **event_id** | Unikalny identyfikator pojedynczego zdarzenia | Browser i server generują **różne** ID dla tego samego zdarzenia |
+| **event_time** | Unix timestamp momentu zdarzenia | Server używa **czasu odbioru webhooka**, nie czasu przeglądarki |
+| **fbp / fbc** | Identyfikator użytkownika (Pixel cookie + parametr fbclid) | Cookies blokowane przez **Safari ITP, AdBlock, brak zgody** |
+
+Każdy z tych trzech parametrów musi pasować po obu stronach. Jeśli choć jeden się rozjedzie, Meta liczy dwa osobne eventy zamiast jednego.
+
+Po kolei.
+
+---
+
+## event_id: ten sam identyfikator po obu stronach
+
+To **fundament deduplikacji**. Browser Pixel generuje unikalny `event_id` przy każdym zdarzeniu i wysyła go w wywołaniu:
+
+```js
+fbq('track', 'Purchase', {}, { eventID: 'purchase_1778673823_abc123' });
+```
+
+**Ten sam `event_id`** musi trafić do server-side CAPI. To znaczy, że Twój server-side endpoint musi go odebrać z przeglądarki, a nie generować własny.
+
+**Najczęstszy błąd**: server-side generuje swój `event_id` w momencie odbioru żądania. Wygląda to logicznie, każdy event ma unikalny ID, ale **nie zgadza się** z tym, który Meta dostała wcześniej z Pixela. Wynik: dwa osobne zdarzenia.
+
+**Jak to sprawdzić**: w Meta Events Manager wejdź w zdarzenie i zobacz sekcję **Klucze deduplikacji**. Jeśli widzisz:
+
+- Browser events z `Identyfikator zdarzenia` na 95%+
+- Server events z `Identyfikator zdarzenia` na 100%
+- Ale **współczynnik pokrycia zdarzeń** na 50-60%
+
+Znaczy to, że ID są obecne po obu stronach, ale **różne**. Każdy server-side wysyła własny, niezsynchronizowany z browser.
+
+**Naprawa**: w skrypcie po stronie strony generujesz `event_id` raz, używasz go w `fbq('track', ...)` i w tym samym momencie wysyłasz go do endpointu server-side. Server-side nie generuje nic, tylko forward'uje 1:1 do Mety.
+
+---
+
+## event_time: zegarek przeglądarki, nie serwera
+
+Ten parametr **prawie nikt nie zauważa**, a potrafi zepsuć deduplikację nawet przy idealnym `event_id`.
+
+Browser Pixel wysyła zdarzenie z `event_time` ustawionym na moment, w którym **użytkownik kliknął**. Sekundy, w jakich wpadło do Mety, są obarczone tylko latencją sieci (ms).
+
+Server-side, w domyślnej konfiguracji, używa **czasu, w którym webhook dotarł do serwera**. To zwykle 1-5 sekund później, czasem więcej (kolejka, retry, mobile reconnect).
+
+**Konsekwencja**: browser event ma `event_time = T`, server event ma `event_time = T + 30s`. Meta widzi ten sam `event_id`, ale **rozjazd czasowy**. Algorytm konserwatywnie traktuje to jako dwa osobne zdarzenia, bo deduplikacja po `event_id` wymaga matchującego timing.
+
+**Naprawa**: server-side musi przyjąć `event_time` z przeglądarki (przekazany razem z `event_id`), a nie generować własny. Fallback na czas serwera tylko wtedy, gdy w żądaniu nie ma timestampu z browsera.
+
+<!-- INFOGRAFIKA: Timeline pokazujący event_time browser vs event_time server. Górna oś: T=0 browser strzela. Dolna oś: T=2s server odbiera webhook. Strzałka "rozjazd 2s = brak match" z czerwoną ikoną krzyżyka. -->
+
+To jedna z **najczęstszych ukrytych przyczyn niskiej deduplikacji**. Mało kto o tym mówi, bo to wymaga zajrzenia w kod skryptu po stronie serwera, a większość agencji tego nie robi.
+
+---
+
+## fbp i fbc: kim jest ten użytkownik
+
+`fbp` (Facebook browser ID) i `fbc` (Facebook click ID) to **identyfikatory użytkownika**, które Meta wykorzystuje do match'owania ścieżki konwersji.
+
+- **fbp**: cookie `_fbp`, ustawiane przez Pixel przy pierwszej wizycie. Format: `fb.1.{timestamp}.{random}`. Persistencja: 90 dni.
+- **fbc**: pochodzi z parametru `?fbclid=` w URL (po kliknięciu reklamy Meta). Zapisywany do cookie `_fbc` na 90 dni.
+
+W browser Pixel Meta odczytuje oba parametry automatycznie. Server-side musi je **otrzymać z przeglądarki**, bo backend nie ma dostępu do cookies użytkownika.
+
+**Problemy**:
+
+1. **Safari ITP** ogranicza żywotność cookies first-party do **7 dni**. User wraca po 8 dniach, cookie zniknęło. fbp pusty.
+2. **AdBlock i pluginy prywatności** blokują skrypt Pixela. Cookie `_fbp` nigdy się nie ustawia.
+3. **Brak zgody marketingowej** (CMP) blokuje Pixel. Server-side dostaje pustą wartość.
+4. **fbc**: większość ruchu to organic, direct, SEO. Tylko **3-5% użytkowników** kliknęło reklamę Meta i ma `fbclid`. To **normalne**, nie problem.
+
+**Naprawa fbp**: jeśli cookie jest puste, server-side może wygenerować zastępczą wartość w formacie Pixela. Spójność per-user przez 90 dni nie jest zachowana, ale algorytm i tak dedupuje po `event_id`, więc to drugorzędne. Lepsze niż wysyłanie pustego `fbp`.
+
+**Naprawa fbc**: pełna analiza w osobnym artykule. [Brakujący parametr w Meta Ads, który kosztuje połowę konwersji](/wiedza/parametr-fbc-meta-capi-niedoraportowane-konwersje) tłumaczy mechanizm cookie + fbclid + walidacja 90 dni krok po kroku.
+
+---
+
+## Jak sprawdzić deduplikację w panelu Mety
+
+5 minut, bez programisty.
+
+1. Wejdź w **Meta Business → Events Manager → Twój pixel → wybierz zdarzenie** (np. PageView, Lead, Purchase).
+2. Kliknij zakładkę **Deduplikacja zdarzeń**.
+3. Zobacz sekcję **Klucze deduplikacji**, a w niej linię z `Identyfikator zdarzenia`.
+
+Co tam jest:
+
+- **Zdarzenia przeglądarki**: ile % browser events ma `event_id`.
+- **Zdarzenia serwera**: ile % server events ma `event_id`.
+- **Współczynnik pokrycia zdarzeń**: ile % par browser-server **matchuje się**.
+
+**Co powinno być**:
+
+| Wskaźnik | Cel | Stan alarmowy |
+|---|---|---|
+| Browser z event_id | 95% i więcej | poniżej 85% |
+| Server z event_id | 100% | poniżej 95% |
+| Współczynnik pokrycia | 75% i więcej | **poniżej 60%** |
+
+Jeśli pokrycie jest poniżej 60%, masz problem z jednym z trzech parametrów powyżej. Najczęściej z `event_id` (różne ID po obu stronach) albo `event_time` (rozjazd timing). Rzadziej z `fbp` (cookies blokowane).
+
+<!-- INFOGRAFIKA: Screenshot panelu "Pokrycie zdarzeń" Mety z zaznaczoną na czerwono cyfrą 50.4% i strzałką w prawo do drugiego screena z 92% w zielonym kółku. Podpis: "Przed naprawą event_time" -> "Po naprawie event_time". -->
+
+---
+
+## Co zrobić, gdy widzisz poniżej 75%
+
+Trzy rzeczy, po kolei.
+
+**Po pierwsze, zweryfikuj source `event_id`**. Otwórz stronę w incognito, F12 → Network → filtr `facebook.com/tr`. Kliknij request `PageView` i sprawdź parametr `eid` w Query String. Jeśli brakuje, browser Pixel nie wysyła `event_id` (problem konfiguracji tagu).
+
+Następnie sprawdź endpoint server-side. Powinien przyjmować `event_id` z body żądania i forward'ować go do Mety **bez modyfikacji**. Jeśli regeneruje własny, masz przyczynę rozjazdu.
+
+**Po drugie, zsynchronizuj `event_time`**. W skrypcie wysyłającym do endpointu server-side dorzuć timestamp z `Math.floor(Date.now() / 1000)`. W endpoincie server-side użyj tego timestampu jako `event_time` w CAPI payload, **nie generuj własnego**.
+
+**Po trzecie, zaakceptuj limity `fbp`**. Pełne 100% pokrycia browser-side jest niemożliwe (Safari, AdBlock, CMP). Cel realistyczny: **85-90%**. Resztę uzupełniasz po stronie serwera fallbackiem.
+
+Po naprawie tych trzech rzeczy, deduplikacja typowo skacze z 50-60% do **90% i więcej** w 24-48h. Algorytm Mety dostaje czyste, zsynchronizowane dane, koszt leada spada o **15 do 25%**, optymalizacja działa **na pełnym obrazie**.
+
+---
+
+## Co dalej
+
+Sam audyt deduplikacji w panelu Mety zajmuje 5 minut i robisz go samodzielnie. Jeśli widzisz pokrycie poniżej 75%, to konkretny **problem techniczny do naprawienia**, nie kwestia większego budżetu.
+
+Standardowa naprawa to **1 do 3 dni roboczych**. Wymaga zmian w konfiguracji tagu po stronie strony i w kodzie endpointu server-side. Nie wymaga zmiany dostawcy reklam ani migracji infrastruktury.
+
+Jeśli Twoja deduplikacja stoi poniżej 60% i agencja wzrusza ramionami, [umów bezpłatną diagnozę](/kontakt). Sprawdzę Twój panel Mety, wskażę konkretny parametr, który zawodzi, i podam, ile dni zajmie naprawa.
+
+Powiązane lektury:
+
+- [Brakujący parametr w Meta Ads, który kosztuje połowę konwersji](/wiedza/parametr-fbc-meta-capi-niedoraportowane-konwersje) (pełna analiza `fbc`)
+- [Czym jest server-side tracking](/wiedza/co-to-server-side-tracking) (intro do tematu)
+- [Cennik wdrożeń server-side](/wiedza/cennik-server-side-polska)
