@@ -63,19 +63,29 @@ import Layout from '../layouts/Layout.astro';
             </div>
 
             <div>
-              <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">
-                Budżet reklamowy miesięczny
+              <label for="service" class="block text-sm font-medium text-gray-700 mb-1">
+                Czym mogę Ci pomóc?
               </label>
               <select
-                id="budget"
-                name="budget"
+                id="service"
+                name="service"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-colors bg-white"
               >
-                <option value="">Wybierz zakres</option>
-                <option value="<5k">Poniżej 5 000 zł</option>
-                <option value="5-15k">5 000 – 15 000 zł</option>
-                <option value="15-50k">15 000 – 50 000 zł</option>
-                <option value=">50k">Powyżej 50 000 zł</option>
+                <option value="">Wybierz usługę</option>
+                <optgroup label="Tracking reklamowy">
+                  <option value="meta-power-vps">Meta Power VPS — Meta Pixel + CAPI na własnym serwerze</option>
+                  <option value="google-power-vps">Google Power VPS — GA4 + Google Ads server-side</option>
+                  <option value="meta-google-combo">Meta + Google Power VPS — oba kanały jednocześnie</option>
+                </optgroup>
+                <optgroup label="Automatyzacje">
+                  <option value="automatyzacje-vps">Automatyzacje VPS — n8n: CRM, maile, integracje</option>
+                </optgroup>
+                <optgroup label="Inne">
+                  <option value="audyt">Audyt trackingu — sprawdzenie obecnej konfiguracji</option>
+                  <option value="pixelyoursite">Konfiguracja PixelYourSite + GTM + CookieYes</option>
+                  <option value="konsultacja">Konsultacja / pytanie ogólne</option>
+                  <option value="inne">Inne</option>
+                </optgroup>
               </select>
             </div>
 
