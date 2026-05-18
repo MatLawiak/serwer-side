@@ -1,0 +1,189 @@
+---
+title: "PixelYourSite i GTM w WordPressie: 3 błędy, które psują dane"
+description: "GTM plus PixelYourSite bez poprawnej konfiguracji to podwójne konwersje, luka RODO i martwy CAPI. Pokazuję 3 konkretne błędy i jak je naprawić krok po kroku."
+date: 2026-05-18
+tags: ["PixelYourSite", "Meta Pixel", "GTM", "WordPress", "CAPI"]
+readingTime: "8 min czytania"
+---
+
+## W skrócie
+
+- PixelYourSite i GTM mogą działać razem, ale domyślnie się dublują i psują dane kampanii.
+- Bez wspólnego `event_id` Meta liczy każde zdarzenie dwa razy. ROAS wygląda świetnie. Kampania optymalizuje pod fikcję.
+- CookieYes zainstalowany tylko przez GTM nie chroni przed RODO, jeśli PYS działa poza GTM.
+- Conversion API w PYS działa dobrze, ale wymaga kilku nieoczywistych ustawień żeby działało tak jak powinno.
+
+---
+
+## Problem, który widzę co tydzień
+
+Klient pisze: mam pixel, mam CAPI, mam CookieYes. Wszystko działa.
+
+Patrzę na konfigurację i widzę trzy niezależne systemy, które nie wiedzą o sobie nawzajem.
+
+GTM odpala Meta Pixel przy każdym zdarzeniu. PYS odpala ten sam Pixel przy każdym zdarzeniu. CookieYes chroni tylko tagi w GTM, ale PYS działa poza GTM, więc zgody obejmują połowę konfiguracji.
+
+Efekt: konwersje podwojone, zgody połowiczne, ROAS z kosmosu.
+
+Nie ma to jak sukces, który niszczy kampanię od środka.
+
+---
+
+## 1. Podwójne zliczanie: kiedy GTM i PYS strzelają do tego samego celu
+
+Typowa konfiguracja: GTM z tagiem Meta Pixel odpalającym `Lead` na stronie `/dziekujemy`, jednocześnie PYS z tym samym Pixel ID i custom eventem `Lead` na tym samym URL.
+
+Gdy użytkownik trafia na `/dziekujemy`, Meta dostaje dwa sygnały `Lead`. Bez wspólnego `event_id` po obu stronach algorytm nie wie, że to to samo zdarzenie. Liczy dwie konwersje.
+
+W raportach Ads Managera wygląda to fantastycznie. Koszt za leada pozornie spada o połowę. W rzeczywistości kampania optymalizuje pod zawyżone dane i dobiera coraz gorszy ruch. W końcu i koszt, i jakość leadów zaczynają boleć.
+
+**Jak to sprawdzić:**
+
+Otwórz stronę `/dziekujemy` w DevTools (F12 → Network → filtr `facebook.com/tr`). Jeśli widzisz dwa requesty z `ev=Lead` przy jednej wizycie, masz duplikat.
+
+**Rozwiązanie jest proste:** wybierz jedno źródło dla każdego eventu. Albo GTM, albo PYS. Nigdy oba naraz dla tego samego zdarzenia.
+
+Jeśli zostajesz przy PYS z CAPI (sensowny wybór dla WordPressa), usuń lub wyłącz tagi Meta z GTM. Jeśli wolisz GTM, wyłącz eventy w PYS i zarządzaj wszystkim przez GTM.
+
+![Schemat podwójnego zliczania: GTM i PYS wysyłają osobno do Meta (2x konwersje) vs. tylko PYS wysyła (1x konwersja)](/infografiki/pixelyoursite-duplikat-schemat.png)
+
+---
+
+## 2. Conversion API: dlaczego sam pixel przeglądarki traci 20-35% danych
+
+Meta Pixel działa w przeglądarce: ładuje JavaScript, zbiera dane sesji, wysyła je do Meta. Problem w tym, że coraz więcej użytkowników to blokuje.
+
+Szacuje się, że od 20 do 35% zdarzeń konwersji ginie przez adblocki (uBlock Origin, AdBlock Plus), restrykcje Safari (ITP obcina żywotność cookies do 7 dni) i przeglądarki nastawione na prywatność jak Brave. W segmencie B2B jest gorzej, bo technicznie zaawansowani użytkownicy mają adblocki zainstalowane częściej.
+
+Conversion API rozwiązuje ten problem przez serwer. Zamiast czekać na przeglądarkę, WordPress bezpośrednio wysyła dane zdarzenia do Meta Graph API. Adblocki i Safari ITP nie mają tu żadnego wpływu.
+
+**Jak PYS obsługuje CAPI:**
+
+PYS wysyła każde zdarzenie dwa razy: raz z przeglądarki (pixel JS), raz z serwera PHP (CAPI). Oba sygnały mają wspólny `event_id`, więc Meta deduplikuje je automatycznie. Jeśli przeglądarka dostarczyła event, serwer jest ignorowany. Jeśli przeglądarka go nie dostarczyła (adblock, ITP), Meta używa wersji serwerowej.
+
+Działa poprawnie pod jednym warunkiem: token CAPI musi być wpisany.
+
+W WordPress → PixelYourSite → Meta wpisz **Conversion API Access Token**. Token generujesz w Meta Events Manager → Settings → Conversions API → Generate access token. Traktuj go jak hasło do konta reklamowego i nie udostępniaj publicznie.
+
+Jeśli chcesz głębiej zrozumieć jak deduplikacja działa i dlaczego `event_id` jest kluczowy, przeczytaj [deduplikacja Meta CAPI i Pixel: 3 parametry, które ją robią](/wiedza/deduplikacja-meta-capi-pixel-parametry).
+
+---
+
+## 3. RODO i zgody: gdzie PYS i GTM się rozjeżdżają
+
+To najczęściej pomijany błąd i jednocześnie najpoważniejszy z perspektywy regulacyjnej.
+
+Typowa konfiguracja: CookieYes zainstalowany jako tag w GTM z triggerem `Consent Initialization`. PixelYourSite ładuje Meta Pixel bezpośrednio przez WordPress, poza GTM.
+
+CookieYes przez GTM zarządza zgodami wyłącznie dla tagów w GTM. Pixel z PYS działa poza tym systemem i odpala się dla każdego użytkownika, niezależnie od tego co kliknął w banerze.
+
+Użytkownik z UE odrzuca cookies marketingowych. CookieYes blokuje GA4 w GTM. Meta Pixel z PYS dalej zbiera dane i wysyła je do Meta. Naruszenie RODO nie z chęci, ale przez architektury, które nie rozmawiają ze sobą.
+
+**Rozwiązanie:**
+
+Zainstaluj CookieYes jako wtyczkę WordPress (nie tylko przez GTM). Gdy wtyczka działa po stronie WordPress, PYS automatycznie ją wykrywa.
+
+W PYS wejdź w **Global Settings → Other consent plugins → CookieYes integration** i włącz przełącznik.
+
+Od tej chwili PYS blokuje Meta Pixel do momentu udzielenia zgody na kategorię Reklama. Jeden system zarządza zgodami dla wszystkich pikseli. Tag CookieYes CMP w GTM staje się zbędny.
+
+**Weryfikacja w 2 minuty:**
+
+Otwórz stronę w incognito → DevTools → Network → filtr `facebook.com/tr`. Przed kliknięciem Akceptuj: zero requestów. Po akceptacji: requesty pojawiają się z `ev=PageView`.
+
+![Schemat zarządzania zgodami: zła konfiguracja (CookieYes w GTM nie chroni PYS) vs. poprawna (CookieYes jako plugin WordPress blokuje oba)](/infografiki/pixelyoursite-consent-rodo.png)
+
+---
+
+## 4. Custom event Lead na thank you page: krok po kroku
+
+Jeśli nie masz WooCommerce (który obsługuje `Purchase` automatycznie), event konwersji dla formularza kontaktowego trzeba skonfigurować ręcznie.
+
+W WordPress → PixelYourSite → Events → kliknij **Add**:
+
+1. Nazwa eventu: np. `kontakt-wyslany`
+2. Trigger: **Page Visit**
+3. URL: fragment adresu thank you page, np. `dziekujemy`
+4. Warunek: **URL Contains**
+5. W sekcji Meta: włącz event, typ zdarzenia: **Lead**
+6. Zapisz
+
+Ikona Meta przy evencie na liście powinna podświecić się na niebiesko. Poczekaj kilka godzin od pierwszego odpalenia, zanim event pojawi się w Meta Events Manager jako opcja do wyboru w kampanii.
+
+**Cel kampanii w Meta Ads:**
+
+Cel **Sprzedaż** (Sales), nie Kontakty. Kontakty są dla Lead Ads Meta (formularze natywne Meta, bez wychodzenia z aplikacji). Przy zbieraniu leadów na własnej stronie wybierasz Sprzedaż.
+
+Lokalizacja konwersji: Strona internetowa. Zdarzenie konwersji: Lead.
+
+---
+
+## 5. Pełna mapa poprawnej konfiguracji
+
+Po wdrożeniu wszystkich kroków struktura wygląda tak:
+
+```
+WordPress
+├── PixelYourSite
+│   ├── Meta Pixel ID + token CAPI → Meta Events Manager
+│   ├── Custom Event: Lead → URL contains /dziekujemy
+│   └── Integracja CookieYes: WŁĄCZONA
+│
+├── CookieYes (wtyczka WordPress, nie tag GTM)
+│   ├── Kategoria Reklama: cookies _fbp, _fbc
+│   └── Google Consent Mode: WŁĄCZONY
+│
+└── Google Tag Manager
+    ├── GA4 Configuration Tag
+    ├── GA4 Events (klik telefon, scroll, formularz)
+    └── Brak tagów Meta Pixel (zarządza PYS)
+```
+
+Każdy system ma swój zakres. Żaden nie wchodzi w kompetencje drugiego.
+
+---
+
+## 6. Checklista przed uruchomieniem kampanii
+
+Zanim włączysz budżet reklamowy, zweryfikuj każdy punkt:
+
+- Pixel ID i token CAPI wpisane w PYS
+- Brak duplikujących się tagów Meta w GTM
+- CookieYes zainstalowany jako wtyczka WordPress (nie tylko GTM)
+- Integracja CookieYes włączona w PYS Global Settings
+- Cookies `_fbp` i `_fbc` przypisane do kategorii Reklama w CookieYes
+- Custom event Lead: trigger Page Visit, URL contains `/dziekujemy`
+- Test w incognito: pixel blokowany przed zgodą, odpala się po akceptacji
+- Weryfikacja w Meta Events Manager → Test Events: event Lead dochodzi
+
+![Wizualna checklista 8 punktów konfiguracji PixelYourSite z GTM i CookieYes](/infografiki/pixelyoursite-checklista.png)
+
+---
+
+## Gdzie PixelYourSite ma swoje limity
+
+PYS to solidna wtyczka dla WordPressa. Ale ma twarde ograniczenia, które przy większej skali zaczynają boleć.
+
+CAPI przez PHP jest uzależniony od serwera WordPress. Jeśli serwer jest przeciążony lub aktualizacja PHP coś psuje, Meta przestaje dostawać dane bez żadnego alertu. `event_time` generowany po stronie serwera rozjeżdża się z `event_time` przeglądarki, co obniża wskaźnik deduplikacji i pogarsza matching.
+
+Każda aktualizacja WordPressa, PHP lub konflikt z inną wtyczką może cicho przerwać wysyłanie danych. Dowiadujesz się o tym zwykle dopiero wtedy, gdy kampanie zaczynają drożeć bez powodu.
+
+Pełna kontrola nad `event_id` i `event_time` w trybie poza-WooCommerce jest ograniczona. To właśnie te parametry decydują o tym, czy Meta deduplikuje zdarzenia z 92% skutecznością, czy z 51%.
+
+Jeśli zależy Ci na pełnej kontroli bez uzależnienia od stacku WordPressa, rozwiązaniem jest server-side tracking poza wtyczką: własny endpoint CAPI na VPS, niezależny od cyklu życia WordPressa i aktualizacji pluginów.
+
+To właśnie robimy w **Meta Power Up**: czysty CAPI, pełna synchronizacja `event_id` i `event_time` z przeglądarki, wskaźnik deduplikacji 90% i powyżej, monitoring który alarmuje gdy coś przestaje działać.
+
+[Umów bezpłatną diagnozę](/kontakt). Sprawdzę Twój obecny setup, powiem czy PYS wystarczy na Twoją skalę, i ile konwersji tracisz teraz.
+
+---
+
+## Co dalej
+
+Poprawna konfiguracja PYS z GTM i CookieYes to minimum, które chroni dane i kampanię przed błędami. Wdróż checklistę z sekcji 6 i zweryfikuj w Test Events czy sygnały docierają poprawnie przed uruchomieniem wydatków.
+
+Powiązane lektury:
+
+- [Deduplikacja Meta CAPI i Pixel: 3 parametry, które ją robią](/wiedza/deduplikacja-meta-capi-pixel-parametry)
+- [Plugin CAPI vs. wdrożenie server-side: co naprawdę dostajesz](/wiedza/plugin-capi-vs-server-side)
+- [Czym jest server-side tracking](/wiedza/co-to-server-side-tracking)
