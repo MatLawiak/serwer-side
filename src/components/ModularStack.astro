@@ -1,46 +1,28 @@
 ---
-const modules = [
+const services = [
   {
     name: 'Meta Power VPS',
-    desc: 'sGTM + Meta CAPI: PageView, Lead, Purchase, ViewContent, AddToCart. Deduplikacja, enrichment, country hash.',
+    desc: 'Meta CAPI i sGTM na dedykowanym serwerze. Odzyskaj 30-50% konwersji, które AdBlock i iOS blokują.',
     href: '/uslugi/meta-power-vps',
+    img: '/infografiki/uslugi/meta-power-vps-card.png',
     label: 'Główna usługa',
     available: true,
   },
   {
     name: 'Google Power VPS',
-    desc: 'GA4 server-side, Google Ads Enhanced Conversions, Consent Mode v2. Pełen obraz ścieżki klienta w GA4.',
+    desc: 'GA4 server-side i Google Ads Enhanced Conversions. Pełen obraz ścieżki klienta bez filtrów przeglądarki.',
     href: '/uslugi/google-power-vps',
-    label: 'Dopłata do Meta PVS',
+    img: '/infografiki/uslugi/google-power-vps-card.png',
+    label: 'Dopłata do Meta VPS',
     available: true,
   },
   {
     name: 'Automatyzacje VPS',
-    desc: 'n8n self-hosted: lead notifications, cart abandonment, AI content gen, integracje Notion/Slack/Telegram.',
+    desc: 'n8n self-hosted: powiadomienia leadów, cart recovery, newsletter Listmonk, AI agenty. Koniec z abonamentami.',
     href: '/uslugi/automatyzacje-vps',
+    img: '/infografiki/uslugi/automatyzacje-vps-card.png',
     label: 'Własny n8n',
     available: true,
-  },
-  {
-    name: 'Newsletter VPS',
-    desc: 'Listmonk lub Mailtrain self-hosted. Koniec z abonamentem 50$ Klaviyo / 30$ Mailchimp. Twój mailer.',
-    href: '/kontakt',
-    label: 'Wkrótce',
-    available: false,
-  },
-  {
-    name: 'Dashboard VPS',
-    desc: 'Grafana lub Looker Studio embed. Live monitoring tracking, alerts SMS/email gdy coverage spada.',
-    href: '/kontakt',
-    label: 'Wkrótce',
-    available: false,
-  },
-  {
-    name: 'AI Agents VPS',
-    desc: 'LangChain self-hosted, custom LLM workflows, własny RAG. Bez OpenAI dla wrażliwych danych.',
-    href: '/kontakt',
-    label: 'Wkrótce',
-    available: false,
   },
 ];
 ---
@@ -53,51 +35,74 @@ const modules = [
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
       Jeden serwer. Wszystkie automatyzacje. Bez 7 abonamentów.
     </h2>
-    <p class="text-gray-300 text-center mb-12 max-w-3xl mx-auto">
-      Twój VPS to nie tylko tracking. Na tym samym serwerze hostujesz Meta CAPI, GA4 server-side, n8n, newsletter, dashboardy i AI. Plugin robi jedną rzecz. Twój VPS robi wszystko.
+    <p class="text-gray-300 text-center mb-10 max-w-3xl mx-auto">
+      Twój VPS to nie tylko tracking. Na tym samym serwerze hostujesz Meta CAPI, GA4 server-side, n8n,
+      newsletter i AI agenty. Plugin robi jedną rzecz. Twój VPS robi wszystko.
     </p>
 
-    <div class="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-6 md:p-10">
-      <div class="text-center mb-8">
-        <div class="inline-flex items-center gap-3 bg-accent text-white px-6 py-3 rounded-xl font-bold">
-          <span>Twój dedykowany VPS</span>
-          <span class="text-xs bg-white/20 px-2 py-0.5 rounded-full">subdomena.twojsklep.pl</span>
-        </div>
-        <p class="text-sm text-gray-400 mt-3">Mikrus / Hostinger / DigitalOcean. Twoje konto, Twoja własność, dostęp root.</p>
-      </div>
+    {/* Infografika drzewka VPS */}
+    <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-8">
+      <img
+        src="/infografiki/vps-modular-stack-tree.png"
+        alt="Diagram: jeden serwer VPS zastępuje Meta Power VPS, Google Power VPS i automatyzacje biznesowe zamiast osobnych abonamentów SaaS"
+        class="w-full h-auto"
+        loading="lazy"
+        width="1200"
+        height="675"
+      />
+    </div>
 
-      <div class="grid md:grid-cols-3 gap-4">
-        {modules.map((m) => (
-          <a
-            href={m.href}
-            class={`block bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-5 transition-all ${m.available ? '' : 'opacity-50'}`}
-          >
+    {/* Mini karty usług z linkami */}
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+      {services.map((s) => (
+        <a
+          href={s.href}
+          class="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-accent/40 rounded-xl overflow-hidden transition-all"
+        >
+          <div class="aspect-square overflow-hidden bg-white/5">
+            <img
+              src={s.img}
+              alt={s.name}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-5">
             <div class="flex items-start justify-between mb-2">
-              <h3 class="font-bold text-white">{m.name}</h3>
-              <span class={`text-xs font-bold px-2 py-0.5 rounded-full ${m.available ? 'bg-accent/20 text-accent' : 'bg-white/10 text-gray-400'}`}>
-                {m.label}
+              <h3 class="font-bold text-white">{s.name}</h3>
+              <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-accent/20 text-accent shrink-0 ml-2">
+                {s.label}
               </span>
             </div>
-            <p class="text-sm text-gray-300">{m.desc}</p>
-          </a>
-        ))}
-      </div>
+            <p class="text-sm text-gray-300 mb-3">{s.desc}</p>
+            <span class="text-accent text-sm font-semibold group-hover:underline">
+              Zobacz szczegóły →
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
 
-      <div class="mt-8 pt-8 border-t border-white/10">
-        <div class="grid md:grid-cols-2 gap-6 items-center">
-          <div>
-            <h4 class="font-bold text-white mb-2">Stack rośnie z Tobą</h4>
-            <p class="text-sm text-gray-300">
-              Zaczynasz od Meta Power VPS. Za miesiąc dodajesz GA4. Za pół roku potrzebujesz newslettera bo Klaviyo skoczył do 99$, dokładamy moduł na ten sam serwer. Zero migracji, zero nowych abonamentów.
-            </p>
-          </div>
-          <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
-            <p class="text-xs text-accent uppercase tracking-wider font-bold mb-1">Średnia oszczędność roczna</p>
-            <p class="text-3xl font-extrabold text-accent">5 000 - 8 000 zł</p>
-            <p class="text-xs text-gray-300 mt-1">vs 5-7 osobnych SaaS-ów (PYS Pro, Klaviyo, Mailchimp, Cookiebot, n8n cloud)</p>
-          </div>
+    {/* Podsumowanie oszczędności */}
+    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+      <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          <h4 class="font-bold text-white mb-2">Stack rośnie z Tobą</h4>
+          <p class="text-sm text-gray-300">
+            Zaczynasz od Meta Power VPS. Za miesiąc dodajesz GA4. Za pół roku potrzebujesz
+            newslettera bo Klaviyo skoczył do 99$, dokładamy moduł na ten sam serwer.
+            Zero migracji, zero nowych abonamentów.
+          </p>
+        </div>
+        <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
+          <p class="text-xs text-accent uppercase tracking-wider font-bold mb-1">Średnia oszczędność roczna</p>
+          <p class="text-3xl font-extrabold text-accent">5 000 - 8 000 zł</p>
+          <p class="text-xs text-gray-300 mt-1">
+            vs 5-7 osobnych SaaS-ów (PYS Pro, Klaviyo, Mailchimp, Cookiebot, n8n cloud)
+          </p>
         </div>
       </div>
     </div>
+
   </div>
 </section>

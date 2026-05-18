@@ -63,30 +63,86 @@ import Layout from '../layouts/Layout.astro';
             </div>
 
             <div>
-              <label for="service" class="block text-sm font-medium text-gray-700 mb-1">
-                Czym mogę Ci pomóc?
-              </label>
-              <select
-                id="service"
-                name="service"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-colors bg-white"
-              >
-                <option value="">Wybierz usługę</option>
-                <optgroup label="Tracking reklamowy">
-                  <option value="meta-power-vps">Meta Power VPS — Meta Pixel + CAPI na własnym serwerze</option>
-                  <option value="google-power-vps">Google Power VPS — GA4 + Google Ads server-side</option>
-                  <option value="meta-google-combo">Meta + Google Power VPS — oba kanały jednocześnie</option>
-                </optgroup>
-                <optgroup label="Automatyzacje">
-                  <option value="automatyzacje-vps">Automatyzacje VPS — n8n: CRM, maile, integracje</option>
-                </optgroup>
-                <optgroup label="Inne">
-                  <option value="audyt">Audyt trackingu — sprawdzenie obecnej konfiguracji</option>
-                  <option value="pixelyoursite">Konfiguracja PixelYourSite + GTM + CookieYes</option>
-                  <option value="konsultacja">Konsultacja / pytanie ogólne</option>
-                  <option value="inne">Inne</option>
-                </optgroup>
-              </select>
+              <p class="block text-sm font-medium text-gray-700 mb-2">
+                Czym mogę Ci pomóc? <span class="text-gray-400 font-normal">(wybierz jedną lub więcej)</span>
+              </p>
+              <div class="p-4 border border-gray-300 rounded-lg bg-white space-y-4">
+
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Tracking reklamowy</p>
+                  <div class="space-y-2">
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="meta-power-vps" name="service" value="meta-power-vps"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="meta-power-vps" class="text-sm text-gray-700 cursor-pointer">
+                        Meta Power VPS: Meta Pixel i CAPI na własnym serwerze
+                      </label>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="google-power-vps" name="service" value="google-power-vps"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="google-power-vps" class="text-sm text-gray-700 cursor-pointer">
+                        Google Power VPS: GA4 i Google Ads server-side
+                      </label>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="meta-google-combo" name="service" value="meta-google-combo"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="meta-google-combo" class="text-sm text-gray-700 cursor-pointer">
+                        Meta i Google Power VPS: oba kanały jednocześnie
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Automatyzacje</p>
+                  <div class="space-y-2">
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="automatyzacje-vps" name="service" value="automatyzacje-vps"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="automatyzacje-vps" class="text-sm text-gray-700 cursor-pointer">
+                        Automatyzacje VPS: n8n, CRM, maile, integracje
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Inne</p>
+                  <div class="space-y-2">
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="audyt" name="service" value="audyt"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="audyt" class="text-sm text-gray-700 cursor-pointer">
+                        Audyt trackingu: sprawdzenie obecnej konfiguracji
+                      </label>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="pixelyoursite" name="service" value="pixelyoursite"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="pixelyoursite" class="text-sm text-gray-700 cursor-pointer">
+                        Konfiguracja PixelYourSite z GTM i CookieYes
+                      </label>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="konsultacja" name="service" value="konsultacja"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="konsultacja" class="text-sm text-gray-700 cursor-pointer">
+                        Konsultacja / pytanie ogólne
+                      </label>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="inne" name="service" value="inne"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="inne" class="text-sm text-gray-700 cursor-pointer">
+                        Inne
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             <div>
@@ -203,6 +259,7 @@ import Layout from '../layouts/Layout.astro';
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    data.service = formData.getAll('service').join(', ');
 
     try {
       const res = await fetch('/api/contact', {
