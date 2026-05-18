@@ -1,0 +1,214 @@
+---
+---
+
+<section class="py-16 md:py-20 bg-primary text-white" id="data-flow-section">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Dlaczego to się dzieje</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">
+        Część Twoich klientów jest niewidzialna dla algorytmu.
+      </h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        Gdy użytkownik korzysta z Safari lub ma zainstalowanego AdBlocka, sygnał konwersji blokowany jest w przeglądarce. Algorytm nie wie, że była sprzedaż.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5" id="flow-diagram">
+
+      {/* LEWA: Problem */}
+      <div class="bg-white/3 border border-red-900/40 rounded-2xl p-6 md:p-8">
+        <p class="text-xs font-bold text-red-400 uppercase tracking-wide mb-8">Bez server-side</p>
+
+        <div class="flex flex-col items-center">
+
+          {/* Node: Przeglądarka */}
+          <div class="flow-node w-full max-w-xs bg-white/8 border border-white/15 rounded-xl px-4 py-3 flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <line x1="2" y1="9" x2="22" y2="9"/>
+              <circle cx="5.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="8.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            <span class="text-sm font-medium text-gray-200">Przeglądarka klienta</span>
+          </div>
+
+          {/* Konektor */}
+          <div class="flow-connector-wrap h-10 flex justify-center items-center relative w-full">
+            <div class="flow-line-down bg-red-700/50 w-px flow-left-line"></div>
+          </div>
+
+          {/* Node: Blokada */}
+          <div class="flow-node w-full max-w-xs bg-red-950/40 border border-red-800/50 rounded-xl px-4 py-3 flex items-center gap-3">
+            <svg class="w-5 h-5 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L4 5v6c0 4.4 3.4 8.4 8 9.2 4.6-.8 8-4.8 8-9.2V5L12 2z"/>
+              <line x1="9" y1="9" x2="15" y2="15" stroke-linecap="round"/>
+              <line x1="15" y1="9" x2="9" y2="15" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <span class="text-sm font-medium text-red-300">AdBlock / iOS ITP / Safari</span>
+              <span class="block text-xs text-red-500 mt-0.5">dane zablokowane tutaj</span>
+            </div>
+          </div>
+
+          {/* Konektor przerywany */}
+          <div class="h-10 flex justify-center items-center relative w-full">
+            <div class="w-px h-full border-l-2 border-dashed border-red-900/50"></div>
+          </div>
+
+          {/* Node: Meta faded */}
+          <div class="flow-node w-full max-w-xs bg-white/3 border border-white/8 rounded-xl px-4 py-3 flex items-center gap-3 opacity-40">
+            <svg class="w-5 h-5 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 4l7 14 3-6 6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="text-sm text-gray-500">Meta Ads</span>
+            <span class="ml-auto text-xs font-bold text-red-600">brak danych</span>
+          </div>
+
+        </div>
+
+        <div class="mt-6 p-3 bg-red-950/30 border border-red-900/30 rounded-xl">
+          <p class="text-xs text-red-300">
+            Algorytm nie widzi tej konwersji. Optymalizuje kampanię pod niepełny wynik.
+          </p>
+        </div>
+      </div>
+
+      {/* PRAWA: Rozwiązanie */}
+      <div class="bg-white/3 border border-accent/20 rounded-2xl p-6 md:p-8">
+        <p class="text-xs font-bold text-accent uppercase tracking-wide mb-8">Z server-side trackingiem</p>
+
+        <div class="flex flex-col items-center">
+
+          {/* Node: Przeglądarka */}
+          <div class="flow-node w-full max-w-xs bg-white/8 border border-white/15 rounded-xl px-4 py-3 flex items-center gap-3">
+            <svg class="w-5 h-5 text-gray-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <line x1="2" y1="9" x2="22" y2="9"/>
+              <circle cx="5.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="8.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            <span class="text-sm font-medium text-gray-200">Przeglądarka klienta</span>
+          </div>
+
+          {/* Konektor z animowaną kropką */}
+          <div class="h-10 flex justify-center items-center relative w-full overflow-hidden">
+            <div class="flow-line-down bg-accent/60 w-px flow-right-line"></div>
+            <div class="flow-dot-right absolute w-2 h-2 rounded-full bg-accent left-1/2 -translate-x-1/2"></div>
+          </div>
+
+          {/* Node: Serwer VPS */}
+          <div class="flow-node w-full max-w-xs bg-accent/10 border border-accent/40 rounded-xl px-4 py-3 flex items-center gap-3">
+            <svg class="w-5 h-5 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="5" rx="1"/>
+              <rect x="2" y="10" width="20" height="5" rx="1"/>
+              <rect x="2" y="17" width="20" height="4" rx="1"/>
+              <circle cx="6" cy="5.5" r="1" fill="currentColor" stroke="none"/>
+              <circle cx="6" cy="12.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            <div>
+              <span class="text-sm font-medium text-accent">Twój Serwer VPS</span>
+              <span class="block text-xs text-accent/60 mt-0.5">poza zasięgiem AdBlocka i iOS</span>
+            </div>
+          </div>
+
+          {/* Rozgałęzienie */}
+          <div class="h-10 w-full max-w-xs relative flex justify-center">
+            <div class="flow-line-down bg-accent/60 w-px flow-branch-line"></div>
+          </div>
+
+          {/* Dwa endpointy */}
+          <div class="w-full max-w-xs grid grid-cols-2 gap-3">
+            <div class="flow-node bg-white/8 border border-white/15 rounded-xl px-3 py-3 flex flex-col items-center gap-1 relative">
+              <div class="flow-dot-branch absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent"></div>
+              <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 4l7 14 3-6 6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-xs text-gray-300 font-medium">Meta CAPI</span>
+            </div>
+            <div class="flow-node bg-white/8 border border-white/15 rounded-xl px-3 py-3 flex flex-col items-center gap-1 relative">
+              <div class="flow-dot-branch absolute -top-4 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-accent" style="animation-delay: 0.3s"></div>
+              <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              <span class="text-xs text-gray-300 font-medium">GA4</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-6 p-3 bg-accent/5 border border-accent/20 rounded-xl">
+          <p class="text-xs text-accent/80">
+            Algorytm otrzymuje pełne dane. Kampania optymalizuje się pod prawdziwe wyniki.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="text-center text-sm text-gray-500 mt-8 max-w-xl mx-auto">
+      Serwer działa po stronie serwera, poza zasięgiem przeglądarki. AdBlock go nie widzi. iOS go nie blokuje. Dane docierają do algorytmu w całości.
+    </p>
+
+  </div>
+</section>
+
+<style>
+  .flow-line-down {
+    height: 0;
+    transition: height 0.5s ease;
+  }
+
+  #flow-diagram.is-animated .flow-line-down {
+    height: 100%;
+  }
+
+  .flow-node {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  #flow-diagram.is-animated .flow-node {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #flow-diagram.is-animated .flow-node:nth-child(1) { transition-delay: 0s; }
+  #flow-diagram.is-animated .flow-node:nth-child(2) { transition-delay: 0.25s; }
+  #flow-diagram.is-animated .flow-node:nth-child(3) { transition-delay: 0.5s; }
+  #flow-diagram.is-animated .flow-node:nth-child(4) { transition-delay: 0.75s; }
+
+  .flow-dot-right {
+    top: 0;
+    opacity: 0;
+  }
+
+  #flow-diagram.is-animated .flow-dot-right {
+    animation: dotTravel 1.8s ease-in-out 0.6s infinite;
+  }
+
+  #flow-diagram.is-animated .flow-dot-branch {
+    animation: dotTravel 1.8s ease-in-out 1.2s infinite;
+  }
+
+  @keyframes dotTravel {
+    0%   { top: 0; opacity: 0; }
+    10%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+</style>
+
+<script>
+  const diagram = document.getElementById('flow-diagram');
+  if (diagram) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        diagram.classList.add('is-animated');
+        observer.disconnect();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(diagram);
+  }
+</script>

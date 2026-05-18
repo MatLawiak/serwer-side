@@ -1,0 +1,127 @@
+---
+const barriers = [
+  {
+    title: 'Safari i iOS',
+    desc: 'Apple ITP usuwa identyfikatory śledzące po 24 godzinach. Konwersja z reklamy sprzed doby nie zostaje przypisana. Atrybucja ginie.',
+    detail: 'Server-Side Tracking utrzymuje atrybucję do 180 dni.',
+    icon: 'mobile',
+  },
+  {
+    title: 'AdBlockery',
+    desc: 'Ponad 40% polskich internautów blokuje skrypty reklamowe. Przeglądarkowy Pixel nie wysyła zdarzenia, zanim użytkownik zdąży zobaczyć stronę.',
+    detail: 'Twój serwer nie jest wykrywany przez żaden AdBlock.',
+    icon: 'shield',
+  },
+  {
+    title: 'Cookieless i 3rd-party',
+    desc: 'Chrome, Safari i Firefox stopniowo eliminują pliki cookies firm trzecich. Bez nich Pixel traci możliwość śledzenia powracających użytkowników.',
+    detail: 'Serwer śledzi przez 1st-party, niezależnie od ustawień przeglądarki.',
+    icon: 'cookie',
+  },
+  {
+    title: 'Opóźnione zakupy',
+    desc: 'Klient klika reklamę w poniedziałek, kupuje w sobotę. Przeglądarkowy Pixel nie połączy tych zdarzeń. Konwersja nie trafi do raportu kampanii.',
+    detail: 'Server-Side śledzi pełną ścieżkę zakupową bez utraty ciągłości.',
+    icon: 'clock',
+  },
+];
+---
+
+<section class="py-16 md:py-20 bg-primary text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Co odzyskujesz</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">
+        Cztery powody, dla których Twój algorytm działa w ciemności.
+      </h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        Każda z tych barier to sygnał konwersji, który nie dotarł do Meta. Algorytm nie wiedział o zakupie i szukał kolejnych klientów w złym miejscu.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-5 mb-10" id="barriers-grid">
+      {barriers.map((b, i) => (
+        <div
+          class="barrier-card bg-white/5 border border-white/10 rounded-2xl p-6 md:p-7 flex flex-col gap-4 opacity-0 translate-y-4 transition-all duration-500"
+          style={`transition-delay: ${i * 100}ms`}
+        >
+          <div class="flex items-start gap-4">
+            {/* Ikona */}
+            <div class="shrink-0 w-11 h-11 bg-accent/10 border border-accent/20 rounded-xl flex items-center justify-center">
+              {b.icon === 'mobile' && (
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <rect x="7" y="2" width="10" height="20" rx="2" ry="2"/>
+                  <line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="2.5"/>
+                </svg>
+              )}
+              {b.icon === 'shield' && (
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L4 5v6c0 4.4 3.4 8.4 8 9.2 4.6-.8 8-4.8 8-9.2V5L12 2z"/>
+                  <line x1="9" y1="9" x2="15" y2="15" stroke-linecap="round"/>
+                  <line x1="15" y1="9" x2="9" y2="15" stroke-linecap="round"/>
+                </svg>
+              )}
+              {b.icon === 'cookie' && (
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/>
+                  <circle cx="14" cy="8" r="1" fill="currentColor" stroke="none"/>
+                  <circle cx="10" cy="15" r="1" fill="currentColor" stroke="none"/>
+                  <circle cx="16" cy="14" r="1" fill="currentColor" stroke="none"/>
+                  <path d="M12 2a10 10 0 01.5 0" stroke-linecap="round"/>
+                </svg>
+              )}
+              {b.icon === 'clock' && (
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              )}
+            </div>
+
+            <div class="flex-1">
+              <h3 class="font-bold text-white text-base mb-1">{b.title}</h3>
+              <p class="text-sm text-gray-400 leading-relaxed">{b.desc}</p>
+            </div>
+          </div>
+
+          {/* Badge "odzyskujesz" */}
+          <div class="flex items-center gap-2 pt-3 border-t border-white/8">
+            <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-xs text-accent/80">{b.detail}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light"
+      >
+        Umów bezpłatną diagnozę
+      </a>
+      <p class="text-xs text-gray-600 mt-3">30 minut. Konkretny raport. Bez zobowiązań.</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const grid = document.getElementById('barriers-grid');
+  if (grid) {
+    const cards = grid.querySelectorAll<HTMLElement>('.barrier-card');
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        cards.forEach((card) => {
+          card.classList.remove('opacity-0', 'translate-y-4');
+        });
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(grid);
+  }
+</script>

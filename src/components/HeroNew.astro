@@ -1,0 +1,111 @@
+---
+---
+
+<section class="bg-primary text-white pt-20 pb-16 md:pt-28 md:pb-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+
+    <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
+      Server-Side Tracking
+    </span>
+
+    <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
+      Twoje kampanie Meta<br/>
+      <span class="text-accent">widzą tylko połowę konwersji.</span>
+    </h1>
+
+    <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-3">
+      AdBlockery, iOS i Safari blokują dane zanim dotrą do algorytmu.
+      Kampania optymalizuje się pod fałszywy wynik i przepala budżet.
+    </p>
+    <p class="text-base text-gray-500 max-w-2xl mx-auto mb-10">
+      Server-Side Tracking przywraca te dane. Algorytm widzi pełen obraz i optymalizuje na prawdziwych wynikach.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a
+        href="/kontakt"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light w-full sm:w-auto"
+      >
+        Sprawdź ile tracisz
+      </a>
+      <a
+        href="/uslugi/meta-power-vps"
+        class="inline-block bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-8 py-4 rounded-lg text-lg w-full sm:w-auto transition-colors"
+      >
+        Zobacz Meta Power VPS
+      </a>
+    </div>
+
+    {/* Statystyki z animacją count-up */}
+    <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto" id="hero-stats">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="50" data-suffix="%">50%</p>
+        <p class="text-sm text-gray-400">konwersji niewidocznych dla algorytmu</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="40" data-suffix="%">40%</p>
+        <p class="text-sm text-gray-400">internautów ma zainstalowanego AdBlocka</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="14" data-suffix=" dni">14 dni</p>
+        <p class="text-sm text-gray-400">od wdrożenia do pełnych efektów</p>
+      </div>
+    </div>
+
+    {/* Trust row */}
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto text-sm text-gray-400">
+      <div class="flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+        Niezależność od WordPressa
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+        Twoje dane, Twój serwer
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+        Bez abonamentów SaaS
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const statsEl = document.getElementById('hero-stats');
+  if (statsEl) {
+    const counters = statsEl.querySelectorAll<HTMLElement>('[data-hero-count]');
+    let animated = false;
+
+    const animateOne = (el: HTMLElement) => {
+      const target = parseInt(el.dataset.heroCount || '0');
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      el.textContent = '0' + suffix;
+
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        counters.forEach(animateOne);
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    observer.observe(statsEl);
+  }
+</script>

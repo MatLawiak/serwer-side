@@ -1,180 +1,95 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import TrustBadges from '../components/TrustBadges.astro';
-import ConversionsAPIIntro from '../components/ConversionsAPIIntro.astro';
+import HeroNew from '../components/HeroNew.astro';
+import DataFlowAnimated from '../components/DataFlowAnimated.astro';
+import BarriersSection from '../components/BarriersSection.astro';
+import CaseStudyAnon from '../components/CaseStudyAnon.astro';
 import ModularStack from '../components/ModularStack.astro';
-import PYSComparison from '../components/PYSComparison.astro';
-import LossCalculator from '../components/LossCalculator.tsx';
-import MigrationFromPYS from '../components/MigrationFromPYS.astro';
 import Testimonials from '../components/Testimonials.astro';
 ---
 
 <Layout
-  title="Meta Power VPS - prawdziwy server-side dla WordPressa | serwer-side.pl"
-  description="Wyrosłeś z wtyczki Pixel Your Site? Meta Power VPS to dedykowany serwer pod Meta CAPI, sGTM i automatyzacje. Bez limitów, bez subskrypcji, Twoja własność."
+  title="Server-Side Tracking dla Meta i Google Ads | serwer-side.pl"
+  description="Twoje kampanie tracą 30-50% konwersji przez AdBlockery, iOS i Safari. Server-Side Tracking przywraca te dane do algorytmu. Sprawdź ile tracisz."
 >
-  {/* 1. Hero */}
-  <section class="bg-primary text-white py-20 md:py-28">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider animate-fade-in-up">
-        Server-side tracking dla WordPress
-      </span>
-      <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
-        Twoje kampanie wyciągają z budżetu<br/>
-        tylko <span class="text-accent">70% mocy</span>.
-      </h1>
-      <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4 animate-fade-in-up" style="animation-delay: 0.2s">
-        To nie kwestia budżetu. To kwestia konfiguracji.
-      </p>
-      <p class="text-base text-gray-400 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.3s">
-        Poznaj rozwiązanie: prawdziwy server-side na Twoim dedykowanym serwerze.
-      </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.4s">
-        <a
-          href="/kontakt"
-          class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light w-full sm:w-auto"
-        >
-          Bezpłatny audyt EMQ
-        </a>
-        <a
-          href="/uslugi/meta-power-vps"
-          class="inline-block bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-8 py-4 rounded-lg text-lg w-full sm:w-auto transition-colors"
-        >
-          Zobacz Meta Power VPS →
-        </a>
-      </div>
+  {/* 1. Hero — ból klienta + liczniki */}
+  <HeroNew />
 
-      <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-sm animate-fade-in-up" style="animation-delay: 0.5s">
-        <div class="flex items-center justify-center gap-2 text-gray-300">
-          <span class="text-accent text-xl">✓</span>
-          <span>Niezależność od WordPressa</span>
-        </div>
-        <div class="flex items-center justify-center gap-2 text-gray-300">
-          <span class="text-accent text-xl">✓</span>
-          <span>TCO 3x niższe niż PYS Agency</span>
-        </div>
-        <div class="flex items-center justify-center gap-2 text-gray-300">
-          <span class="text-accent text-xl">✓</span>
-          <span>Moduły, nie tylko tracking</span>
-        </div>
-      </div>
-
-      <div class="mt-10">
-        <TrustBadges variant="light" delay="0.6s" />
-      </div>
-    </div>
-  </section>
-
-  {/* 2. Czym jest API konwersji / server-side */}
-  <ConversionsAPIIntro />
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 3. Modułowy stack */}
+  {/* 2. Animowany schemat przepływu danych */}
+  <DataFlowAnimated />
+
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+
+  {/* 3. Cztery bariery = cztery powody do wdrożenia */}
+  <BarriersSection />
+
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+
+  {/* 4. Case study (anonimowe) z animowanymi wykresami */}
+  <CaseStudyAnon />
+
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+
+  {/* 5. Modułowy stack VPS */}
   <ModularStack />
+
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 4. Porównanie PYS vs Meta Power VPS */}
-  <PYSComparison />
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 5. Kalkulator strat / ROI z wdrożenia */}
-  <LossCalculator client:visible />
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 6. Migracja z PYS */}
-  <MigrationFromPYS />
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 7. Pakiety cenowe (skrót) */}
-  <section class="py-16 md:py-20 bg-primary text-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-4">
-        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
-      </div>
-      <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">
-        Trzy moduły, jeden serwer
-      </h2>
-      <p class="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
-        Zaczynasz od Meta Power VPS. Dokładasz Google albo automatyzacje wtedy, kiedy potrzebujesz. Wszystko na tym samym serwerze.
-      </p>
-      <div class="grid md:grid-cols-3 gap-8">
-
-        <a href="/uslugi/meta-power-vps" class="group bg-white/5 backdrop-blur border-2 border-accent rounded-xl p-8 relative flex flex-col hover:bg-white/10 transition-colors">
-          <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
-            Główna oferta
-          </span>
-          <h3 class="text-lg font-bold mb-1 text-white">Meta Power VPS</h3>
-          <p class="text-gray-300 text-sm mb-3">Meta CAPI na dedykowanym serwerze</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">od 300 zł</p>
-          <p class="text-gray-400 text-xs mb-4">+ abonament 25 zł/mies.</p>
-          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
-            <li>✓ Odzyskasz 30-50% konwersji</li>
-            <li>✓ Pełna własność infrastruktury</li>
-            <li>✓ Pełna własność danych, bez abonamentów</li>
-          </ul>
-          <span class="text-accent font-semibold text-sm">Zobacz szczegóły →</span>
-        </a>
-
-        <a href="/uslugi/google-power-vps" class="group bg-white/5 backdrop-blur border border-white/10 rounded-xl p-8 flex flex-col hover:bg-white/10 transition-colors opacity-90">
-          <h3 class="text-lg font-bold mb-1 text-white">Google Power VPS</h3>
-          <p class="text-gray-300 text-sm mb-3">GA4 i Google Ads Enhanced</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">Wkrótce</p>
-          <p class="text-gray-400 text-xs mb-4">w przygotowaniu</p>
-          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
-            <li>✓ Pełen obraz ścieżki w GA4</li>
-            <li>✓ Enhanced Conversions w Google Ads</li>
-            <li>✓ Consent Mode v2 gotowy</li>
-          </ul>
-          <span class="text-accent font-semibold text-sm">Zostaw kontakt na liście →</span>
-        </a>
-
-        <a href="/uslugi/automatyzacje-vps" class="group bg-white/5 backdrop-blur border border-white/10 rounded-xl p-8 flex flex-col hover:bg-white/10 transition-colors">
-          <h3 class="text-lg font-bold mb-1 text-white">Automatyzacje VPS</h3>
-          <p class="text-gray-300 text-sm mb-3">n8n, newsletter, cart recovery, AI</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">Indywidualnie</p>
-          <p class="text-gray-400 text-xs mb-4">wycena po rozmowie</p>
-          <ul class="text-gray-200 text-sm space-y-2 mb-6 flex-grow">
-            <li>✓ Koniec z haraczem Mailchimpa i Klaviyo</li>
-            <li>✓ Oszczędność 1 500 do 3 000 zł/mies.</li>
-            <li>✓ Własny stack, zero vendor lock-in</li>
-          </ul>
-          <span class="text-accent font-semibold text-sm">Zobacz szczegóły →</span>
-        </a>
-
-      </div>
-
-      <div class="text-center mt-10">
-        <a href="/uslugi" class="inline-block text-accent font-semibold hover:underline">
-          Zobacz porównanie wszystkich usług →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {/* 8. Testimoniale */}
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+  {/* 6. Testimoniale */}
   <Testimonials />
+
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 9. CTA końcowe */}
-  <section class="py-16 md:py-20 bg-primary text-white">
+  {/* 7. CTA końcowe */}
+  <section class="py-20 md:py-28 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-2xl md:text-3xl font-bold mb-4">
-        Sprawdź jak wypada Twój obecny tracking
+
+      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
+        Bezpłatna diagnoza
+      </span>
+
+      <h2 class="text-2xl md:text-4xl font-extrabold mb-5 leading-tight">
+        Sprawdź ile konwersji<br/>
+        traci Twoja kampania.
       </h2>
-      <p class="text-gray-300 mb-2">
-        Bezpłatna 30-minutowa rozmowa diagnostyczna. Sprawdzę EMQ Twoich kampanii, pokrycie zdarzeń, deduplikację Pixel/CAPI.
+
+      <p class="text-gray-300 mb-3 text-lg max-w-xl mx-auto">
+        30 minut. Bezpłatnie. Konkretna diagnoza, nie sprzedaż.
       </p>
-      <p class="text-gray-400 text-sm mb-8">
-        Konkretny raport. Konkretne propozycje. Bez zobowiązań.
+      <p class="text-gray-500 text-sm mb-10 max-w-lg mx-auto">
+        Sprawdzę EMQ Twoich kampanii, pokrycie zdarzeń i deduplikację Pixel/CAPI. Powiem konkretnie co traci Twój tracking i czy wdrożenie ma sens w Twoim przypadku.
       </p>
+
       <a
         href="/kontakt"
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light"
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-10 py-4 rounded-lg text-lg btn-brutal-light"
       >
         Umów bezpłatny audyt EMQ
       </a>
+
+      <p class="text-xs text-gray-600 mt-4">
+        Bez umowy. Bez zobowiązań. Odpowiadam w 24h.
+      </p>
+
+      {/* Linki pomocnicze */}
+      <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+        <a href="/uslugi" class="text-gray-400 hover:text-accent transition-colors">
+          Zobacz wszystkie usługi
+        </a>
+        <span class="text-white/20">|</span>
+        <a href="/wiedza" class="text-gray-400 hover:text-accent transition-colors">
+          Baza wiedzy
+        </a>
+        <span class="text-white/20">|</span>
+        <a href="/o-mnie" class="text-gray-400 hover:text-accent transition-colors">
+          O mnie
+        </a>
+      </div>
+
     </div>
   </section>
+
 </Layout>

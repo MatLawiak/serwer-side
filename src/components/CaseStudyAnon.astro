@@ -1,0 +1,144 @@
+---
+---
+
+<section class="py-16 md:py-20 bg-primary text-white" id="case-study">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Dowód w liczbach</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3">
+        Algorytm zaczął widzieć 24% więcej konwersji w 30 dni.
+      </h2>
+    </div>
+
+    <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+      <div class="grid md:grid-cols-2">
+
+        {/* Lewa: wykresy słupkowe */}
+        <div class="p-6 md:p-10 border-b md:border-b-0 md:border-r border-white/10" id="case-bars">
+
+          <p class="text-xs font-bold text-gray-500 uppercase tracking-wide mb-6">Metryki przed i po wdrożeniu</p>
+
+          <div class="space-y-6">
+
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-300">Widoczne konwersje Meta</span>
+                <span class="font-bold text-white">
+                  <span class="text-gray-500 line-through mr-2">61%</span>
+                  <span class="text-accent">85%</span>
+                </span>
+              </div>
+              <div class="relative h-3 bg-white/5 rounded-full overflow-hidden">
+                <div class="case-bar absolute top-0 left-0 h-full bg-red-500/40 rounded-full" style="--target-w: 61%"></div>
+                <div class="case-bar absolute top-0 left-0 h-full bg-accent rounded-full" style="--target-w: 85%; transition-delay: 0.15s"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-300">Event Match Quality (EMQ)</span>
+                <span class="font-bold text-white">
+                  <span class="text-gray-500 line-through mr-2">51%</span>
+                  <span class="text-accent">87%</span>
+                </span>
+              </div>
+              <div class="relative h-3 bg-white/5 rounded-full overflow-hidden">
+                <div class="case-bar absolute top-0 left-0 h-full bg-red-500/40 rounded-full" style="--target-w: 51%"></div>
+                <div class="case-bar absolute top-0 left-0 h-full bg-accent rounded-full" style="--target-w: 87%; transition-delay: 0.3s"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-300">Pokrycie zdarzeń (coverage)</span>
+                <span class="font-bold text-white">
+                  <span class="text-gray-500 line-through mr-2">66%</span>
+                  <span class="text-accent">94%</span>
+                </span>
+              </div>
+              <div class="relative h-3 bg-white/5 rounded-full overflow-hidden">
+                <div class="case-bar absolute top-0 left-0 h-full bg-red-500/40 rounded-full" style="--target-w: 66%"></div>
+                <div class="case-bar absolute top-0 left-0 h-full bg-accent rounded-full" style="--target-w: 94%; transition-delay: 0.45s"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="mt-6 flex items-center gap-4 text-xs text-gray-500">
+            <span class="flex items-center gap-1.5">
+              <span class="inline-block w-3 h-3 rounded-full bg-red-500/40"></span> Przed wdrożeniem
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="inline-block w-3 h-3 rounded-full bg-accent"></span> Po wdrożeniu
+            </span>
+          </div>
+        </div>
+
+        {/* Prawa: opis */}
+        <div class="p-6 md:p-10 flex flex-col justify-center">
+          <div class="text-xs text-gray-500 uppercase tracking-wide mb-4">Sklep e-commerce, branża lifestyle</div>
+
+          <div class="space-y-4 text-sm text-gray-300 leading-relaxed">
+            <p>
+              Kampania Meta miała stabilny budżet, ale ROAS systematycznie spadał. Audyt pokazał, że Pixel widział tylko 61% konwersji, a EMQ Score wynosił 51%.
+            </p>
+            <p>
+              Algorytm optymalizował kampanię pod niepełne dane. Szukał klientów w segmentach, które wyglądały dobrze w raportach, ale nie odzwierciedlały rzeczywistości.
+            </p>
+            <p>
+              Po wdrożeniu serwer-side trackingu algorytm zobaczył 24% więcej transakcji i zaczął dostarczać tańsze kliknięcia od właściwej grupy odbiorców.
+            </p>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <div class="bg-accent/10 border border-accent/20 rounded-xl p-4 text-center">
+              <p class="text-2xl font-extrabold text-accent">+24%</p>
+              <p class="text-xs text-gray-400 mt-1">więcej widocznych konwersji</p>
+            </div>
+            <div class="bg-accent/10 border border-accent/20 rounded-xl p-4 text-center">
+              <p class="text-2xl font-extrabold text-accent">30 dni</p>
+              <p class="text-xs text-gray-400 mt-1">do pełnych efektów</p>
+            </div>
+          </div>
+
+          <a
+            href="/wiedza/meta-capi-server-side-case-study-maltaview"
+            class="mt-6 inline-flex items-center gap-2 text-accent text-sm font-semibold hover:underline"
+          >
+            Czytaj pełne case study
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .case-bar {
+    width: 0;
+    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #case-study.is-visible .case-bar {
+    width: var(--target-w);
+  }
+</style>
+
+<script>
+  const section = document.getElementById('case-study');
+  if (section) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        section.classList.add('is-visible');
+        observer.disconnect();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(section);
+  }
+</script>
