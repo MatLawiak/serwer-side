@@ -86,6 +86,13 @@ function addCorsHeaders(headers) {
   return response;
 }
 
+// Sciezki specyficzne dla sGTM container (Stape mial, Tag Gateway nie potrzebuje)
+// Zwracamy 204 No Content zeby unikac bledu w console.
+const SILENT_204_PATTERNS = [
+  /^\/metrics\/sw_iframe\.html/,
+  /^\/metrics\/service_worker\//,
+];
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -97,6 +104,16 @@ export default {
         status: 204,
         headers: addCorsHeaders(new Headers()),
       });
+    }
+
+    // Silent 204 dla sciezek sGTM container ktore u nas nie istnieja
+    for (const pattern of SILENT_204_PATTERNS) {
+      if (pattern.test(pathname)) {
+        return new Response(null, {
+          status: 204,
+          headers: addCorsHeaders(new Headers()),
+        });
+      }
     }
 
     // Resolve target Google URL
