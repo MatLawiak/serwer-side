@@ -17,6 +17,25 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 <!doctype html>
 <html lang="pl">
   <head>
+    <!-- Consent Mode v2 default (denied) - musi byc PRZED CookieYes i GTM zeby zatrzymac tagi do czasu zgody -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted',
+        wait_for_update: 2000
+      });
+    </script>
+
+    <!-- CookieYes CMP - wstrzykuje consent update po decyzji uzytkownika -->
+    <script is:inline id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/7069068c48b25e93eee7c1e3274d441c/script.js"></script>
+
     <!-- Google Tag Manager (przez Tag Gateway na serwer-side.pl/metrics/) -->
     <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://serwer-side.pl/metrics/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MNFRJGHT');</script>
     <!-- End Google Tag Manager -->
