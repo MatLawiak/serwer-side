@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "serwer-side-tag-gateway",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-06-03",
+  "routes": [
+    {
+      "pattern": "serwer-side.pl/metrics/*",
+      "zone_name": "serwer-side.pl"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}
