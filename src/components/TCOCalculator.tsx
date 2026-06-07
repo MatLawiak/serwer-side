@@ -114,9 +114,9 @@ export default function TCOCalculator() {
               <p className="text-xs text-red-600 mt-1">{formatPLN(yearlyCost)} / rok</p>
             </div>
             <div className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200" style={{boxShadow: '3px 3px 0px rgba(16,185,129,0.12)'}}>
-              <p className="text-xs text-emerald-700 uppercase tracking-wider mb-1 font-semibold">Meta Power VPS Wariant 2</p>
+              <p className="text-xs text-emerald-700 uppercase tracking-wider mb-1 font-semibold">Meta Power Up Wariant 2</p>
               <p className="text-3xl font-extrabold text-emerald-700">{formatPLN(vpsCost)}</p>
-              <p className="text-xs text-emerald-600 mt-1">500 zł jednorazowo + 45 zł/mc</p>
+              <p className="text-xs text-emerald-600 mt-1">1 200 zł jednorazowo + 35 zł/mc</p>
             </div>
           </div>
 
@@ -144,7 +144,7 @@ export default function TCOCalculator() {
               className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-lg transition-all border-2 border-primary/15 hover:translate-x-[2px] hover:translate-y-[2px]"
               style={{boxShadow: '3px 3px 0px rgba(15,23,42,0.15)'}}
             >
-              Umów demo Meta Power VPS →
+              Umów demo Meta Power Up →
             </a>
           </div>
         </div>

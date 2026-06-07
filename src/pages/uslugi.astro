@@ -9,7 +9,7 @@ const faq = [
   },
   {
     q: 'Czy muszę wziąć wszystkie 3 usługi?',
-    a: 'Nie. Możesz zacząć od samego Meta Power VPS, a Google Power i Automation dołożyć później. Jeśli bierzesz komplet od razu, dostajesz rabat (dopłata zamiast pełnej ceny standalone), bo infrastruktura już stoi.',
+    a: 'Nie. Możesz zacząć od samego Meta Power Up, a Google Power Up i Automation dołożyć później. Jeśli bierzesz komplet od razu, dostajesz rabat 15% od sumy.',
   },
   {
     q: 'Czy wdrożenie idzie przez Google Tag Manager?',
@@ -17,7 +17,7 @@ const faq = [
   },
   {
     q: 'Czy to zgodne z RODO?',
-    a: 'Tak. VPS stawiam u europejskiego dostawcy (Mikrus w PL, Hostinger w LT/NL/DE). Dane nie opuszczają EOG do momentu, aż sam Meta lub Google je odbierze. Integruję Consent Mode v2, żeby respektować zgody z banera cookies.',
+    a: 'Tak. VPS stawiam na Hostingerze (centra danych w LT/NL/DE, wszystkie w EOG). Dane nie opuszczają EOG do momentu, aż sam Meta lub Google je odbierze. Integruję Consent Mode v2, żeby respektować zgody z banera cookies.',
   },
   {
     q: 'Co, jeśli kiedyś się rozstaniemy?',
@@ -27,8 +27,8 @@ const faq = [
 ---
 
 <Layout
-  title="Usługi: Meta Power VPS, Google Power VPS, Automatyzacje | serwer-side.pl"
-  description="3 usługi dla firm reklamujących się online: Meta CAPI, GA4 + Google Ads server-side, automatyzacje na n8n. Jeden VPS, cały marketing tech stack, pełna własność danych."
+  title="Usługi: Meta Power Up, Google Power Up, Automatyzacje | serwer-side.pl"
+  description="3 usługi dla firm reklamujących się online: Meta CAPI server-side, Google Tag Gateway lub pełen sGTM, automatyzacje na n8n. Hostinger VPS, pełna własność danych."
 >
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20">
@@ -38,7 +38,7 @@ const faq = [
         3 usługi dla firm reklamujących się online. Wybierz jedną, dwie albo wszystkie. Infrastruktura jest współdzielona.
       </p>
       <p class="text-gray-400 text-sm mt-4">
-        Wdrożenie od <strong class="text-white">300 zł</strong> · Abonament od <strong class="text-white">25 zł/mies.</strong> · Pełna własność danych i infrastruktury
+        Wdrożenie od <strong class="text-white">800 zł</strong> · Abonament od <strong class="text-white">0 zł/mies.</strong> (Cloudflare Free) lub <strong class="text-white">25 zł/mies.</strong> (Hostinger VPS)
       </p>
     </div>
   </section>
@@ -62,16 +62,16 @@ const faq = [
 
       <div class="grid md:grid-cols-3 gap-8">
 
-        {/* Meta Power VPS */}
+        {/* Meta Power Up */}
         <a href="/uslugi/meta-power-vps" class="group bg-white rounded-xl p-8 card-brutal-accent relative flex flex-col hover:shadow-lg transition-shadow">
           <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
             Główna oferta
           </span>
           <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Usługa 1</p>
-          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Meta Power VPS</h3>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Meta Power Up</h3>
           <p class="text-gray-600 text-sm mb-4">Dedykowany Meta CAPI + Pixel server-side. Odzyskuje 30–50% konwersji gubionych przez iOS 14+, ITP i adblockery.</p>
-          <p class="text-accent font-extrabold text-3xl mb-1">od 300 zł</p>
-          <p class="text-gray-500 text-sm mb-6">+ abonament 25–130 zł/mies.</p>
+          <p class="text-accent font-extrabold text-3xl mb-1">od 800 zł</p>
+          <p class="text-gray-500 text-sm mb-6">+ abonament 25–50 zł/mies. (Hostinger)</p>
           <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
             <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Meta Conversions API z deduplikacją</span></li>
             <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Enhanced Matching (hashed PII)</span></li>
@@ -83,18 +83,18 @@ const faq = [
           </span>
         </a>
 
-        {/* Google Power VPS */}
+        {/* Google Power Up */}
         <a href="/uslugi/google-power-vps" class="group bg-white rounded-xl p-8 card-brutal flex flex-col hover:shadow-lg transition-shadow">
           <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Usługa 2</p>
-          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Google Power VPS</h3>
-          <p class="text-gray-600 text-sm mb-4">GA4 Measurement Protocol + Google Ads Enhanced Conversions na tym samym VPS-ie. Bez miesięcznych abonamentów.</p>
-          <p class="text-accent font-extrabold text-3xl mb-1">od 200 zł</p>
-          <p class="text-gray-500 text-sm mb-6">dopłata do Meta PVS · 400 zł standalone</p>
+          <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Google Power Up</h3>
+          <p class="text-gray-600 text-sm mb-4">Dwie drogi: Tag Gateway na Cloudflare (do 50k zł budżetu/m-c, 0 zł utrzymania) lub pełen sGTM na VPS (powyżej 50k zł).</p>
+          <p class="text-accent font-extrabold text-3xl mb-1">od 1 000 zł</p>
+          <p class="text-gray-500 text-sm mb-6">Tag Gateway · od 2 200 zł Server-Side</p>
           <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 server-side (Measurement Protocol)</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 i Google Ads server-side</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Tag Gateway omija adblockery (0 zł/mies.)</span></li>
             <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Zero dodatkowego abonamentu (ten sam sGTM)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Próg sensowności VPS: 50k zł budżetu/m-c</span></li>
           </ul>
           <span class="inline-flex items-center gap-2 text-accent font-semibold text-sm">
             Zobacz szczegóły →

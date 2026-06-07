@@ -4,19 +4,19 @@ import TrustBadges from '../../components/TrustBadges.astro';
 ---
 
 <Layout
-  title="Google Power VPS - czysty GA4 i skuteczny Google Ads | serwer-side.pl"
-  description="GA4 i Google Ads Enhanced Conversions server-side na Twoim VPS. Pełny obraz ścieżki użytkownika, Consent Mode v2, pełna własność danych. Wdrożenie od 200 zł."
+  title="Google Power Up - czysty GA4 i skuteczny Google Ads | serwer-side.pl"
+  description="GA4 i Google Ads server-side. Dwie drogi w zaleznosci od budzetu reklamowego: Tag Gateway na Cloudflare od 1000 zl, lub serwer VPS od 2200 zl. Pelna wlasnosc danych, Consent Mode v2."
 >
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Usługa 2 · Google Power VPS</span>
-      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Google Power VPS</h1>
+      <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">Usługa 2 · Google Power Up</span>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Google Power Up</h1>
       <p class="text-gray-300 text-lg md:text-xl mb-4">
-        Czysty GA4, skuteczny Google Ads, Consent Mode v2 bez bólu głowy. Na Twoim VPS-ie, bez miesięcznych abonamentów.
+        Czysty GA4, skuteczny Google Ads, Consent Mode v2 bez bólu głowy. Dwie drogi w zależności od budżetu reklamowego.
       </p>
       <p class="text-gray-400 text-sm mt-4">
-        Wdrożenie od <strong class="text-white">200 zł</strong> jako dopłata do Meta PVS (lub <strong class="text-white">400 zł</strong> standalone)
+        <strong class="text-white">Tag Gateway</strong> od 1 000 zł (do 50k zł budżetu/m-c) · <strong class="text-white">Server-Side VPS</strong> od 2 200 zł (powyżej)
       </p>
     </div>
   </section>
@@ -28,7 +28,7 @@ import TrustBadges from '../../components/TrustBadges.astro';
     </div>
   </section>
 
-  {/* Czy to dla Ciebie? — sygnały problemu */}
+  {/* Czy to dla Ciebie? */}
   <section class="py-16 md:py-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="mb-4">
@@ -36,7 +36,7 @@ import TrustBadges from '../../components/TrustBadges.astro';
       </div>
       <h2 class="text-2xl md:text-3xl font-bold mb-4">6 sygnałów, że Twój GA4 i Google Ads szwankują</h2>
       <p class="text-gray-600 mb-8 max-w-3xl">
-        Jeśli rozpoznajesz choć 2 z poniższych sytuacji, Twój Google stack pracuje na niepełnych danych. Google Power VPS załatwia wszystkie naraz.
+        Jeśli rozpoznajesz choć 2 z poniższych sytuacji, Twój Google stack pracuje na niepełnych danych. Google Power Up załatwia wszystkie naraz.
       </p>
 
       <div class="grid md:grid-cols-2 gap-6">
@@ -84,8 +84,8 @@ import TrustBadges from '../../components/TrustBadges.astro';
           <div class="flex items-start gap-3">
             <div class="shrink-0 w-10 h-10 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold text-lg">5</div>
             <div>
-              <h3 class="font-bold text-primary mb-1">Koszty Twojego trackingu rosną z ruchem</h3>
-              <p class="text-sm text-gray-600">Typowe hostowane rozwiązania sGTM liczą opłatę od liczby requestów. Im większy ruch, tym wyższa faktura. Własny VPS ma stały koszt, niezależny od wolumenu. Przy 1 mln requestów miesięcznie różnica to 300 do 400 zł/mies.</p>
+              <h3 class="font-bold text-primary mb-1">Płacisz Stape, Stape.io lub hostowany sGTM</h3>
+              <p class="text-sm text-gray-600">Typowe hostowane rozwiązania liczą opłatę 80 do 400 zł/mies. Im większy ruch, tym wyższa faktura. Cloudflare Workers dla Tag Gateway są w 99% bezpłatne. Hostinger VPS dla pełnego server-side ma stały koszt 35 zł/mies.</p>
             </div>
           </div>
         </div>
@@ -103,69 +103,127 @@ import TrustBadges from '../../components/TrustBadges.astro';
     </div>
   </section>
 
-  {/* Jak to działa — mechanika z miejscem na infografiki */}
+  {/* Dwie drogi - kluczowa sekcja */}
   <section class="py-16 md:py-20 bg-stone-50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-4">
-        <span class="text-xs font-bold text-accent uppercase tracking-wider">Jak to działa</span>
+      <div class="mb-4 text-center">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Dwie drogi do wyboru</span>
       </div>
-      <h2 class="text-2xl md:text-3xl font-bold mb-6">Ten sam serwer co Meta Power VPS, dodatkowe tagi</h2>
-      <p class="text-gray-600 mb-10 max-w-3xl">
-        Google Power VPS wykorzystuje tę samą infrastrukturę, co Meta Power VPS. Dokładam tagi GA4 i Google Ads do istniejącego kontenera. Jeśli zaczynasz od Google, stawiam VPS od zera (tak samo jak dla Meta).
+      <h2 class="text-2xl md:text-3xl font-bold mb-4 text-center">Która opcja dla Ciebie?</h2>
+      <p class="text-gray-600 mb-12 max-w-3xl mx-auto text-center">
+        Wybór zależy od jednej rzeczy: <strong>budżetu reklamowego miesięcznego</strong>. Próg to <strong>50 000 zł/mies. na Google Ads</strong>. Pokazuję obie drogi, żebyś sam zobaczył która do Twojej skali pasuje.
       </p>
 
-      {/* Infografika 1: Przepływ danych Google */}
-      <figure class="mb-10">
-        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
-          <img
-            src="/infografiki/google-power-vps-przeplyw.jpeg"
-            alt="Schemat przepływu danych GA4 i Google Ads przez serwer VPS"
-            class="mx-auto max-w-full h-auto"
-            loading="lazy"
-          />
-        </div>
-        <figcaption class="text-center text-sm text-gray-500 mt-3">
-          Infografika 1: Jak dane trafiają z Twojej strony przez VPS do GA4 i Google Ads.
-        </figcaption>
-      </figure>
+      <div class="grid md:grid-cols-2 gap-6">
 
-      <div class="grid md:grid-cols-2 gap-6 mb-10">
-        <div class="bg-white rounded-xl p-6 card-brutal">
-          <div class="text-accent font-extrabold text-3xl mb-2">GA4</div>
-          <h3 class="font-bold text-primary mb-2">Measurement Protocol server-side</h3>
-          <p class="text-sm text-gray-600">Zamiast polegać na przeglądarce, GA4 dostaje dane z Twojego serwera. Sesje nie urywają się, atrybucja jest pełna, raport „Źródło ruchu" mówi prawdę.</p>
+        {/* Droga A: Tag Gateway */}
+        <div class="bg-white rounded-xl p-8 card-brutal-accent flex flex-col">
+          <div class="mb-2">
+            <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded-full">DO 50 000 ZŁ/MIES.</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Droga A: Tag Gateway</h3>
+          <p class="text-gray-500 text-sm mb-4">Reverse proxy przez Cloudflare</p>
+
+          <p class="text-accent font-extrabold text-3xl mb-1">od 1 000 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo</p>
+          <p class="text-gray-600 text-sm font-semibold mb-6">+ <strong class="text-emerald-700">0 zł/mies.</strong> utrzymania</p>
+
+          <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 i Google Ads przez Twoją własną domenę</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Omija adblockery (Brave, uBlock, AdGuard)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>First-party cookies (mniej Safari ITP)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Cloudflare Workers Free (do 100k req/dzień)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 setup</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>1 do 2 dni roboczych</span></li>
+          </ul>
+
+          <div class="bg-stone-50 rounded-lg p-4 text-xs text-gray-600">
+            <strong>Dla kogo:</strong> małe i średnie biznesy do 30-50k zł budżetu na Google Ads. WordPress, WooCommerce, strony usługowe z formularzami, blogi affiliate.
+          </div>
         </div>
-        <div class="bg-white rounded-xl p-6 card-brutal">
-          <div class="text-accent font-extrabold text-3xl mb-2">Ads</div>
-          <h3 class="font-bold text-primary mb-2">Enhanced Conversions server-to-server</h3>
-          <p class="text-sm text-gray-600">Zaszyfrowane dane klienta (email, telefon) idą bezpośrednio do Google Ads. Algorytm precyzyjniej dopasowuje konwersje do użytkowników i optymalizuje kampanie.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal">
-          <div class="text-accent font-extrabold text-3xl mb-2">CM v2</div>
-          <h3 class="font-bold text-primary mb-2">Consent Mode v2 advanced</h3>
-          <p class="text-sm text-gray-600">Gotowa zgoda z Twoim banerem cookies. Google dostaje sygnał nawet od użytkowników, którzy odmówili, i modeluje ich konwersje, zamiast zgubić.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal">
-          <div class="text-accent font-extrabold text-3xl mb-2">0 zł</div>
-          <h3 class="font-bold text-primary mb-2">Bez dodatkowego abonamentu</h3>
-          <p class="text-sm text-gray-600">Jeśli masz już Meta PVS, Google działa na tym samym serwerze. Żadnego dodatkowego rachunku miesięcznego. Płacisz raz za wdrożenie tagów.</p>
+
+        {/* Droga B: Server-Side */}
+        <div class="bg-white rounded-xl p-8 card-brutal flex flex-col">
+          <div class="mb-2">
+            <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded-full">POWYŻEJ 50 000 ZŁ/MIES.</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">Droga B: Server-Side VPS</h3>
+          <p class="text-gray-500 text-sm mb-4">Pełen sGTM na własnym serwerze</p>
+
+          <p class="text-accent font-extrabold text-3xl mb-1">od 2 200 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo</p>
+          <p class="text-gray-600 text-sm font-semibold mb-6">+ <strong>35 do 50 zł/mies.</strong> (Hostinger KVM 2)</p>
+
+          <ul class="text-gray-700 space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Pełen kontener sGTM, nie tylko proxy</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Modyfikacja eventów (PII redaction, wzbogacanie z CRM)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Kontrola compliance EU vs USA (Schrems II)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions advanced</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Możliwość integracji z Meta CAPI na tym samym VPS</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>3 do 5 dni roboczych</span></li>
+          </ul>
+
+          <div class="bg-stone-50 rounded-lg p-4 text-xs text-gray-600">
+            <strong>Dla kogo:</strong> średnie i duże e-commerce, biznesy z budżetem 50k+ zł/mies. na Google Ads, klienci wymagający compliance PII/RODO, projekty łączące Google + Meta + TikTok.
+          </div>
         </div>
       </div>
 
-      {/* Infografika 2: Consent Mode v2 */}
-      <figure>
-        <div class="bg-white rounded-xl card-brutal p-4 md:p-8 text-center">
-          <img
-            src="/infografiki/google-consent-mode-v2.jpeg"
-            alt="Schemat działania Consent Mode v2 z sygnalizacją zgody do Google"
-            class="mx-auto max-w-full h-auto"
-            loading="lazy"
-          />
+      {/* Tabela porownawcza */}
+      <div class="mt-10 bg-white rounded-xl p-6 md:p-8 card-brutal">
+        <h3 class="text-lg font-bold mb-6 text-center">Porównanie dróg</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[600px] text-sm">
+            <thead>
+              <tr class="border-b-2 border-gray-200">
+                <th class="text-left py-3 px-3 font-semibold text-gray-700">Aspekt</th>
+                <th class="text-center py-3 px-3 font-semibold text-emerald-700">Tag Gateway</th>
+                <th class="text-center py-3 px-3 font-semibold text-blue-700">Server-Side VPS</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-700">
+              <tr class="border-b border-gray-100">
+                <td class="py-3 px-3 font-semibold">Cena setup</td>
+                <td class="py-3 px-3 text-center">1 000 do 1 800 zł</td>
+                <td class="py-3 px-3 text-center">2 200 do 3 500 zł</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="py-3 px-3 font-semibold">Utrzymanie/mies.</td>
+                <td class="py-3 px-3 text-center font-bold text-emerald-700">0 zł</td>
+                <td class="py-3 px-3 text-center">35 do 50 zł</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-3 px-3 font-semibold">Infrastruktura</td>
+                <td class="py-3 px-3 text-center text-xs">Cloudflare Workers Free</td>
+                <td class="py-3 px-3 text-center text-xs">Hostinger KVM 2</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="py-3 px-3 font-semibold">Modyfikacja eventów</td>
+                <td class="py-3 px-3 text-center">Brak (pass-through)</td>
+                <td class="py-3 px-3 text-center font-bold">Pełna</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-3 px-3 font-semibold">Compliance EU/PII</td>
+                <td class="py-3 px-3 text-center">Podstawowy</td>
+                <td class="py-3 px-3 text-center font-bold">Pełna kontrola</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="py-3 px-3 font-semibold">Czas wdrożenia</td>
+                <td class="py-3 px-3 text-center">1 do 2 dni</td>
+                <td class="py-3 px-3 text-center">3 do 5 dni</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 font-semibold">Próg sensowności</td>
+                <td class="py-3 px-3 text-center">do 50k zł budżetu/m-c</td>
+                <td class="py-3 px-3 text-center">powyżej 50k zł/m-c</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <figcaption class="text-center text-sm text-gray-500 mt-3">
-          Infografika 2: Jak Consent Mode v2 pozwala modelować konwersje nawet od użytkowników, którzy odmówili zgody.
-        </figcaption>
-      </figure>
+        <div class="mt-6 bg-emerald-50 border-l-4 border-emerald-400 rounded-r-lg p-4 text-sm text-emerald-900">
+          <strong>Reguła kciuka:</strong> jeśli wahasz się między opcjami, zacznij od Tag Gateway. Działa w 80% projektów MŚP, kosztuje 0 zł/mies., zwraca się w pierwszym tygodniu. Migracja do Server-Side VPS możliwa później, jeśli urośniesz powyżej progu.
+        </div>
+      </div>
     </div>
   </section>
 
@@ -181,7 +239,7 @@ import TrustBadges from '../../components/TrustBadges.astro';
         <div class="bg-white rounded-xl p-6 card-brutal">
           <div class="text-accent font-extrabold text-3xl mb-2">+20 do 40%</div>
           <h3 class="font-bold text-primary mb-2">Więcej widocznych konwersji w Google Ads</h3>
-          <p class="text-sm text-gray-600">Enhanced Conversions + server-side odzyskuje konwersje gubione w blokadach cookies i ITP. Algorytm Performance Max uczy się na pełnych danych.</p>
+          <p class="text-sm text-gray-600">Tag Gateway omija adblockery, server-side dorzuca Enhanced Conversions. Algorytm Performance Max uczy się na pełnych danych.</p>
         </div>
         <div class="bg-white rounded-xl p-6 card-brutal">
           <div class="text-accent font-extrabold text-3xl mb-2">Pełny</div>
@@ -189,9 +247,9 @@ import TrustBadges from '../../components/TrustBadges.astro';
           <p class="text-sm text-gray-600">Koniec z 40% ruchu w kategorii „(not set)" i „direct". Raporty źródeł ruchu, lejków i atrybucji zaczynają mieć sens, a decyzje oparte są na prawdziwych liczbach.</p>
         </div>
         <div class="bg-white rounded-xl p-6 card-brutal">
-          <div class="text-accent font-extrabold text-3xl mb-2">2 400 zł</div>
+          <div class="text-accent font-extrabold text-3xl mb-2">~4 000 zł</div>
           <h3 class="font-bold text-primary mb-2">Rocznie oszczędności na hostingu</h3>
-          <p class="text-sm text-gray-600">Typowy hostowany sGTM przy średnim ruchu to 300 do 400 zł/mies., czyli 3 600 do 4 800 zł rocznie. Google Power VPS to jednorazowe 200 do 800 zł plus ten sam VPS, który masz pod Meta. Różnica sama się policzy.</p>
+          <p class="text-sm text-gray-600">Stape startup to 80 zł/mies. (960 zł rocznie), business 400 zł/mies. (4 752 zł). Tag Gateway na Cloudflare to 0 zł, Server-Side VPS 50 zł/mies. (600 zł rocznie). Różnica robi się sama w 12 miesięcy.</p>
         </div>
         <div class="bg-white rounded-xl p-6 card-brutal">
           <div class="text-accent font-extrabold text-3xl mb-2">DSA</div>
@@ -202,13 +260,137 @@ import TrustBadges from '../../components/TrustBadges.astro';
     </div>
   </section>
 
-  {/* Dla kogo */}
+  {/* Cennik szczegolowy */}
   <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik szczegółowy</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4">Wybierz wariant pod swój lejek</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Cena zależy od liczby konwersji i złożoności trackingu. Wszystkie warianty obejmują Consent Mode v2 setup.
+        </p>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4 text-emerald-700">Tag Gateway (budżet do 50k zł/m-c)</h3>
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant A1</p>
+          <h3 class="text-lg font-bold mb-1">Formularz</h3>
+          <p class="text-gray-500 text-sm mb-3">GA4 Lead + Google Ads Conv.</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">1 000 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 0 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">1 dzień roboczy</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Cloudflare Worker (Tag Gateway)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 event <code class="bg-stone-100 px-1 rounded text-xs">generate_lead</code></span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions (1 akcja)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 + CookieYes setup</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Strony usługowe, kancelarie, B2B lead-gen</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal-accent relative flex flex-col">
+          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Najczęściej wybierany</span>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant A2</p>
+          <h3 class="text-lg font-bold mb-1">Cały ruch z konwersją</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełny GA4 + Google Ads</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">1 400 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 0 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">1 do 2 dni roboczych</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wszystko z A1</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Pełny GA4 (PageView, scroll, engagement)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads remarketing audiences</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Floodlight (Google Marketing Platform)</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Blogi, portale, SaaS z lead-gen</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant A3</p>
+          <h3 class="text-lg font-bold mb-1">E-commerce MŚP</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełen lejek zakupowy</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">1 800 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 0 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">2 do 3 dni roboczych</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wszystko z A2</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 Enhanced Ecommerce</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads dynamic remarketing</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Merchant Center sync</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">WooCommerce, PrestaShop, Shopify Plus</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-bold mb-4 text-blue-700">Server-Side VPS (budżet powyżej 50k zł/m-c)</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant B1</p>
+          <h3 class="text-lg font-bold mb-1">Formularz + Lead</h3>
+          <p class="text-gray-500 text-sm mb-3">GA4 + Google Ads + modyfikacje</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">2 200 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 35 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">Hostinger KVM 2, 2 do 3 dni</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Pełen sGTM kontener</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>PII redaction przed wysyłką do USA</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Compliance Schrems II</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Walidacja w GA4 DebugView</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Średnie B2B, fintech, ubezpieczenia</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal-accent relative flex flex-col">
+          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Pełny pakiet</span>
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant B2</p>
+          <h3 class="text-lg font-bold mb-1">Cały ruch + remarketing</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełny GA4 + GAds + wzbogacanie z CRM</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">2 800 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 35 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">Hostinger KVM 2, 3 do 4 dni</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wszystko z B1</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wzbogacanie eventów z Twojego CRM</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>User-ID stitching (dla zalogowanych)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 advanced</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">SaaS premium, edu z subskrypcjami</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant B3</p>
+          <h3 class="text-lg font-bold mb-1">E-commerce premium</h3>
+          <p class="text-gray-500 text-sm mb-3">Pełen sGTM + Meta CAPI na tym samym VPS</p>
+          <p class="text-accent font-extrabold text-2xl mb-1">3 500 zł</p>
+          <p class="text-gray-500 text-xs mb-1">jednorazowo + 50 zł/mies.</p>
+          <p class="text-gray-500 text-xs mb-4">Hostinger KVM 4, 5 do 7 dni</p>
+          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Wszystko z B2</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Meta CAPI na tym samym serwerze</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Product feed sync (Merchant + Catalog)</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Raport „przed i po" w 30 dniach</span></li>
+            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Szkolenie 1h video call</span></li>
+          </ul>
+          <p class="text-gray-500 text-xs">Sklepy 100k+ zł budżet reklamowy/m-c</p>
+        </div>
+      </div>
+
+      <div class="mt-10 bg-stone-50 rounded-xl p-6 text-center text-sm text-gray-700">
+        💡 <strong>Pakiet kompleksowy:</strong> Meta Power Up + Google Power Up razem = rabat 15% od sumy. Najlepsza opcja jeśli prowadzisz reklamy na obu platformach.
+      </div>
+    </div>
+  </section>
+
+  {/* Dla kogo */}
+  <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="mb-4">
         <span class="text-xs font-bold text-accent uppercase tracking-wider">Dla kogo</span>
       </div>
-      <h2 class="text-2xl md:text-3xl font-bold mb-8">Google Power VPS ma sens, jeśli...</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Google Power Up ma sens, jeśli...</h2>
 
       <div class="space-y-3">
         <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
@@ -217,89 +399,16 @@ import TrustBadges from '../../components/TrustBadges.astro';
         </div>
         <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
           <span class="text-emerald-500 font-bold text-xl">✓</span>
-          <p class="text-gray-700"><strong>Używasz GA4 do raportowania biznesowego.</strong> Jeśli GA4 to podstawa decyzji marketingowych, musi mieć czyste dane. Server-side zamyka luki.</p>
+          <p class="text-gray-700"><strong>Używasz GA4 do raportowania biznesowego.</strong> Jeśli GA4 to podstawa decyzji marketingowych, musi mieć czyste dane. Tag Gateway lub server-side zamykają luki.</p>
         </div>
         <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
           <span class="text-emerald-500 font-bold text-xl">✓</span>
-          <p class="text-gray-700"><strong>Masz już Meta Power VPS.</strong> Najlepszy moment na dołożenie Google. Ten sam serwer, ten sam sGTM, tylko dodatkowe tagi. Dopłata 200 do 800 zł zamiast pełnej ceny.</p>
+          <p class="text-gray-700"><strong>Masz już Meta Power Up.</strong> Możemy postawić Tag Gateway dla Google jako dopłatę 800 zł, albo dorzucić Google Server-Side do istniejącego VPS jako dopłatę 1 200 zł.</p>
         </div>
         <div class="flex items-start gap-3 bg-white rounded-xl p-5 card-brutal">
           <span class="text-emerald-500 font-bold text-xl">✓</span>
-          <p class="text-gray-700"><strong>Chcesz własną infrastrukturę, zamiast hostowanej u zewnętrznego dostawcy.</strong> VPS zostaje Twój, dane zostają u Ciebie, abonament nie rośnie wraz z ruchem.</p>
+          <p class="text-gray-700"><strong>Chcesz własną infrastrukturę zamiast hostowanej u zewnętrznego dostawcy.</strong> Cloudflare lub VPS zostaje Twój. Abonament nie rośnie wraz z ruchem.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  {/* Cennik — 3 warianty */}
-  <section class="py-16 md:py-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
-        <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4">3 warianty zależnie od lejka</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">
-          <strong>Dopłata</strong> dla klientów z Meta Power VPS (ten sam VPS i sGTM). <strong>Standalone</strong> dla startujących od Google.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6 mb-8">
-
-        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 1</p>
-          <h3 class="text-lg font-bold mb-1">Formularz</h3>
-          <p class="text-gray-500 text-sm mb-3">GA4 Lead + Google Ads Conv.</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">+200 zł</p>
-          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
-          <p class="text-gray-600 text-sm mb-1">lub <strong>400 zł</strong> standalone</p>
-          <p class="text-gray-500 text-xs mb-4">2 dni robocze</p>
-          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 event <code class="bg-stone-100 px-1 rounded text-xs">generate_lead</code></span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads Enhanced Conversions (1 akcja)</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 basic</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Walidacja w GA4 DebugView</span></li>
-          </ul>
-          <p class="text-gray-500 text-xs">Kampanie Google Search i PMax lead-gen</p>
-        </div>
-
-        <div class="bg-white rounded-xl p-6 card-brutal-accent relative flex flex-col">
-          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Najczęściej wybierany</span>
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 2</p>
-          <h3 class="text-lg font-bold mb-1">Cały ruch z konwersją</h3>
-          <p class="text-gray-500 text-sm mb-3">Pełny GA4 + Google Ads</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">+400 zł</p>
-          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
-          <p class="text-gray-600 text-sm mb-1">lub <strong>800 zł</strong> standalone</p>
-          <p class="text-gray-500 text-xs mb-4">3 do 4 dni roboczych</p>
-          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Pełny GA4 server-side (PageView, scroll, engagement)</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads: konwersje i remarketing audiences</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Consent Mode v2 advanced</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>User-ID stitching (dla zalogowanych)</span></li>
-          </ul>
-          <p class="text-gray-500 text-xs">SaaS, portale, edukacja z długim lejkiem</p>
-        </div>
-
-        <div class="bg-white rounded-xl p-6 card-brutal flex flex-col">
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Wariant 3</p>
-          <h3 class="text-lg font-bold mb-1">E-commerce</h3>
-          <p class="text-gray-500 text-sm mb-3">GA4 Enhanced Ecom + GAds</p>
-          <p class="text-accent font-extrabold text-2xl mb-1">+800 zł</p>
-          <p class="text-gray-500 text-xs mb-1">dopłata do Meta PVS</p>
-          <p class="text-gray-600 text-sm mb-1">lub <strong>1 600 zł</strong> standalone</p>
-          <p class="text-gray-500 text-xs mb-4">5 do 8 dni roboczych</p>
-          <ul class="text-gray-700 space-y-2 mb-4 flex-grow text-sm">
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>GA4 Enhanced Ecommerce (pełen lejek)</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Google Ads dynamic remarketing i Merchant Center</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Product feed sync (id, cena, dostępność)</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Eventy zwrotów i anulowań</span></li>
-            <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Raport „przed i po" w GA4</span></li>
-          </ul>
-          <p class="text-gray-500 text-xs">Sklepy z Performance Max i Shopping</p>
-        </div>
-      </div>
-
-      <div class="bg-stone-50 rounded-xl p-6 text-center">
-        💡 <strong>Kluczowa informacja:</strong> Google Power VPS <strong>nie zwiększa</strong> abonamentu miesięcznego, jeśli jest dokładany do Meta Power VPS. Ten sam serwer, ten sam sGTM. Płacisz tylko raz za wdrożenie tagów.
       </div>
     </div>
   </section>
@@ -308,13 +417,13 @@ import TrustBadges from '../../components/TrustBadges.astro';
   <section class="py-16 md:py-20 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-bold mb-4">
-        Chcesz czysty GA4 i skuteczny Google Ads na własnej infrastrukturze?
+        Nie wiesz, którą drogę wybrać dla Twojego budżetu?
       </h2>
       <p class="text-gray-300 mb-2">
-        W 30 minut sprawdzimy stan Twojego GA4, Consent Mode i Enhanced Conversions. Dobierzemy wariant Google Power VPS lub pakiet z Meta PVS.
+        W 30 minut sprawdzimy stan Twojego GA4, Consent Mode i budżet reklamowy. Powiem konkretnie, czy Tag Gateway u Ciebie wystarczy, czy lepiej iść w Server-Side VPS.
       </p>
       <p class="text-gray-400 text-sm mb-8">
-        Bezpłatna rozmowa, bez zobowiązań. Dostajesz konkretną propozycję zakresu.
+        Bezpłatna rozmowa, bez zobowiązań. Lub napisz na <strong class="text-white">kontakt@serwer-side.pl</strong> z linkiem do strony i orientacyjnym budżetem reklamowym.
       </p>
       <a
         href="/kontakt"
@@ -324,7 +433,7 @@ import TrustBadges from '../../components/TrustBadges.astro';
       </a>
       <div class="mt-8 pt-8 border-t border-white/10 grid md:grid-cols-3 gap-4 text-sm">
         <a href="/uslugi/meta-power-vps" class="text-gray-300 hover:text-accent transition-colors">
-          ← Zobacz też: Meta Power VPS
+          ← Zobacz też: Meta Power Up
         </a>
         <a href="/uslugi" class="text-gray-300 hover:text-accent transition-colors">
           Wszystkie usługi
