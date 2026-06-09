@@ -1,0 +1,282 @@
+---
+title: "Tracking leadów Meta CAPI: case Callio w 1 dzień"
+description: "Tracking leadów Meta CAPI dla SaaS Callio: Pixel + serwer z deduplikacją. Wdrożyłem w 1 dzień, koszt 0 zł, bypass adblockerów. Sprawdź case study."
+date: 2026-06-09
+tags: ["tracking leadów", "Meta CAPI", "case study", "server-side tracking"]
+readingTime: "9 min czytania"
+---
+
+## W skrócie
+
+- Callio (trycallio.com) to amerykański SaaS sprzedający usługę wirtualnego recepcjonisty AI. Konwersja Lead to klik w "Call to get started", który wywołuje numer telefonu sprzedaży.
+- Wdrożyliśmy **tracking leadów Meta CAPI** w pełnym pipeline: Cloudflare Worker, n8n na serwerze klienta, dedup po event_id, RODO Consent Gate.
+- Całość poszła **w 1 dzień**, koszt utrzymania **0 zł miesięcznie**.
+- Pierwszy real test produkcyjny: Browser Pixel Lead + Server CAPI Lead z tym samym event_id. Meta zdedupowała na 1 konwersję.
+
+---
+
+## Pixel po stronie przeglądarki to połowa obrazu
+
+Jeśli Twoja firma B2B zbiera leady i polegasz wyłącznie na pikselu Meta po stronie przeglądarki, **tracisz od 20 do 40% konwersji**. To nie jest teoria.
+
+iOS Safari z ITP usuwa ciasteczka po 7 dniach. Adblockery blokują żądanie do `facebook.com/tr` zanim w ogóle się odpali. Chrome wyłącza third-party cookies stopniowo. Każdy z tych elementów odbiera dane algorytmowi Meta, który optymalizuje Twoje kampanie.
+
+Płacisz Mecie za leady, których w połowie nie widzi. Algorytm uczy się na niepełnym zbiorze i podaje Ci coraz słabsze wyniki.
+
+**Tracking leadów Meta CAPI** rozwiązuje ten problem na poziomie infrastruktury, nie wtyczek. Klient Callio jest dobrym przykładem jak to wdrożyć szybko i bez SaaS-owych kosztów.
+
+---
+
+## Klient: Callio (trycallio.com)
+
+Callio to SaaS B2B z USA. Sprzedaje **AI Receptionist** dla małych firm. Algorytm odbiera telefony, rozpoznaje intencję klienta i zapisuje rozmowę w panelu sprzedawcy.
+
+Konwersja sprzedażowa to **klik w "Call to get started"** na landingu. Klik wywołuje numer sprzedaży, klient ma rozmowę z AI demo, a sprzedawca dzwoni z follow-upem.
+
+Model biznesowy:
+
+- Krótki lejek, decyzja zakupowa **w tym samym dniu lub tygodniu**
+- Wartość pojedynczego leada wysoka (subskrypcja miesięczna **49-299 USD**)
+- Kampanie Meta Ads optymalizowane pod event Lead
+
+Stack techniczny po stronie Callio:
+
+- Frontend: Expo Web (React Native dla webu), SPA renderowana na **Cloudflare Pages**
+- Backend: REST API na własnym VPS w Hetznerze
+- Auth: Firebase plus Cognito
+- Tracking dotychczasowy: zero. Pierwsza pełna implementacja Meta plus GA4
+
+To wymarzony case start. Świeży projekt, brak długu w postaci starych wtyczek WordPressa, klient z silnym dev po swojej stronie.
+
+---
+
+## Architektura: 3 warstwy między klikiem a panelem Meta Ads
+
+Standardowe wdrożenie Pixela Meta to jedna warstwa. Skrypt w przeglądarce, wysyłka do `facebook.com/tr`, gotowe. Działa tak długo jak adblock i Safari nie powiedzą "nie".
+
+Dla Callio wdrożyliśmy **3 warstwy** współpracujące ze sobą:
+
+1. **Przeglądarka klienta**: standardowy Pixel Meta jako fallback, plus skrypt generujący stały identyfikator zdarzenia
+2. **Cloudflare Worker** na własnej domenie `trycallio.com/metrics/*` jako pierwsze odbicie ruchu
+3. **Serwer Callio** z workflow n8n, który spina się z Conversions API Meta
+
+Każda warstwa ma jedną odpowiedzialność. Każda jest niezależna, ale wspólnie tworzą sieć, której adblock nie blokuje, a Safari nie wycina.
+
+<!-- INFOGRAFIKA: Schemat architektury 3-warstwowej. Klient → Cloudflare Worker (first-party trycallio.com/metrics) → n8n na serwerze klienta → Meta CAPI. Pokazać że Browser Pixel i Server CAPI lecą równolegle z tym samym event_id. -->
+
+### Co się dzieje przy kliknięciu
+
+Klient odwiedza `trycallio.com`. Przy ładowaniu strony wykonują się 3 rzeczy w określonej kolejności:
+
+- **Consent Mode v2** ustawia stan zgody na "denied all" jako domyślny
+- **CookieYes Banner** pokazuje informację o cookies i czeka na decyzję
+- Jeśli klient akceptuje cookies, **Meta Pixel** ładuje się i wysyła PageView z unikalnym identyfikatorem
+
+Równocześnie nasz skrypt generuje identyfikator dla potencjalnej konwersji Lead. Zapisuje go w pliku cookie o czasie życia **30 minut** i ustawia jako globalną zmienną.
+
+Klient klika **"Call to get started"**. Wywołują się 3 rzeczy jednocześnie:
+
+- **Browser Pixel** wysyła event `Lead` do `facebook.com/tr` z identyfikatorem konwersji
+- **GA4** dostaje event `generate_lead` (przez Tag Google)
+- Skrypt robi **fetch** do `trycallio.com/metrics/lead` z tym samym identyfikatorem i danymi użytkownika
+
+Trzecia ścieżka jest najciekawsza. To **server-side**, działa nawet jak adblock zablokował `facebook.com/tr` w przeglądarce.
+
+---
+
+## Cloudflare Worker: pierwsze odbicie ruchu pod własną domeną
+
+Adblockery rozpoznają domeny śledzące. `facebook.com/tr`, `google-analytics.com/g/collect`, `googletagmanager.com/gtm.js` - wszystkie są na czarnych listach.
+
+Rozwiązanie nazywa się **Tag Gateway**. To proxy serwujące te same skrypty pod Twoją własną domeną. Adblock widzi `trycallio.com/metrics/gtm.js` i nie blokuje, bo to "własna" ścieżka.
+
+Dla Callio wdrożyliśmy Tag Gateway jako **Cloudflare Worker**. Worker proxyuje ścieżki:
+
+- `/metrics/gtm.js` zamiast `googletagmanager.com/gtm.js`
+- `/metrics/g/collect` zamiast `google-analytics.com/g/collect`
+- `/metrics/pagead/conversion/*` dla Google Ads conversions
+- `/metrics/td/*` dla Floodlight (DoubleClick)
+
+Plus jeden endpoint specjalny: `/metrics/lead`. To **brama do Conversions API Meta**.
+
+### Dlaczego nie SaaS jak Stape
+
+Stape.io to popularne rozwiązanie hostingowe dla server-side GTM. Działa dobrze, ale ma koszty:
+
+| Element | Stape | Cloudflare Worker |
+|---|---|---|
+| Koszt miesięczny | od **80 USD** | **0 zł** (Free plan) |
+| Limity zapytań | 10 mln / m-c | 100 tys / dzień |
+| Kontrola kodu | ograniczona | pełna |
+| Konfiguracja | przez panel SaaS | własna domena |
+| Locking | uzależnienie od dostawcy | niezależność |
+
+Dla Callio limit Cloudflare Free w zupełności wystarczy. Nawet przy **5 tysiącach unikalnych użytkowników dziennie** zostaje 95 tysięcy zapytań w zapasie.
+
+### Propagacja prawdziwego IP
+
+Krytyczny detal techniczny. Worker stoi między klientem a serwerem Callio. Bez specjalnej konfiguracji n8n na końcu widzi IP Cloudflare, nie IP użytkownika.
+
+A bez prawdziwego IP **Event Match Quality (EMQ)** w Meta spada. Meta używa IP do dopasowania konwersji do konta Facebookowego użytkownika, który widział reklamę.
+
+Worker dla Callio **forwarduje `CF-Connecting-IP`** jako nagłówek `X-Real-IP`. Razem z `User-Agent` i ciasteczkami `_fbp`, `_fbc`. Wszystko dociera do CAPI w komplecie.
+
+---
+
+## Serwer Callio: tu spina się Meta Conversions API
+
+Drugie odbicie ruchu to **n8n** na serwerze klienta. To nie wtyczka WordPressa ani SaaS. To **serwer VPS** pod kontrolą Callio, z workflowem przetwarzającym konwersje.
+
+Wybór n8n zamiast bezpośredniego kodu w Workerze ma sens biznesowy. Klient widzi w panelu:
+
+- **Każdą konwersję** jako osobny rekord (Execution)
+- **Body żądania** w pełnej formie (fbp, fbc, IP, user_agent, event_id)
+- **Odpowiedź Meta CAPI** z fbtrace_id i statusem
+- **Wszystkie błędy** z timestampami i payload (Dead Letter Queue)
+
+Plus klient może sam zmienić logikę przetwarzania bez naszej ingerencji.
+
+<!-- INFOGRAFIKA: Zrzut z panelu n8n pokazujący sukces execution: Webhook → Consent Gate → Przygotuj CAPI payload → Meta CAPI events_received: 1 → Dead Letter Queue (puste, brak błędu). Strzałki, kolory ok/error. -->
+
+### 3 wymagania, które klient sam postawił
+
+Współpraca z Callio była konkretna. Wojtek (CTO) w pierwszym mailu napisał, co musi mieć workflow Meta CAPI. Wszystkie 3 punkty zostały zaimplementowane:
+
+**1. Consent Gate na poziomie serwera.** Consent Mode v2 bramkuje tylko Google. Meta nie ma swojego mechanizmu zgody, więc jeśli wysyłasz Lead bez akceptacji cookies, łamiesz RODO. Workflow Callio sprawdza pole `marketing_consent` w żądaniu. Jeśli różne od `granted`, **CAPI nie idzie**.
+
+**2. Deduplikacja po event_id.** Ten sam identyfikator konwersji w Pixelu po stronie przeglądarki i w CAPI po stronie serwera. Meta wykrywa duplikat po nazwie eventu i identyfikatorze. Liczy 1 konwersję, nie 2.
+
+**3. Hashing danych użytkownika.** Email i numer telefonu (jeśli zostaną kiedyś zbierane przy konwersji) są **hashowane SHA-256** przed wysyłką. To wymaganie samej Meta dla zgodności z RODO.
+
+Plus standardowo retry **x3** dla błędów sieciowych Meta, **Dead Letter Queue** dla nieudanych prób, timeout 8 sekund.
+
+---
+
+## Deduplikacja Pixel i CAPI: jedna konwersja, dwa kanały
+
+Najczęstszy błąd przy wdrożeniu Conversions API to **podwójne liczenie konwersji**. Klient kliknął Lead raz, Pixel wysłał event po stronie przeglądarki, CAPI wysłał ten sam event z serwera. Meta widzi 2 konwersje i Twój panel pokazuje sztuczne wyniki.
+
+Rozwiązanie nazywa się **event_id deduplication**. To unikalny identyfikator konwersji, generowany **raz** na sesję, używany **dwukrotnie**:
+
+- W Pixelu jako parametr `eventID` w wywołaniu `fbq('track', 'Lead', ..., {eventID})`
+- W CAPI jako pole `event_id` w payload do `graph.facebook.com/events`
+
+Meta dedupuje po parze `event_name` plus `event_id`. Jeden Lead z `lead_1781017102166_ge3gfygf0` widzi 1 raz, niezależnie ile razy go dostała.
+
+### Jak generujemy identyfikator dla Callio
+
+Skrypt **Gen Lead EventID** wykonuje się przy załadowaniu strony marketingowej:
+
+1. Sprawdza czy w cookies istnieje **`_callio_lead_eid`**
+2. Jeśli nie, generuje identyfikator typu `lead_<timestamp>_<random>` i zapisuje na **30 minut**
+3. Ustawia globalną zmienną `window._callioLeadEventId`
+
+Przy kliku w "Call to get started" tag czyta zmienną, wysyła do Pixela i webhookowi do Cloudflare Workera. Worker forwarduje do n8n. n8n wysyła do CAPI.
+
+Jeden identyfikator. Trzy systemy. Meta widzi **1 konwersję** zamiast 2.
+
+---
+
+## Real test produkcyjny: liczby
+
+Po opublikowaniu kontenera GTM zrobiliśmy real test na żywym landingu. Klient otworzył `trycallio.com` w trybie incognito, zaakceptował cookies w bannerze, kliknął numer telefonu `+48 732 106 132`.
+
+**Co się stało w tle (logi z produkcji):**
+
+| Pomiar | Wartość |
+|---|---|
+| Event ID | `lead_1781017102166_ge3gfygf0` |
+| CTA | `call_to_start` |
+| Content name | `Call to get started` |
+| Marketing consent | `granted` |
+| Real client IP | `37.30.63.181` (NIE IP Cloudflare!) |
+| User Agent | Chrome 149 na Windows |
+| Browser Pixel response | `200 OK` |
+| Server CAPI response | `events_received: 1` |
+| Meta fbtrace_id | `AoJh9jAHPaFX6AmfGpE7MwB` |
+| Dedup status | Browser i Server z tym samym event_id |
+
+**To są nasze realne liczby, nie symulacja.** Worker zadziałał, n8n przyjął żądanie, Consent Gate przepuścił, CAPI dostało event i zwróciło fbtrace_id. Meta zdedupowała Pixel i CAPI po tym samym identyfikatorze.
+
+Cały pipeline od kliknięcia do panelu Meta Ads **w mniej niż 2 sekundy**.
+
+---
+
+## Co zyskał Callio
+
+Lista konkretów. Każdy punkt z liczbą lub mechanizmem, nie ogólnikami.
+
+### Bypass adblockerów i Safari ITP
+
+First-party domena `trycallio.com/metrics/*` zamiast `facebook.com/tr`. Adblock nie widzi sygnatury domeny śledzącej. Safari nie usuwa ciasteczek po 7 dniach, bo to ciasteczka z własnej domeny.
+
+Szacowany **odzysk od 20 do 40% konwersji** od użytkowników na iOS Safari i z aktywnym AdBlockiem.
+
+### Brak podwójnego liczenia konwersji
+
+Browser Pixel i Server CAPI z tym samym event_id. Meta dedupuje na **1 konwersję, nie 2**. Panel Meta Ads pokazuje prawdziwe liczby, nie nadpalone.
+
+To samo dotyczy raportów wewnętrznych. Wcześniej każdy raport pokazywał inne liczby, bo Pixel i CAPI nie współpracowały. Teraz **1 konwersja w obu źródłach**.
+
+### Lepszy Event Match Quality
+
+Meta dopasowuje konwersje do kont użytkowników po IP, User-Agent, fbp, fbc. Im więcej i im lepsze dane, tym **EMQ rośnie**. EMQ powyżej **6.0** to próg, od którego algorytm zaczyna efektywnie optymalizować kampanie.
+
+Worker forwarduje prawdziwe IP klienta przez `CF-Connecting-IP`. CAPI dostaje real IP. EMQ ma większą szansę przekroczyć **6.0** w pierwszym miesiącu.
+
+### Pełna zgodność z RODO
+
+Consent Mode v2 default deny-all, ładuje się **przed** GTM. CookieYes Banner zarządza zgodą. Plus dodatkowy **Consent Gate na serwerze**: jeśli żądanie do n8n nie zawiera `marketing_consent: granted`, CAPI nie idzie. Podwójna warstwa zabezpieczeń przed wysłaniem konwersji bez zgody.
+
+### Koszt utrzymania 0 zł miesięcznie
+
+Cloudflare Workers na planie Free, n8n self-hosted u klienta. Brak SaaS-owej subskrypcji Stape (od **80 USD/m-c**), brak agencji wymagającej retainera.
+
+Roczne oszczędności względem Stape: **około 4 200 zł**. Plus pełna kontrola kodu.
+
+### Wdrożenie w 1 dzień zamiast 2-3 tygodni
+
+Klient miał silnego DevOpsa po swojej stronie (Wojtek). Wszystkie dostępy do Cloudflare, n8n, GTM przyszły **w ciągu kilku godzin**. Worker zbudowany, workflow wdrożony, GTM kontener wstrzyknięty, real test zaliczony. **Wszystko w 1 dniu**.
+
+Dla porównania standardowy projekt Meta CAPI w agencji to **2-3 tygodnie**. U nas trwa od **1 do 5 dni** w zależności od stanu infrastruktury klienta.
+
+---
+
+## Czy to zadziała u Ciebie
+
+Tracking leadów Meta CAPI to nie tylko dla SaaS B2B. Schemat działa identycznie dla:
+
+- **Dewelopera nieruchomości** zbierającego formularze "Umów prezentację"
+- **Kancelarii prawnej** z konwersją "Wyślij zapytanie"
+- **Kliniki medycznej** mierzącej rezerwacje wizyt
+- **Agencji marketingowej** generującej leady B2B przez formularz briefu
+- **Każdej firmy usługowej** z formularzem kontaktowym jako głównym celem
+
+Warunki sukcesu są 3:
+
+1. **Własna domena z Cloudflare** (Free plan wystarczy)
+2. **Serwer VPS lub Hetzner cloud** pod n8n (od **20 zł/m-c**)
+3. **Dostęp administratora** do Meta Business Manager i Google Tag Manager
+
+Jeśli masz te 3 elementy, schemat z Callio działa bez modyfikacji.
+
+Jeśli nie masz jeszcze swojego VPS, mogę wdrożyć infrastrukturę razem z Tobą. Konkretne wycene i czas znajdziesz w [cenniku server-side](/wiedza/cennik-server-side-polska).
+
+---
+
+## Co dalej z Twoimi leadami
+
+Sprawdź sam czy Twoje konwersje docierają do Mety w pełni. W Events Manager wejdź w swoją dataset i zobacz **procent konwersji nieobsłużonych przez CAPI**. Jeśli wyższy niż **30%**, tracisz dane i pieniądze.
+
+Następny krok zależy od skali:
+
+- Mały budżet reklamowy (poniżej **5 000 zł/m-c**): wdrożenie wtyczki CAPI z [tego porównania](/wiedza/plugin-capi-vs-server-side) może wystarczyć
+- Średni i duży budżet: pełna architektura jak u Callio. Więcej kontroli, lepszy EMQ, niższe koszty utrzymania w skali
+- Chcesz wdrożenie z pełnym wsparciem: napisz na [kontakt@serwer-side.pl](/kontakt). Przyjrzymy się Twojej obecnej konfiguracji i powiemy konkretnie, ile to potrwa
+
+Powiązane artykuły:
+
+- [Meta CAPI server-side: case study Maltaview](/wiedza/meta-capi-server-side-case-study-maltaview)
+- [Parametr fbc Meta CAPI i niedoraportowane konwersje](/wiedza/parametr-fbc-meta-capi-niedoraportowane-konwersje)
+- [Plugin CAPI vs server-side: które wybrać](/wiedza/plugin-capi-vs-server-side)
+- [Co to jest server-side tracking](/wiedza/co-to-server-side-tracking)
