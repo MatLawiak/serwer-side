@@ -144,7 +144,7 @@ Plus klient może sam zmienić logikę przetwarzania bez naszej ingerencji.
 
 <img
   src="/img/articles/callio/workflow-n8n-success.jpg"
-  alt="Workflow n8n Meta CAPI dla Callio: pełen flowchart 5 nodów z Webhook callio-lead, Consent Gate KRYTYCZNE, IF consent granted TRUE, Przygotuj CAPI payload, Meta CAPI Lead z events_received: 1 i fbtrace_id AoJh9jAHPaFX6AmfGpE7MwB. Dead Letter Queue handler nieaktywny. Real client IP 37.30.63.181, Event ID dedup OK, total execution 60ms."
+  alt="Workflow n8n Meta CAPI dla Callio: pełen flowchart 5 nodów z Webhook callio-lead, Consent Gate KRYTYCZNE, IF consent granted TRUE, Przygotuj CAPI payload, Meta CAPI Lead z events_received: 1. Dead Letter Queue handler nieaktywny. Real client IP propagated, Event ID dedup OK, total execution 60ms."
   width="1200"
   height="1500"
   loading="lazy"
@@ -173,7 +173,7 @@ Rozwiązanie nazywa się **event_id deduplication**. To unikalny identyfikator k
 - W Pixelu jako parametr `eventID` w wywołaniu `fbq('track', 'Lead', ..., {eventID})`
 - W CAPI jako pole `event_id` w payload do `graph.facebook.com/events`
 
-Meta dedupuje po parze `event_name` plus `event_id`. Jeden Lead z `lead_1781017102166_ge3gfygf0` widzi 1 raz, niezależnie ile razy go dostała.
+Meta dedupuje po parze `event_name` plus `event_id`. Jeden Lead z identyfikatorem `lead_<timestamp>_<random>` widzi 1 raz, niezależnie ile razy go dostała.
 
 ### Jak generujemy identyfikator dla Callio
 
@@ -191,21 +191,21 @@ Jeden identyfikator. Trzy systemy. Meta widzi **1 konwersję** zamiast 2.
 
 ## Real test produkcyjny: liczby
 
-Po opublikowaniu kontenera GTM zrobiliśmy real test na żywym landingu. Klient otworzył `trycallio.com` w trybie incognito, zaakceptował cookies w bannerze, kliknął numer telefonu `+48 732 106 132`.
+Po opublikowaniu kontenera GTM zrobiliśmy real test na żywym landingu. Otwarliśmy `trycallio.com` w trybie incognito, zaakceptowaliśmy cookies w bannerze, kliknęliśmy w numer telefonu konwersji.
 
-**Co się stało w tle (logi z produkcji):**
+**Co się stało w tle (logi z produkcji, dane testowe zanonimizowane):**
 
 | Pomiar | Wartość |
 |---|---|
-| Event ID | `lead_1781017102166_ge3gfygf0` |
+| Event ID | format `lead_<timestamp>_<random>` |
 | CTA | `call_to_start` |
 | Content name | `Call to get started` |
 | Marketing consent | `granted` |
-| Real client IP | `37.30.63.181` (NIE IP Cloudflare!) |
-| User Agent | Chrome 149 na Windows |
+| Real client IP | propagowany prawidłowo (NIE IP Cloudflare) |
+| User Agent | propagowany prawidłowo |
 | Browser Pixel response | `200 OK` |
 | Server CAPI response | `events_received: 1` |
-| Meta fbtrace_id | `AoJh9jAHPaFX6AmfGpE7MwB` |
+| Meta fbtrace_id | otrzymany prawidłowo |
 | Dedup status | Browser i Server z tym samym event_id |
 
 **To są nasze realne liczby, nie symulacja.** Worker zadziałał, n8n przyjął żądanie, Consent Gate przepuścił, CAPI dostało event i zwróciło fbtrace_id. Meta zdedupowała Pixel i CAPI po tym samym identyfikatorze.
