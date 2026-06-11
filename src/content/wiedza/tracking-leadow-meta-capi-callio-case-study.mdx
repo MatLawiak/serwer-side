@@ -62,7 +62,13 @@ Dla Callio wdrożyliśmy **3 warstwy** współpracujące ze sobą:
 
 Każda warstwa ma jedną odpowiedzialność. Każda jest niezależna, ale wspólnie tworzą sieć, której adblock nie blokuje, a Safari nie wycina.
 
-<!-- INFOGRAFIKA: Schemat architektury 3-warstwowej. Klient → Cloudflare Worker (first-party trycallio.com/metrics) → n8n na serwerze klienta → Meta CAPI. Pokazać że Browser Pixel i Server CAPI lecą równolegle z tym samym event_id. -->
+<img
+  src="/img/articles/callio/architektura-3-warstwowa.jpg"
+  alt="Schemat architektury 3-warstwowej Meta CAPI dla Callio: Użytkownik klika Get Started na trycallio.com, Cloudflare Worker pełni rolę first-party gateway przez /metrics/lead, n8n VPS uruchamia Consent Gate i workflow Meta CAPI, finalnie events_received: 1 w Meta. Równoległa ścieżka Browser Pixel direct dla deduplikacji po event_id."
+  width="1200"
+  height="1500"
+  loading="lazy"
+/>
 
 ### Co się dzieje przy kliknięciu
 
@@ -136,7 +142,13 @@ Wybór n8n zamiast bezpośredniego kodu w Workerze ma sens biznesowy. Klient wid
 
 Plus klient może sam zmienić logikę przetwarzania bez naszej ingerencji.
 
-<!-- INFOGRAFIKA: Zrzut z panelu n8n pokazujący sukces execution: Webhook → Consent Gate → Przygotuj CAPI payload → Meta CAPI events_received: 1 → Dead Letter Queue (puste, brak błędu). Strzałki, kolory ok/error. -->
+<img
+  src="/img/articles/callio/workflow-n8n-success.jpg"
+  alt="Workflow n8n Meta CAPI dla Callio: pełen flowchart 5 nodów z Webhook callio-lead, Consent Gate KRYTYCZNE, IF consent granted TRUE, Przygotuj CAPI payload, Meta CAPI Lead z events_received: 1 i fbtrace_id AoJh9jAHPaFX6AmfGpE7MwB. Dead Letter Queue handler nieaktywny. Real client IP 37.30.63.181, Event ID dedup OK, total execution 60ms."
+  width="1200"
+  height="1500"
+  loading="lazy"
+/>
 
 ### 3 wymagania, które klient sam postawił
 
