@@ -21,6 +21,11 @@ import Layout from '../layouts/Layout.astro';
         {/* Formularz */}
         <div class="md:col-span-3">
           <form id="contact-form" class="space-y-5">
+            {/* Pułapka na boty: pole poza ekranem, człowiek go nie wypełni. api/contact.ts udaje sukces i nic nie wysyła. */}
+            <div aria-hidden="true" class="absolute -left-[9999px] w-px h-px overflow-hidden">
+              <label for="website_hp">Nie wypełniaj tego pola</label>
+              <input type="text" id="website_hp" name="website_hp" tabindex="-1" autocomplete="off" />
+            </div>
             <div>
               <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
                 Imię i nazwisko *
@@ -192,7 +197,8 @@ import Layout from '../layouts/Layout.astro';
               Dziękuję! Twoja wiadomość została wysłana. Odezwę się w ciągu 24h.
             </div>
             <div id="form-error" class="hidden p-4 bg-red-50 border-2 border-red-200 rounded-xl text-red-700 text-sm text-center">
-              Wystąpił błąd podczas wysyłania. Spróbuj ponownie lub napisz bezpośrednio na email.
+              Nie udało się wysłać wiadomości. Spróbuj ponownie albo napisz bezpośrednio na
+              <a href="mailto:kontakt@serwer-side.pl" class="font-semibold underline">kontakt@serwer-side.pl</a>.
             </div>
           </form>
         </div>
