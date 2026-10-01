@@ -1,0 +1,112 @@
+---
+// Hero strony głównej: Integrator jako główny produkt. Układ, liczniki
+// i rząd zaufania powtarzają dotychczasowy HeroNew; liczby to fakty
+// z produktu (historia 400 dni, synchronizacja arkusza co 15 min,
+// limit +20% na zmianę budżetu przez AI), nie statystyki rynkowe.
+import { Image } from 'astro:assets';
+import zrodla from '../../assets/integrator/zrodla-danych.png';
+import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
+---
+
+<section class="bg-primary text-white pt-16 pb-14 md:pt-24 md:pb-20 overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7">
+        <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
+          Integrator danych reklamowych
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
+          Wiesz, która reklama przyniosła<br class="hidden md:block" />
+          <span class="text-accent">klienta, a nie tylko leada.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-3">
+          Łącz dane z Meta Ads, Google Ads i CRM w jednym miejscu. Pytaj o kampanie
+          i zlecaj zmiany z Claude Desktop przez MCP, bez klikania po Menedżerach reklam.
+        </p>
+        <p class="text-base text-gray-500 max-w-2xl mb-8">
+          Handlowiec ocenia leady tam, gdzie dziś: w arkuszu albo w CRM. Integrator liczy
+          z tego koszt zakwalifikowanego leada dla każdej kreacji.
+        </p>
+        <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+          <a href={TRIAL_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg text-base btn-brutal-light">
+            Wypróbuj 7 dni za darmo
+          </a>
+          <a href="/kontakt" class="inline-block text-center bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-7 py-3.5 rounded-lg text-base transition-colors">
+            Umów demo
+          </a>
+          <a href={PANEL_URL} class="inline-flex items-center justify-center gap-2 text-gray-300 hover:text-accent font-semibold px-4 py-3.5 transition-colors">
+            Zaloguj się
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 relative">
+        <div class="absolute -inset-10 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+        <Image
+          src={zrodla}
+          alt="Trzy źródła danych (Meta Ads, Google Ads, CRM) łączą się w module Integratora i wychodzą jako jeden raport"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 420px, 90vw"
+          format="webp"
+          loading="eager"
+          class="relative w-full h-auto rounded-2xl"
+        />
+      </div>
+    </div>
+
+    {/* Liczniki: fakty z produktu, animacja count-up jak dotąd */}
+    <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl" id="hero-stats">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="400" data-suffix=" dni">400 dni</p>
+        <p class="text-sm text-gray-400">historii kosztów i kreacji od pierwszego dnia</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="15" data-suffix=" min">15 min</p>
+        <p class="text-sm text-gray-400">od oceny handlowca w arkuszu do CPQL w panelu</p>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-5">
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="20" data-prefix="+" data-suffix="%">+20%</p>
+        <p class="text-sm text-gray-400">najwyżej tyle budżetu w 24 h może zmienić AI</p>
+      </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl text-sm text-gray-400">
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Bez karty przez 7 dni</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Dane i klucze w Unii Europejskiej</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Tylko odczyt, dopóki nie zlecisz zmiany</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const statsEl = document.getElementById('hero-stats');
+  if (statsEl) {
+    const counters = statsEl.querySelectorAll<HTMLElement>('[data-hero-count]');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let animated = false;
+    const animateOne = (el: HTMLElement) => {
+      const target = parseInt(el.dataset.heroCount || '0');
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      el.textContent = prefix + '0' + suffix;
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !animated && !reduced) {
+        animated = true;
+        counters.forEach(animateOne);
+        observer.disconnect();
+      }
+    }, { threshold: 0.4 });
+    observer.observe(statsEl);
+  }
+</script>

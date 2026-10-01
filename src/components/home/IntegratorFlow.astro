@@ -1,0 +1,127 @@
+---
+// Animowany schemat w idiomie DataFlowAnimated: węzły wchodzą kaskadą,
+// linie rosną, kropki płyną. Trzy źródła po lewej, Integrator w środku,
+// trzy wyjścia po prawej. Na telefonie kolumny układają się pionowo,
+// a łączniki zamieniają się w strzałki.
+const zrodla = [
+  { name: 'Meta Ads', desc: 'kampanie, kreacje, leady z formularzy', color: 'text-blue-300' },
+  { name: 'Google Ads', desc: 'koszty, konwersje, słowa kluczowe, PMax', color: 'text-emerald-300' },
+  { name: 'CRM albo arkusz', desc: 'ocena leada przez handlowca', color: 'text-amber-300' },
+];
+const wyjscia = [
+  { name: 'CPQL per kreacja', desc: 'koszt zakwalifikowanego leada dla każdej reklamy' },
+  { name: 'Poranny skrót', desc: 'e-mail i Slack: 3 wnioski, 1 akcja' },
+  { name: 'MCP dla Claude', desc: 'pytania o kampanie i zlecenia z limitem' },
+];
+---
+
+<section class="py-16 md:py-20 bg-primary text-white" id="integrator-flow-section">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Jak to działa</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Trzy źródła wchodzą. Jedna odpowiedź wychodzi.</h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        Platformy mówią, ile kosztował lead. Handlowiec mówi, czy był coś wart. Integrator łączy jedno z drugim na poziomie pojedynczej reklamy.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-4 md:gap-2" id="integrator-flow">
+      {/* Źródła */}
+      <div class="flex flex-col gap-3">
+        {zrodla.map((z) => (
+          <div class="flow-node bg-white/8 border border-white/15 rounded-xl px-4 py-3">
+            <p class={`font-semibold ${z.color}`}>{z.name}</p>
+            <p class="text-xs text-gray-400">{z.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Łącznik 1 */}
+      <div class="flow-connector relative h-8 md:h-24 md:w-16 flex items-center justify-center" aria-hidden="true">
+        <div class="flow-h-line hidden md:block h-px bg-accent/60 absolute left-0 top-1/2"></div>
+        <div class="flow-dot hidden md:block absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent"></div>
+        <svg class="md:hidden w-5 h-5 text-accent/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+      </div>
+
+      {/* Integrator */}
+      <div class="flow-node bg-accent/10 border border-accent/40 rounded-2xl px-5 py-6 text-center relative">
+        <div class="absolute -inset-3 bg-accent/10 blur-2xl rounded-full pointer-events-none" aria-hidden="true"></div>
+        <div class="relative">
+          <img src="/robot-mascot-nobg.png" alt="" class="w-14 h-14 mx-auto mb-2 object-contain" loading="lazy" />
+          <p class="font-extrabold text-lg">Integrator</p>
+          <p class="text-xs text-gray-300 mt-1">lead ← reklama ← koszt<br />+ ocena handlowca</p>
+        </div>
+      </div>
+
+      {/* Łącznik 2 */}
+      <div class="flow-connector relative h-8 md:h-24 md:w-16 flex items-center justify-center" aria-hidden="true">
+        <div class="flow-h-line hidden md:block h-px bg-accent/60 absolute left-0 top-1/2"></div>
+        <div class="flow-dot flow-dot-late hidden md:block absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent"></div>
+        <svg class="md:hidden w-5 h-5 text-accent/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+      </div>
+
+      {/* Wyjścia */}
+      <div class="flex flex-col gap-3">
+        {wyjscia.map((w) => (
+          <div class="flow-node bg-white/8 border border-white/15 rounded-xl px-4 py-3">
+            <p class="font-semibold text-accent">{w.name}</p>
+            <p class="text-xs text-gray-400">{w.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p class="text-center text-sm text-gray-500 mt-8 max-w-xl mx-auto">
+      Lead z formularza Meta, Google albo ze strony www dostaje identyfikator reklamy. Ocena handlowca wraca do tej samej reklamy. Bez ręcznego przepisywania.
+    </p>
+  </div>
+</section>
+
+<style>
+  .flow-node {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  #integrator-flow.is-animated .flow-node { opacity: 1; transform: translateY(0); }
+  #integrator-flow.is-animated > div:nth-child(1) .flow-node:nth-child(1) { transition-delay: 0s; }
+  #integrator-flow.is-animated > div:nth-child(1) .flow-node:nth-child(2) { transition-delay: 0.15s; }
+  #integrator-flow.is-animated > div:nth-child(1) .flow-node:nth-child(3) { transition-delay: 0.3s; }
+  #integrator-flow.is-animated > div:nth-child(3) { transition-delay: 0.6s; }
+  #integrator-flow.is-animated > div:nth-child(5) .flow-node:nth-child(1) { transition-delay: 1s; }
+  #integrator-flow.is-animated > div:nth-child(5) .flow-node:nth-child(2) { transition-delay: 1.15s; }
+  #integrator-flow.is-animated > div:nth-child(5) .flow-node:nth-child(3) { transition-delay: 1.3s; }
+
+  .flow-h-line { width: 0; transition: width 0.5s ease 0.45s; }
+  #integrator-flow.is-animated .flow-h-line { width: 100%; }
+
+  .flow-dot { left: 0; opacity: 0; }
+  #integrator-flow.is-animated .flow-dot { animation: dotTravelX 1.8s ease-in-out 0.9s infinite; }
+  #integrator-flow.is-animated .flow-dot-late { animation-delay: 1.5s; }
+
+  @keyframes dotTravelX {
+    0%   { left: 0; opacity: 0; }
+    10%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flow-node { opacity: 1; transform: none; transition: none; }
+    .flow-h-line { width: 100%; transition: none; }
+    #integrator-flow.is-animated .flow-dot { animation: none; opacity: 0; }
+  }
+</style>
+
+<script>
+  const flow = document.getElementById('integrator-flow');
+  if (flow) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        flow.classList.add('is-animated');
+        observer.disconnect();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(flow);
+  }
+</script>

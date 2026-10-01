@@ -80,7 +80,7 @@ import Layout from '../layouts/Layout.astro';
                       <input type="checkbox" id="integrator" name="service" value="integrator"
                         class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
                       <label for="integrator" class="text-sm text-gray-700 cursor-pointer">
-                        Integrator danych reklamowych: 7 dni za darmo
+                        Darmowy test Integratora (7 dni)
                       </label>
                     </div>
                     {/* Plan z przycisku w cenniku (?plan=...). Trafia do maila jako osobne pole usługi. */}
@@ -95,6 +95,13 @@ import Layout from '../layouts/Layout.astro';
                 <div>
                   <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Tracking reklamowy</p>
                   <div class="space-y-2">
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="serverside-vps" name="service" value="serverside-vps"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="serverside-vps" class="text-sm text-gray-700 cursor-pointer">
+                        Wdrożenie Server-Side / VPS (nie wiem jeszcze, Meta czy Google)
+                      </label>
+                    </div>
                     <div class="flex items-start gap-3">
                       <input type="checkbox" id="meta-power-vps" name="service" value="meta-power-vps"
                         class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
@@ -139,7 +146,7 @@ import Layout from '../layouts/Layout.astro';
                       <input type="checkbox" id="audyt" name="service" value="audyt"
                         class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
                       <label for="audyt" class="text-sm text-gray-700 cursor-pointer">
-                        Audyt trackingu: sprawdzenie obecnej konfiguracji
+                        Audyt kont reklamowych i ustawień Meta/Google
                       </label>
                     </div>
                     <div class="flex items-start gap-3">
@@ -291,7 +298,9 @@ import Layout from '../layouts/Layout.astro';
   const integrator = document.getElementById('integrator') as HTMLInputElement;
   const plan = document.getElementById('plan') as HTMLSelectElement;
   const pokazPlan = () => plan.classList.toggle('hidden', !integrator.checked);
-  if (params.get('usluga') === 'integrator') integrator.checked = true;
+  // ?usluga=<id> zaznacza dowolną opcję formularza (integrator, audyt, serverside-vps...).
+  const zaznacz = document.getElementById(params.get('usluga') || '') as HTMLInputElement | null;
+  if (zaznacz && zaznacz.type === 'checkbox') zaznacz.checked = true;
   const wybranyPlan = params.get('plan');
   if (wybranyPlan && [...plan.options].some((o) => o.value === wybranyPlan)) plan.value = wybranyPlan;
   integrator.addEventListener('change', pokazPlan);

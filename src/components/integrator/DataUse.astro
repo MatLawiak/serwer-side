@@ -1,0 +1,52 @@
+---
+// Sekcja zgodności: jak Integrator używa danych z Google i Meta. Jedna
+// treść na stronie głównej i na /integrator (strona główna aplikacji
+// w ekranie zgody Google), żeby recenzent wszędzie czytał to samo.
+interface Props {
+  dark?: boolean;
+}
+const { dark = false } = Astro.props;
+
+const karty = [
+  {
+    t: 'Co pobieramy',
+    p: 'Dane kampanii z kont reklamowych, które użytkownik sam wskaże: nazwy, budżety, koszty, wyświetlenia, kliknięcia, konwersje, słowa kluczowe i treść reklam. Gdy użytkownik włączy pobieranie leadów, także leady z formularzy reklamowych.',
+  },
+  {
+    t: 'Po co',
+    p: 'Żeby pokazać raporty kosztów i wyników kampanii agencji, która je prowadzi, i policzyć koszt zakwalifikowanego leada. Zmiany w koncie reklamowym (budżet, wstrzymanie kampanii) tylko na wyraźne polecenie użytkownika i w limitach opisanych wyżej.',
+  },
+  {
+    t: 'Czego nie robimy',
+    p: 'Nie sprzedajemy danych, nie udostępniamy ich do celów reklamowych i nie używamy ich do trenowania modeli AI. Dane jednej agencji nigdy nie trafiają do innej: każda przestrzeń jest odizolowana w bazie danych.',
+  },
+  {
+    t: 'Twoja kontrola',
+    p: 'Konto odłączysz w panelu albo cofniesz dostęp w ustawieniach Google i Facebooka. Usunięcie danych zlecisz mailem, a zrobimy to w ciągu 30 dni.',
+  },
+];
+---
+
+<section id="dane" class:list={['py-16 md:py-20 scroll-mt-20', dark ? 'bg-primary text-white border-t border-white/10' : 'bg-stone-50']}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <h2 class="text-2xl md:text-3xl font-bold mb-3">Jak bezpiecznie przetwarzamy dane z Google i Meta Ads</h2>
+    <p class:list={['mb-8 max-w-2xl', dark ? 'text-gray-400' : 'text-gray-600']}>
+      Integrator łączy się z Google Ads API i Meta Marketing API wyłącznie za zgodą użytkownika, przez logowanie Google i Facebook.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6 text-sm leading-relaxed">
+      {karty.map((k) => (
+        <div class:list={['rounded-xl p-6', dark ? 'bg-white/5 border border-white/10 text-gray-300' : 'bg-white card-brutal-static text-gray-700']}>
+          <h3 class:list={['font-bold text-base mb-2', dark ? 'text-white' : 'text-primary']}>{k.t}</h3>
+          <p>{k.p}</p>
+        </div>
+      ))}
+    </div>
+    <p class:list={['text-sm mt-8', dark ? 'text-gray-400' : 'text-gray-600']}>
+      Szczegóły: <a href="/polityka-prywatnosci" class="text-accent font-semibold hover:underline">Polityka prywatności</a> ·
+      <a href="/polityka-prywatnosci#usuwanie-danych" class="text-accent font-semibold hover:underline">Usuwanie danych</a> ·
+      <a href="/regulamin" class="text-accent font-semibold hover:underline">Regulamin</a>.
+      Korzystanie z danych z interfejsów API Google jest zgodne z
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" class="text-accent font-semibold hover:underline" rel="noopener">Zasadami dotyczącymi danych użytkownika w usługach API Google</a>, w tym z wymogami ograniczonego użytkowania (Limited Use).
+    </p>
+  </div>
+</section>

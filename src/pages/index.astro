@@ -1,95 +1,97 @@
 ---
+// Strona główna: Integrator jako główny produkt, server-side jako fundament
+// danych i usługi premium. Dotychczasowe sekcje o utraconych konwersjach
+// (HeroNew, DataFlowAnimated, BarriersSection) żyją dalej na
+// /server-side-tracking, żeby nie stracić pozycji na te frazy.
 import Layout from '../layouts/Layout.astro';
-import HeroNew from '../components/HeroNew.astro';
-import DataFlowAnimated from '../components/DataFlowAnimated.astro';
-import BarriersSection from '../components/BarriersSection.astro';
+import HeroIntegrator from '../components/home/HeroIntegrator.astro';
+import IntegratorFlow from '../components/home/IntegratorFlow.astro';
+import UspCards from '../components/home/UspCards.astro';
+import McpScene from '../components/home/McpScene.astro';
+import FoundationPaths from '../components/home/FoundationPaths.astro';
+import PremiumServices from '../components/home/PremiumServices.astro';
 import CaseStudyAnon from '../components/CaseStudyAnon.astro';
-import ModularStack from '../components/ModularStack.astro';
 import Testimonials from '../components/Testimonials.astro';
+import DataUse from '../components/integrator/DataUse.astro';
+import { TRIAL_URL } from '../data/integrator';
+
+// Statyczna strona: adapter Cloudflare optymalizuje obrazy (webp) tylko
+// przy prerenderingu; na żądanie serwowałby 500 KB PNG z Gemini jak leci.
+export const prerender = true;
 ---
 
 <Layout
-  title="Server-Side Tracking dla Meta i Google Ads | serwer-side.pl"
-  description="Twoje kampanie tracą 30-50% konwersji przez AdBlockery, iOS i Safari. Server-Side Tracking przywraca te dane do algorytmu. Sprawdź ile tracisz."
+  title="Integrator danych reklamowych: która reklama przyniosła klienta | serwer-side.pl"
+  description="Meta Ads, Google Ads i CRM w jednym panelu. Koszt zakwalifikowanego leada dla każdej kreacji, poranny skrót i sterowanie kampaniami z Claude przez MCP. Server-side tracking jako fundament danych."
 >
-
-  {/* 1. Hero — ból klienta + liczniki */}
-  <HeroNew />
-
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 2. Animowany schemat przepływu danych */}
-  <DataFlowAnimated />
+  {/* 1. Hero: Integrator, liczniki, ilustracja źródeł danych */}
+  <HeroIntegrator />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 3. Cztery bariery = cztery powody do wdrożenia */}
-  <BarriersSection />
+  {/* 2. Animowany schemat: źródła → Integrator → wyjścia */}
+  <IntegratorFlow />
 
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+  {/* 3. Trzy wyróżniki z etykietami stanu */}
+  <UspCards />
 
-  {/* 4. Case study (anonimowe) z animowanymi wykresami */}
+  {/* 4. Scena MCP: ilustracja + zapis rozmowy z Claude */}
+  <McpScene />
+
+  {/* 5. Server-side jako fundament, dwie ścieżki */}
+  <FoundationPaths />
+
+  {/* 6. Usługi premium */}
+  <PremiumServices />
+
+  {/* 7. Case study (anonimowe) z animowanymi wykresami */}
   <CaseStudyAnon />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 5. Modułowy stack VPS */}
-  <ModularStack />
-
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 6. Testimoniale */}
+  {/* 8. Testimoniale */}
   <Testimonials />
 
+  {/* 9. Zgodność: dane z Google i Meta */}
+  <DataUse dark />
+
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 7. CTA końcowe */}
+  {/* 10. CTA końcowe */}
   <section class="py-20 md:py-28 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-
       <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
-        Bezpłatna diagnoza
+        7 dni za darmo
       </span>
-
       <h2 class="text-2xl md:text-4xl font-extrabold mb-5 leading-tight">
-        Sprawdź ile konwersji<br/>
-        traci Twoja kampania.
+        Sprawdź na swoich kampaniach,<br/>
+        ile naprawdę kosztuje klient.
       </h2>
-
       <p class="text-gray-300 mb-3 text-lg max-w-xl mx-auto">
-        30 minut. Bezpłatnie. Konkretna diagnoza, nie sprzedaż.
+        Pierwsze konto podłączymy razem, w 20 minut. Bez karty, bez umowy na start.
       </p>
       <p class="text-gray-500 text-sm mb-10 max-w-lg mx-auto">
-        Sprawdzę EMQ Twoich kampanii, pokrycie zdarzeń i deduplikację Pixel/CAPI. Powiem konkretnie co traci Twój tracking i czy wdrożenie ma sens w Twoim przypadku.
+        Jeśli Twoje dane gubią się po drodze do Meta i Google, zaczniemy od bezpłatnej diagnozy trackingu i dopiero potem od panelu.
       </p>
-
-      <a
-        href="/kontakt"
-        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-10 py-4 rounded-lg text-lg btn-brutal-light"
-      >
-        Umów bezpłatny audyt EMQ
-      </a>
-
-      <p class="text-xs text-gray-600 mt-4">
-        Bez umowy. Bez zobowiązań. Odpowiadam w 24h.
-      </p>
-
-      {/* Linki pomocnicze */}
-      <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-        <a href="/uslugi" class="text-gray-400 hover:text-accent transition-colors">
-          Zobacz wszystkie usługi
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={TRIAL_URL} class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-10 py-4 rounded-lg text-lg btn-brutal-light">
+          Wypróbuj Integrator
         </a>
-        <span class="text-white/20">|</span>
-        <a href="/wiedza" class="text-gray-400 hover:text-accent transition-colors">
-          Baza wiedzy
-        </a>
-        <span class="text-white/20">|</span>
-        <a href="/o-mnie" class="text-gray-400 hover:text-accent transition-colors">
-          O mnie
+        <a href="/kontakt?usluga=audyt" class="inline-block bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-10 py-4 rounded-lg text-lg transition-colors">
+          Umów diagnozę trackingu
         </a>
       </div>
+      <p class="text-xs text-gray-600 mt-4">Odpowiadam w 24 h.</p>
 
+      <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+        <a href="/integrator" class="text-gray-400 hover:text-accent transition-colors">Integrator w szczegółach</a>
+        <span class="text-white/20">|</span>
+        <a href="/uslugi" class="text-gray-400 hover:text-accent transition-colors">Wszystkie usługi</a>
+        <span class="text-white/20">|</span>
+        <a href="/server-side-tracking" class="text-gray-400 hover:text-accent transition-colors">Czym jest server-side tracking</a>
+        <span class="text-white/20">|</span>
+        <a href="/wiedza" class="text-gray-400 hover:text-accent transition-colors">Baza wiedzy</a>
+      </div>
     </div>
   </section>
-
 </Layout>

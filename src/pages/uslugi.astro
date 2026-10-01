@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
 import PanelMockup from '../components/integrator/PanelMockup.astro';
+import FoundationPaths from '../components/home/FoundationPaths.astro';
+import PremiumServices from '../components/home/PremiumServices.astro';
 import { PANEL_URL, TRIAL_URL } from '../data/integrator';
 
 export const prerender = true;
@@ -193,20 +195,15 @@ const faq = [
     </div>
   </section>
 
-  {/* Audyt danych */}
-  <section class="py-12">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <div class="bg-white rounded-xl p-8 card-brutal text-center">
-        <span class="inline-block bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-3">Opcjonalny start</span>
-        <h3 class="text-xl font-bold mb-2">Audyt danych przed wdrożeniem</h3>
-        <p class="text-accent font-extrabold text-2xl mb-2">2 000–4 000 zł</p>
-        <p class="text-gray-600 text-sm mb-4">3–5 dni roboczych</p>
-        <p class="text-gray-600 text-sm max-w-2xl mx-auto mb-4">
-          Zanim zainwestujesz w wdrożenie, robimy pełną diagnozę Twojego GA4, Meta Pixela, Google Ads i GTM. Dostajesz raport: <em>ile tracisz, dlaczego, co zrobić najpierw</em>. Koszt audytu odlicza się od ceny wdrożenia.
-        </p>
-      </div>
-    </div>
-  </section>
+  {/* Ścieżki wdrożeniowe: Lead Gen / E-commerce */}
+  <FoundationPaths compact />
+
+  {/* Wsparcie premium: VPS i audyt (Power Upy mają karty wyżej) */}
+  <PremiumServices
+    only={['vps', 'audyt']}
+    heading="Wsparcie premium"
+    intro="Dedykowany serwer pod tracking i audyt, który mówi, co naprawić najpierw. Koszt audytu odliczamy od wdrożenia."
+  />
 
   {/* FAQ */}
   <section class="py-16 md:py-20 bg-stone-50">

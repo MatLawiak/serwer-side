@@ -1,21 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import DataFlowDiagram from '../components/DataFlowDiagram.astro';
+import HeroNew from '../components/HeroNew.astro';
+import DataFlowAnimated from '../components/DataFlowAnimated.astro';
+import BarriersSection from '../components/BarriersSection.astro';
+
+// Sekcje przeniesione ze strony głównej (2026-10-01), gdy Integrator został
+// głównym produktem: tu zostają frazy o utraconych konwersjach i server-side.
+export const prerender = true;
 ---
 
 <Layout
   title="Server-Side Tracking — Czym jest i jak działa | serwer-side.pl"
   description="Kompletny przewodnik po server-side tracking. Dowiedz się, jak działa, dlaczego jest potrzebny i jakie rozwiązania wybrać dla swojego biznesu."
 >
-  {/* Hero */}
-  <section class="bg-primary text-white py-16 md:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Server-Side Tracking</h1>
-      <p class="text-gray-300 text-lg">
-        Kompletny przewodnik: czym jest, jak działa i&nbsp;dlaczego Twój biznes go potrzebuje.
-      </p>
-    </div>
-  </section>
+  {/* Hero z licznikami (dawna strona główna) */}
+  <HeroNew />
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+  <DataFlowAnimated />
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+  <BarriersSection />
 
   {/* Czym jest */}
   <section class="py-16 md:py-20">

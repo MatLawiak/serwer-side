@@ -7,6 +7,7 @@ import Layout from '../layouts/Layout.astro';
 import PanelMockup from '../components/integrator/PanelMockup.astro';
 import FeatureGrid from '../components/integrator/FeatureGrid.astro';
 import PricingCards from '../components/integrator/PricingCards';
+import DataUse from '../components/integrator/DataUse.astro';
 import { features, plans, PANEL_URL, TRIAL_URL } from '../data/integrator';
 
 export const prerender = true;
@@ -115,39 +116,7 @@ const faq = [
   </section>
 
   {/* Dane Google i Meta: sekcja dla użytkowników i recenzentów platform */}
-  <section id="dane" class="py-16 md:py-20 bg-stone-50 scroll-mt-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <h2 class="text-2xl md:text-3xl font-bold mb-3">Jak używamy danych z Google i Meta</h2>
-      <p class="text-gray-600 mb-8 max-w-2xl">
-        Integrator łączy się z Google Ads API i Meta Marketing API wyłącznie za zgodą użytkownika, przez logowanie Google i Facebook.
-      </p>
-      <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-700 leading-relaxed">
-        <div class="bg-white rounded-xl p-6 card-brutal-static">
-          <h3 class="font-bold text-primary text-base mb-2">Co pobieramy</h3>
-          <p>Dane kampanii z kont reklamowych, które użytkownik sam wskaże: nazwy, budżety, koszty, wyświetlenia, kliknięcia, konwersje, słowa kluczowe i treść reklam. Gdy użytkownik włączy pobieranie leadów, także leady z formularzy reklamowych.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal-static">
-          <h3 class="font-bold text-primary text-base mb-2">Po co</h3>
-          <p>Żeby pokazać raporty kosztów i wyników kampanii agencji, która je prowadzi, i policzyć koszt zakwalifikowanego leada. Zmiany w koncie reklamowym (budżet, wstrzymanie kampanii) tylko na wyraźne polecenie użytkownika i w limitach opisanych wyżej.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal-static">
-          <h3 class="font-bold text-primary text-base mb-2">Czego nie robimy</h3>
-          <p>Nie sprzedajemy danych, nie udostępniamy ich do celów reklamowych i nie używamy ich do trenowania modeli AI. Dane jednej agencji nigdy nie trafiają do innej.</p>
-        </div>
-        <div class="bg-white rounded-xl p-6 card-brutal-static">
-          <h3 class="font-bold text-primary text-base mb-2">Twoja kontrola</h3>
-          <p>Konto odłączysz w panelu albo cofniesz dostęp w ustawieniach Google i Facebooka. Usunięcie danych zlecisz mailem, a zrobimy to w ciągu 30 dni.</p>
-        </div>
-      </div>
-      <p class="text-sm text-gray-600 mt-8">
-        Szczegóły: <a href="/polityka-prywatnosci" class="text-accent font-semibold hover:underline">Polityka prywatności</a> ·
-        <a href="/polityka-prywatnosci#usuwanie-danych" class="text-accent font-semibold hover:underline">Usuwanie danych</a> ·
-        <a href="/regulamin" class="text-accent font-semibold hover:underline">Regulamin</a>.
-        Korzystanie z danych z interfejsów API Google jest zgodne z
-        <a href="https://developers.google.com/terms/api-services-user-data-policy" class="text-accent font-semibold hover:underline" rel="noopener">Zasadami dotyczącymi danych użytkownika w usługach API Google</a>, w tym z wymogami ograniczonego użytkowania (Limited Use).
-      </p>
-    </div>
-  </section>
+  <DataUse />
 
   {/* Cennik */}
   <section id="cennik" class="py-16 md:py-20 scroll-mt-20">
