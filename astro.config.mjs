@@ -1,4 +1,5 @@
 // @ts-check
+import { readdirSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -6,21 +7,12 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 
-const WIEDZA_SLUGS = [
-  'co-to-server-side-tracking',
-  'ga4-traci-dane',
-  'ga4-measurement-protocol-offline-konwersje',
-  'meta-capi-server-side-case-study-maltaview',
-  'parametr-fbc-meta-capi-niedoraportowane-konwersje',
-  'plugin-capi-vs-server-side',
-  'roas-spadl-sprzedaz-nie',
-  'sgtm-server-side-gtm-google-ads-case-study',
-  'cennik-server-side-polska',
-  'koszt-leada-dewelopera-meta-capi',
-  'formularz-2x-wiecej-leadow',
-  'deduplikacja-meta-capi-pixel-parametry',
-  'pixelyoursite-gtm-wordpress-konfiguracja',
-];
+// Artykuły renderują się na żądanie, więc wtyczka mapy ich nie widzi i trzeba
+// je podać wprost. Lista czyta się z folderu: ręczna gubiła nowe artykuły.
+const WIEDZA_SLUGS = readdirSync(new URL('./src/content/wiedza', import.meta.url))
+  .filter((f) => f.endsWith('.mdx') || f.endsWith('.md'))
+  .map((f) => f.replace(/\.mdx?$/, ''))
+  .sort();
 
 export default defineConfig({
   site: 'https://serwer-side.pl',
@@ -29,21 +21,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      customPages: [
-        'https://serwer-side.pl/',
-        'https://serwer-side.pl/wiedza',
-        'https://serwer-side.pl/uslugi',
-        'https://serwer-side.pl/integrator',
-        'https://serwer-side.pl/o-mnie',
-        'https://serwer-side.pl/kontakt',
-        'https://serwer-side.pl/polityka-prywatnosci',
-        'https://serwer-side.pl/regulamin',
-        'https://serwer-side.pl/server-side-tracking',
-        'https://serwer-side.pl/uslugi/meta-power-vps',
-        'https://serwer-side.pl/uslugi/google-power-vps',
-        'https://serwer-side.pl/uslugi/automatyzacje-vps',
-        ...WIEDZA_SLUGS.map((s) => `https://serwer-side.pl/wiedza/${s}`),
-      ],
+      // Zwykłe podstrony wtyczka dodaje sama, z ukośnikiem na końcu. Ręcznie
+      // podajemy tylko artykuły (trasa dynamiczna): wpisanie tu także podstron
+      // dawało w mapie każdy adres dwa razy.
+      customPages: WIEDZA_SLUGS.map((s) => `https://serwer-side.pl/wiedza/${s}`),
+      // Podziękowanie po formularzu nie jest treścią do wyszukiwarki.
+      filter: (page) => !page.includes('/wiadomosc-wyslana'),
     }),
     react(),
   ],
