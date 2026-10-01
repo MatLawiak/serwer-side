@@ -1,8 +1,9 @@
 import type { Plan } from '../components/integrator/PricingCards';
 
-// Jedno źródło treści o Integratorze dla /integrator i /uslugi.
-// Opis funkcji ma odpowiadać temu, co panel robi dziś: strona jest też
-// stroną główną aplikacji w weryfikacji Google, a recenzent porównuje ją z produktem.
+// Jedno źródło treści o Integratorze dla strony głównej, /integrator i /uslugi.
+// Język ma być zrozumiały dla właściciela agencji, który nie jest techniczny:
+// korzyść zamiast parametru. Opis musi przy tym odpowiadać temu, co aplikacja
+// robi dziś, bo /integrator jest stroną główną aplikacji w weryfikacji Google.
 
 export type Feature = { tag: string; title: string; text: string };
 
@@ -11,44 +12,34 @@ export const TRIAL_URL = '/kontakt?usluga=integrator';
 
 export const features: Feature[] = [
   {
-    tag: 'Wyróżnik',
-    title: 'Koszt klienta, nie kontaktu',
-    text: 'Łączymy koszt każdej reklamy z oceną handlowca. CPQL pokazuje, która kreacja przynosi zakwalifikowane leady, a nie tylko najtańsze formularze.',
-  },
-  {
-    tag: 'Źródła',
+    tag: 'Jeden panel',
     title: 'Meta Ads i Google Ads obok siebie',
-    text: 'Koszty dzienne, kampanie, kreacje z miniaturami i słowa kluczowe. Performance Max rozbity na grupy zasobów.',
-  },
-  {
-    tag: 'Leady',
-    title: 'Formularze Meta, Google i strony',
-    text: 'Leady z formularzy błyskawicznych i ze strony www trafiają do panelu z przypisaniem do kampanii i konkretnej reklamy.',
-  },
-  {
-    tag: 'Jakość',
-    title: 'Ocena w arkuszu albo w CRM',
-    text: 'Handlowiec ocenia leady w Google Sheets albo w CRM. Ocena wraca do panelu co 15 minut, bez przepisywania.',
+    text: 'Wydatki, wyniki i reklamy z obu platform w jednym miejscu. Koniec z przeklikiwaniem się między dwoma Menedżerami reklam.',
   },
   {
     tag: 'Codziennie',
-    title: 'Poranny skrót e-mailem i na Slacku',
-    text: 'O wybranej godzinie trzy wnioski i jedna akcja dla każdego klienta. Każda liczba w skrócie jest sprawdzana z danymi.',
+    title: 'Raport na e-mail albo Slacka',
+    text: 'Rano dostajesz krótkie podsumowanie każdego klienta: co działa, co wymaga uwagi i co warto zrobić dziś. Włączasz jednym przełącznikiem.',
+  },
+  {
+    tag: 'Rekomendacje',
+    title: 'Proste podpowiedzi, co zmienić',
+    text: 'Integrator porównuje kampanie i reklamy ze sobą i mówi zwykłym językiem, które warto wspierać, a które przepalają budżet.',
   },
   {
     tag: 'AI',
-    title: 'Asystent AI z twardymi limitami',
-    text: 'Model AI (np. Claude) czyta dane przez MCP i odpowiada na pytania o kampanie. Zmiany w kontach, czyli budżet najwyżej +20% w 24 h i wstrzymanie kampanii, włączamy po zatwierdzeniu przez Meta i Google.',
+    title: 'Rozmowa z AI o kampaniach',
+    text: 'Podpinasz narzędzie AI, z którego korzystasz, i pytasz o wyniki tak, jak pytałbyś współpracownika. Dziś działa z Claude, ChatGPT dołączy wkrótce.',
   },
   {
-    tag: 'Optymalizacja',
-    title: 'Oceny wracają do Meta',
-    text: 'Zakwalifikowane leady trafiają z powrotem do Meta przez Conversions API, więc algorytm uczy się na wartościowych klientach.',
+    tag: 'Reklamy',
+    title: 'Galeria reklam z wynikami',
+    text: 'Widzisz grafiki i teksty swoich reklam razem z tym, ile kosztowały i co przyniosły. Od razu wiadomo, która reklama ciągnie kampanię.',
   },
   {
     tag: 'Bezpieczeństwo',
-    title: 'Dane klientów agencji osobno',
-    text: 'Tokeny i kontakty szyfrowane kluczami w Google Cloud KMS, dane każdej agencji odizolowane w bazie, serwery w Unii Europejskiej.',
+    title: 'Dane każdego klienta osobno',
+    text: 'Dane są szyfrowane i przechowywane w Unii Europejskiej. Jedna agencja nigdy nie zobaczy danych drugiej.',
   },
 ];
 
@@ -56,15 +47,15 @@ export const plans: Plan[] = [
   {
     id: 'starter',
     name: 'Starter',
-    price: '149 zł',
+    price: '49 zł',
     unit: 'netto / miesiąc',
-    lead: 'Dla firmy, która prowadzi kampanie sama albo z jednym partnerem.',
+    lead: 'Na start: kilku klientów albo własne kampanie.',
     features: [
-      'do 3 klientów (projektów)',
-      'Meta Ads i Google Ads',
-      'leady z formularzy i strony',
-      'ocena leadów w arkuszu Google',
-      'codzienny skrót e-mailem',
+      'do 5 klientów (kont reklamowych)',
+      'Meta Ads i Google Ads w jednym panelu',
+      'codzienny raport na e-mail i Slacka',
+      'podpowiedzi, co zmienić w kampaniach',
+      'podłączenie narzędzia AI',
     ],
     cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=starter`,
@@ -72,17 +63,10 @@ export const plans: Plan[] = [
   {
     id: 'agencja',
     name: 'Agencja',
-    price: '449 zł',
+    price: '150 zł',
     unit: 'netto / miesiąc',
-    lead: 'Dla agencji, która raportuje jakość leadów wielu klientom.',
-    features: [
-      'do 15 klientów',
-      'wszystko ze Startera',
-      'integracja z CRM',
-      'skrót na Slacku',
-      'asystent AI (MCP) z limitami zmian',
-      'oceny wracają do Meta (Conversions API)',
-    ],
+    lead: 'Dla agencji, która prowadzi kampanie wielu klientów.',
+    features: ['do 15 klientów (kont reklamowych)', 'wszystko ze Startera'],
     cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=agencja`,
     featured: true,
@@ -90,17 +74,15 @@ export const plans: Plan[] = [
   {
     id: 'enterprise',
     name: 'Enterprise',
-    price: 'Wycena',
-    unit: 'indywidualna',
-    lead: 'Dla sieci agencji i dużych reklamodawców.',
+    price: '200 zł',
+    unit: 'netto / miesiąc',
+    lead: 'Bez limitu, dla dużych agencji.',
     features: [
       'bez limitu klientów',
       'wszystko z planu Agencja',
-      'integracje z Twoim CRM i hurtownią danych',
-      'branding agencji w panelu (w przygotowaniu)',
-      'umowa z gwarancją dostępności',
+      'osobny dostęp AI dla każdego klienta',
     ],
-    cta: 'Umów rozmowę',
+    cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=enterprise`,
   },
 ];

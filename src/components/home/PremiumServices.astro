@@ -10,8 +10,8 @@ interface Props {
 }
 const {
   only,
-  heading = 'Wdrożenia, które karmią Integrator pełnymi danymi',
-  intro = 'Jednorazowa praca na Twojej infrastrukturze. Bez abonamentów za narzędzia, z pełną własnością danych.',
+  heading = 'Usługi, które naprawiają dane u źródła',
+  intro = 'Jednorazowe wdrożenie na Twoim serwerze. Dane zostają u Ciebie, bez kolejnych abonamentów.',
 } = Astro.props;
 
 const wszystkie = [
@@ -20,7 +20,7 @@ const wszystkie = [
     name: 'Meta Power Up',
     price: 'od 800 zł',
     note: '+ serwer 25–50 zł/mies.',
-    desc: 'Conversions API z deduplikacją, Enhanced Matching i first-party cookies na Twojej subdomenie. Raport EMQ po wdrożeniu.',
+    desc: 'Meta dostaje informację o każdym zakupie i zgłoszeniu prosto z Twojego serwera, także gdy przeglądarka klienta blokuje śledzenie.',
     href: '/uslugi/meta-power-vps',
   },
   {
@@ -28,7 +28,7 @@ const wszystkie = [
     name: 'Google Power Up',
     price: 'od 1 000 zł',
     note: 'Tag Gateway · sGTM od 2 200 zł',
-    desc: 'GA4 i Google Ads server-side. Tag Gateway na Cloudflare dla mniejszych budżetów, pełen sGTM na VPS powyżej 50 tys. zł miesięcznie.',
+    desc: 'To samo dla Google Ads i Google Analytics. Przy mniejszych budżetach lżejszy wariant bez opłat za serwer.',
     href: '/uslugi/google-power-vps',
   },
   {
@@ -36,7 +36,7 @@ const wszystkie = [
     name: 'Dedykowany VPS pod tracking',
     price: '25–130 zł/mies.',
     note: 'Hostinger, centra danych w EOG',
-    desc: 'Twój własny serwer: dane nie mieszają się z innymi klientami, a wydajność nie zależy od cudzego ruchu. Konfiguracja w cenie wdrożenia.',
+    desc: 'Twój własny serwer do zbierania danych. Nic nie miesza się z danymi innych firm. Konfiguracja w cenie wdrożenia.',
     href: '/uslugi/automatyzacje-vps',
   },
   {
@@ -44,7 +44,7 @@ const wszystkie = [
     name: 'Audyt kont i ustawień Meta/Google',
     price: '2 000–4 000 zł',
     note: '3–5 dni roboczych',
-    desc: 'Sprawdzamy piksel, CAPI, GA4, GTM i ustawienia kampanii: co platforma włączyła za Ciebie, gdzie gubisz dane i co naprawić najpierw. Koszt odliczamy od wdrożenia.',
+    desc: 'Sprawdzamy konta reklamowe i ustawienia kampanii: co platforma włączyła za Ciebie, gdzie giną dane i co naprawić najpierw. Koszt odliczamy od wdrożenia.',
     href: '/kontakt?usluga=audyt',
   },
 ];

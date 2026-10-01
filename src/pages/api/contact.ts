@@ -35,8 +35,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   const name = pole(data.name, 120);
   const email = pole(data.email, 200);
-  const url = pole(data.url, 300);
-  const budget = pole(data.budget, 100);
   // Lista wyboru planu jest w formularzu zawsze, więc plan liczy się tylko przy zaznaczonym Integratorze.
   const plan = pole(data.plan, 30);
   const uslugi = pole(data.service, 300);
@@ -58,9 +56,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const wiersze: [string, string][] = [
     ['Imię', name],
     ['E-mail', email],
-    ['Strona', url || '(nie podano)'],
-    ['Budżet', budget || '(nie podano)'],
-    ['Usługi', service || '(nie wybrano)'],
+    ['Temat', service || '(nie wybrano)'],
   ];
   const html =
     `<h2 style="font-family:Arial,sans-serif;color:#1a2744">Nowe zapytanie z serwer-side.pl</h2>` +
@@ -85,7 +81,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         from: OD,
         to: [DO],
         reply_to: email,
-        subject: `Zapytanie ze strony: ${name}${budget ? ` (${budget})` : ''}`.slice(0, 200),
+        subject: `Zapytanie ze strony: ${name}${service ? ` (${service})` : ''}`.slice(0, 200),
         html,
         text,
       }),

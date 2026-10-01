@@ -1,8 +1,7 @@
 ---
 // Hero strony głównej: Integrator jako główny produkt. Układ, liczniki
-// i rząd zaufania powtarzają dotychczasowy HeroNew; liczby to fakty
-// z produktu (historia 400 dni, synchronizacja arkusza co 15 min,
-// limit +20% na zmianę budżetu przez AI), nie statystyki rynkowe.
+// i rząd zaufania powtarzają dotychczasowy HeroNew. Język dla właściciela
+// agencji: raport i podpowiedzi na pierwszym planie, bez żargonu.
 import { Image } from 'astro:assets';
 import zrodla from '../../assets/integrator/zrodla-danych.png';
 import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
@@ -16,16 +15,14 @@ import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
           Integrator danych reklamowych
         </span>
         <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
-          Wiesz, która reklama przyniosła<br class="hidden md:block" />
-          <span class="text-accent">klienta, a nie tylko leada.</span>
+          Meta Ads i Google Ads w jednym panelu.<br class="hidden md:block" />
+          <span class="text-accent">Co rano wiesz, co zmienić.</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-3">
-          Łącz dane z Meta Ads, Google Ads i CRM w jednym miejscu. Pytaj o kampanie
-          i zlecaj zmiany z Claude Desktop przez MCP, bez klikania po Menedżerach reklam.
+          Dostajesz codzienny raport z obu platform i proste podpowiedzi, które kampanie wspierać, a które wstrzymać.
         </p>
-        <p class="text-base text-gray-500 max-w-2xl mb-8">
-          Handlowiec ocenia leady tam, gdzie dziś: w arkuszu albo w CRM. Integrator liczy
-          z tego koszt zakwalifikowanego leada dla każdej kreacji.
+        <p class="text-base text-gray-400 max-w-2xl mb-8">
+          Podepnij narzędzie AI, z którego korzystasz, i pytaj o kampanie bez wchodzenia do Menedżera reklam.
         </p>
         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
           <a href={TRIAL_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg text-base btn-brutal-light">
@@ -45,7 +42,7 @@ import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
         <div class="absolute -inset-10 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
         <Image
           src={zrodla}
-          alt="Trzy źródła danych (Meta Ads, Google Ads, CRM) łączą się w module Integratora i wychodzą jako jeden raport"
+          alt="Dane z Meta Ads, Google Ads i CRM łączą się w Integratorze w jeden raport"
           widths={[480, 720, 960]}
           sizes="(min-width: 1024px) 420px, 90vw"
           format="webp"
@@ -55,26 +52,26 @@ import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
       </div>
     </div>
 
-    {/* Liczniki: fakty z produktu, animacja count-up jak dotąd */}
+    {/* Liczniki z animacją count-up, jak dotąd */}
     <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl" id="hero-stats">
       <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="400" data-suffix=" dni">400 dni</p>
-        <p class="text-sm text-gray-400">historii kosztów i kreacji od pierwszego dnia</p>
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="2" data-suffix=" platformy">2 platformy</p>
+        <p class="text-sm text-gray-400">reklamowe w jednym panelu i jednym raporcie</p>
       </div>
       <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="15" data-suffix=" min">15 min</p>
-        <p class="text-sm text-gray-400">od oceny handlowca w arkuszu do CPQL w panelu</p>
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="7" data-suffix=" dni">7 dni</p>
+        <p class="text-sm text-gray-400">testu za darmo, bez podawania karty</p>
       </div>
       <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="20" data-prefix="+" data-suffix="%">+20%</p>
-        <p class="text-sm text-gray-400">najwyżej tyle budżetu w 24 h może zmienić AI</p>
+        <p class="text-3xl md:text-4xl font-extrabold text-accent mb-1" data-hero-count="49" data-prefix="od " data-suffix=" zł">od 49 zł</p>
+        <p class="text-sm text-gray-400">miesięcznie, rezygnujesz kiedy chcesz</p>
       </div>
     </div>
 
     <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl text-sm text-gray-400">
-      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Bez karty przez 7 dni</div>
-      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Dane i klucze w Unii Europejskiej</div>
-      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Tylko odczyt, dopóki nie zlecisz zmiany</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Raport na e-mail albo Slacka</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Dane w Unii Europejskiej</div>
+      <div class="flex items-center gap-2"><span class="text-accent">✓</span> Nic nie zmienia się bez Ciebie</div>
     </div>
   </div>
 </section>

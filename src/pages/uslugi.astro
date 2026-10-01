@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
-import PanelMockup from '../components/integrator/PanelMockup.astro';
+import DigestPreview from '../components/integrator/DigestPreview.astro';
 import FoundationPaths from '../components/home/FoundationPaths.astro';
 import PremiumServices from '../components/home/PremiumServices.astro';
 import { PANEL_URL, TRIAL_URL } from '../data/integrator';
@@ -11,11 +11,11 @@ export const prerender = true;
 const faq = [
   {
     q: 'Czym Integrator różni się od usług wdrożeniowych?',
-    a: 'Integrator to aplikacja w abonamencie: pokazuje koszty Meta i Google Ads obok oceny handlowca i liczy koszt zakwalifikowanego leada dla każdej reklamy. Usługi wdrożeniowe to jednorazowa praca na Twoim serwerze: naprawiamy przepływ danych do Meta i Google, żeby algorytmy i raporty widziały pełne konwersje. Możesz wziąć jedno albo drugie, razem działają najlepiej.',
+    a: 'Integrator to aplikacja w abonamencie: zbiera wyniki Meta Ads i Google Ads w jednym panelu, wysyła codzienny raport i podpowiada, co zmienić. Usługi wdrożeniowe to jednorazowa praca na Twoim serwerze: naprawiamy przepływ danych do Meta i Google, żeby platformy i raporty widziały wszystkie zakupy i zgłoszenia. Możesz wziąć jedno albo drugie, razem działają najlepiej.',
   },
   {
     q: 'Czy do Integratora potrzebuję wdrożenia server-side?',
-    a: 'Nie. Integrator działa na danych z kont reklamowych i ocenach handlowca, bez zmian na stronie. Server-side tracking przydaje się, gdy platformy gubią konwersje: wtedy Integrator dostaje pełniejsze dane, a algorytmy Meta i Google uczą się na większej próbie.',
+    a: 'Nie. Integrator czyta dane prosto z kont reklamowych, bez zmian na Twojej stronie. Wdrożenie server-side przydaje się, gdy platformy gubią część zakupów albo zgłoszeń: wtedy raporty są pełniejsze, a Meta i Google lepiej dobierają odbiorców.',
   },
   {
     q: 'Co daje server-side na własnym VPS-ie w porównaniu z pudełkowym stackiem SaaS?',
@@ -47,12 +47,12 @@ const faq = [
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Pokazujemy, która reklama zarabia. I naprawiamy dane, które ją gubią.</h1>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Pokazujemy, co działa w Twoich kampaniach. I naprawiamy dane, na których się opierają.</h1>
       <p class="text-gray-300 text-lg md:text-xl mb-2">
-        Integrator danych reklamowych mierzy koszt zakwalifikowanego leada dla każdej kreacji. Usługi wdrożeniowe server-side odzyskują konwersje, których Meta i Google dziś nie widzą.
+        Integrator zbiera wyniki Meta Ads i Google Ads w jednym panelu i co rano podpowiada, co zmienić. Wdrożenia server-side sprawiają, że platformy widzą wszystkie zakupy i zgłoszenia.
       </p>
       <p class="text-gray-400 text-sm mt-4">
-        Integrator od <strong class="text-white">149 zł/mies.</strong>, 7 dni za darmo · Wdrożenia server-side od <strong class="text-white">800 zł</strong>
+        Integrator od <strong class="text-white">49 zł/mies.</strong>, 7 dni za darmo · Wdrożenia server-side od <strong class="text-white">800 zł</strong>
       </p>
     </div>
   </section>
@@ -62,20 +62,20 @@ const faq = [
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="bg-white rounded-2xl card-brutal-accent p-6 md:p-10 relative">
         <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Główny produkt</span>
-        <div class="grid lg:grid-cols-5 gap-10 items-center">
-          <div class="lg:col-span-2">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
             <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Aplikacja w abonamencie</p>
             <h2 class="text-2xl md:text-4xl font-extrabold mb-4 leading-tight">Integrator danych reklamowych</h2>
             <p class="text-gray-600 mb-6">
-              Meta Ads, Google Ads i ocena handlowca w jednym panelu. Zamiast pytać, która kampania dała leady, widzisz, która reklama dała klientów, z którymi warto rozmawiać.
+              Wyniki Meta Ads i Google Ads w jednym panelu. Co rano dostajesz krótki raport i proste podpowiedzi, które kampanie wspierać, a które wstrzymać.
             </p>
             <ul class="text-gray-700 space-y-2 mb-7 text-sm">
-              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>CPQL dla każdej kreacji, zestawu i kampanii</span></li>
-              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Leady z formularzy Meta, Google i strony www</span></li>
-              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Ocena handlowca z arkusza Google albo z CRM</span></li>
-              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Poranny skrót e-mailem i na Slacku, asystent AI</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Codzienny raport na e-mail albo Slacka</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Podpowiedzi, co zmienić, zwykłym językiem</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Rozmowa o kampaniach z Twoim narzędziem AI</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Opcja: ocena zgłoszeń przez handlowca</span></li>
             </ul>
-            <p class="text-accent font-extrabold text-3xl mb-1">od 149 zł <span class="text-base font-semibold text-gray-500">netto/mies.</span></p>
+            <p class="text-accent font-extrabold text-3xl mb-1">od 49 zł <span class="text-base font-semibold text-gray-500">netto/mies.</span></p>
             <p class="text-gray-500 text-sm mb-6">7 dni za darmo, bez karty</p>
             <div class="flex flex-col sm:flex-row gap-3">
               <a href={TRIAL_URL} class="text-center bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal">Wypróbuj 7 dni</a>
@@ -83,9 +83,7 @@ const faq = [
             </div>
             <p class="text-sm text-gray-500 mt-4">Masz już konto? <a href={PANEL_URL} class="text-accent font-semibold hover:underline">Zaloguj się</a></p>
           </div>
-          <div class="lg:col-span-3">
-            <PanelMockup compact />
-          </div>
+          <DigestPreview />
         </div>
       </div>
     </div>
@@ -174,7 +172,7 @@ const faq = [
       <div class="text-center mb-10">
         <h2 class="text-2xl md:text-3xl font-bold mb-3">Integrator pokazuje, wdrożenie naprawia</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">
-          Integrator mówi, która reklama przynosi klientów. Server-side sprawia, że Meta i Google w ogóle widzą te konwersje i uczą się na pełnych danych. A wdrożenia dzielą jeden serwer, więc każde kolejne wychodzi taniej.
+          Integrator mówi, które kampanie działają. Wdrożenie server-side sprawia, że Meta i Google widzą wszystkie zakupy i zgłoszenia, a nie tylko część. Wdrożenia dzielą jeden serwer, więc każde kolejne wychodzi taniej.
         </p>
       </div>
 

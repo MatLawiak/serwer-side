@@ -1,8 +1,8 @@
 ---
-// Scena MCP: ilustracja z Gemini po lewej, po prawej zapis rozmowy z Claude
-// odtworzony w kodzie. Liczby (50 zł → 60 zł, +100% ucięte do +20%) są tym
-// samym scenariuszem, który idzie w nagraniu dla weryfikatorów; zapis jest
-// dziś wyłączony, więc nagłówek mówi o tym wprost.
+// Scena „rozmowa z AI”: ilustracja z Gemini i przykładowa rozmowa zwykłym
+// językiem, bez nazw narzędzi i parametrów. Pierwsza wymiana (pytanie
+// o wyniki) działa dziś; druga (zmiana budżetu) jest oznaczona jako
+// przyszła, bo zapis czeka na zatwierdzenie aplikacji przez Meta i Google.
 import { Image } from 'astro:assets';
 import mcp from '../../assets/integrator/mcp-claude.png';
 ---
@@ -14,7 +14,7 @@ import mcp from '../../assets/integrator/mcp-claude.png';
         <div class="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
         <Image
           src={mcp}
-          alt="Laptop z oknem czatu połączony kablem z modułem AI, nad którym unoszą się dwie karty kampanii: suwak budżetu zatrzymany na limicie i przycisk pauzy"
+          alt="Laptop z oknem rozmowy z AI połączony z kartami kampanii: suwak budżetu i przycisk wstrzymania"
           widths={[480, 720, 960]}
           sizes="(min-width: 1024px) 540px, 90vw"
           format="webp"
@@ -24,38 +24,40 @@ import mcp from '../../assets/integrator/mcp-claude.png';
       </div>
 
       <div>
-        <span class="text-xs font-bold text-accent uppercase tracking-wider">MCP: sterowanie z czatu</span>
-        <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Mówisz Claude, co zrobić. Limity są w kodzie, nie w obietnicach.</h2>
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Twoje AI, Twoje kampanie</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Pytasz AI jak współpracownika. Odpowiada na podstawie Twoich kampanii.</h2>
         <p class="text-gray-400 mb-6">
-          Integrator jest serwerem MCP. Claude Desktop albo Claude Code dostają klucz z panelu i widzą
-          dokładnie tych klientów, których im pozwolisz. Tak wygląda zmiana budżetu po włączeniu zapisu:
+          Podpinasz narzędzie AI, z którego już korzystasz, i rozmawiasz o kampaniach bez otwierania Menedżera reklam. Sam decydujesz, do których klientów AI ma dostęp.
         </p>
 
-        {/* Zapis rozmowy */}
+        {/* Przykładowa rozmowa */}
         <div class="bg-[#0f172a] border border-white/10 rounded-2xl overflow-hidden text-sm">
-          <div class="flex items-center justify-between px-4 py-2 border-b border-white/10 text-xs text-gray-400">
-            <span>Claude Desktop · integrator (MCP)</span>
-            <span class="px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-300 bg-amber-400/10">scenariusz po zatwierdzeniu</span>
-          </div>
+          <div class="px-4 py-2 border-b border-white/10 text-xs text-gray-400">Przykładowa rozmowa</div>
           <div class="p-4 space-y-3">
             <div class="flex gap-3">
               <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold shrink-0">Ty</span>
-              <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">Zwiększ budżet kampanii „Mieszkania z ogrodem” u klienta Zielone Tarasy o 100%.</p>
+              <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">Która kampania u klienta Zielone Tarasy radzi sobie najlepiej?</p>
             </div>
             <div class="flex gap-3">
               <span class="w-7 h-7 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold shrink-0">AI</span>
-              <div class="flex-1 space-y-2">
-                <div class="font-mono text-[12px] bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-gray-300">
-                  <p class="text-gray-500">▸ update_budget</p>
-                  <p>status: <span class="text-amber-300">clipped</span></p>
-                  <p>requested: +100% · applied: <span class="text-accent">+20%</span></p>
-                  <p>daily_budget: 50,00 zł → <span class="text-accent">60,00 zł</span></p>
-                  <p class="text-gray-500">„Zwiększono budżet, ale ucięto do limitu +20% ze względów bezpieczeństwa.”</p>
-                </div>
-                <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">
-                  Podniosłem budżet do 60 zł dziennie. Limit +20% na 24 godziny jest wykorzystany, kolejną podwyżkę zrobisz jutro. Wpis trafił do Dziennika agenta.
-                </p>
-              </div>
+              <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">
+                Najlepiej działa „Mieszkania z ogrodem” w Meta Ads: zgłoszenia są tam o jedną trzecią tańsze niż średnio u tego klienta. Najsłabiej wypada „Rabat 5%” w Google Ads. Proponuję przesunąć część budżetu.
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-1">
+              <span class="h-px flex-1 bg-white/10"></span>
+              <span class="text-[11px] px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-300 bg-amber-400/10">wkrótce</span>
+              <span class="h-px flex-1 bg-white/10"></span>
+            </div>
+            <div class="flex gap-3">
+              <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold shrink-0">Ty</span>
+              <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">Podnieś budżet tej najlepszej.</p>
+            </div>
+            <div class="flex gap-3">
+              <span class="w-7 h-7 rounded-full bg-accent/20 text-accent flex items-center justify-center text-xs font-bold shrink-0">AI</span>
+              <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">
+                Zrobione, podniosłem budżet o 20%. To największa podwyżka na dobę, żeby wydatki nie wymknęły się spod kontroli. Zmianę zobaczysz w historii działań.
+              </p>
             </div>
           </div>
         </div>
@@ -63,13 +65,16 @@ import mcp from '../../assets/integrator/mcp-claude.png';
         <ul class="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
           <li class="bg-white/5 border border-white/10 rounded-xl p-4">
             <p class="text-emerald-300 text-xs font-semibold mb-1">Działa dziś</p>
-            <p class="text-gray-300">Wyniki, sygnały, kreacje, leady i słowa kluczowe klienta. Pytania po polsku, odpowiedzi z Twoich danych.</p>
+            <p class="text-gray-300">Pytania o wyniki, reklamy i podpowiedzi dla każdego klienta. Dziś z Claude, ChatGPT wkrótce.</p>
           </li>
           <li class="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p class="text-amber-300 text-xs font-semibold mb-1">Po zatwierdzeniu przez Meta i Google</p>
-            <p class="text-gray-300">Budżet najwyżej +20% w 24 h, wstrzymanie kampanii, nowa kampania wyłącznie jako wstrzymany szkic.</p>
+            <p class="text-amber-300 text-xs font-semibold mb-1">Wkrótce</p>
+            <p class="text-gray-300">Zmiana budżetu i wstrzymanie kampanii jednym zdaniem. Uruchomimy, gdy Meta i Google zatwierdzą aplikację.</p>
           </li>
         </ul>
+        <p class="mt-4 text-sm text-gray-400">
+          Bezpiecznik: AI podniesie budżet najwyżej o 20% dziennie i nigdy samo nie włączy kampanii.
+        </p>
       </div>
     </div>
   </div>

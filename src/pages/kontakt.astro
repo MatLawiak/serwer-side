@@ -1,16 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Cztery opcje zamiast kilkunastu: formularz ma się dać wypełnić w pół minuty.
+// Szczegóły (Meta czy Google, jaki serwer) ustalamy w rozmowie.
+const opcje = [
+  { id: 'integrator', label: 'Darmowy test Integratora (7 dni)' },
+  { id: 'serverside-vps', label: 'Wdrożenie Server-Side / VPS' },
+  { id: 'audyt', label: 'Audyt kont reklamowych' },
+  { id: 'inne', label: 'Inne pytanie' },
+];
 ---
 
 <Layout
-  title="Kontakt — Umów bezpłatną diagnozę | serwer-side.pl"
-  description="Skontaktuj się, aby umówić bezpłatną 30-minutową rozmowę diagnostyczną. Sprawdzimy, ile danych traci Twój tracking."
+  title="Kontakt: test Integratora, wdrożenie, audyt | serwer-side.pl"
+  description="Zacznij 7-dniowy test Integratora, zapytaj o wdrożenie server-side albo umów audyt kont reklamowych. Odpowiadam w ciągu 24 godzin."
 >
   <section class="bg-primary text-white py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
       <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Kontakt</h1>
       <p class="text-gray-300 text-lg">
-        Odpowiadam w ciągu 24h. Pierwsza rozmowa diagnostyczna (30&nbsp;min) jest bezpłatna.
+        Odpowiadam w ciągu 24 godzin. Pierwsza rozmowa (30&nbsp;min) jest bezpłatna.
       </p>
     </div>
   </section>
@@ -54,138 +63,31 @@ import Layout from '../layouts/Layout.astro';
               />
             </div>
 
-            <div>
-              <label for="url" class="block text-sm font-medium text-gray-700 mb-1">
-                URL strony / sklepu
-              </label>
-              <input
-                type="url"
-                id="url"
-                name="url"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-colors"
-                placeholder="https://mojsklep.pl"
-              />
-            </div>
-
-            <div>
-              <p class="block text-sm font-medium text-gray-700 mb-2">
-                Czym mogę Ci pomóc? <span class="text-gray-400 font-normal">(wybierz jedną lub więcej)</span>
-              </p>
-              <div class="p-4 border border-gray-300 rounded-lg bg-white space-y-4">
-
-                <div>
-                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Aplikacja</p>
-                  <div class="space-y-2">
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="integrator" name="service" value="integrator"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="integrator" class="text-sm text-gray-700 cursor-pointer">
-                        Darmowy test Integratora (7 dni)
-                      </label>
-                    </div>
-                    {/* Plan z przycisku w cenniku (?plan=...). Trafia do maila jako osobne pole usługi. */}
-                    <select id="plan" name="plan" class="hidden ml-7 text-sm border border-gray-300 rounded-md px-2 py-1 text-gray-700">
-                      <option value="starter">Plan Starter</option>
-                      <option value="agencja">Plan Agencja</option>
-                      <option value="enterprise">Plan Enterprise</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Tracking reklamowy</p>
-                  <div class="space-y-2">
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="serverside-vps" name="service" value="serverside-vps"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="serverside-vps" class="text-sm text-gray-700 cursor-pointer">
-                        Wdrożenie Server-Side / VPS (nie wiem jeszcze, Meta czy Google)
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="meta-power-vps" name="service" value="meta-power-vps"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="meta-power-vps" class="text-sm text-gray-700 cursor-pointer">
-                        Meta Power Up: Meta Pixel i CAPI na własnym serwerze
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="google-power-vps" name="service" value="google-power-vps"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="google-power-vps" class="text-sm text-gray-700 cursor-pointer">
-                        Google Power Up: GA4 i Google Ads server-side
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="meta-google-combo" name="service" value="meta-google-combo"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="meta-google-combo" class="text-sm text-gray-700 cursor-pointer">
-                        Meta i Google Power Up: oba kanały jednocześnie
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Automatyzacje</p>
-                  <div class="space-y-2">
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="automatyzacje-vps" name="service" value="automatyzacje-vps"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="automatyzacje-vps" class="text-sm text-gray-700 cursor-pointer">
-                        Automatyzacje VPS: n8n, CRM, maile, integracje
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Inne</p>
-                  <div class="space-y-2">
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="audyt" name="service" value="audyt"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="audyt" class="text-sm text-gray-700 cursor-pointer">
-                        Audyt kont reklamowych i ustawień Meta/Google
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="pixelyoursite" name="service" value="pixelyoursite"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="pixelyoursite" class="text-sm text-gray-700 cursor-pointer">
-                        Konfiguracja PixelYourSite z GTM i CookieYes
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="konsultacja" name="service" value="konsultacja"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="konsultacja" class="text-sm text-gray-700 cursor-pointer">
-                        Konsultacja / pytanie ogólne
-                      </label>
-                    </div>
-                    <div class="flex items-start gap-3">
-                      <input type="checkbox" id="inne" name="service" value="inne"
-                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
-                      <label for="inne" class="text-sm text-gray-700 cursor-pointer">
-                        Inne
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
+            <fieldset>
+              <legend class="block text-sm font-medium text-gray-700 mb-2">W czym mogę pomóc?</legend>
+              <div class="grid sm:grid-cols-2 gap-2">
+                {opcje.map((o) => (
+                  <label class="flex items-center gap-3 px-4 py-3 border border-gray-300 rounded-lg bg-white cursor-pointer hover:border-accent has-[:checked]:border-accent has-[:checked]:bg-accent/5 transition-colors">
+                    <input type="radio" id={o.id} name="service" value={o.id} checked={o.id === 'integrator'}
+                      class="w-4 h-4 text-accent border-gray-300 focus:ring-accent" />
+                    <span class="text-sm text-gray-700">{o.label}</span>
+                  </label>
+                ))}
               </div>
-            </div>
+              {/* Plan z przycisku w cenniku (?plan=...). Trafia do maila razem z wyborem. */}
+              <input type="hidden" id="plan" name="plan" value="" />
+            </fieldset>
 
             <div>
               <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
-                Wiadomość
+                Wiadomość <span class="text-gray-400 font-normal">(opcjonalnie)</span>
               </label>
               <textarea
                 id="message"
                 name="message"
-                rows="4"
+                rows="3"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-colors resize-y"
-                placeholder="Opisz swoją sytuację lub zadaj pytanie..."
+                placeholder="Np. adres strony albo pytanie, które chcesz zadać"
               ></textarea>
             </div>
 
@@ -278,7 +180,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="text-sm text-gray-600 space-y-2">
               <p>Odpowiadam w ciągu <strong>24 godzin</strong></p>
               <p>Pierwsza rozmowa: <strong>30 min, bezpłatnie</strong></p>
-              <p>Omówimy Twój obecny tracking i&nbsp;potencjał do poprawy</p>
+              <p>Konto testowe Integratora zakładam w&nbsp;ciągu jednego dnia roboczego</p>
             </div>
           </div>
         </div>
@@ -292,19 +194,12 @@ import Layout from '../layouts/Layout.astro';
   const successMsg = document.getElementById('form-success')!;
   const errorMsg = document.getElementById('form-error')!;
 
-  // Przyciski „Wypróbuj 7 dni” z /integrator i /uslugi prowadzą tu z
-  // ?usluga=integrator&plan=... : zaznaczamy usługę i pokazujemy wybrany plan.
+  // Linki z innych stron (?usluga=integrator&plan=agencja, ?usluga=audyt)
+  // zaznaczają odpowiednią opcję i przekazują plan do maila.
   const params = new URLSearchParams(window.location.search);
-  const integrator = document.getElementById('integrator') as HTMLInputElement;
-  const plan = document.getElementById('plan') as HTMLSelectElement;
-  const pokazPlan = () => plan.classList.toggle('hidden', !integrator.checked);
-  // ?usluga=<id> zaznacza dowolną opcję formularza (integrator, audyt, serverside-vps...).
-  const zaznacz = document.getElementById(params.get('usluga') || '') as HTMLInputElement | null;
-  if (zaznacz && zaznacz.type === 'checkbox') zaznacz.checked = true;
-  const wybranyPlan = params.get('plan');
-  if (wybranyPlan && [...plan.options].some((o) => o.value === wybranyPlan)) plan.value = wybranyPlan;
-  integrator.addEventListener('change', pokazPlan);
-  pokazPlan();
+  const wybor = document.getElementById(params.get('usluga') || '') as HTMLInputElement | null;
+  if (wybor && wybor.type === 'radio') wybor.checked = true;
+  (document.getElementById('plan') as HTMLInputElement).value = params.get('plan') || '';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();

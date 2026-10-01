@@ -13,9 +13,9 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div data-feature-grid class="grid sm:grid-cols-2 lg:grid-cols-4 bg-white rounded-xl card-brutal-static overflow-hidden">
+<div data-feature-grid class="grid sm:grid-cols-2 lg:grid-cols-3 bg-white rounded-xl card-brutal-static overflow-hidden">
   {items.map((f) => (
-    <div data-feature class="p-6 border-slate-200 border-b sm:[&:nth-child(odd)]:border-r lg:border-r lg:[&:nth-child(4n)]:border-r-0">
+    <div data-feature class="p-6 border-slate-200 border-b sm:max-lg:[&:nth-child(odd)]:border-r lg:border-r lg:[&:nth-child(3n)]:border-r-0">
       <p class="text-[11px] font-bold uppercase tracking-wider text-accent-dark mb-2">{f.tag}</p>
       <h3 class="text-lg font-bold text-primary mb-2 leading-snug">{f.title}</h3>
       <p class="text-sm text-gray-600 leading-relaxed">{f.text}</p>

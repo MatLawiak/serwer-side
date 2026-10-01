@@ -4,14 +4,14 @@
 // trzy wyjścia po prawej. Na telefonie kolumny układają się pionowo,
 // a łączniki zamieniają się w strzałki.
 const zrodla = [
-  { name: 'Meta Ads', desc: 'kampanie, kreacje, leady z formularzy', color: 'text-blue-300' },
-  { name: 'Google Ads', desc: 'koszty, konwersje, słowa kluczowe, PMax', color: 'text-emerald-300' },
-  { name: 'CRM albo arkusz', desc: 'ocena leada przez handlowca', color: 'text-amber-300' },
+  { name: 'Meta Ads', desc: 'kampanie, reklamy, wydatki', color: 'text-blue-300' },
+  { name: 'Google Ads', desc: 'kampanie, reklamy, słowa kluczowe', color: 'text-emerald-300' },
+  { name: 'CRM albo arkusz', desc: 'opcjonalnie: ocena zgłoszeń', color: 'text-amber-300' },
 ];
 const wyjscia = [
-  { name: 'CPQL per kreacja', desc: 'koszt zakwalifikowanego leada dla każdej reklamy' },
-  { name: 'Poranny skrót', desc: 'e-mail i Slack: 3 wnioski, 1 akcja' },
-  { name: 'MCP dla Claude', desc: 'pytania o kampanie i zlecenia z limitem' },
+  { name: 'Codzienny raport', desc: 'na e-mail albo Slacka, każdego ranka' },
+  { name: 'Proste podpowiedzi', desc: 'co wspierać, a co wstrzymać' },
+  { name: 'Rozmowa z AI', desc: 'pytasz o kampanie zwykłym językiem' },
 ];
 ---
 
@@ -19,9 +19,9 @@ const wyjscia = [
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
       <span class="text-xs font-bold text-accent uppercase tracking-wider">Jak to działa</span>
-      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Trzy źródła wchodzą. Jedna odpowiedź wychodzi.</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Dane z kilku miejsc. Jeden raport.</h2>
       <p class="text-gray-400 max-w-2xl mx-auto">
-        Platformy mówią, ile kosztował lead. Handlowiec mówi, czy był coś wart. Integrator łączy jedno z drugim na poziomie pojedynczej reklamy.
+        Nie musisz już składać wyników z dwóch Menedżerów reklam. Integrator robi to za Ciebie i mówi, co z tego wynika.
       </p>
     </div>
 
@@ -49,7 +49,7 @@ const wyjscia = [
         <div class="relative">
           <img src="/robot-mascot-nobg.png" alt="" class="w-14 h-14 mx-auto mb-2 object-contain" loading="lazy" />
           <p class="font-extrabold text-lg">Integrator</p>
-          <p class="text-xs text-gray-300 mt-1">lead ← reklama ← koszt<br />+ ocena handlowca</p>
+          <p class="text-xs text-gray-300 mt-1">wszystko w jednym miejscu</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ const wyjscia = [
     </div>
 
     <p class="text-center text-sm text-gray-500 mt-8 max-w-xl mx-auto">
-      Lead z formularza Meta, Google albo ze strony www dostaje identyfikator reklamy. Ocena handlowca wraca do tej samej reklamy. Bez ręcznego przepisywania.
+      Podłączenie to kilka kliknięć: logujesz się przez Facebook i Google i zaznaczasz konta, które Integrator ma czytać.
     </p>
   </div>
 </section>

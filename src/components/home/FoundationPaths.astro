@@ -9,27 +9,25 @@ const { compact = false } = Astro.props;
 
 const sciezki = [
   {
-    tag: 'Lead Gen',
+    tag: 'Zbierasz zgłoszenia',
     title: 'Deweloperzy, usługi, B2B',
-    intro: 'Lead to dopiero początek. Liczy się, czy handlowiec miał z kim rozmawiać.',
+    intro: 'Formularz to dopiero początek. Liczy się, czy było z kim rozmawiać.',
     points: [
-      'Leady z formularzy Meta, Google i strony www z identyfikatorem reklamy',
-      'Ocena handlowca z CRM (np. voxDeveloper) albo z arkusza Google',
-      'CPQL: koszt zakwalifikowanego leada dla każdej kreacji i kampanii',
-      'Oceny wracają do Meta (Conversions API), algorytm uczy się na dobrych klientach',
+      'Zgłoszenia z formularzy Meta, Google i strony w jednym miejscu',
+      'Wiesz, z której reklamy przyszło każde zgłoszenie',
+      'Opcja: handlowiec ocenia zgłoszenia, a Ty widzisz, które reklamy przynoszą dobrych klientów',
     ],
     href: '/integrator',
     cta: 'Zobacz Integrator',
   },
   {
-    tag: 'E-commerce',
+    tag: 'Prowadzisz sklep',
     title: 'Sklepy internetowe',
-    intro: 'Adblockery i iOS gubią zakupy. Algorytm optymalizuje pod połowę prawdy.',
+    intro: 'Blokady reklam ukrywają część zakupów. Platformy uczą się na połowie danych.',
     points: [
-      'Pełne Conversions API Meta i Google po stronie serwera (Meta i Google Power Up)',
-      'Odzyskanie zdarzeń blokowanych w przeglądarce, deduplikacja z pikselem',
-      'Wartość koszyka i realny ROAS w raportach platform',
-      'W Integratorze: koszt każdej konwersji po nazwie zdarzenia, Meta obok Google',
+      'Meta i Google dostają informację o każdym zakupie, także gdy klient blokuje reklamy',
+      'Poprawna wartość koszyka i zwrot z reklamy w raportach',
+      'Algorytmy uczą się na pełnych danych, więc lepiej dobierają odbiorców',
     ],
     href: '/uslugi/meta-power-vps',
     cta: 'Zobacz Meta Power Up',
@@ -41,9 +39,9 @@ const sciezki = [
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
       <span class="text-xs font-bold text-accent uppercase tracking-wider">Fundament danych</span>
-      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Integrator liczy tylko tak dobrze, jak dobre dane dostaje</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Dobre decyzje wymagają pełnych danych</h2>
       <p class="text-gray-400 max-w-2xl mx-auto">
-        Server-side tracking na Twoim serwerze sprawia, że Meta i Google widzą pełne konwersje, a Integrator pracuje na kompletnych danych. Dwie ścieżki, zależnie od tego, co sprzedajesz.
+        Blokady reklam i ustawienia prywatności w telefonach sprawiają, że Meta i Google nie widzą części zakupów i zgłoszeń. Naprawiamy to u źródła (server-side tracking), żeby raporty pokazywały pełny obraz.
       </p>
     </div>
 

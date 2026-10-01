@@ -1,37 +1,37 @@
 ---
-// Trzy wyróżniki Integratora. Etykieta stanu przy każdym jest obowiązkowa:
-// strona trafia do weryfikatorów Meta i Google, którzy porównują obietnice
-// z nagraniem, a funkcje zapisu są wyłączone do zatwierdzenia uprawnień.
+// Trzy wyróżniki Integratora, prostym językiem. Etykieta stanu przy każdym
+// zostaje: strona trafia do weryfikatorów Meta i Google, a zmiany
+// w kampaniach z poziomu AI są wyłączone do zatwierdzenia aplikacji.
 const usps = [
-  {
-    badge: 'Sprawdzak: w przygotowaniu',
-    badgeTone: 'soon',
-    title: 'Zero narzucanych „ulepszeń” Meta i Google',
-    desc: 'Advantage+ creative, automatyczne zasoby Google, rozszerzony targeting: platformy włączają to po cichu, a Ty płacisz za reklamę, której nie zatwierdziłeś. Integrator sprawdzi ustawienia każdej kampanii i ostrzeże, gdy coś zmieniło się bez Ciebie.',
-    detail: 'Automatyczne wyłączanie: po zatwierdzeniu uprawnień zapisu przez Meta i Google.',
-    icon: 'shield',
-  },
   {
     badge: 'Działa dziś',
     badgeTone: 'now',
-    title: 'Pełna swoboda kreacji',
-    desc: 'Twoje grafiki, Twoje teksty, Twoje struktury kampanii. Integrator niczego nie podmienia. Pokazuje za to, która z Twoich kreacji przyniosła klientów, z którymi handlowiec chciał rozmawiać, a która tylko tanie kontakty.',
-    detail: 'Szkic nowej kampanii z polecenia dla AI (zawsze wstrzymany): po zatwierdzeniu przez Meta i Google.',
-    icon: 'palette',
+    title: 'Oszczędzasz czas każdego ranka',
+    desc: 'Zamiast logować się do dwóch Menedżerów reklam i przeglądać kampanię po kampanii, czytasz jeden krótki raport. Wiesz od razu, gdzie zajrzeć, a gdzie wszystko działa.',
+    detail: 'Raport na e-mail albo Slacka włączasz jednym przełącznikiem.',
+    icon: 'clock',
   },
   {
-    badge: 'Claude Desktop i Claude Code',
+    badge: 'W przygotowaniu',
+    badgeTone: 'soon',
+    title: 'Koniec z „ulepszeniami”, o które nie prosiłeś',
+    desc: 'Meta i Google lubią same coś dołożyć: przerobić grafikę, dopisać tekst, poszerzyć grupę odbiorców. Integrator sprawdzi ustawienia kampanii i da znać, gdy platforma włączyła coś bez Ciebie.',
+    detail: 'Do czasu premiery robimy to ręcznie w ramach audytu kont.',
+    icon: 'shield',
+  },
+  {
+    badge: 'Działa z Claude',
     badgeTone: 'now',
-    title: 'Sterowanie przez MCP i czat',
-    desc: 'Podłączasz Integrator do Claude jednym kluczem. Pytasz po polsku o wyniki, sygnały i kreacje klienta, bez otwierania Menedżera reklam. Każda liczba w odpowiedzi pochodzi z Twoich danych.',
-    detail: 'Zmiany budżetu (najwyżej +20% w 24 h) i wstrzymanie kampanii: po zatwierdzeniu przez Meta i Google. ChatGPT: wkrótce.',
+    title: 'Kampanie bez Menedżera reklam',
+    desc: 'Podepnij narzędzie AI, z którego korzystasz, i pytaj o kampanie zwykłymi zdaniami. Odpowiedzi powstają z Twoich danych, nie z domysłów.',
+    detail: 'Dziś działa z Claude, ChatGPT dołączy wkrótce. Zmiany w kampaniach z czatu: po zatwierdzeniu aplikacji przez Meta i Google.',
     icon: 'chat',
   },
 ];
 
 const icons: Record<string, string> = {
+  clock: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
   shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-  palette: 'M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01',
   chat: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z',
 };
 ---
@@ -40,9 +40,9 @@ const icons: Record<string, string> = {
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="text-center mb-12">
       <span class="text-xs font-bold text-accent uppercase tracking-wider">Dlaczego Integrator</span>
-      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Kontrola wraca do Ciebie</h2>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Więcej kontroli, mniej klikania</h2>
       <p class="text-gray-400 max-w-2xl mx-auto">
-        Platformy reklamowe optymalizują pod własne cele. Integrator stoi po stronie agencji: pokazuje, co naprawdę działa, i pilnuje, żeby nic nie zmieniło się bez Twojej wiedzy.
+        Integrator oszczędza Twój czas i pilnuje, żeby w kampaniach nic nie działo się bez Twojej wiedzy.
       </p>
     </div>
 
