@@ -54,8 +54,16 @@ const currentYear = new Date().getFullYear();
         </div>
       </div>
     </div>
-    <div class="border-t border-white/10 mt-6 pt-6 text-center text-xs">
-      <p>&copy; {currentYear} serwer-side.pl. Wszystkie prawa zastrzeżone.</p>
+    <div class="border-t border-white/10 mt-6 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+      <p class="text-center md:text-left">
+        &copy; {currentYear} serwer-side.pl · Mateusz Ławiak, ul. Święty Marcin 29 lok. 8, 61-806 Poznań · NIP 7872153451
+      </p>
+      <nav aria-label="Dokumenty" class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        <a href="/polityka-prywatnosci" class="hover:text-accent transition-colors">Polityka prywatności</a>
+        <a href="/regulamin" class="hover:text-accent transition-colors">Regulamin</a>
+        {/* Klasa cky-banner-element otwiera panel zgód CookieYes; wycofanie zgody musi być tak proste jak jej udzielenie. */}
+        <a href="#" class="cky-banner-element hover:text-accent transition-colors">Ustawienia cookies</a>
+      </nav>
     </div>
   </div>
 </footer>

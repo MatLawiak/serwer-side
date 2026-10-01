@@ -167,10 +167,18 @@ import Layout from '../layouts/Layout.astro';
                 class="mt-1 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent"
               />
               <label for="rodo" class="text-xs text-gray-500 leading-relaxed">
-                Wyrażam zgodę na przetwarzanie moich danych osobowych w celu obsługi zapytania
-                kontaktowego, zgodnie z&nbsp;Rozporządzeniem Parlamentu Europejskiego i&nbsp;Rady (UE) 2016/679 (RODO). *
+                Zapoznałem się z&nbsp;<a href="/polityka-prywatnosci" target="_blank" class="text-accent hover:underline">Polityką prywatności</a>
+                i&nbsp;chcę, żeby serwer-side.pl odpowiedział na moje zapytanie. *
               </label>
             </div>
+            {/* Obowiązek informacyjny z art. 13 RODO. Podstawą jest odpowiedź na zapytanie (art. 6 ust. 1 lit. b),
+                a nie zgoda: zgodę można wycofać, a odpowiedzi na wysłane pytanie nie da się cofnąć. */}
+            <p class="text-xs text-gray-400 leading-relaxed -mt-2">
+              Administratorem danych jest Mateusz Ławiak, ul. Święty Marcin 29 lok. 8, 61-806 Poznań.
+              Dane z&nbsp;formularza wykorzystamy wyłącznie do odpowiedzi i&nbsp;przygotowania oferty,
+              a&nbsp;korespondencję przechowujemy 12 miesięcy. Masz prawo dostępu do danych, ich poprawienia
+              i&nbsp;usunięcia. Szczegóły w&nbsp;<a href="/polityka-prywatnosci" class="underline hover:text-accent">Polityce prywatności</a>.
+            </p>
 
             <button
               type="submit"

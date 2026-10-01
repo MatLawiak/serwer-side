@@ -35,6 +35,8 @@ export default defineConfig({
         'https://serwer-side.pl/uslugi',
         'https://serwer-side.pl/o-mnie',
         'https://serwer-side.pl/kontakt',
+        'https://serwer-side.pl/polityka-prywatnosci',
+        'https://serwer-side.pl/regulamin',
         'https://serwer-side.pl/server-side-tracking',
         'https://serwer-side.pl/uslugi/meta-power-vps',
         'https://serwer-side.pl/uslugi/google-power-vps',
