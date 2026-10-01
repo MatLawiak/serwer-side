@@ -37,7 +37,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const email = pole(data.email, 200);
   const url = pole(data.url, 300);
   const budget = pole(data.budget, 100);
-  const service = pole(data.service, 300);
+  // Lista wyboru planu jest w formularzu zawsze, więc plan liczy się tylko przy zaznaczonym Integratorze.
+  const plan = pole(data.plan, 30);
+  const uslugi = pole(data.service, 300);
+  const service =
+    uslugi.split(', ').includes('integrator') && plan ? `${uslugi} (plan: ${plan})` : uslugi;
   const message = pole(data.message, 5000);
 
   if (!name || !EMAIL.test(email) || !data.rodo) {

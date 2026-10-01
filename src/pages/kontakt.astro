@@ -74,6 +74,25 @@ import Layout from '../layouts/Layout.astro';
               <div class="p-4 border border-gray-300 rounded-lg bg-white space-y-4">
 
                 <div>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Aplikacja</p>
+                  <div class="space-y-2">
+                    <div class="flex items-start gap-3">
+                      <input type="checkbox" id="integrator" name="service" value="integrator"
+                        class="mt-0.5 w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent" />
+                      <label for="integrator" class="text-sm text-gray-700 cursor-pointer">
+                        Integrator danych reklamowych: 7 dni za darmo
+                      </label>
+                    </div>
+                    {/* Plan z przycisku w cenniku (?plan=...). Trafia do maila jako osobne pole usługi. */}
+                    <select id="plan" name="plan" class="hidden ml-7 text-sm border border-gray-300 rounded-md px-2 py-1 text-gray-700">
+                      <option value="starter">Plan Starter</option>
+                      <option value="agencja">Plan Agencja</option>
+                      <option value="enterprise">Plan Enterprise</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
                   <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Tracking reklamowy</p>
                   <div class="space-y-2">
                     <div class="flex items-start gap-3">
@@ -265,6 +284,18 @@ import Layout from '../layouts/Layout.astro';
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const successMsg = document.getElementById('form-success')!;
   const errorMsg = document.getElementById('form-error')!;
+
+  // Przyciski „Wypróbuj 7 dni” z /integrator i /uslugi prowadzą tu z
+  // ?usluga=integrator&plan=... : zaznaczamy usługę i pokazujemy wybrany plan.
+  const params = new URLSearchParams(window.location.search);
+  const integrator = document.getElementById('integrator') as HTMLInputElement;
+  const plan = document.getElementById('plan') as HTMLSelectElement;
+  const pokazPlan = () => plan.classList.toggle('hidden', !integrator.checked);
+  if (params.get('usluga') === 'integrator') integrator.checked = true;
+  const wybranyPlan = params.get('plan');
+  if (wybranyPlan && [...plan.options].some((o) => o.value === wybranyPlan)) plan.value = wybranyPlan;
+  integrator.addEventListener('change', pokazPlan);
+  pokazPlan();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();

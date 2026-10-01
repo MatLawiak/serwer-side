@@ -1,0 +1,128 @@
+---
+// Makieta panelu Integratora (galeria Kreacji). Kod zamiast zrzutu ekranu:
+// ostra na każdym ekranie i bez danych prawdziwych klientów.
+// Liczby są spójne: suma wydatków 4 920 zł, 125 leadów (CPL 39,36 zł),
+// 27 zakwalifikowanych (CPQL 182,22 zł). Kreacja B ma najtańszego leada
+// i najdroższego klienta, czyli dokładnie to, czego CPL nie pokazuje.
+interface Props {
+  class?: string;
+  // Wąska kolumna (np. obok opisu na /uslugi): bez bocznego menu, żeby liczby się nie łamały.
+  compact?: boolean;
+}
+const { class: className = '', compact = false } = Astro.props;
+
+const kpi = [
+  { label: 'Wydatki', value: '4 920 zł' },
+  { label: 'Leady', value: '125' },
+  { label: 'CPL', value: '39,36 zł' },
+  { label: 'CPQL', value: '182,22 zł', accent: true },
+];
+
+const kreacje = [
+  {
+    name: 'Wideo: spacer po mieszkaniu',
+    platform: 'Meta',
+    spend: '1 840 zł',
+    leads: 46,
+    qualified: 14,
+    cpl: '40,00 zł',
+    cpql: '131,43 zł',
+    tone: 'good',
+    thumb: 'from-sky-200 via-cyan-100 to-white',
+  },
+  {
+    name: 'Grafika: rabat 5% do końca miesiąca',
+    platform: 'Meta',
+    spend: '2 120 zł',
+    leads: 61,
+    qualified: 6,
+    cpl: '34,75 zł',
+    cpql: '353,33 zł',
+    tone: 'bad',
+    thumb: 'from-amber-200 via-orange-100 to-white',
+  },
+  {
+    name: 'PMax: Mieszkania z ogrodem',
+    platform: 'Google',
+    spend: '960 zł',
+    leads: 18,
+    qualified: 7,
+    cpl: '53,33 zł',
+    cpql: '137,14 zł',
+    tone: 'good',
+    thumb: 'from-emerald-200 via-teal-100 to-white',
+  },
+];
+---
+
+<figure class={`relative ${className}`} aria-label="Makieta panelu Integratora: galeria kreacji z kosztem zakwalifikowanego leada">
+  <div class="rounded-xl bg-white card-brutal-static overflow-hidden text-left">
+    {/* pasek okna */}
+    <div class="flex items-center gap-2 px-4 py-2.5 border-b border-slate-200 bg-slate-50">
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
+      <span class="ml-3 text-[11px] text-slate-500 truncate">integrator.serwer-side.pl · Klienci · Kreacje</span>
+    </div>
+
+    <div class="flex">
+      {/* boczne menu */}
+      <aside class:list={['flex-col gap-1 w-40 shrink-0 border-r border-slate-200 p-3 text-[12px]', compact ? 'hidden' : 'hidden md:flex']}>
+        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">Analiza</span>
+        <span class="px-2 py-1.5 rounded text-slate-600">Podsumowanie</span>
+        <span class="px-2 py-1.5 rounded text-slate-600">Kampanie</span>
+        <span class="px-2 py-1.5 rounded bg-primary text-white font-semibold">Kreacje</span>
+        <span class="px-2 py-1.5 rounded text-slate-600">Leady</span>
+        <span class="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mt-3 mb-1">System</span>
+        <span class="px-2 py-1.5 rounded text-slate-600">Powiadomienia</span>
+        <span class="px-2 py-1.5 rounded text-slate-600">Dostęp dla AI</span>
+      </aside>
+
+      <div class="flex-1 min-w-0 p-4 md:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <p class="text-[11px] text-slate-500">Klient</p>
+            <p class="font-bold text-primary text-sm md:text-base">Osiedle Zielone Tarasy</p>
+          </div>
+          <span class="text-[11px] px-2 py-1 rounded-md border border-slate-200 text-slate-600">Ostatnie 30 dni</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+          {kpi.map((k) => (
+            <div class={`rounded-lg border px-3 py-2 ${k.accent ? 'border-accent bg-accent/5' : 'border-slate-200'}`}>
+              <p class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">{k.label}</p>
+              <p class={`font-extrabold whitespace-nowrap ${compact ? 'text-sm' : 'text-sm md:text-base'} ${k.accent ? 'text-accent-dark' : 'text-primary'}`}>{k.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3">
+          {kreacje.map((c) => (
+            <div class="rounded-lg border border-slate-200 overflow-hidden">
+              <div class={`h-20 bg-gradient-to-br ${c.thumb} relative`}>
+                <span class="absolute top-2 left-2 text-[10px] font-semibold bg-white/90 text-slate-700 px-1.5 py-0.5 rounded">{c.platform}</span>
+              </div>
+              <div class="p-2.5">
+                <p class="text-[12px] font-semibold text-primary leading-snug mb-2 line-clamp-2 min-h-[2rem]">{c.name}</p>
+                <dl class="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px]">
+                  <dt class="text-slate-500">Wydatki</dt><dd class="text-right text-slate-700">{c.spend}</dd>
+                  <dt class="text-slate-500">Leady</dt><dd class="text-right text-slate-700">{c.leads}</dd>
+                  <dt class="text-slate-500">CPL</dt><dd class="text-right text-slate-700">{c.cpl}</dd>
+                  <dt class="text-slate-500">Zakwalifik.</dt><dd class="text-right text-slate-700">{c.qualified}</dd>
+                </dl>
+                <div class={`mt-2 flex items-center justify-between rounded-md px-2 py-1.5 text-[12px] font-bold ${c.tone === 'good' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
+                  <span>CPQL</span><span class="whitespace-nowrap">{c.cpql}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-900">
+          <strong>Wskazówka:</strong> „Grafika: rabat 5%” ma najtańszego leada (34,75 zł), ale tylko 6 z 61 leadów handlowiec uznał za wartościowe. CPQL 353,33 zł, 2,7 razy więcej niż wideo.
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption class="mt-2 text-xs text-slate-400 text-center">Makieta panelu, dane przykładowe</figcaption>
+</figure>

@@ -1,0 +1,194 @@
+---
+// Strona produktu Integrator. Jest też „stroną główną aplikacji” w ekranie
+// zgody Google (projekt „Raporty”): recenzent szuka tu opisu aplikacji,
+// sposobu użycia danych Google i linku do polityki prywatności. Sekcja
+// #dane musi zostać i mówić prawdę o tym, co robi panel.
+import Layout from '../layouts/Layout.astro';
+import PanelMockup from '../components/integrator/PanelMockup.astro';
+import FeatureGrid from '../components/integrator/FeatureGrid.astro';
+import PricingCards from '../components/integrator/PricingCards';
+import { features, plans, PANEL_URL, TRIAL_URL } from '../data/integrator';
+
+export const prerender = true;
+
+const kroki = [
+  {
+    nr: '1',
+    title: 'Podłączasz konta reklamowe',
+    text: 'Logujesz się przez Facebook i Google i sam wskazujesz konta, strony i formularze, które Integrator ma obsługiwać. Nic więcej nie pobieramy.',
+  },
+  {
+    nr: '2',
+    title: 'Handlowiec ocenia leady',
+    text: 'W arkuszu Google albo w CRM, tak jak dziś. Integrator dopasowuje każdą ocenę do leada i do reklamy, z której przyszedł.',
+  },
+  {
+    nr: '3',
+    title: 'Widzisz koszt zakwalifikowanego leada',
+    text: 'Dla każdej kreacji, zestawu i kampanii. Rano dostajesz skrót: co działa, co przepala budżet i co zrobić dziś.',
+  },
+];
+
+const faq = [
+  {
+    q: 'Czym CPQL różni się od CPL?',
+    a: 'CPL dzieli wydatki przez wszystkie leady, także te, z którymi handlowiec nie ma o czym rozmawiać. CPQL dzieli je tylko przez leady, które handlowiec uznał za wartościowe. Reklama z tanim CPL potrafi mieć najdroższy CPQL, bo ściąga przypadkowe kontakty.',
+  },
+  {
+    q: 'Jak działa 7-dniowy okres próbny?',
+    a: 'Zostaw kontakt w formularzu, a w ciągu jednego dnia roboczego założymy Ci przestrzeń i pomożemy podłączyć pierwsze konto. Przez 7 dni korzystasz bez opłat i bez podawania danych karty.',
+  },
+  {
+    q: 'Czy muszę mieć CRM?',
+    a: 'Nie. Wystarczy arkusz Google, w którym handlowiec oznacza leady. Integrator dodaje w nim jedną zakładkę i synchronizuje ją co 15 minut. CRM podłączysz później, w planie Agencja.',
+  },
+  {
+    q: 'Czy Integrator może coś zepsuć w moich kampaniach?',
+    a: 'Domyślnie tylko czyta dane. Zmiany w kontach wymagają osobnego połączenia z prawem zapisu i wyraźnego polecenia. Nawet wtedy limity są w kodzie serwera: budżet najwyżej +20% w ciągu 24 godzin, nowe kampanie wyłącznie jako wstrzymane szkice, żadnego uruchamiania kampanii.',
+  },
+  {
+    q: 'Gdzie są przechowywane dane?',
+    a: 'Baza danych działa w Irlandii, serwer aplikacji w Niemczech, klucze szyfrujące w Warszawie. Dane kontaktowe z leadów są szyfrowane i usuwane automatycznie po 180 dniach.',
+  },
+];
+---
+
+<Layout
+  title="Integrator danych reklamowych: koszt zakwalifikowanego leada per reklama | serwer-side.pl"
+  description="Meta Ads, Google Ads i ocena handlowca w jednym panelu. Integrator pokazuje CPQL dla każdej kreacji, wysyła poranny skrót i współpracuje z asystentem AI. 7 dni za darmo."
+>
+  {/* Hero */}
+  <section class="bg-primary text-white pt-16 md:pt-20 pb-10 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="max-w-3xl">
+        <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-5 uppercase tracking-wider">
+          Integrator danych reklamowych
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-5">
+          Wiesz, która reklama przyniosła klienta, a nie tylko leada.
+        </h1>
+        <p class="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl">
+          Meta Ads, Google Ads i ocena handlowca w jednym panelu. Integrator liczy koszt zakwalifikowanego leada (CPQL) dla każdej kreacji i co rano mówi, gdzie przesunąć budżet.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={TRIAL_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
+            Wypróbuj 7 dni za darmo
+          </a>
+          <a href={PANEL_URL} class="inline-block text-center bg-white/5 hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
+            Zaloguj się do panelu
+          </a>
+        </div>
+        <p class="text-gray-400 text-sm mt-4">Bez karty · Pomagamy podłączyć pierwsze konto · Dane w UE</p>
+      </div>
+    </div>
+  </section>
+  <section class="bg-gradient-to-b from-primary from-30% to-stone-50 to-30% pb-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <PanelMockup />
+    </div>
+  </section>
+
+  {/* Jak to działa */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-3">Jak to działa</h2>
+      <p class="text-gray-600 mb-10 max-w-2xl">Pierwsze dane widzisz tego samego dnia. Historię kosztów pobieramy do 400 dni wstecz.</p>
+      <ol class="grid md:grid-cols-3 gap-6">
+        {kroki.map((k) => (
+          <li class="bg-white rounded-xl p-6 card-brutal-static">
+            <span class="inline-flex w-9 h-9 items-center justify-center rounded-full bg-primary text-white font-bold mb-4">{k.nr}</span>
+            <h3 class="text-lg font-bold mb-2">{k.title}</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">{k.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* Funkcje */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-3">Co dostajesz</h2>
+      <p class="text-gray-600 mb-10 max-w-2xl">Wszystko, czego agencja potrzebuje, żeby rozmawiać z klientem o jakości leadów, a nie o liczbie kliknięć.</p>
+      <FeatureGrid items={features} />
+    </div>
+  </section>
+
+  {/* Dane Google i Meta: sekcja dla użytkowników i recenzentów platform */}
+  <section id="dane" class="py-16 md:py-20 bg-stone-50 scroll-mt-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-3">Jak używamy danych z Google i Meta</h2>
+      <p class="text-gray-600 mb-8 max-w-2xl">
+        Integrator łączy się z Google Ads API i Meta Marketing API wyłącznie za zgodą użytkownika, przez logowanie Google i Facebook.
+      </p>
+      <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-700 leading-relaxed">
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <h3 class="font-bold text-primary text-base mb-2">Co pobieramy</h3>
+          <p>Dane kampanii z kont reklamowych, które użytkownik sam wskaże: nazwy, budżety, koszty, wyświetlenia, kliknięcia, konwersje, słowa kluczowe i treść reklam. Gdy użytkownik włączy pobieranie leadów, także leady z formularzy reklamowych.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <h3 class="font-bold text-primary text-base mb-2">Po co</h3>
+          <p>Żeby pokazać raporty kosztów i wyników kampanii agencji, która je prowadzi, i policzyć koszt zakwalifikowanego leada. Zmiany w koncie reklamowym (budżet, wstrzymanie kampanii) tylko na wyraźne polecenie użytkownika i w limitach opisanych wyżej.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <h3 class="font-bold text-primary text-base mb-2">Czego nie robimy</h3>
+          <p>Nie sprzedajemy danych, nie udostępniamy ich do celów reklamowych i nie używamy ich do trenowania modeli AI. Dane jednej agencji nigdy nie trafiają do innej.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <h3 class="font-bold text-primary text-base mb-2">Twoja kontrola</h3>
+          <p>Konto odłączysz w panelu albo cofniesz dostęp w ustawieniach Google i Facebooka. Usunięcie danych zlecisz mailem, a zrobimy to w ciągu 30 dni.</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600 mt-8">
+        Szczegóły: <a href="/polityka-prywatnosci" class="text-accent font-semibold hover:underline">Polityka prywatności</a> ·
+        <a href="/polityka-prywatnosci#usuwanie-danych" class="text-accent font-semibold hover:underline">Usuwanie danych</a> ·
+        <a href="/regulamin" class="text-accent font-semibold hover:underline">Regulamin</a>.
+        Korzystanie z danych z interfejsów API Google jest zgodne z
+        <a href="https://developers.google.com/terms/api-services-user-data-policy" class="text-accent font-semibold hover:underline" rel="noopener">Zasadami dotyczącymi danych użytkownika w usługach API Google</a>, w tym z wymogami ograniczonego użytkowania (Limited Use).
+      </p>
+    </div>
+  </section>
+
+  {/* Cennik */}
+  <section id="cennik" class="py-16 md:py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">Cennik</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Każdy plan zaczyna się od 7 dni za darmo. Płacisz miesięcznie, rezygnujesz w dowolnej chwili.</p>
+      </div>
+      <PricingCards client:visible plans={plans} />
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="py-16 md:py-20 bg-stone-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-12">Najczęściej zadawane pytania</h2>
+      <div class="space-y-4">
+        {faq.map((item) => (
+          <details class="group bg-white rounded-xl accordion-brutal overflow-hidden">
+            <summary class="flex items-center justify-between p-5 cursor-pointer font-semibold text-primary hover:bg-stone-50 transition-colors">
+              <span>{item.q}</span>
+              <svg class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180 shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 text-gray-600 text-sm leading-relaxed">{item.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="py-16 md:py-20 bg-primary text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Sprawdź na swoich kampaniach, ile kosztuje klient</h2>
+      <p class="text-gray-300 mb-8">7 dni za darmo. Pierwsze konto podłączymy razem, w 20 minut.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={TRIAL_URL} class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Wypróbuj 7 dni za darmo</a>
+        <a href="/kontakt" class="inline-block bg-white/5 hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Umów demo</a>
+      </div>
+    </div>
+  </section>
+</Layout>

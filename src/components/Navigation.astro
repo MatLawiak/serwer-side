@@ -1,7 +1,10 @@
 ---
 const currentPath = Astro.url.pathname;
 
+const PANEL_URL = 'https://integrator.serwer-side.pl';
+
 const uslugiSubmenu = [
+  { href: '/integrator', label: 'Integrator danych reklamowych' },
   { href: '/uslugi/meta-power-vps', label: 'Meta Power Up' },
   { href: '/uslugi/google-power-vps', label: 'Google Power Up' },
   { href: '/uslugi/automatyzacje-vps', label: 'Dedykowane automatyzacje VPS' },
@@ -9,6 +12,7 @@ const uslugiSubmenu = [
 
 const links = [
   { href: '/', label: 'Strona główna' },
+  { href: '/integrator', label: 'Integrator' },
   { href: '/uslugi', label: 'Usługi', hasSubmenu: true },
   { href: '/wiedza', label: 'Wiedza' },
   { href: '/o-mnie', label: 'O mnie' },
@@ -81,6 +85,12 @@ const isUslugiActive = currentPath === '/uslugi' || currentPath.startsWith('/usl
             </a>
           )
         ))}
+        <a
+          href={PANEL_URL}
+          class="text-sm font-semibold px-4 py-2 rounded-lg border-2 border-accent/60 text-accent hover:bg-accent hover:text-white transition-colors"
+        >
+          Zaloguj
+        </a>
       </div>
 
       {/* Mobile hamburger */}
@@ -148,6 +158,12 @@ const isUslugiActive = currentPath === '/uslugi' || currentPath.startsWith('/usl
         </a>
       )
     ))}
+    <a
+      href={PANEL_URL}
+      class="block mt-6 text-center px-3 py-3 rounded-lg border-2 border-accent/60 text-accent font-semibold"
+    >
+      Zaloguj się do Integratora
+    </a>
   </div>
 </div>
 

@@ -1,8 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadges from '../components/TrustBadges.astro';
+import PanelMockup from '../components/integrator/PanelMockup.astro';
+import { PANEL_URL, TRIAL_URL } from '../data/integrator';
+
+export const prerender = true;
 
 const faq = [
+  {
+    q: 'Czym Integrator różni się od usług wdrożeniowych?',
+    a: 'Integrator to aplikacja w abonamencie: pokazuje koszty Meta i Google Ads obok oceny handlowca i liczy koszt zakwalifikowanego leada dla każdej reklamy. Usługi wdrożeniowe to jednorazowa praca na Twoim serwerze: naprawiamy przepływ danych do Meta i Google, żeby algorytmy i raporty widziały pełne konwersje. Możesz wziąć jedno albo drugie, razem działają najlepiej.',
+  },
+  {
+    q: 'Czy do Integratora potrzebuję wdrożenia server-side?',
+    a: 'Nie. Integrator działa na danych z kont reklamowych i ocenach handlowca, bez zmian na stronie. Server-side tracking przydaje się, gdy platformy gubią konwersje: wtedy Integrator dostaje pełniejsze dane, a algorytmy Meta i Google uczą się na większej próbie.',
+  },
   {
     q: 'Co daje server-side na własnym VPS-ie w porównaniu z pudełkowym stackiem SaaS?',
     a: 'Dokładnie to, co realnie potrzebujesz: pełne dane konwersji, własną infrastrukturę i brak abonamentów za każdy element osobno. Typowy pudełkowy stack (newsletter, automation, chatbot, integracje, raporty) to 1 500 do 3 000 zł/mies. tylko za tooling. Jeden VPS (25 do 130 zł/mies.) hostuje sGTM (Meta, Google, GA4), n8n (automatyzacje), Listmonk (newsletter) i chatbot. Wszystko naraz. Płacisz za serwer, nie za licencje.',
@@ -27,19 +39,53 @@ const faq = [
 ---
 
 <Layout
-  title="Usługi: Meta Power Up, Google Power Up, Automatyzacje | serwer-side.pl"
-  description="3 usługi dla firm reklamujących się online: Meta CAPI server-side, Google Tag Gateway lub pełen sGTM, automatyzacje na n8n. Hostinger VPS, pełna własność danych."
+  title="Usługi: Integrator danych reklamowych, Meta i Google Power Up, automatyzacje | serwer-side.pl"
+  description="Integrator danych reklamowych: koszt zakwalifikowanego leada dla każdej reklamy Meta i Google. Do tego wdrożenia server-side: Meta CAPI, Google Tag Gateway i sGTM, automatyzacje n8n na Twoim VPS."
 >
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Jeden VPS, cały marketing tech stack</h1>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Pokazujemy, która reklama zarabia. I naprawiamy dane, które ją gubią.</h1>
       <p class="text-gray-300 text-lg md:text-xl mb-2">
-        3 usługi dla firm reklamujących się online. Wybierz jedną, dwie albo wszystkie. Infrastruktura jest współdzielona.
+        Integrator danych reklamowych mierzy koszt zakwalifikowanego leada dla każdej kreacji. Usługi wdrożeniowe server-side odzyskują konwersje, których Meta i Google dziś nie widzą.
       </p>
       <p class="text-gray-400 text-sm mt-4">
-        Wdrożenie od <strong class="text-white">800 zł</strong> · Abonament od <strong class="text-white">0 zł/mies.</strong> (Cloudflare Free) lub <strong class="text-white">25 zł/mies.</strong> (Hostinger VPS)
+        Integrator od <strong class="text-white">149 zł/mies.</strong>, 7 dni za darmo · Wdrożenia server-side od <strong class="text-white">800 zł</strong>
       </p>
+    </div>
+  </section>
+
+  {/* Integrator: produkt główny */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-2xl card-brutal-accent p-6 md:p-10 relative">
+        <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Główny produkt</span>
+        <div class="grid lg:grid-cols-5 gap-10 items-center">
+          <div class="lg:col-span-2">
+            <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Aplikacja w abonamencie</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold mb-4 leading-tight">Integrator danych reklamowych</h2>
+            <p class="text-gray-600 mb-6">
+              Meta Ads, Google Ads i ocena handlowca w jednym panelu. Zamiast pytać, która kampania dała leady, widzisz, która reklama dała klientów, z którymi warto rozmawiać.
+            </p>
+            <ul class="text-gray-700 space-y-2 mb-7 text-sm">
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>CPQL dla każdej kreacji, zestawu i kampanii</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Leady z formularzy Meta, Google i strony www</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Ocena handlowca z arkusza Google albo z CRM</span></li>
+              <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>Poranny skrót e-mailem i na Slacku, asystent AI</span></li>
+            </ul>
+            <p class="text-accent font-extrabold text-3xl mb-1">od 149 zł <span class="text-base font-semibold text-gray-500">netto/mies.</span></p>
+            <p class="text-gray-500 text-sm mb-6">7 dni za darmo, bez karty</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href={TRIAL_URL} class="text-center bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal">Wypróbuj 7 dni</a>
+              <a href="/integrator" class="text-center bg-white hover:bg-stone-50 text-primary font-semibold px-6 py-3 rounded-lg btn-brutal">Zobacz, jak działa</a>
+            </div>
+            <p class="text-sm text-gray-500 mt-4">Masz już konto? <a href={PANEL_URL} class="text-accent font-semibold hover:underline">Zaloguj się</a></p>
+          </div>
+          <div class="lg:col-span-3">
+            <PanelMockup compact />
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -54,20 +100,18 @@ const faq = [
   <section class="py-16 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-12">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3">3 usługi, jeden serwer</h2>
+        <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Usługi wdrożeniowe</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">Trzy wdrożenia, jeden serwer</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">
-          Kliknij kartę, żeby zobaczyć pełny opis: mechanikę, zyski, dla kogo, i cennik z 3 wariantami.
+          Jednorazowa praca na Twoim VPS-ie. Kliknij kartę, żeby zobaczyć mechanikę, zyski, dla kogo i cennik w trzech wariantach.
         </p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
 
         {/* Meta Power Up */}
-        <a href="/uslugi/meta-power-vps" class="group bg-white rounded-xl p-8 card-brutal-accent relative flex flex-col hover:shadow-lg transition-shadow">
-          <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
-            Główna oferta
-          </span>
-          <p class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Usługa 1</p>
+        <a href="/uslugi/meta-power-vps" class="group bg-white rounded-xl p-8 card-brutal relative flex flex-col hover:shadow-lg transition-shadow">
+          <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Usługa 1</p>
           <h3 class="text-2xl font-bold mb-2 group-hover:text-accent transition-colors">Meta Power Up</h3>
           <p class="text-gray-600 text-sm mb-4">Dedykowany Meta CAPI + Pixel server-side. Odzyskuje 30–50% konwersji gubionych przez iOS 14+, ITP i adblockery.</p>
           <p class="text-accent font-extrabold text-3xl mb-1">od 800 zł</p>
@@ -126,9 +170,9 @@ const faq = [
   <section class="py-16 md:py-20 bg-stone-50">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-10">
-        <h2 class="text-2xl md:text-3xl font-bold mb-3">Dlaczego jeden VPS = cały stack</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">Integrator pokazuje, wdrożenie naprawia</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">
-          Trzy usługi, jedna infrastruktura. Im więcej bierzesz, tym taniej wychodzi każda następna.
+          Integrator mówi, która reklama przynosi klientów. Server-side sprawia, że Meta i Google w ogóle widzą te konwersje i uczą się na pełnych danych. A wdrożenia dzielą jeden serwer, więc każde kolejne wychodzi taniej.
         </p>
       </div>
 

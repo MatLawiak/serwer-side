@@ -33,6 +33,7 @@ export default defineConfig({
         'https://serwer-side.pl/',
         'https://serwer-side.pl/wiedza',
         'https://serwer-side.pl/uslugi',
+        'https://serwer-side.pl/integrator',
         'https://serwer-side.pl/o-mnie',
         'https://serwer-side.pl/kontakt',
         'https://serwer-side.pl/polityka-prywatnosci',

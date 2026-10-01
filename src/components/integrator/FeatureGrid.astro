@@ -1,0 +1,51 @@
+---
+// Siatka funkcji w stylu „cienkie linie, jedna komórka = jedna funkcja”.
+// Karty są w HTML-u od razu widoczne: ta sekcja ma być czytelna bez JavaScriptu
+// (recenzent Google, czytniki, słabe łącze). Wersja z wyspą Reacta renderowała
+// je po stronie serwera z opacity: 0 i bez JS sekcja była pusta.
+// Kaskadowe wejście (wzorowane na Motion-Primitives `animated-group`) dokłada
+// skrypt niżej, tylko gdy użytkownik nie ograniczył animacji.
+import type { Feature } from '../../data/integrator';
+
+interface Props {
+  items: Feature[];
+}
+const { items } = Astro.props;
+---
+
+<div data-feature-grid class="grid sm:grid-cols-2 lg:grid-cols-4 bg-white rounded-xl card-brutal-static overflow-hidden">
+  {items.map((f) => (
+    <div data-feature class="p-6 border-slate-200 border-b sm:[&:nth-child(odd)]:border-r lg:border-r lg:[&:nth-child(4n)]:border-r-0">
+      <p class="text-[11px] font-bold uppercase tracking-wider text-accent-dark mb-2">{f.tag}</p>
+      <h3 class="text-lg font-bold text-primary mb-2 leading-snug">{f.title}</h3>
+      <p class="text-sm text-gray-600 leading-relaxed">{f.text}</p>
+    </div>
+  ))}
+</div>
+
+<script>
+  import { animate, inView, stagger } from 'motion';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-feature-grid]').forEach((grid) => {
+    const cards = grid.querySelectorAll<HTMLElement>('[data-feature]');
+    const rect = grid.getBoundingClientRect();
+    // Ukrywamy tylko to, co jest jeszcze pod ekranem: siatka już widoczna nie mruga.
+    if (reduced || rect.top < window.innerHeight) return;
+    cards.forEach((c) => {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(16px)';
+    });
+    inView(
+      grid,
+      () => {
+        animate(
+          cards,
+          { opacity: 1, transform: 'translateY(0px)' },
+          { duration: 0.45, delay: stagger(0.08), ease: [0.22, 1, 0.36, 1] },
+        );
+      },
+      { amount: 0.15 },
+    );
+  });
+</script>
