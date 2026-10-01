@@ -6,30 +6,14 @@
 // Język: dla właściciela agencji, nie dla programisty.
 import Layout from '../layouts/Layout.astro';
 import DigestPreview from '../components/integrator/DigestPreview.astro';
-import FeatureGrid from '../components/integrator/FeatureGrid.astro';
+import FeatureTiles from '../components/integrator/FeatureTiles.astro';
+import LeadQualityChart from '../components/integrator/LeadQualityChart.astro';
+import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import PricingCards from '../components/integrator/PricingCards';
 import DataUse from '../components/integrator/DataUse.astro';
-import { features, plans, PANEL_URL, TRIAL_URL } from '../data/integrator';
+import { plans, PANEL_URL, TRIAL_URL } from '../data/integrator';
 
 export const prerender = true;
-
-const kroki = [
-  {
-    nr: '1',
-    title: 'Podłączasz konta reklamowe',
-    text: 'Logujesz się przez Facebook i Google i zaznaczasz konta, które Integrator ma czytać. Zajmuje to kilka minut, a pierwsze konto podłączymy razem.',
-  },
-  {
-    nr: '2',
-    title: 'Rano dostajesz raport',
-    text: 'Na e-mail albo na Slacka. Krótko: co działa, co wymaga uwagi i co warto dziś zrobić u każdego klienta.',
-  },
-  {
-    nr: '3',
-    title: 'Decydujesz, co dalej',
-    text: 'W panelu widzisz kampanie i reklamy z obu platform obok siebie. Możesz też zapytać o nie swoje narzędzie AI.',
-  },
-];
 
 const faq = [
   {
@@ -99,44 +83,27 @@ const faq = [
     </div>
   </section>
 
-  {/* Jak to działa */}
-  <section class="py-16 md:py-20 bg-stone-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <h2 class="text-2xl md:text-3xl font-bold mb-3">Jak to działa</h2>
-      <p class="text-gray-600 mb-10 max-w-2xl">Pierwszy raport dostajesz następnego ranka po podłączeniu konta.</p>
-      <ol class="grid md:grid-cols-3 gap-6">
-        {kroki.map((k) => (
-          <li class="bg-white rounded-xl p-6 card-brutal-static">
-            <span class="inline-flex w-9 h-9 items-center justify-center rounded-full bg-primary text-white font-bold mb-4">{k.nr}</span>
-            <h3 class="text-lg font-bold mb-2">{k.title}</h3>
-            <p class="text-sm text-gray-600 leading-relaxed">{k.text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
+  {/* Jak to działa: animowany schemat zamiast opisu krok po kroku */}
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+  <IntegratorFlow />
 
-  {/* Funkcje */}
+  {/* Co dostajesz: kafle z ilustracjami */}
   <section class="py-16 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <h2 class="text-2xl md:text-3xl font-bold mb-3">Co dostajesz</h2>
       <p class="text-gray-600 mb-10 max-w-2xl">Mniej czasu w Menedżerach reklam, więcej pewności, że budżet idzie tam, gdzie działa.</p>
-      <FeatureGrid items={features} />
+      <FeatureTiles />
 
-      {/* Opcja dodatkowa: ocena leadów */}
-      <div class="mt-8 bg-stone-50 rounded-xl p-6 md:p-8 card-brutal-static grid md:grid-cols-3 gap-6 items-center">
-        <div class="md:col-span-2">
+      {/* Opcja dodatkowa: ocena zgłoszeń */}
+      <div class="mt-8 bg-stone-50 rounded-xl p-6 md:p-8 card-brutal-static grid md:grid-cols-2 gap-8 items-center">
+        <div>
           <span class="inline-block bg-accent/10 text-accent-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">Opcja dodatkowa</span>
-          <h3 class="text-xl font-bold mb-2">Zbierasz zgłoszenia? Sprawdź, które reklamy przynoszą dobrych klientów</h3>
+          <h3 class="text-xl font-bold mb-2">Więcej zgłoszeń nie znaczy więcej klientów</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
-            Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe. Integrator pokazuje wtedy, z których reklam przyszły, i odróżnia reklamę z dobrymi klientami od reklamy z tanimi, ale przypadkowymi kontaktami. Włączasz, jeśli chcesz. Bez tej opcji wszystko inne działa tak samo.
+            Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe. Integrator pokazuje, z których reklam przyszły. Włączasz, jeśli chcesz.
           </p>
         </div>
-        <ul class="text-sm text-gray-700 space-y-2">
-          <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>arkusz Google albo CRM</span></li>
-          <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>zgłoszenia z formularzy Meta, Google i strony</span></li>
-          <li class="flex items-start gap-2"><span class="text-accent font-bold mt-0.5">✓</span><span>dostępna w każdym planie</span></li>
-        </ul>
+        <LeadQualityChart />
       </div>
     </div>
   </section>

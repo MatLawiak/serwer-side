@@ -1,0 +1,31 @@
+---
+// Mała infografika do opcji „ocena zgłoszeń”: dwie reklamy, paski zgłoszeń
+// i tych wartościowych. Pokazuje jednym spojrzeniem to, co wcześniej
+// tłumaczył akapit: więcej zgłoszeń nie znaczy więcej klientów.
+// Liczby przykładowe; szerokości pasków liczone z nich, nie wpisane ręcznie.
+const reklamy = [
+  { name: 'Reklama A', all: 46, good: 14 },
+  { name: 'Reklama B', all: 61, good: 6 },
+];
+const max = Math.max(...reklamy.map((r) => r.all));
+const pct = (n: number) => `${Math.round((n / max) * 100)}%`;
+---
+
+<figure aria-label="Przykład: reklama B ma więcej zgłoszeń, ale reklama A więcej wartościowych">
+  <div class="space-y-5">
+    {reklamy.map((r) => (
+      <div>
+        <p class="text-sm font-semibold text-primary mb-1.5">{r.name}</p>
+        <div class="flex items-center gap-3 mb-1">
+          <div class="h-3 rounded-full bg-slate-300" style={`width: ${pct(r.all)}`}></div>
+          <span class="text-xs text-gray-600 whitespace-nowrap">{r.all} zgłoszeń</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="h-3 rounded-full bg-accent" style={`width: ${pct(r.good)}`}></div>
+          <span class="text-xs font-semibold text-accent-dark whitespace-nowrap">{r.good} wartościowych</span>
+        </div>
+      </div>
+    ))}
+  </div>
+  <figcaption class="mt-4 text-xs text-gray-400">Dane przykładowe</figcaption>
+</figure>

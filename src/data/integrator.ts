@@ -5,43 +5,8 @@ import type { Plan } from '../components/integrator/PricingCards';
 // korzyść zamiast parametru. Opis musi przy tym odpowiadać temu, co aplikacja
 // robi dziś, bo /integrator jest stroną główną aplikacji w weryfikacji Google.
 
-export type Feature = { tag: string; title: string; text: string };
-
 export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
-
-export const features: Feature[] = [
-  {
-    tag: 'Jeden panel',
-    title: 'Meta Ads i Google Ads obok siebie',
-    text: 'Wydatki, wyniki i reklamy z obu platform w jednym miejscu. Koniec z przeklikiwaniem się między dwoma Menedżerami reklam.',
-  },
-  {
-    tag: 'Codziennie',
-    title: 'Raport na e-mail albo Slacka',
-    text: 'Rano dostajesz krótkie podsumowanie każdego klienta: co działa, co wymaga uwagi i co warto zrobić dziś. Włączasz jednym przełącznikiem.',
-  },
-  {
-    tag: 'Rekomendacje',
-    title: 'Proste podpowiedzi, co zmienić',
-    text: 'Integrator porównuje kampanie i reklamy ze sobą i mówi zwykłym językiem, które warto wspierać, a które przepalają budżet.',
-  },
-  {
-    tag: 'AI',
-    title: 'Rozmowa z AI o kampaniach',
-    text: 'Podpinasz narzędzie AI, z którego korzystasz, i pytasz o wyniki tak, jak pytałbyś współpracownika. Dziś działa z Claude, ChatGPT dołączy wkrótce.',
-  },
-  {
-    tag: 'Reklamy',
-    title: 'Galeria reklam z wynikami',
-    text: 'Widzisz grafiki i teksty swoich reklam razem z tym, ile kosztowały i co przyniosły. Od razu wiadomo, która reklama ciągnie kampanię.',
-  },
-  {
-    tag: 'Bezpieczeństwo',
-    title: 'Dane każdego klienta osobno',
-    text: 'Dane są szyfrowane i przechowywane w Unii Europejskiej. Jedna agencja nigdy nie zobaczy danych drugiej.',
-  },
-];
 
 export const plans: Plan[] = [
   {

@@ -39,7 +39,10 @@ const klienci = [
       </div>
     </div>
     <div class="p-4 space-y-4">
-      <p class="font-bold text-white">📊 Codzienny raport kampanii</p>
+      <p class="font-bold text-white flex items-center gap-2">
+        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6m4 6V5m4 14v-9M5 19h14" /></svg>
+        Codzienny raport kampanii
+      </p>
       {klienci.map((k) => (
         <div class="border-l-2 border-white/15 pl-3">
           <p class="flex items-center gap-2 font-semibold text-white">
@@ -51,7 +54,10 @@ const klienci = [
             {k.points.map((p) => <li class="flex gap-2"><span class="text-gray-500">•</span><span>{p}</span></li>)}
           </ul>
           {k.action && (
-            <p class="mt-2 text-gray-100"><span class="mr-1">👉</span><strong>Co zrobić:</strong> {k.action}</p>
+            <p class="mt-2 text-gray-100 flex gap-2">
+              <svg class="w-4 h-4 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+              <span><strong>Co zrobić:</strong> {k.action}</span>
+            </p>
           )}
         </div>
       ))}

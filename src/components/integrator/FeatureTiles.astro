@@ -1,0 +1,91 @@
+---
+// „Co dostajesz” jako kafle z ilustracją zamiast siatki tekstu: jedna
+// ilustracja, tytuł i jedno zdanie na funkcję. Ilustracje wygenerowane
+// jednorazowo (Gemini) w stylu strony; bez tekstu na obrazie, podpisy w HTML.
+import { Image } from 'astro:assets';
+import zrodla from '../../assets/integrator/zrodla-danych.png';
+import raport from '../../assets/integrator/raport.png';
+import podpowiedzi from '../../assets/integrator/podpowiedzi.png';
+import mcp from '../../assets/integrator/mcp-claude.png';
+import bezpieczenstwo from '../../assets/integrator/bezpieczenstwo.png';
+
+const kafle = [
+  {
+    img: zrodla,
+    alt: 'Dane z kilku źródeł łączą się w jednym module',
+    title: 'Jeden panel',
+    text: 'Wydatki, wyniki i reklamy z Meta i Google obok siebie.',
+    span: 'lg:col-span-3',
+  },
+  {
+    img: raport,
+    alt: 'Raport wysyłany z serwera na e-mail i komunikator, widoczny na telefonie',
+    title: 'Codzienny raport',
+    text: 'Rano na e-mail albo Slacka: co działa i co zrobić dziś.',
+    span: 'lg:col-span-3',
+  },
+  {
+    img: podpowiedzi,
+    alt: 'Trzy karty kampanii: jedna ze strzałką w górę, jedna ze znakiem pauzy',
+    title: 'Proste podpowiedzi',
+    text: 'Które kampanie wspierać, a które wstrzymać.',
+    span: 'lg:col-span-2',
+  },
+  {
+    img: mcp,
+    alt: 'Laptop z rozmową z AI połączony z kartami kampanii',
+    title: 'Rozmowa z AI',
+    text: 'Pytasz o kampanie zwykłymi zdaniami. Dziś z Claude.',
+    span: 'lg:col-span-2',
+  },
+  {
+    img: bezpieczenstwo,
+    alt: 'Oddzielne szklane komory z danymi pod wspólną tarczą',
+    title: 'Dane pod kluczem',
+    text: 'Każdy klient osobno, szyfrowane, w Unii Europejskiej.',
+    span: 'lg:col-span-2',
+  },
+];
+---
+
+<div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-5" id="feature-tiles">
+  {kafle.map((k, i) => (
+    <div
+      class:list={['tile bg-primary text-white rounded-2xl overflow-hidden card-brutal-static flex flex-col opacity-0 translate-y-4 transition-all duration-500', k.span]}
+      style={`transition-delay: ${i * 90}ms`}
+    >
+      <div class="aspect-[16/10] overflow-hidden bg-[#0f172a]">
+        <Image
+          src={k.img}
+          alt={k.alt}
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 560px, 90vw"
+          format="webp"
+          loading="lazy"
+          class="w-full h-full object-cover object-left"
+        />
+      </div>
+      <div class="p-5">
+        <h3 class="text-lg font-bold">{k.title}</h3>
+        <p class="text-sm text-gray-300 mt-1">{k.text}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<noscript><style>#feature-tiles .tile { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<script>
+  const tiles = document.getElementById('feature-tiles');
+  if (tiles) {
+    const cards = tiles.querySelectorAll<HTMLElement>('.tile');
+    const show = () => cards.forEach((c) => c.classList.remove('opacity-0', 'translate-y-4'));
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        show();
+        observer.disconnect();
+      }
+    }, { threshold: 0.05 });
+    observer.observe(tiles);
+  }
+</script>
