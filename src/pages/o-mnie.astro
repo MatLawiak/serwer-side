@@ -55,14 +55,24 @@ import Layout from '../layouts/Layout.astro';
       {/* Specjalizacje */}
       <div class="mb-12">
         <h2 class="text-2xl font-bold mb-4">Specjalizacje</h2>
-        <div class="bg-stone-50 rounded-xl p-6 card-brutal-static">
-          <ul class="text-gray-600 space-y-2">
-            <li>🎯 Google Tag Manager Server-Side (wdrożenia od zera, migracje)</li>
-            <li>📊 Meta Conversions API (Lead, Purchase, pełen e-commerce funnel)</li>
-            <li>📈 GA4 Measurement Protocol + Google Ads Enhanced Conversions</li>
-            <li>⚙️ Automatyzacje n8n na dedykowanym VPS</li>
-          </ul>
-        </div>
+        <ul class="grid sm:grid-cols-2 gap-4">
+          {[
+            { title: 'Google Tag Manager Server-Side', desc: 'Wdrożenia od zera i migracje.' },
+            { title: 'Meta Conversions API', desc: 'Zgłoszenia, zakupy i cała ścieżka sklepu internetowego.' },
+            { title: 'Google Analytics 4 i Google Ads', desc: 'Measurement Protocol i konwersje rozszerzone.' },
+            { title: 'Automatyzacje na własnym serwerze', desc: 'Połączenie formularzy, CRM, poczty i sklepu na dedykowanym VPS.' },
+          ].map((s, i) => (
+            <li class="bg-white rounded-xl p-5 card-brutal-static flex gap-4">
+              <span class="shrink-0 w-9 h-9 rounded-lg bg-accent/10 text-accent-dark font-extrabold text-sm flex items-center justify-center" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <p class="font-semibold text-primary leading-snug">{s.title}</p>
+                <p class="text-sm text-gray-600 mt-1 leading-relaxed">{s.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* LinkedIn */}

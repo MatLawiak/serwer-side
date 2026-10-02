@@ -15,14 +15,19 @@ import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
           Integrator danych reklamowych
         </span>
         <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-6">
-          Meta Ads i Google Ads w jednym panelu.<br class="hidden md:block" />
-          <span class="text-accent">Co rano wiesz, co zmienić.</span>
+          Zarządzaj Meta Ads i Google Ads <span class="text-accent">bez otwierania Menedżera reklam</span>
         </h1>
         <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-3">
-          Dostajesz codzienny raport z obu platform i proste podpowiedzi, które kampanie wspierać, a które wstrzymać.
+          Przestań przeklikiwać skomplikowane panele. Co rano dostajesz krótki raport: co dowozi wyniki, a co przepala budżet. Do tego gotowe rekomendacje oparte na doświadczeniu specjalisty.
         </p>
-        <p class="text-base text-gray-400 max-w-2xl mb-8">
-          Podepnij narzędzie AI, z którego korzystasz, i pytaj o kampanie bez wchodzenia do Menedżera reklam.
+        {/* Tworzenie i zmiana kampanii czeka na zatwierdzenie aplikacji, a ChatGPT
+            na logowanie OAuth; dopisek stoi tuż pod obietnicą, bo tę stronę
+            oglądają też recenzenci Meta i Google. */}
+        <p class="text-base text-gray-300 max-w-2xl mb-2">
+          Twórz nowe kampanie i zmieniaj obecne w zwykłej rozmowie, prosto ze swojego asystenta AI (Claude lub ChatGPT).
+        </p>
+        <p class="text-xs text-amber-300/90 max-w-2xl mb-8">
+          Pytania o wyniki działają dziś w Claude. Zmiany w kampaniach uruchomimy po zatwierdzeniu aplikacji przez Meta i Google, ChatGPT wkrótce.
         </p>
         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
           <a href={TRIAL_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg text-base btn-brutal-light">

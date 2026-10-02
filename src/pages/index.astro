@@ -9,11 +9,11 @@ import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import UspCards from '../components/home/UspCards.astro';
 import McpScene from '../components/home/McpScene.astro';
 import PremiumTeaser from '../components/home/PremiumTeaser.astro';
-import PricingCards from '../components/integrator/PricingCards';
+import PricingTable from '../components/integrator/PricingTable.astro';
 import CaseStudyAnon from '../components/CaseStudyAnon.astro';
 import Testimonials from '../components/Testimonials.astro';
 import DataUse from '../components/integrator/DataUse.astro';
-import { plans, TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION } from '../data/integrator';
+import { TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION } from '../data/integrator';
 
 // Statyczna strona: adapter Cloudflare optymalizuje obrazy (webp) tylko
 // przy prerenderingu; na żądanie serwowałby 500 KB PNG z Gemini jak leci.
@@ -21,7 +21,7 @@ export const prerender = true;
 ---
 
 <Layout
-  title="Integrator: Meta Ads i Google Ads w jednym panelu, codzienny raport | serwer-side.pl"
+  title="Integrator: Meta Ads i Google Ads bez otwierania Menedżera reklam | serwer-side.pl"
   description="Wyniki kampanii Meta Ads i Google Ads w jednym panelu. Codzienny raport na e-mail albo Slacka z prostymi podpowiedziami, co zmienić. Podłącz swoje narzędzie AI. 7 dni za darmo."
 >
   {/* 1. Hero: Integrator, liczniki, ilustracja źródeł danych */}
@@ -46,7 +46,7 @@ export const prerender = true;
         <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Prosty cennik, 7 dni za darmo</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">Płacisz miesięcznie i rezygnujesz w dowolnej chwili. Plan dobierasz do liczby klientów.</p>
       </div>
-      <PricingCards client:visible plans={plans} />
+      <PricingTable />
       <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION}</p>
     </div>
   </section>

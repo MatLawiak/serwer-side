@@ -1,5 +1,3 @@
-import type { Plan } from '../components/integrator/PricingCards';
-
 // Jedno źródło treści o Integratorze dla strony głównej i /integrator.
 // Język ma być zrozumiały dla właściciela agencji, który nie jest techniczny:
 // korzyść zamiast parametru. Opis musi przy tym odpowiadać temu, co aplikacja
@@ -10,8 +8,17 @@ export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
 export const PREMIUM_URL = '/uslugi/infrastruktura-premium/';
 
-const PO_ZATWIERDZENIU = 'po zatwierdzeniu przez Meta i Google';
-const W_PRZYGOTOWANIU = 'w przygotowaniu';
+export type Plan = {
+  id: string;
+  name: string;
+  price: string;
+  unit: string;
+  lead: string;
+  cta: string;
+  href: string;
+  featured?: boolean;
+  badge?: string;
+};
 
 export const plans: Plan[] = [
   {
@@ -20,14 +27,6 @@ export const plans: Plan[] = [
     price: '49 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla jednej firmy albo własnych kampanii.',
-    features: [
-      '1 konto (jedna przestrzeń robocza)',
-      'Meta Ads i Google Ads w jednym panelu',
-      { text: 'rozmowa z AI o kampaniach: Claude', note: 'ChatGPT wkrótce' },
-      'codzienny raport na e-mail i Slacka',
-      'podpowiedzi, co zmienić w kampaniach',
-      { text: 'edycja i tworzenie kampanii przez AI', note: PO_ZATWIERDZENIU },
-    ],
     cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=starter`,
   },
@@ -37,14 +36,6 @@ export const plans: Plan[] = [
     price: '99 zł',
     unit: 'netto / miesiąc',
     lead: 'Odkryj, które kreacje przynoszą zakwalifikowanego leada.',
-    features: [
-      'do 10 klientów',
-      'wszystko ze Startera',
-      'ocena leadów z CRM albo arkusza przy każdej reklamie',
-      'oceny leadów z formularzy wracają do Meta (Conversions API)',
-      { text: 'przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU },
-      { text: 'panel kontroli ustawień kont (Health Check)', note: W_PRZYGOTOWANIU },
-    ],
     cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=agencja`,
     featured: true,
@@ -56,12 +47,6 @@ export const plans: Plan[] = [
     price: '199 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla agencji z dużą liczbą klientów.',
-    features: [
-      'do 50 klientów (zasada uczciwego korzystania)',
-      'wszystko z planu Agencja / Pro',
-      'osobny dostęp AI dla każdego klienta',
-      { text: 'priorytetowe odświeżanie danych', note: W_PRZYGOTOWANIU },
-    ],
     cta: 'Wypróbuj 7 dni',
     href: `${TRIAL_URL}&plan=scale`,
   },
@@ -71,19 +56,43 @@ export const plans: Plan[] = [
     price: 'Wycena',
     unit: 'indywidualna',
     lead: 'Własny serwer, pomiar i automatyzacje szyte na miarę.',
-    features: [
-      'Twój własny serwer w UE',
-      'pomiar konwersji po stronie serwera',
-      'automatyzacje n8n na Twoim serwerze',
-      'Integrator ustawiony pod Twoje konta i CRM',
-      'dla budżetów reklamowych od 10 000 zł miesięcznie',
-    ],
-    cta: 'Zapytaj o wycenę',
+    cta: 'Dowiedz się więcej',
     href: PREMIUM_URL,
-    dark: true,
   },
+];
+
+const PO_ZATWIERDZENIU = 'po zatwierdzeniu przez Meta i Google';
+const W_PRZYGOTOWANIU = 'w przygotowaniu';
+
+// Wiersz tabeli cennika. `values` idzie w kolejności `plans`: true = jest,
+// false = nie ma, tekst = wartość (np. limit klientów). Każda funkcja jest
+// wypisana przy każdym planie, żeby nie trzeba było zgadywać, czy wyższy
+// plan zawiera to, co niższy. `note` to dopisek o stanie funkcji.
+export type FeatureRow = {
+  text: string;
+  note?: string;
+  values: (boolean | string)[];
+};
+
+export const featureRows: FeatureRow[] = [
+  { text: 'Liczba klientów', values: ['1', 'do 10', 'do 50', 'według ustaleń'] },
+  { text: 'Meta Ads i Google Ads w jednym panelu', values: [true, true, true, true] },
+  { text: 'Codzienny raport na e-mail i Slacka', values: [true, true, true, true] },
+  { text: 'Podpowiedzi, co zmienić w kampaniach', values: [true, true, true, true] },
+  { text: 'Rozmowa z AI o kampaniach (Claude)', note: 'ChatGPT wkrótce', values: [true, true, true, true] },
+  { text: 'Edycja i tworzenie kampanii przez AI', note: PO_ZATWIERDZENIU, values: [true, true, true, true] },
+  { text: 'Ocena leadów z CRM albo arkusza przy każdej reklamie', values: [false, true, true, true] },
+  { text: 'Oceny leadów z formularzy wracają do Meta (Conversions API)', values: [false, true, true, true] },
+  { text: 'Przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
+  { text: 'Panel kontroli ustawień kont (Health Check)', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
+  { text: 'Osobny dostęp AI dla każdego klienta', values: [false, false, true, true] },
+  { text: 'Priorytetowe odświeżanie danych', note: W_PRZYGOTOWANIU, values: [false, false, true, true] },
+  { text: 'Twój własny serwer w UE', values: [false, false, false, true] },
+  { text: 'Pomiar konwersji po stronie serwera', values: [false, false, false, true] },
+  { text: 'Automatyzacje na Twoim serwerze', values: [false, false, false, true] },
+  { text: 'Dodatkowe źródła: TikTok Ads, Microsoft Ads i inne', values: [false, false, false, true] },
 ];
 
 // Jeden klient w rozumieniu limitu planu. Zdanie stoi pod tabelą na obu stronach.
 export const CLIENT_DEFINITION =
-  'Jeden klient to jedno konto Meta Ads albo wybrany zestaw kampanii, jego konto Google Ads i jego CRM.';
+  'Jeden klient to jedno konto Meta Ads albo wybrany zestaw kampanii, jego konto Google Ads i jego CRM. W planie Scale obowiązuje zasada uczciwego korzystania.';
