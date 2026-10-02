@@ -10,8 +10,6 @@ import UspCards from '../components/home/UspCards.astro';
 import McpScene from '../components/home/McpScene.astro';
 import PremiumTeaser from '../components/home/PremiumTeaser.astro';
 import PricingTable from '../components/integrator/PricingTable.astro';
-import CaseStudyAnon from '../components/CaseStudyAnon.astro';
-import Testimonials from '../components/Testimonials.astro';
 import DataUse from '../components/integrator/DataUse.astro';
 import { TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION } from '../data/integrator';
 
@@ -51,25 +49,17 @@ export const prerender = true;
     </div>
   </section>
 
-  {/* 6. Case study (anonimowe) z animowanymi wykresami */}
-  <CaseStudyAnon />
-
-  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
-
-  {/* 7. Testimoniale */}
-  <Testimonials />
-
-  {/* 8. Zgodność: dane z Google i Meta */}
+  {/* 6. Zgodność: dane z Google i Meta */}
   <DataUse dark />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 9. Usługi premium: własny serwer, na końcu */}
+  {/* 7. Usługi premium: własny serwer, na końcu */}
   <PremiumTeaser />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 10. CTA końcowe */}
+  {/* 8. CTA końcowe */}
   <section class="py-20 md:py-28 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-6 uppercase tracking-wider">
