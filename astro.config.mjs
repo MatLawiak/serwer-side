@@ -18,6 +18,13 @@ export default defineConfig({
   site: 'https://serwer-side.pl',
   output: 'server',
   adapter: cloudflare({ imageService: 'compile' }),
+  // Trzy podstrony usług i ich lista zostały zastąpione jedną ofertą.
+  // 301, żeby linki z zewnątrz i pozycje w wyszukiwarce przeszły na nowy adres.
+  redirects: Object.fromEntries(
+    ['/uslugi', '/uslugi/meta-power-vps', '/uslugi/google-power-vps', '/uslugi/automatyzacje-vps'].map(
+      (stary) => [stary, { status: 301, destination: '/uslugi/infrastruktura-premium/' }],
+    ),
+  ),
   integrations: [
     mdx(),
     sitemap({

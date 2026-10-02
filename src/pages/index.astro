@@ -1,6 +1,6 @@
 ---
-// Strona główna: Integrator jako główny produkt, server-side jako fundament
-// danych i usługi premium. Dotychczasowe sekcje o utraconych konwersjach
+// Strona główna: Integrator jako główny produkt, potem cennik, a usługi
+// premium (własny serwer) dopiero na końcu, jako oferta dla większych budżetów. Dotychczasowe sekcje o utraconych konwersjach
 // (HeroNew, DataFlowAnimated, BarriersSection) żyją dalej na
 // /server-side-tracking, żeby nie stracić pozycji na te frazy.
 import Layout from '../layouts/Layout.astro';
@@ -8,12 +8,12 @@ import HeroIntegrator from '../components/home/HeroIntegrator.astro';
 import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import UspCards from '../components/home/UspCards.astro';
 import McpScene from '../components/home/McpScene.astro';
-import FoundationPaths from '../components/home/FoundationPaths.astro';
-import PremiumServices from '../components/home/PremiumServices.astro';
+import PremiumTeaser from '../components/home/PremiumTeaser.astro';
+import PricingCards from '../components/integrator/PricingCards';
 import CaseStudyAnon from '../components/CaseStudyAnon.astro';
 import Testimonials from '../components/Testimonials.astro';
 import DataUse from '../components/integrator/DataUse.astro';
-import { TRIAL_URL } from '../data/integrator';
+import { plans, TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION } from '../data/integrator';
 
 // Statyczna strona: adapter Cloudflare optymalizuje obrazy (webp) tylko
 // przy prerenderingu; na żądanie serwowałby 500 KB PNG z Gemini jak leci.
@@ -38,22 +38,34 @@ export const prerender = true;
   {/* 4. Scena MCP: ilustracja + zapis rozmowy z Claude */}
   <McpScene />
 
-  {/* 5. Server-side jako fundament, dwie ścieżki */}
-  <FoundationPaths />
+  {/* 5. Cennik Integratora */}
+  <section id="cennik" class="py-16 md:py-20 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Cennik</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Prosty cennik, 7 dni za darmo</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">Płacisz miesięcznie i rezygnujesz w dowolnej chwili. Plan dobierasz do liczby klientów.</p>
+      </div>
+      <PricingCards client:visible plans={plans} />
+      <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION}</p>
+    </div>
+  </section>
 
-  {/* 6. Usługi premium */}
-  <PremiumServices />
-
-  {/* 7. Case study (anonimowe) z animowanymi wykresami */}
+  {/* 6. Case study (anonimowe) z animowanymi wykresami */}
   <CaseStudyAnon />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
-  {/* 8. Testimoniale */}
+  {/* 7. Testimoniale */}
   <Testimonials />
 
-  {/* 9. Zgodność: dane z Google i Meta */}
+  {/* 8. Zgodność: dane z Google i Meta */}
   <DataUse dark />
+
+  <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
+
+  {/* 9. Usługi premium: własny serwer, na końcu */}
+  <PremiumTeaser />
 
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
 
@@ -86,7 +98,7 @@ export const prerender = true;
       <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
         <a href="/integrator" class="text-gray-400 hover:text-accent transition-colors">Integrator w szczegółach</a>
         <span class="text-white/20">|</span>
-        <a href="/uslugi" class="text-gray-400 hover:text-accent transition-colors">Wszystkie usługi</a>
+        <a href={PREMIUM_URL} class="text-gray-400 hover:text-accent transition-colors">Usługi Premium (VPS)</a>
         <span class="text-white/20">|</span>
         <a href="/server-side-tracking" class="text-gray-400 hover:text-accent transition-colors">Czym jest server-side tracking</a>
         <span class="text-white/20">|</span>

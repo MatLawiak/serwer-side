@@ -41,6 +41,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const service =
     uslugi.split(', ').includes('integrator') && plan ? `${uslugi} (plan: ${plan})` : uslugi;
   const message = pole(data.message, 5000);
+  // Budżet reklamowy podaje tylko formularz usług premium; to on rozstrzyga,
+  // czy rozmowa o własnym serwerze ma sens, więc ma być widoczny w mailu.
+  const budget = pole(data.budget, 60);
 
   if (!name || !EMAIL.test(email) || !data.rodo) {
     return json({ error: 'Wymagane pola: imię, poprawny e-mail, akceptacja polityki prywatności.' }, 400);
@@ -58,6 +61,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     ['E-mail', email],
     ['Temat', service || '(nie wybrano)'],
   ];
+  if (budget) wiersze.push(['Budżet reklamowy / mies.', budget]);
   const html =
     `<h2 style="font-family:Arial,sans-serif;color:#1a2744">Nowe zapytanie z serwer-side.pl</h2>` +
     `<table style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">` +

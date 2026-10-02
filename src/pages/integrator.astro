@@ -11,7 +11,7 @@ import LeadQualityChart from '../components/integrator/LeadQualityChart.astro';
 import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import PricingCards from '../components/integrator/PricingCards';
 import DataUse from '../components/integrator/DataUse.astro';
-import { plans, PANEL_URL, TRIAL_URL } from '../data/integrator';
+import { plans, PANEL_URL, TRIAL_URL, CLIENT_DEFINITION } from '../data/integrator';
 
 export const prerender = true;
 
@@ -38,7 +38,7 @@ const faq = [
   },
   {
     q: 'Na czym polega ocena leadów?',
-    a: 'To opcja dla firm, które zbierają zgłoszenia. Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe, a Integrator pokazuje, z których reklam przyszły. Nie musisz jej włączać, raporty i rekomendacje działają bez niej.',
+    a: 'To opcja w planie Agencja / Pro dla firm, które zbierają zgłoszenia. Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe, a Integrator pokazuje, z których reklam przyszły. Nie musisz jej włączać, raporty i rekomendacje działają bez niej.',
   },
   {
     q: 'Gdzie są przechowywane dane?',
@@ -97,7 +97,7 @@ const faq = [
       {/* Opcja dodatkowa: ocena zgłoszeń */}
       <div class="mt-8 bg-stone-50 rounded-xl p-6 md:p-8 card-brutal-static grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <span class="inline-block bg-accent/10 text-accent-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">Opcja dodatkowa</span>
+          <span class="inline-block bg-accent/10 text-accent-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">Od planu Agencja / Pro</span>
           <h3 class="text-xl font-bold mb-2">Więcej zgłoszeń nie znaczy więcej klientów</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
             Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe. Integrator pokazuje, z których reklam przyszły. Włączasz, jeśli chcesz.
@@ -119,7 +119,7 @@ const faq = [
         <p class="text-gray-600 max-w-2xl mx-auto">Każdy plan zaczyna się od 7 dni za darmo. Płacisz miesięcznie, rezygnujesz w dowolnej chwili.</p>
       </div>
       <PricingCards client:visible plans={plans} />
-      <p class="text-center text-sm text-gray-500 mt-8">Plany różnią się liczbą klientów. Raporty, rekomendacje, podłączenie AI i ocena leadów są w każdym.</p>
+      <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION} Raporty, podpowiedzi i rozmowa z AI są w każdym planie, a ocena leadów od planu Agencja / Pro.</p>
     </div>
   </section>
 

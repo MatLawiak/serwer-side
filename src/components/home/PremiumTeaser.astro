@@ -1,0 +1,61 @@
+---
+// Usługi premium na końcu strony głównej: jedna zapowiedź z odsyłaczem do
+// /uslugi/infrastruktura-premium/. Wcześniej stały tu cztery karty z cenami
+// trzech osobnych podstron; oferta wdrożeniowa jest teraz jedna i wyceniana
+// indywidualnie, więc karta z ceną „od 800 zł” wprowadzałaby w błąd.
+import { Image } from 'astro:assets';
+import serwer from '../../assets/premium/wlasny-serwer.png';
+import { PREMIUM_URL } from '../../data/integrator';
+
+const filary = [
+  {
+    title: 'Pomiar po stronie serwera',
+    desc: 'Meta i Google dostają informację o zakupie albo zgłoszeniu prosto z Twojego serwera, także gdy przeglądarka blokuje śledzenie.',
+  },
+  {
+    title: 'Automatyzacje n8n',
+    desc: 'Formularz, CRM, poczta i sklep połączone na Twoim serwerze, bez opłat za każdą wykonaną operację.',
+  },
+  {
+    title: 'Integrator i AI',
+    desc: 'Integrator ustawiony pod Twoje konta, CRM i sposób raportowania.',
+  },
+];
+---
+
+<section class="py-16 md:py-20 bg-primary text-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="relative order-last lg:order-first">
+        <div class="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+        <Image
+          src={serwer}
+          alt="Własny serwer na osobnej platformie, otoczony szklanym ogrodzeniem, z kluczem przy wejściu"
+          widths={[480, 720, 960]}
+          sizes="(min-width: 1024px) 540px, 90vw"
+          format="webp"
+          loading="lazy"
+          class="relative w-full h-auto rounded-2xl"
+        />
+      </div>
+      <div>
+        <span class="text-xs font-bold text-accent uppercase tracking-wider">Usługi Premium (VPS)</span>
+        <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Wydajesz na reklamy ponad 10 000 zł miesięcznie? Postaw pomiar na własnym serwerze.</h2>
+        <p class="text-gray-300 mb-6">
+          Jednorazowe wdrożenie na serwerze, który należy do Ciebie. Wycena indywidualna, po krótkiej rozmowie.
+        </p>
+        <ul class="space-y-3 mb-8">
+          {filary.map((f) => (
+            <li class="bg-white/5 border border-white/10 rounded-xl p-4">
+              <p class="font-semibold text-white">{f.title}</p>
+              <p class="text-sm text-gray-300 mt-1">{f.desc}</p>
+            </li>
+          ))}
+        </ul>
+        <a href={PREMIUM_URL} class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg btn-brutal-light">
+          Zobacz usługi premium
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
