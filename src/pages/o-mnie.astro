@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
+  dark
   title="O mnie — Specjalista server-side tracking | serwer-side.pl"
   description="Specjalizuję się we wdrożeniach server-side tracking: GTM Server-Side, GA4, Meta CAPI, Google Ads Enhanced Conversions."
 >
@@ -18,7 +19,9 @@ import Layout from '../layouts/Layout.astro';
 
   <section class="py-16 md:py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <img src="/logo-512.png" alt="serwer-side.pl mascot" class="w-32 h-32 mx-auto mb-6" />
+      <div class="w-36 h-36 mx-auto mb-8 rounded-full bg-slate-100 ring-2 ring-accent/40 flex items-center justify-center overflow-hidden">
+        <img src="/robot-mascot-nobg.png" alt="Robot z logo serwer-side.pl" class="w-full h-full object-contain scale-150" />
+      </div>
 
       {/* Intro */}
       <div class="mb-12">

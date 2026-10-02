@@ -24,11 +24,14 @@ const btn = (featured?: boolean) =>
         <th scope="col" class="p-5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider align-bottom">Funkcja</th>
         {plans.map((p) => (
           <th scope="col" class:list={['p-5 text-left font-normal border-l border-gray-200', p.featured && 'bg-accent/10']}>
-            {p.badge && (
-              <span class="inline-block bg-accent text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-2">{p.badge}</span>
-            )}
-            <span class="block text-base font-bold text-primary">{p.name}</span>
-            <span class="block text-xs text-gray-500 mt-1 min-h-[3rem]">{p.lead}</span>
+            {/* Stałe wysokości plakietki, nazwy i opisu: ceny i przyciski stoją w jednej linii. */}
+            <span class="block h-7">
+              {p.badge && (
+                <span class="inline-block bg-accent text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">{p.badge}</span>
+              )}
+            </span>
+            <span class="block text-base font-bold text-primary min-h-[3rem]">{p.name}</span>
+            <span class="block text-xs text-gray-500 mt-1 min-h-[3.25rem]">{p.lead}</span>
             <span class="block text-2xl font-extrabold text-primary mt-3">{p.price}</span>
             <span class="block text-xs text-gray-500 mb-4">{p.unit}</span>
             <a href={p.href} class:list={['block text-center font-semibold px-3 py-2.5 rounded-lg transition-colors', btn(p.featured)]}>{p.cta}</a>
@@ -50,7 +53,7 @@ const btn = (featured?: boolean) =>
               {v === true ? (
                 <span class="inline-flex w-6 h-6 rounded-full bg-accent text-white items-center justify-center text-xs font-bold" aria-label="jest w planie">✓</span>
               ) : v === false ? (
-                <span class="text-gray-300" aria-label="brak w planie">–</span>
+                <span class="opacity-25" aria-label="brak w planie">–</span>
               ) : (
                 <span class="font-bold text-primary">{v}</span>
               )}

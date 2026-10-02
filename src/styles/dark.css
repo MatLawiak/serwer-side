@@ -1,0 +1,188 @@
+/* Ciemny motyw stron ofertowych (Layout z propem `dark`).
+ *
+ * Sekcje stron były pisane na przemian: ciemne i białe. Zamiast przepisywać
+ * klasy w kilkunastu plikach, ten arkusz przemalowuje jasne klasy Tailwinda
+ * wewnątrz `.theme-dark main`. Dzięki temu artykuły i strony prawne (Layout
+ * bez `dark`) zostają jasne, a te same komponenty działają w obu wariantach.
+ *
+ * Plik celowo nie przechodzi przez `@layer`: reguły poza warstwami wygrywają
+ * z klasami narzędziowymi Tailwinda. Konsekwencja: stany hover / focus /
+ * :checked, które Tailwind robi klasami, trzeba tu powtórzyć (niżej).
+ */
+
+.theme-dark {
+  --dark-a: #1a2744;
+  --dark-b: #131c33;
+  --dark-line: rgba(255, 255, 255, 0.12);
+  --dark-card: rgba(255, 255, 255, 0.045);
+  background-color: var(--dark-a);
+}
+
+.theme-dark main {
+  color: #f1f5f9;
+}
+
+/* Sekcje: dwa odcienie na przemian, niezależnie od klasy tła w kodzie. */
+.theme-dark main > section {
+  position: relative;
+  background-color: var(--dark-a);
+}
+.theme-dark main > section:nth-of-type(even) {
+  background-color: var(--dark-b);
+}
+
+/* Separator: linia, która rozjaśnia się do cyjanu w środku i gaśnie ku brzegom. */
+.theme-dark main > section:not(:first-of-type)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(72rem, 92%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(6, 182, 212, 0.15) 20%,
+    rgba(6, 182, 212, 0.7) 50%,
+    rgba(6, 182, 212, 0.15) 80%,
+    transparent
+  );
+  pointer-events: none;
+}
+/* Dawne szare kreski między sekcjami: zastępuje je separator wyżej. */
+.theme-dark main > div.bg-primary:has(hr) {
+  display: none;
+}
+
+/* Powierzchnie */
+.theme-dark main .bg-white,
+.theme-dark main .bg-stone-50,
+.theme-dark main .bg-gray-50 {
+  background-color: var(--dark-card);
+}
+.theme-dark main .bg-stone-50\/60 {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+.theme-dark main .bg-stone-100,
+.theme-dark main .bg-gray-100 {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.theme-dark main .hover\:bg-stone-50:hover,
+.theme-dark main .hover\:bg-gray-50:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+/* Tekst */
+.theme-dark main .text-primary,
+.theme-dark main .text-gray-900,
+.theme-dark main .text-gray-800 {
+  color: #ffffff;
+}
+.theme-dark main .text-gray-700 {
+  color: #e2e8f0;
+}
+.theme-dark main .text-gray-600 {
+  color: #cbd5e1;
+}
+.theme-dark main .text-gray-500 {
+  color: #94a3b8;
+}
+.theme-dark main .text-accent-dark {
+  color: var(--color-accent);
+}
+.theme-dark main .hover\:text-accent:hover {
+  color: var(--color-accent);
+}
+
+/* Obramowania, karty, przyciski */
+.theme-dark main .border-gray-200,
+.theme-dark main .border-gray-300,
+.theme-dark main .border-gray-100 {
+  border-color: var(--dark-line);
+}
+.theme-dark main .card-brutal,
+.theme-dark main .card-brutal-static,
+.theme-dark main .accordion-brutal,
+.theme-dark main .btn-brutal {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.28);
+}
+.theme-dark main .card-brutal:hover,
+.theme-dark main .btn-brutal:hover {
+  border-color: rgba(6, 182, 212, 0.55);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28);
+}
+.theme-dark main .card-brutal-accent {
+  background-color: rgba(6, 182, 212, 0.07);
+}
+.theme-dark main hr {
+  border-color: var(--dark-line);
+}
+
+/* Formularze */
+.theme-dark main input[type='text'],
+.theme-dark main input[type='email'],
+.theme-dark main textarea,
+.theme-dark main select {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+.theme-dark main input::placeholder,
+.theme-dark main textarea::placeholder {
+  color: #64748b;
+}
+.theme-dark main input:focus,
+.theme-dark main textarea:focus,
+.theme-dark main select:focus {
+  border-color: var(--color-accent);
+}
+.theme-dark main label.border:hover {
+  border-color: var(--color-accent);
+}
+.theme-dark main label.border:has(:checked) {
+  border-color: var(--color-accent);
+  background-color: rgba(6, 182, 212, 0.12);
+}
+
+/* Kolory stanu: jasne tła pastelowe zamienione na półprzezroczyste */
+.theme-dark main .bg-amber-50 {
+  background-color: rgba(251, 191, 36, 0.1);
+}
+.theme-dark main .text-amber-700 {
+  color: #fcd34d;
+}
+.theme-dark main .bg-emerald-100,
+.theme-dark main .bg-green-50 {
+  background-color: rgba(52, 211, 153, 0.15);
+}
+.theme-dark main .text-emerald-700,
+.theme-dark main .text-green-700 {
+  color: #6ee7b7;
+}
+.theme-dark main .border-green-200 {
+  border-color: rgba(52, 211, 153, 0.35);
+}
+.theme-dark main .bg-red-100,
+.theme-dark main .bg-red-50 {
+  background-color: rgba(248, 113, 113, 0.14);
+}
+.theme-dark main .text-red-700 {
+  color: #fca5a5;
+}
+.theme-dark main .border-red-200 {
+  border-color: rgba(248, 113, 113, 0.35);
+}
+
+/* Menu po przewinięciu: na jasnych stronach robi się białe, tu zostaje ciemne. */
+.theme-dark #main-nav.bg-white\/95 {
+  background-color: rgba(19, 28, 51, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.theme-dark #main-nav .text-primary {
+  color: #ffffff;
+}
+.theme-dark #main-nav .nav-link.text-gray-600 {
+  color: #d1d5db;
+}
