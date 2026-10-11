@@ -2,7 +2,7 @@
 layout: ../layouts/LegalPage.astro
 title: Polityka prywatności
 description: Jak serwer-side.pl i Integrator danych reklamowych przetwarzają dane osobowe, pliki cookies i dane z Meta oraz Google Ads. Usuwanie danych na żądanie.
-updated: 1 października 2026 r.
+updated: 11 października 2026 r.
 ---
 
 export const prerender = true;
@@ -94,6 +94,27 @@ Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech
 - dziennik działań w kontach reklamowych: przez czas korzystania z usługi;
 - tokeny dostępu: do odłączenia konta albo usunięcia danych;
 - dane konta użytkownika: przez czas trwania umowy i do upływu terminów przedawnienia roszczeń.
+
+### 4.8 Google user data: sharing, transfer and disclosure (English)
+
+This section describes how Integrator handles data received from Google APIs (Google user data).
+
+**Data we access.** With the scope `https://www.googleapis.com/auth/adwords` Integrator accesses only the Google Ads accounts that the user selects after signing in with Google: account and campaign names, ad groups, ads and asset groups (ad texts and image addresses), keywords, daily performance metrics (impressions, clicks, cost, conversions), conversion action names, and campaign budgets and statuses.
+
+**How we use it.** To show reports to the user and, only at the user's explicit request, to change a campaign's daily budget (at most +20% within 24 hours), pause a campaign or create a new campaign as a paused draft. Integrator never enables campaigns.
+
+**With whom we share, transfer or disclose Google user data.** We do not sell Google user data and we do not share it with anyone for advertising, marketing or profiling. Google user data is disclosed only to:
+
+- the user who connected the Google Ads account and the members of the same workspace in Integrator whom that user invited;
+- our service providers, who process it on our behalf and only to run Integrator, under data processing agreements: Hetzner Online GmbH (application server, Germany), Supabase (database, Ireland), Cloudflare (secure connection to our server and storage of raw API responses), Google Cloud (encryption keys in Cloud KMS; the Gemini API receives campaign names and metrics to write the text of the daily summary, on a paid tier that does not use the data to train models), Resend (sending the daily summary e-mail) and Slack (only if the user connects their own Slack channel);
+- the AI assistant that the user chooses to connect to Integrator through MCP (for example Claude by Anthropic): only the data the assistant requests on the user's behalf, processed under the user's own agreement with that provider;
+- public authorities, when we are required to do so by law.
+
+None of these recipients may use Google user data for advertising or to train artificial intelligence models.
+
+**Limited Use.** Integrator's use and transfer to any other app of information received from Google APIs will adhere to the [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.
+
+**Retention and deletion.** Campaign data is kept for up to 400 days and access tokens until the account is disconnected. The user can revoke access at any time at [myaccount.google.com/connections](https://myaccount.google.com/connections) and can request deletion of all data by writing to [kontakt@serwer-side.pl](mailto:kontakt@serwer-side.pl); we delete it within 30 days (see section 8).
 
 ## 5. Komu powierzamy dane
 
