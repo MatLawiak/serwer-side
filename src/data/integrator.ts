@@ -93,6 +93,12 @@ export const featureRows: FeatureRow[] = [
   { text: 'Dodatkowe źródła: TikTok Ads, Microsoft Ads i inne', values: [false, false, false, true] },
 ];
 
+// Klauzula VAT pod cennikiem, ta sama co w Regulaminie (§ 5 ust. 6) i w panelu
+// (`core/billing/plans.VAT_NOTE` w integratorze). Ceny są netto, a sprzedawca
+// jest zwolniony z VAT, więc dziś cena netto jest kwotą do zapłaty.
+export const VAT_NOTE =
+  'Ceny netto (sprzedawca zwolniony z VAT na podstawie art. 113 ust. 1 ustawy o VAT). W przypadku powstania obowiązku podatkowego do ceny zostanie doliczony podatek VAT w obowiązującej stawce. Plan opłacany kartą odnawia się co miesiąc; odnowienie wyłączysz w panelu jednym kliknięciem.';
+
 // Jeden klient w rozumieniu limitu planu. Zdanie stoi pod tabelą na obu stronach.
 export const CLIENT_DEFINITION =
   'Jeden klient to jedno konto Meta Ads albo wybrany zestaw kampanii, jego konto Google Ads i jego CRM. W planie Scale obowiązuje zasada uczciwego korzystania.';

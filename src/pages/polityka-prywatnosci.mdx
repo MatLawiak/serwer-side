@@ -2,7 +2,7 @@
 layout: ../layouts/LegalPage.astro
 title: Polityka prywatności
 description: Jak serwer-side.pl i Integrator danych reklamowych przetwarzają dane osobowe, pliki cookies i dane z Meta oraz Google Ads. Usuwanie danych na żądanie.
-updated: 11 października 2026 r.
+updated: 3 listopada 2026 r.
 ---
 
 export const prerender = true;
@@ -41,7 +41,15 @@ Integrator (integrator.serwer-side.pl) to narzędzie dla firm, głównie agencji
 
 ### 4.1 Dane konta użytkownika
 
-Przy zakładaniu konta przetwarzamy adres e-mail, imię i nazwisko (jeśli je podasz), przypisanie do przestrzeni roboczej i role, a także dane techniczne logowania. Jesteśmy ich administratorem. Przetwarzamy je, żeby świadczyć usługę na podstawie umowy (art. 6 ust. 1 lit. b RODO), a dane rozliczeniowe, żeby wypełnić obowiązki podatkowe (art. 6 ust. 1 lit. c RODO).
+Przy zakładaniu konta przetwarzamy adres e-mail, imię i nazwisko (jeśli je podasz), przypisanie do przestrzeni roboczej i role, a także dane techniczne logowania. Jesteśmy ich administratorem. Przetwarzamy je, żeby świadczyć usługę na podstawie umowy (art. 6 ust. 1 lit. b RODO).
+
+**Logowanie przez Google.** Jeśli zakładasz konto albo logujesz się kontem Google, dostajemy od Google adres e-mail, imię i nazwisko oraz zdjęcie profilowe. Nie dostajemy dostępu do innych danych konta Google. To logowanie jest oddzielone od połączenia z Google Ads opisanego w punkcie 4.2.
+
+**Akceptacja dokumentów i zgody.** Zapisujemy, kiedy i którą wersję Regulaminu zaakceptowałeś, oświadczenie o zapoznaniu się z tą polityką, oświadczenie, że konto zakłada firma, oraz decyzję o zgodzie marketingowej, razem z adresem IP i nazwą przeglądarki. Robimy to, żeby móc wykazać zawarcie umowy i treść zgód (art. 6 ust. 1 lit. c i f RODO).
+
+**Dane do faktury i płatności.** Gdy zamawiasz Plan, przetwarzamy nazwę firmy, NIP, adres, e-mail do faktur i status nabywcy, a także historię płatności. Dane karty i rachunku bankowego obsługują wyłącznie operatorzy płatności (Stripe, Przelewy24); my ich nie widzimy. Fakturę wystawiamy w systemie inFakt i, gdy przepisy tego wymagają, w Krajowym Systemie e-Faktur. Podstawą jest umowa i obowiązki podatkowe (art. 6 ust. 1 lit. b i c RODO).
+
+**Informacje marketingowe.** Wiadomości o nowościach i ofertach wysyłamy wyłącznie za Twoją zgodą (art. 6 ust. 1 lit. a RODO i art. 398 ustawy Prawo komunikacji elektronicznej). Zgodę wycofasz w panelu (System → Dane i konto) albo linkiem w wiadomości.
 
 ### 4.2 Dane pobierane z Meta i Google
 
@@ -60,7 +68,8 @@ Dane z kont reklamowych służą do tego, żeby:
 - pokazać użytkownikowi raporty kosztów i wyników kampanii jego klientów;
 - porównać wyniki kampanii z oceną leadów przez handlowca (koszt zakwalifikowanego leada);
 - wysyłać codzienny skrót kampanii e-mailem i, jeśli użytkownik go włączy, na wskazany kanał Slack;
-- wykonać w koncie reklamowym ograniczone działania, **wyłącznie na wyraźne polecenie użytkownika**: zmienić budżet dzienny kampanii (wzrost najwyżej o 20% w ciągu 24 godzin), wstrzymać kampanię albo utworzyć nową kampanię jako wstrzymany szkic. Integrator nie uruchamia kampanii. Każde takie działanie trafia do dziennika dostępnego dla użytkownika.
+- wykonać w koncie reklamowym ograniczone działania, **wyłącznie na wyraźne polecenie użytkownika** (w rozmowie z asystentem AI albo kliknięciem w panelu): zmienić budżet dzienny kampanii (wzrost najwyżej o 20% w ciągu 24 godzin), wstrzymać kampanię, zestaw reklam albo reklamę, utworzyć nową kampanię jako wstrzymany szkic, a w Meta zmienić teksty reklamy, która się nie wyświetla. Pełny katalog i ograniczenia opisuje [Regulamin](/regulamin), § 7. Integrator nie uruchamia, nie wznawia i nie usuwa kampanii. Każde takie działanie trafia do dziennika dostępnego dla użytkownika;
+- pokazywać alerty ochrony budżetu: codziennie porównujemy wydatki zestawów reklam i kampanii z regułą ustawioną przez użytkownika. Alert jest tylko propozycją, a wstrzymanie wymaga kliknięcia człowieka.
 
 ### 4.4 Kto jest administratorem danych z leadów
 
@@ -91,9 +100,11 @@ Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech
 
 - dane o kosztach i wynikach kampanii oraz kopie surowych odpowiedzi API (bez danych kontaktowych): do 400 dni;
 - dane kontaktowe z leadów: do 180 dni, potem usuwamy je automatycznie;
-- dziennik działań w kontach reklamowych: przez czas korzystania z usługi;
+- dziennik działań w kontach reklamowych i zapis akceptacji dokumentów: przez czas korzystania z usługi, a po jej zakończeniu 3 lata od końca roku, w którym umowa wygasła (obrona przed roszczeniami); z dziennika usuwamy wtedy adresy e-mail osób;
 - tokeny dostępu: do odłączenia konta albo usunięcia danych;
-- dane konta użytkownika: przez czas trwania umowy i do upływu terminów przedawnienia roszczeń.
+- faktury i dane płatności: 5 lat od końca roku podatkowego, w którym wystawiliśmy fakturę;
+- dane konta użytkownika: przez czas trwania umowy i do upływu terminów przedawnienia roszczeń;
+- po wniosku o usunięcie przestrzeni: 30 dni na pobranie eksportu, potem usuwamy dane przestrzeni, z wyjątkiem danych wymienionych wyżej, które przepisy każą przechowywać dłużej.
 
 ### 4.8 Google user data: sharing, transfer and disclosure (English)
 
@@ -101,7 +112,7 @@ This section describes how Integrator handles data received from Google APIs (Go
 
 **Data we access.** With the scope `https://www.googleapis.com/auth/adwords` Integrator accesses only the Google Ads accounts that the user selects after signing in with Google: account and campaign names, ad groups, ads and asset groups (ad texts and image addresses), keywords, daily performance metrics (impressions, clicks, cost, conversions), conversion action names, and campaign budgets and statuses.
 
-**How we use it.** To show reports to the user and, only at the user's explicit request, to change a campaign's daily budget (at most +20% within 24 hours), pause a campaign or create a new campaign as a paused draft. Integrator never enables campaigns.
+**How we use it.** To show reports to the user and, only at the user's explicit request, to change a campaign's daily budget (at most +20% within 24 hours), pause a campaign or create a new campaign as a paused draft. Integrator never enables campaigns. If the user sets a budget protection rule, Integrator compares daily campaign costs with that rule and shows an alert in the dashboard; a campaign is paused only when the user clicks the button in the alert.
 
 **With whom we share, transfer or disclose Google user data.** We do not sell Google user data and we do not share it with anyone for advertising, marketing or profiling. Google user data is disclosed only to:
 
@@ -127,13 +138,16 @@ Korzystamy z usług firm, które przetwarzają dane na nasze zlecenie i według 
 - Resend: wysyłka e-maili z Integratora, region Irlandia;
 - CookieYes: zarządzanie zgodami na pliki cookies;
 - Slack: wyłącznie gdy użytkownik sam wskaże swój kanał do codziennego skrótu;
+- Stripe Payments Europe, Limited (Irlandia): płatności kartą i abonament odnawiany; Stripe jest też samodzielnym administratorem danych płatniczych w zakresie przepisów o usługach płatniczych i przeciwdziałaniu praniu pieniędzy;
+- PayPro S.A. (Poznań), operator serwisu Przelewy24: płatności jednorazowe (BLIK, przelew); w zakresie usług płatniczych także samodzielny administrator;
+- inFakt: system do wystawiania faktur i wysyłki ich do Krajowego Systemu e-Faktur;
 - dostawca poczty e-mail i biuro rachunkowe, w zakresie korespondencji i rozliczeń.
 
 Dane kont reklamowych wracają też do Meta i Google, gdy użytkownik zleci działanie w koncie reklamowym albo włączy przekazywanie ocen leadów do Meta (Conversions API).
 
 ## 6. Przekazywanie danych poza Europejski Obszar Gospodarczy
 
-Część naszych dostawców (Google, Cloudflare, Supabase, Resend, Slack) to firmy z USA albo z nimi powiązane, więc dane mogą trafić poza EOG. Odbywa się to na podstawie decyzji Komisji Europejskiej o odpowiednim stopniu ochrony (EU-US Data Privacy Framework) albo standardowych klauzul umownych zatwierdzonych przez Komisję. Kopię zabezpieczeń udostępnimy na prośbę wysłaną na kontakt@serwer-side.pl.
+Część naszych dostawców (Google, Cloudflare, Supabase, Resend, Slack, Stripe) to firmy z USA albo z nimi powiązane, więc dane mogą trafić poza EOG. Odbywa się to na podstawie decyzji Komisji Europejskiej o odpowiednim stopniu ochrony (EU-US Data Privacy Framework) albo standardowych klauzul umownych zatwierdzonych przez Komisję. Kopię zabezpieczeń udostępnimy na prośbę wysłaną na kontakt@serwer-side.pl.
 
 ## 7. Twoje prawa
 
@@ -147,7 +161,9 @@ Nie podejmujemy wobec Ciebie decyzji opartych wyłącznie na zautomatyzowanym pr
 
 Ta instrukcja dotyczy danych pobranych przez Integrator z Meta i Google.
 
-**Odłączenie w Integratorze.** W panelu, w zakładce Podłączone platformy, możesz odłączyć konta reklamowe i przestać je obserwować. Możesz też cofnąć dostęp aplikacji w ustawieniach Facebooka (Ustawienia i prywatność → Ustawienia → Aplikacje i witryny) albo konta Google (Zarządzaj kontem Google → Bezpieczeństwo → Połączenia z aplikacjami i usługami innych firm). Po cofnięciu dostępu Integrator przestaje pobierać dane.
+**Odłączenie w Integratorze.** W panelu, w zakładce Podłączone platformy, przycisk „Odłącz” przy połączeniu Meta albo Google cofa zgodę aplikacji u platformy, usuwa tokeny dostępu i kończy pobieranie danych. Możesz przy tym od razu usunąć pobrane dane tego połączenia. Zgodę cofniesz też w ustawieniach Facebooka (Ustawienia i prywatność → Ustawienia → Aplikacje i witryny) albo konta Google (Zarządzaj kontem Google → Bezpieczeństwo → Połączenia z aplikacjami i usługami innych firm).
+
+**Eksport i usunięcie w panelu.** W zakładce System → Dane i konto Administrator pobierze eksport danych przestrzeni (pliki CSV), a właściciel złoży wniosek o usunięcie przestrzeni: po 30 dniach usuwamy jej dane. Tam też usuniesz własne konto.
 
 **Wniosek o usunięcie danych.** Napisz na [kontakt@serwer-side.pl](mailto:kontakt@serwer-side.pl) z tematem „Usunięcie danych Integratora” i podaj adres e-mail konta w Integratorze albo identyfikator konta reklamowego. W ciągu 30 dni usuniemy tokeny dostępu, dane kampanii, leady i kopie surowe i potwierdzimy to mailowo.
 

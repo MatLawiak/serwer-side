@@ -1,8 +1,9 @@
 ---
 layout: ../layouts/LegalPage.astro
 title: Regulamin
-description: Regulamin serwisu serwer-side.pl i usługi Integrator danych reklamowych. Konto, okres próbny, płatności, powierzenie danych, działania w kontach reklamowych.
-updated: 1 października 2026 r.
+description: Regulamin serwisu serwer-side.pl i usługi Integrator danych reklamowych. Konto, okres próbny, płatności i faktury bez VAT, odstąpienie, działania asystenta AI w kontach reklamowych, eksport i usunięcie danych.
+updated: 3 listopada 2026 r.
+version: 2026-11-03
 ---
 
 export const prerender = true;
@@ -18,12 +19,13 @@ export const prerender = true;
 7. **Plan**: pakiet Integratora o określonym zakresie i cenie, opisany w cenniku w Serwisie albo w indywidualnej ofercie.
 8. **Okres próbny**: 7 dni bezpłatnego korzystania z Integratora, liczonych od założenia Przestrzeni.
 9. **Usługi wdrożeniowe**: usługi Meta Power Up, Google Power Up i Dedykowane automatyzacje VPS opisane w Serwisie.
+10. **Punkt kontaktowy**: adres kontakt@serwer-side.pl, wyznaczony zgodnie z art. 11 i 12 rozporządzenia (UE) 2022/2065 (akt o usługach cyfrowych) do kontaktu z organami państw członkowskich, Komisją Europejską, Europejską Radą ds. Usług Cyfrowych i Użytkownikami. Komunikacja odbywa się w języku polskim lub angielskim.
 
 ## § 2. Postanowienia ogólne
 
 1. Regulamin określa zasady korzystania z Serwisu i Integratora. Jest regulaminem, o którym mowa w art. 8 ustawy z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną.
-2. Integrator jest usługą dla przedsiębiorców. Założenie Przestrzeni oznacza oświadczenie, że Klient działa w związku ze swoją działalnością gospodarczą lub zawodową.
-3. Do przedsiębiorcy będącego osobą fizyczną, który zawiera umowę bezpośrednio związaną z jego działalnością, ale nieposiadającą dla niego charakteru zawodowego (art. 385⁵ Kodeksu cywilnego), nie stosuje się postanowień Regulaminu wyłączających lub ograniczających uprawnienia konsumenta.
+2. Integrator jest usługą dla przedsiębiorców. Założenie Przestrzeni wymaga oświadczenia, że Klient działa w związku ze swoją działalnością gospodarczą lub zawodową.
+3. Do przedsiębiorcy będącego osobą fizyczną, który zawiera umowę bezpośrednio związaną z jego działalnością, ale nieposiadającą dla niego charakteru zawodowego (art. 385⁵ Kodeksu cywilnego i art. 7aa ustawy o prawach konsumenta), nie stosuje się postanowień Regulaminu wyłączających lub ograniczających uprawnienia konsumenta. Przysługuje mu prawo odstąpienia od umowy na zasadach z § 5a.
 4. Usługi wdrożeniowe świadczymy na podstawie indywidualnej oferty lub umowy. Regulamin stosuje się do nich w zakresie, w jakim oferta lub umowa nie stanowi inaczej.
 
 ## § 3. Usługi świadczone drogą elektroniczną
@@ -36,30 +38,55 @@ export const prerender = true;
 
 ## § 4. Konto i Przestrzeń
 
-1. Umowa o korzystanie z Integratora zostaje zawarta z chwilą założenia Przestrzeni. Osoba zakładająca Przestrzeń oświadcza, że jest umocowana do działania w imieniu Klienta.
-2. Klient nadaje Użytkownikom role (przeglądający, analityk, administrator, właściciel) i odpowiada za ich działania w Przestrzeni.
-3. Użytkownik chroni dane logowania i klucze dostępu (w tym klucze dla asystentów AI) przed osobami nieupoważnionymi. Klucz, który mógł trafić w niepowołane ręce, należy natychmiast odwołać w panelu.
-4. Usługodawca może zablokować dostęp do Przestrzeni, gdy Klient korzysta z niej niezgodnie z prawem lub Regulaminem albo naraża na szkodę Usługodawcę, innych Klientów lub dostawców platform reklamowych. O blokadzie i jej przyczynie Usługodawca informuje e-mailem.
+1. Użytkownik zakłada konto w Integratorze adresem e-mail i hasłem, z potwierdzeniem adresu linkiem z wiadomości, albo przez logowanie kontem Google.
+2. Umowa o korzystanie z Integratora zostaje zawarta z chwilą założenia Przestrzeni. Przestrzeń powstaje po akceptacji Regulaminu (w tym umowy powierzenia z § 9), złożeniu oświadczenia o zapoznaniu się z Polityką prywatności i oświadczenia, że Klient działa w związku ze swoją działalnością gospodarczą lub zawodową. Osoba zakładająca Przestrzeń oświadcza, że jest umocowana do działania w imieniu Klienta.
+3. Klient nadaje Użytkownikom role Administratora albo Analityka i odpowiada za ich działania w Przestrzeni. Administrator zarządza wszystkim, w tym zespołem i płatnościami. Analityk korzysta ze wszystkich funkcji poza zespołem i płatnościami.
+4. Użytkownik chroni dane logowania i klucze dostępu (w tym klucze dla asystentów AI) przed osobami nieupoważnionymi. Klucz, który mógł trafić w niepowołane ręce, należy natychmiast odwołać w panelu.
+5. Usługodawca może zablokować dostęp do Przestrzeni, gdy Klient korzysta z niej niezgodnie z prawem lub Regulaminem albo naraża na szkodę Usługodawcę, innych Klientów lub dostawców platform reklamowych. O blokadzie i jej przyczynie Usługodawca informuje e-mailem.
 
 ## § 5. Okres próbny, Plany i płatności
 
-1. Każda nowa Przestrzeń dostaje 7-dniowy Okres próbny. W tym czasie Klient korzysta z Integratora bezpłatnie i bez obowiązku podawania danych płatniczych.
+1. Każda nowa Przestrzeń dostaje 7-dniowy Okres próbny. W tym czasie Klient korzysta z Integratora bezpłatnie i bez obowiązku podawania danych płatniczych. Okres próbny nie zamienia się sam w płatny Plan.
 2. Po Okresie próbnym dalsze korzystanie wymaga wybrania Planu i opłacenia go zgodnie z cennikiem albo ofertą. Bez opłaty Usługodawca zawiesza pobieranie danych i dostęp do raportów. Dane zostają zachowane przez 30 dni, a potem są usuwane, chyba że Klient wcześniej opłaci Plan.
-3. Opłaty pobierane są z góry za okres rozliczeniowy wskazany w Planie. Usługodawca wystawia fakturę w formie elektronicznej, na co Klient wyraża zgodę.
-4. Zmiana cennika nie dotyczy okresu, który Klient już opłacił. O zmianie cen Usługodawca informuje co najmniej 30 dni przed jej wejściem w życie.
+3. Opłata za Plan jest pobierana z góry za okres rozliczeniowy wskazany w Planie (miesiąc albo rok). Płatności obsługują Stripe Payments Europe Ltd. (karty, płatności cykliczne) oraz PayPro S.A. jako operator serwisu Przelewy24 (płatności jednorazowe). Zamówienie Klient składa w panelu przyciskiem „Zamawiam z obowiązkiem zapłaty”.
+4. Plan opłacany przez Stripe odnawia się automatycznie na kolejny okres rozliczeniowy, a opłata jest pobierana w dniu odnowienia. Klient może w każdej chwili wyłączyć odnowienie w panelu (System → Płatności). Wyłączenie działa od następnego okresu.
+5. Plan opłacony przez Przelewy24 nie odnawia się automatycznie. Usługodawca przypomina o końcu okresu e-mailem przed jego upływem.
+6. Ceny w cenniku są cenami netto (Usługodawca jest zwolniony z VAT na podstawie art. 113 ust. 1 ustawy z dnia 11 marca 2004 r. o podatku od towarów i usług). W przypadku powstania obowiązku podatkowego do ceny zostanie doliczony podatek VAT w obowiązującej stawce. O utracie zwolnienia Usługodawca informuje Klientów e-mailem co najmniej 14 dni przed najbliższym odnowieniem. Do tego czasu cena netto jest kwotą do zapłaty.
+7. Usługodawca wystawia fakturę bez VAT w formie elektronicznej, w tym w Krajowym Systemie e-Faktur, gdy przepisy tego wymagają, na co Klient wyraża zgodę. Faktura trafia też na adres e-mail wskazany w danych do faktury. Potwierdzenie płatności ze Stripe nie jest fakturą.
+8. Gdy opłata za odnowienie nie zostanie pobrana, Usługodawca informuje o tym Klienta i ponawia próbę przez 7 dni. Po tym czasie stosuje się ust. 2 zdanie drugie i trzecie.
+9. Zmiana cennika nie dotyczy okresu, który Klient już opłacił. O zmianie cen Usługodawca informuje co najmniej 30 dni przed jej wejściem w życie.
+
+## § 5a. Odstąpienie od umowy przez przedsiębiorcę na prawach konsumenta
+
+1. Przedsiębiorca, o którym mowa w § 2 ust. 3, może odstąpić od umowy o opłacony Plan bez podania przyczyny w terminie 14 dni od jej zawarcia. Umowa o Plan zostaje zawarta z chwilą opłacenia Planu. Okres próbny nie skraca tego terminu.
+2. Oświadczenie o odstąpieniu można złożyć w panelu (System → Płatności → Odstąpienie od umowy) albo e-mailem na kontakt@serwer-side.pl, także na wzorze formularza stanowiącym załącznik nr 2 do ustawy o prawach konsumenta. Do zachowania terminu wystarczy wysłanie oświadczenia przed jego upływem. Usługodawca potwierdza otrzymanie oświadczenia e-mailem.
+3. Jeżeli Klient zażądał rozpoczęcia świadczenia przed upływem terminu na odstąpienie, płaci za okres korzystania z Integratora do chwili odstąpienia, proporcjonalnie do ceny Planu. Pozostałą część opłaty Usługodawca zwraca w terminie 14 dni od otrzymania oświadczenia, tą samą metodą płatności, i wystawia fakturę korygującą.
 
 ## § 6. Podłączanie kont reklamowych
 
 1. Klient podłącza konta reklamowe przez logowanie Meta lub Google i sam wskazuje, które konta, strony i formularze Integrator ma obsługiwać. Integrator nie pobiera danych z kont, których Klient nie wskazał.
 2. Klient oświadcza, że ma prawo udostępnić Usługodawcy dane z podłączonych kont, w tym dane kont reklamowych swoich klientów, oraz że korzysta z platform reklamowych zgodnie z ich regulaminami.
-3. Dane w Integratorze pochodzą z platform reklamowych i systemów Klienta (arkuszy, CRM). Platformy liczą wyniki według własnych zasad atrybucji, więc dane w Integratorze mogą różnić się od danych w panelach Meta i Google. Usługodawca nie odpowiada za błędy i przerwy w działaniu interfejsów platform.
+3. Dane w Integratorze pochodzą z platform reklamowych i systemów Klienta (arkuszy, CRM). Platformy liczą wyniki według własnych zasad atrybucji, więc dane w Integratorze mogą różnić się od danych w panelach Meta i Google.
+4. Integrator działa w oparciu o interfejsy programistyczne Meta Platforms i Google. Ich właściciele mogą zmienić, ograniczyć lub wycofać funkcje interfejsów, cofnąć uprawnienia aplikacji albo zablokować konto reklamowe Klienta. W takim przypadku Usługodawca może zmienić lub wyłączyć funkcję Integratora, która od nich zależy, i informuje o tym Klientów w panelu lub e-mailem. Jeżeli zmiana istotnie ogranicza Plan, Klient może wypowiedzieć umowę ze skutkiem natychmiastowym i otrzymuje zwrot opłaty za niewykorzystaną część okresu rozliczeniowego.
+5. Klient może w każdej chwili odłączyć połączenie z Meta albo Google w panelu (Podłączone platformy → Odłącz). Integrator cofa wtedy zgodę u platformy, usuwa tokeny dostępu i przestaje pobierać dane. Historia raportów zostaje, chyba że Klient zaznaczy jej usunięcie.
 
 ## § 7. Asystent AI i działania w kontach reklamowych
 
-1. Klient może podłączyć do Integratora wybrany przez siebie model językowy przez protokół MCP. Dostęp wymaga klucza wydanego w panelu, który można w każdej chwili odwołać.
-2. Zmiany w kontach reklamowych są możliwe wyłącznie przez osobne połączenie z prawem zapisu i wyłącznie na polecenie Użytkownika. Integrator stosuje stałe ograniczenia: wzrost budżetu dziennego kampanii najwyżej o 20% w ciągu 24 godzin, wstrzymanie kampanii oraz tworzenie nowych kampanii wyłącznie jako wstrzymanych szkiców. Integrator nie uruchamia kampanii.
-3. Każde działanie w koncie reklamowym trafia do dziennika dostępnego w panelu.
-4. Decyzje o budżetach i kampaniach podejmuje Klient. Opisy, skróty i wskazówki tworzone automatycznie lub przez model językowy mają charakter informacyjny. Liczby w nich pochodzą z danych Klienta, ale nie stanowią gwarancji wyników.
+1. Klient może podłączyć do Integratora wybrany przez siebie model językowy przez protokół MCP. Dostęp wymaga klucza wydanego w panelu, który można w każdej chwili odwołać. Dostawcą modelu jest podmiot wybrany przez Klienta, który przetwarza dane na warunkach umowy zawartej z Klientem. Usługodawca nie jest dostawcą tego modelu.
+2. Model językowy odczytuje przez Integrator dane Przestrzeni: listę klientów i kampanii, wyniki, kreacje, jakość leadów, słowa kluczowe, sygnały i dziennik działań. Danych kontaktowych z leadów model nie dostaje.
+3. Zmiany w kontach reklamowych są możliwe wyłącznie przez osobne połączenie z prawem zapisu, które Klient zakłada w panelu, i kluczem z prawem zapisu. Klient upoważnia Usługodawcę do wykonywania w jego imieniu działań z ust. 4 na polecenie Użytkownika. Usługodawca może włączać działania z ust. 4 lit. d i e dla poszczególnych Przestrzeni.
+4. Katalog działań i stałe ograniczenia, których model językowy ani treść polecenia nie mogą zmienić:
+   a) zmiana budżetu dziennego kampanii w Meta Ads albo Google Ads: wzrost najwyżej o 20% w ciągu 24 godzin, liczony od budżetu sprzed pierwszej zmiany w tym oknie; obniżka jest dozwolona, ale nie do zera; budżetu współdzielonego przez kilka kampanii Google Integrator nie zmienia;
+   b) wstrzymanie kampanii w Meta Ads albo Google Ads;
+   c) utworzenie kampanii wyłącznie jako wstrzymanego szkicu z oznaczeniem „[Szkic AI]”; w Google Ads kampanii w sieci wyszukiwania, z opcjonalną grupą reklam, reklamą i słowami kluczowymi, wszystkie wstrzymane;
+   d) w Meta Ads: odczyt struktury kampanii (zestawy reklam, reklamy, teksty, status sprawdzenia) i wstrzymanie zestawu reklam albo reklamy;
+   e) w Meta Ads: zmiana tekstów podstawowych reklamy, która się nie wyświetla (reklama, jej zestaw albo kampania są wstrzymane), przez utworzenie nowej kreacji po sprawdzeniu treści przez Meta; poprzednia kreacja zostaje w koncie i w dzienniku.
+   Integrator nie uruchamia, nie wznawia i nie usuwa kampanii, zestawów reklam ani reklam.
+5. Ochrona budżetu: Klient może ustawić dla klienta regułę (wydatek co najmniej określonej kwoty w ostatnich dniach przy liczbie leadów nie większej niż wskazana). Integrator sprawdza ją codziennie i pokazuje alert w panelu. Zestaw reklam Meta albo kampania Google zostaje wstrzymany wyłącznie po kliknięciu Użytkownika w alercie; Integrator niczego nie wstrzymuje sam.
+6. Każde działanie, także odrzucone lub nieudane, trafia do dziennika w panelu razem z wartością sprzed zmiany, wartością po zmianie, źródłem (asystent AI albo kliknięcie w panelu), osobą lub kluczem, które je zleciły, i czasem.
+7. Klient może w każdej chwili odwołać klucz z prawem zapisu albo odłączyć połączenie z prawem zapisu (§ 6 ust. 5). Odłączenie działa natychmiast.
+8. Decyzje o budżetach, kampaniach i ich uruchomieniu podejmuje Klient. Opisy, skróty i wskazówki tworzone automatycznie lub przez model językowy mają charakter informacyjny i mogą zawierać błędy. Liczby w codziennym skrócie pochodzą z danych Klienta i są sprawdzane przez Integrator przed wysyłką; opis słowny tworzy model Gemini (Google). Usługodawca nie przekazuje modelom językowym danych kontaktowych z leadów i nie wykorzystuje danych Klienta do trenowania modeli.
+9. Zmiany w kampaniach mogą wpłynąć na ich wyniki, w tym zresetować fazę uczenia algorytmu platformy. Treści z kont reklamowych, formularzy i stron (nazwy, teksty reklam, odpowiedzi w formularzach) pochodzą od osób trzecich i mogą zawierać polecenia skierowane do modelu językowego. Ograniczenia z ust. 4 działają niezależnie od treści polecenia.
 
 ## § 8. Obowiązki Klienta
 
@@ -82,24 +109,35 @@ Klient zobowiązuje się:
    - zgłasza Klientowi naruszenie ochrony danych bez zbędnej zwłoki, nie później niż w ciągu 48 godzin od jego stwierdzenia;
    - udostępnia informacje potrzebne do wykazania zgodności z art. 28 RODO i umożliwia audyt, zapowiedziany co najmniej 14 dni wcześniej.
 5. Klient udziela ogólnej zgody na korzystanie z dalszych podmiotów przetwarzających wymienionych w Polityce prywatności. O planowanej zmianie lub dodaniu podmiotu Usługodawca informuje e-mailem co najmniej 14 dni wcześniej. Klient może w tym czasie zgłosić sprzeciw, a gdy strony nie dojdą do porozumienia, wypowiedzieć umowę ze skutkiem natychmiastowym.
-6. Dane kontaktowe z leadów Usługodawca usuwa automatycznie po 180 dniach. Po zakończeniu umowy usuwa wszystkie powierzone dane w ciągu 30 dni, chyba że przepisy wymagają ich dalszego przechowywania.
+6. Dane kontaktowe z leadów Usługodawca usuwa automatycznie po 180 dniach. Po zakończeniu umowy Usługodawca, według wyboru Klienta, udostępnia powierzone dane do pobrania na zasadach § 12 ust. 3, a następnie usuwa je wraz z istniejącymi kopiami w terminie z § 12 ust. 4, chyba że przepisy wymagają ich dalszego przechowywania.
 
 ## § 10. Dostępność i odpowiedzialność
 
 1. Usługodawca dba o ciągłość działania Integratora. Prace techniczne, które mogą powodować przerwy, wykonuje w miarę możliwości poza godzinami pracy i zapowiada je w panelu lub e-mailem.
-2. Usługodawca nie odpowiada za szkody wynikające z decyzji podjętych przez Klienta na podstawie raportów i wskazówek, z działań platform reklamowych, z przerw w działaniu interfejsów Meta i Google ani z nieprawidłowych danych dostarczonych przez Klienta.
-3. Odpowiedzialność Usługodawcy wobec Klienta jest ograniczona do wysokości opłat zapłaconych przez Klienta za ostatnie 3 miesiące korzystania z Integratora. Ograniczenie nie dotyczy szkody wyrządzonej umyślnie.
+2. Usługodawca nie odpowiada za szkody wynikające z:
+   a) decyzji podjętych przez Klienta na podstawie raportów, skrótów i wskazówek;
+   b) działań wykonanych w kontach reklamowych zgodnie z poleceniem Użytkownika albo po jego kliknięciu w alercie ochrony budżetu, w granicach § 7 ust. 4 i 5;
+   c) działań, zaniechań, zmian interfejsów i zasad platform reklamowych, w tym odrzucenia reklamy, blokady konta reklamowego lub cofnięcia uprawnień aplikacji;
+   d) przerw w działaniu interfejsów Meta i Google oraz dostawców infrastruktury, na których działanie Usługodawca nie ma wpływu;
+   e) nieprawidłowych danych dostarczonych przez Klienta lub jego systemy;
+   f) działania modelu językowego wybranego i podłączonego przez Klienta.
+3. Odpowiedzialność Usługodawcy wobec Klienta jest ograniczona do szkody rzeczywistej i do kwoty opłat zapłaconych przez Klienta za okres 3 miesięcy poprzedzających zdarzenie wywołujące szkodę. Przy Planie rocznym jest to 3/12 opłaty rocznej. Usługodawca nie odpowiada za utracone korzyści.
+4. Ograniczenia z ust. 2 i 3 nie dotyczą szkody wyrządzonej umyślnie lub wskutek rażącego niedbalstwa oraz przypadków, w których wyłączenie odpowiedzialności nie jest dopuszczalne z mocy prawa, w tym wobec przedsiębiorcy, o którym mowa w § 2 ust. 3.
 
 ## § 11. Reklamacje
 
 1. Reklamacje dotyczące Serwisu lub Integratora należy wysyłać na kontakt@serwer-side.pl, z opisem problemu i nazwą Przestrzeni.
 2. Usługodawca odpowiada na reklamację w ciągu 14 dni od jej otrzymania.
+3. Wobec przedsiębiorcy, o którym mowa w § 2 ust. 3, stosuje się przepisy ustawy o prawach konsumenta o zgodności usługi cyfrowej z umową.
 
-## § 12. Rozwiązanie umowy
+## § 12. Rozwiązanie umowy, eksport danych i zmiana dostawcy
 
-1. Klient może w każdej chwili zrezygnować z Integratora, pisząc na kontakt@serwer-side.pl. Umowa wygasa z końcem opłaconego okresu rozliczeniowego, a opłata za ten okres nie podlega zwrotowi.
+1. Klient może w każdej chwili zrezygnować z Integratora w panelu (System → Płatności → Zrezygnuj z odnowienia) albo pisząc na kontakt@serwer-side.pl. Umowa wygasa z końcem opłaconego okresu rozliczeniowego. Opłata za ten okres nie podlega zwrotowi, z zastrzeżeniem § 5a i § 6 ust. 4.
 2. Usługodawca może wypowiedzieć umowę z zachowaniem 30-dniowego okresu wypowiedzenia, a ze skutkiem natychmiastowym, gdy Klient rażąco narusza Regulamin i nie usunie naruszenia w terminie 7 dni od wezwania.
-3. Po zakończeniu umowy Usługodawca usuwa dane Przestrzeni w ciągu 30 dni, zgodnie z § 9 ust. 6.
+3. Administrator Przestrzeni może w każdej chwili pobrać w panelu (System → Dane i konto) eksport danych Przestrzeni w plikach CSV: dane kosztów i wyników kampanii, leady z oceną, konfigurację klientów i przypisań, dziennik działań w kontach reklamowych, płatności. Dane kontaktowe leadów trafiają do eksportu wyłącznie na wyraźne wskazanie Administratora. Eksport jest dostępny także przez 30 dni od zakończenia umowy albo od złożenia wniosku o usunięcie Przestrzeni (okres na pobranie danych).
+4. Po upływie okresu na pobranie danych Usługodawca usuwa dane Przestrzeni w ciągu 30 dni, z wyjątkiem danych, które musi przechowywać na podstawie przepisów (dokumenty księgowe przez 5 lat od końca roku podatkowego), oraz dziennika działań w kontach reklamowych i potwierdzeń akceptacji Regulaminu, przechowywanych przez 3 lata od końca roku, w którym umowa wygasła, w celu obrony przed roszczeniami.
+5. Właściciel Przestrzeni może złożyć w panelu wniosek o jej usunięcie. Od tej chwili Integrator nie pobiera danych, a po 30 dniach usuwa Przestrzeń zgodnie z ust. 4. W tym czasie wniosek można cofnąć.
+6. Klient, który chce przenieść dane do innego dostawcy, może złożyć wniosek o zmianę dostawcy z wyprzedzeniem nie dłuższym niż 2 miesiące. Usługodawca nie pobiera opłat za eksport ani za zmianę dostawcy.
 
 ## § 13. Własność intelektualna
 
@@ -111,7 +149,7 @@ Zasady przetwarzania danych osobowych przez Usługodawcę jako administratora op
 
 ## § 15. Zmiany Regulaminu i postanowienia końcowe
 
-1. Usługodawca może zmienić Regulamin z ważnych przyczyn, w szczególności zmiany przepisów, zakresu usług albo zasad platform reklamowych. O zmianie informuje Klientów e-mailem co najmniej 14 dni przed jej wejściem w życie. Klient, który nie akceptuje zmian, może wypowiedzieć umowę przed tą datą.
+1. Usługodawca może zmienić Regulamin wyłącznie z następujących przyczyn: zmiana przepisów lub orzeczenie albo decyzja organu, zmiana zasad lub interfejsów platform Meta i Google, wprowadzenie, zmiana lub wycofanie funkcji Integratora, zmiana operatora płatności lub dostawcy infrastruktury, poprawa bezpieczeństwa danych, usunięcie niejasności lub błędów redakcyjnych. O zmianie Usługodawca informuje Klientów e-mailem i w panelu co najmniej 14 dni przed jej wejściem w życie. Klient, który nie akceptuje zmian, może wypowiedzieć umowę ze skutkiem na dzień wejścia zmian w życie i otrzymuje zwrot opłaty za niewykorzystaną część okresu rozliczeniowego.
 2. W sprawach nieuregulowanych stosuje się prawo polskie, w szczególności Kodeks cywilny, ustawę o świadczeniu usług drogą elektroniczną i RODO.
 3. Spory z Klientami rozstrzyga sąd właściwy dla siedziby Usługodawcy, z zastrzeżeniem § 2 ust. 3.
-4. Regulamin obowiązuje od 1 października 2026 r.
+4. Regulamin obowiązuje od 3 listopada 2026 r. Do tego dnia obowiązuje [poprzednia wersja Regulaminu](/regulamin-2026-10-01).

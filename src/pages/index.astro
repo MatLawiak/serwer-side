@@ -11,7 +11,7 @@ import McpScene from '../components/home/McpScene.astro';
 import PremiumTeaser from '../components/home/PremiumTeaser.astro';
 import PricingTable from '../components/integrator/PricingTable.astro';
 import DataUse from '../components/integrator/DataUse.astro';
-import { TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION } from '../data/integrator';
+import { TRIAL_URL, PREMIUM_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
 
 // Statyczna strona: adapter Cloudflare optymalizuje obrazy (webp) tylko
 // przy prerenderingu; na żądanie serwowałby 500 KB PNG z Gemini jak leci.
@@ -47,6 +47,7 @@ export const prerender = true;
       </div>
       <PricingTable />
       <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION}</p>
+      <p class="text-center text-xs text-gray-500 mt-3 max-w-2xl mx-auto">{VAT_NOTE}</p>
     </div>
   </section>
 

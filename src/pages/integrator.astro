@@ -11,7 +11,7 @@ import LeadQualityChart from '../components/integrator/LeadQualityChart.astro';
 import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import PricingTable from '../components/integrator/PricingTable.astro';
 import DataUse from '../components/integrator/DataUse.astro';
-import { PANEL_URL, TRIAL_URL, CLIENT_DEFINITION } from '../data/integrator';
+import { PANEL_URL, TRIAL_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
 
 export const prerender = true;
 
@@ -121,6 +121,7 @@ const faq = [
       </div>
       <PricingTable />
       <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION} Raporty, podpowiedzi i rozmowa z AI są w każdym planie, a ocena leadów od planu Agencja / Pro.</p>
+      <p class="text-center text-xs text-gray-500 mt-3 max-w-2xl mx-auto">{VAT_NOTE}</p>
     </div>
   </section>
 
