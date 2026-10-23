@@ -1,0 +1,57 @@
+---
+layout: ../layouts/LegalPage.astro
+title: Eksport danych z Integratora
+description: Struktura i formaty plików eksportu danych przestrzeni z Integratora danych reklamowych. Rejestr formatów zgodnie z art. 26 rozporządzenia (UE) 2023/2854 (Data Act).
+updated: 23 października 2026 r.
+---
+
+export const prerender = true;
+
+Ta strona opisuje, co zawiera eksport danych przestrzeni z Integratora i w jakim formacie. Jest rejestrem struktur i formatów danych, o którym mowa w art. 26 rozporządzenia (UE) 2023/2854 (Data Act), i uzupełnia § 12 [Regulaminu](/regulamin).
+
+## Jak pobrać eksport
+
+Administrator przestrzeni pobiera eksport w panelu: System → Dane i konto → Przygotuj eksport. Eksport jest bezpłatny, można go pobierać dowolnie często, także przez 30 dni od zakończenia umowy albo od złożenia wniosku o usunięcie przestrzeni.
+
+## Format plików
+
+- Archiwum ZIP z plikami CSV i plikiem README.txt z listą plików i liczbą wierszy.
+- CSV: separator średnik, kodowanie UTF-8 ze znacznikiem BOM, pierwszy wiersz to nazwy kolumn.
+- Daty w formacie ISO 8601 (RRRR-MM-DD, czas z przesunięciem strefy).
+- Kwoty jako liczby dziesiętne z kropką, w walucie podanej w kolumnie `currency` danego wiersza.
+- Pola złożone (na przykład konwersje po nazwie, wartości przed i po zmianie w dzienniku agenta) jako JSON w jednej komórce.
+- Identyfikatory rekordów jako UUID; identyfikatory platform (kampanii, zestawów, reklam) w postaci nadanej przez Meta albo Google.
+
+## Pliki w archiwum
+
+| Plik | Zawartość |
+|---|---|
+| klienci.csv | klienci (projekty) przestrzeni: nazwa, strona, branża, waluta, strefa czasowa, definicja leada |
+| cele_klientow.csv | cele liczbowe klientów (metryka, próg, minimalna próba) |
+| polaczenia.csv | połączenia z Meta i Google: platforma, konto, status, uprawnienia, rodzaj (odczyt albo zapis); bez tokenów |
+| konta_reklamowe.csv | konta reklamowe: platforma, numer, nazwa, waluta, strefa, obserwowanie, zapis dla AI |
+| konta_klientow.csv | przypisanie kont reklamowych do klientów i jego zakres |
+| kampanie.csv | kampanie z platform: identyfikator, nazwa, status |
+| przypisania_kampanii.csv | przypisanie kampanii do klientów na kontach współdzielonych |
+| koszty_dzienne.csv | koszty i wyniki dzienne: data, konto, kampania, zestaw, reklama, wyświetlenia, kliknięcia, koszt, konwersje (także po nazwie) |
+| leady.csv | leady bez danych kontaktowych: data, źródło, kanał, kampania, zestaw, reklama, ocena handlowca, wartość, zgody |
+| historia_ocen_leadow.csv | historia zmian oceny leadów |
+| strony_facebook.csv | strony Facebooka wskazane przy połączeniu; bez tokenów |
+| formularze.csv | formularze błyskawiczne i ich przypisanie do klientów |
+| sygnaly.csv | wskazówki i sygnały wyliczone z danych klienta |
+| dziennik_agenta.csv | działania w kontach reklamowych: czas, źródło, narzędzie, obiekt, wartość żądana, zastosowana, przed i po, wynik |
+| ochrona_budzetu_reguly.csv | reguły ochrony budżetu |
+| ochrona_budzetu_alerty.csv | alerty ochrony budżetu i decyzje Użytkowników |
+| platnosci.csv | płatności za Plany |
+| faktury.csv | faktury: numer, numer KSeF, status, data wystawienia |
+| akceptacje_dokumentow.csv | akceptacje Regulaminu, oświadczenia i zgody w przestrzeni |
+| zespol.csv | osoby w przestrzeni i ich role |
+| kontakty_leadow.csv | dane kontaktowe leadów, tylko gdy Administrator zaznaczy je przy eksporcie |
+
+## Czego eksport nie zawiera
+
+Eksport nie obejmuje danych o wewnętrznym działaniu Integratora: logów technicznych, metryk wydajności, kluczy szyfrujących, tokenów dostępu do platform i skrótów kluczy dla asystentów AI. Dane kontaktowe leadów usunięte automatycznie po 180 dniach nie trafiają do eksportu, bo już ich nie ma.
+
+## Zmiana dostawcy
+
+Zasady przeniesienia danych do innego dostawcy, okres przejściowy i terminy opisuje § 12 ust. 6 [Regulaminu](/regulamin). Wniosek o zmianę dostawcy wyślij na kontakt@serwer-side.pl.

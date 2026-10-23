@@ -2,7 +2,7 @@
 layout: ../layouts/LegalPage.astro
 title: Polityka prywatności
 description: Jak serwer-side.pl i Integrator danych reklamowych przetwarzają dane osobowe, pliki cookies i dane z Meta oraz Google Ads. Usuwanie danych na żądanie.
-updated: 3 listopada 2026 r.
+updated: 23 października 2026 r.
 ---
 
 export const prerender = true;
@@ -41,11 +41,11 @@ Integrator (integrator.serwer-side.pl) to narzędzie dla firm, głównie agencji
 
 ### 4.1 Dane konta użytkownika
 
-Przy zakładaniu konta przetwarzamy adres e-mail, imię i nazwisko (jeśli je podasz), przypisanie do przestrzeni roboczej i role, a także dane techniczne logowania. Jesteśmy ich administratorem. Przetwarzamy je, żeby świadczyć usługę na podstawie umowy (art. 6 ust. 1 lit. b RODO).
+Przy zakładaniu konta przetwarzamy adres e-mail, imię i nazwisko (jeśli je podasz), przypisanie do przestrzeni roboczej i role, a także dane techniczne logowania. Jesteśmy ich administratorem. Osobie, która zawiera z nami umowę, świadczymy usługę na podstawie umowy (art. 6 ust. 1 lit. b RODO). Użytkownika zaproszonego przez klienta (na przykład pracownika agencji) nie łączy z nami umowa: jego adres e-mail i rolę dostajemy od Administratora przestrzeni, który go zaprasza, a przetwarzamy je w naszym i klienta prawnie uzasadnionym interesie, czyli żeby świadczyć usługę i zarządzać dostępem (art. 6 ust. 1 lit. f RODO).
 
 **Logowanie przez Google.** Jeśli zakładasz konto albo logujesz się kontem Google, dostajemy od Google adres e-mail, imię i nazwisko oraz zdjęcie profilowe. Nie dostajemy dostępu do innych danych konta Google. To logowanie jest oddzielone od połączenia z Google Ads opisanego w punkcie 4.2.
 
-**Akceptacja dokumentów i zgody.** Zapisujemy, kiedy i którą wersję Regulaminu zaakceptowałeś, oświadczenie o zapoznaniu się z tą polityką, oświadczenie, że konto zakłada firma, oraz decyzję o zgodzie marketingowej, razem z adresem IP i nazwą przeglądarki. Robimy to, żeby móc wykazać zawarcie umowy i treść zgód (art. 6 ust. 1 lit. c i f RODO).
+**Akceptacja dokumentów i zgody.** Zapisujemy, kiedy i którą wersję Regulaminu zaakceptowałeś, oświadczenie o zapoznaniu się z tą polityką, oświadczenie, że konto zakłada firma, oraz decyzję o zgodzie marketingowej, razem z adresem IP i nazwą przeglądarki. Robimy to, żeby móc wykazać zawarcie umowy i treść zgód oraz bronić się przed roszczeniami (art. 6 ust. 1 lit. f RODO).
 
 **Dane do faktury i płatności.** Gdy zamawiasz Plan, przetwarzamy nazwę firmy, NIP, adres, e-mail do faktur i status nabywcy, a także historię płatności. Dane karty i rachunku bankowego obsługują wyłącznie operatorzy płatności (Stripe, Przelewy24); my ich nie widzimy. Fakturę wystawiamy w systemie inFakt i, gdy przepisy tego wymagają, w Krajowym Systemie e-Faktur. Podstawą jest umowa i obowiązki podatkowe (art. 6 ust. 1 lit. b i c RODO).
 
@@ -83,7 +83,7 @@ Za dane osobowe z leadów i dane klientów agencji odpowiada agencja albo reklam
 
 Dane trafiają do modelu językowego tylko w dwóch sytuacjach:
 
-1. **Codzienny skrót kampanii.** Wyniki kampanii (nazwy kampanii i reklam, koszty, wskaźniki i ich odchylenia) przekazujemy usłudze Gemini API firmy Google, która pisze z nich opis słowny. Nie przekazujemy danych osobowych z leadów. Korzystamy z płatnej wersji usługi, w której Google nie używa treści zapytań do trenowania ani ulepszania swoich modeli. Skrót można wyłączyć w panelu (System → Powiadomienia).
+1. **Codzienny skrót kampanii.** Wyniki kampanii (nazwy kampanii i reklam, koszty, wskaźniki i ich odchylenia) przekazujemy usłudze Gemini API firmy Google, która pisze z nich opis słowny. W skrócie oznaczamy go jako wygenerowany przez AI. Nie przekazujemy danych osobowych z leadów. Korzystamy z płatnej wersji usługi, w której Google nie używa treści zapytań do trenowania ani ulepszania swoich modeli. Skrót można wyłączyć w panelu (System → Powiadomienia).
 2. **Asystent AI wybrany przez użytkownika.** Gdy użytkownik sam podłączy model językowy do Integratora przez protokół MCP, model dostaje dane, o które zapyta w imieniu użytkownika. Dostawca modelu przetwarza je wtedy na warunkach umowy zawartej przez użytkownika.
 
 **Google:** Korzystanie przez Integrator z informacji otrzymanych z interfejsów API Google i przekazywanie ich do innych aplikacji jest zgodne z [Zasadami dotyczącymi danych użytkownika w usługach API Google](https://developers.google.com/terms/api-services-user-data-policy), w tym z wymogami ograniczonego użytkowania (Limited Use).
@@ -94,7 +94,7 @@ Dane trafiają do modelu językowego tylko w dwóch sytuacjach:
 
 Tokeny dostępu i dane kontaktowe z leadów szyfrujemy kopertowo, a klucze główne leżą w usłudze Google Cloud KMS w Warszawie. Dane każdej firmy są odizolowane w bazie danych regułami bezpieczeństwa na poziomie wierszy (Row-Level Security), więc jedna agencja nie zobaczy danych drugiej nawet przy błędzie w aplikacji. Dostęp modelu językowego wymaga osobnego klucza, który użytkownik może w każdej chwili odwołać, a prawo zmian w kontach reklamowych nadaje się osobnym połączeniem.
 
-Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech.
+Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech. Infrastruktura Integratora podlega prawu Unii Europejskiej. Nie udostępniamy danych organom państw spoza EOG, chyba że wymaga tego prawo Unii lub państwa członkowskiego; tokeny i dane kontaktowe są szyfrowane w spoczynku, a klucze przechowujemy w Google Cloud KMS w Warszawie.
 
 ### 4.7 Jak długo przechowujemy dane Integratora
 
@@ -102,8 +102,9 @@ Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech
 - dane kontaktowe z leadów: do 180 dni, potem usuwamy je automatycznie;
 - dziennik działań w kontach reklamowych i zapis akceptacji dokumentów: przez czas korzystania z usługi, a po jej zakończeniu 3 lata od końca roku, w którym umowa wygasła (obrona przed roszczeniami); z dziennika usuwamy wtedy adresy e-mail osób;
 - tokeny dostępu: do odłączenia konta albo usunięcia danych;
-- faktury i dane płatności: 5 lat od końca roku podatkowego, w którym wystawiliśmy fakturę;
+- faktury i dane płatności: do upływu okresu przedawnienia zobowiązania podatkowego, co do zasady 5 lat od końca roku kalendarzowego, w którym upłynął termin płatności podatku;
 - dane konta użytkownika: przez czas trwania umowy i do upływu terminów przedawnienia roszczeń;
+- logi techniczne i bezpieczeństwa (adres IP, czas logowania, działania w panelu): do 12 miesięcy, w naszym prawnie uzasadnionym interesie, czyli dla bezpieczeństwa usługi (art. 6 ust. 1 lit. f RODO);
 - po wniosku o usunięcie przestrzeni: 30 dni na pobranie eksportu, potem usuwamy dane przestrzeni, z wyjątkiem danych wymienionych wyżej, które przepisy każą przechowywać dłużej.
 
 ### 4.8 Google user data: sharing, transfer and disclosure (English)
@@ -129,19 +130,30 @@ None of these recipients may use Google user data for advertising or to train ar
 
 ## 5. Komu powierzamy dane
 
-Korzystamy z usług firm, które przetwarzają dane na nasze zlecenie i według naszych poleceń:
+Odbiorców danych dzielimy na trzy grupy, bo każda przetwarza dane na innej podstawie.
 
-- Cloudflare: hosting strony, bezpieczne połączenie z serwerem Integratora, przechowywanie kopii surowych danych z API;
-- Hetzner Online GmbH: serwer Integratora w Niemczech;
-- Supabase: baza danych i logowanie do Integratora, region Irlandia;
-- Google: Google Cloud KMS (klucze szyfrujące, region Warszawa), Gemini API (opis codziennego skrótu), Google Analytics (statystyki strony, za zgodą);
-- Resend: wysyłka e-maili z Integratora, region Irlandia;
-- CookieYes: zarządzanie zgodami na pliki cookies;
+**a) Dalsze podmioty przetwarzające dane powierzone nam przez klientów Integratora** (dane z leadów i dane klientów agencji, § 9 Regulaminu). Na te podmioty klient udziela ogólnej zgody w § 9 ust. 5 Regulaminu:
+
+- Supabase: baza danych Integratora, region Irlandia;
+- Hetzner Online GmbH: serwer aplikacji, Niemcy;
+- Cloudflare: bezpieczne połączenie z serwerem Integratora oraz przechowywanie kopii surowych odpowiedzi API (kopie nie zawierają danych kontaktowych z leadów);
+- Google Cloud KMS: klucze szyfrujące, region Warszawa (usługa nie przechowuje samych danych).
+
+**b) Podmioty przetwarzające dane, których jesteśmy administratorem** (konta użytkowników, korespondencja, rozliczenia, strona):
+
+- Supabase: logowanie do Integratora, region Irlandia;
+- Resend: wysyłka e-maili z Integratora (zaproszenia, codzienny skrót bez danych z leadów), region Irlandia;
 - Slack: wyłącznie gdy użytkownik sam wskaże swój kanał do codziennego skrótu;
-- Stripe Payments Europe, Limited (Irlandia): płatności kartą i abonament odnawiany; Stripe jest też samodzielnym administratorem danych płatniczych w zakresie przepisów o usługach płatniczych i przeciwdziałaniu praniu pieniędzy;
-- PayPro S.A. (Poznań), operator serwisu Przelewy24: płatności jednorazowe (BLIK, przelew); w zakresie usług płatniczych także samodzielny administrator;
+- Google: Gemini API (opis codziennego skrótu, bez danych z leadów), Google Analytics (statystyki strony, za zgodą);
+- Cloudflare: hosting strony serwer-side.pl;
+- CookieYes: zarządzanie zgodami na pliki cookies;
 - inFakt: system do wystawiania faktur i wysyłki ich do Krajowego Systemu e-Faktur;
 - dostawca poczty e-mail i biuro rachunkowe, w zakresie korespondencji i rozliczeń.
+
+**c) Odrębni administratorzy:**
+
+- Stripe Payments Europe, Limited (Irlandia): płatności kartą i abonament odnawiany; administrator danych płatniczych w zakresie przepisów o usługach płatniczych i przeciwdziałaniu praniu pieniędzy;
+- PayPro S.A. (Poznań), operator serwisu Przelewy24: płatności jednorazowe (BLIK, przelew); administrator w zakresie usług płatniczych.
 
 Dane kont reklamowych wracają też do Meta i Google, gdy użytkownik zleci działanie w koncie reklamowym albo włączy przekazywanie ocen leadów do Meta (Conversions API).
 
