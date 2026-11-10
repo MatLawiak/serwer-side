@@ -16,12 +16,12 @@ export const prerender = true;
 const filary = [
   {
     nr: '01',
-    tag: 'Server-Side i GTM na własnym serwerze',
-    title: 'Meta i Google dowiadują się o każdej konwersji',
+    tag: 'Pomiar server-side i GTM',
+    title: 'Dane o konwersjach idą z Twojego serwera',
     desc: 'Część zakupów i zgłoszeń nie dociera do platform reklamowych, bo przeglądarka albo blokada reklam zatrzymuje je po drodze. Na własnym serwerze informacja idzie prosto od Ciebie do Meta i Google.',
     points: [
       'Meta Conversions API, Google Tag Manager po stronie serwera i Google Analytics 4',
-      'algorytmy uczą się na pełniejszych danych, więc lepiej dobierają odbiorców',
+      'platformy dostają pełniejsze dane, w granicach zgód użytkowników',
       'sam decydujesz, co i komu jest wysyłane, zgodnie ze zgodami użytkowników',
     ],
     img: pomiar,
@@ -84,8 +84,8 @@ const budzety = [
 
 <Layout
   dark
-  title="Usługi Premium: własny serwer do pomiaru i automatyzacji | serwer-side.pl"
-  description="Pomiar konwersji po stronie serwera, automatyzacje i Integrator z AI na Twoim własnym serwerze (VPS) w UE. Dla firm z budżetem reklamowym od 10 000 zł miesięcznie. Wycena indywidualna."
+  title="Rozwiązania server-side: własne środowisko danych dla reklam | serwer-side.pl"
+  description="Rozwiązania server-side: łączymy stronę, sklep, CRM i systemy reklamowe w środowisku Twojej firmy. Dedykowany VPS w UE, pomiar po stronie serwera, integracje i automatyzacje. Wycena indywidualna."
 >
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20 overflow-hidden">
@@ -93,7 +93,7 @@ const budzety = [
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-5 uppercase tracking-wider">
-            Usługi Premium (VPS)
+            Rozwiązania server-side
           </span>
           <h1 class="text-3xl md:text-[2.75rem] font-extrabold leading-tight mb-5">
             Dedykowana infrastruktura analityczna i automatyzacje <span class="text-accent">na Twoim własnym serwerze</span>
@@ -124,6 +124,32 @@ const budzety = [
           />
         </div>
       </div>
+    </div>
+  </section>
+
+  {/* W skrócie: czym są rozwiązania server-side. VPS to sposób realizacji,
+      nie osobny produkt. Bez obietnic każdej konwersji i wzrostu wyników. */}
+  <section class="py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Rozwiązania server-side w skrócie</h2>
+      <dl class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <dt class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Dla kogo</dt>
+          <dd class="text-gray-700 text-sm leading-relaxed">Dla firm, które potrzebują własnego środowiska danych zamiast kolejnych zewnętrznych narzędzi.</dd>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <dt class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Co łączymy</dt>
+          <dd class="text-gray-700 text-sm leading-relaxed">Stronę, sklep, CRM i systemy reklamowe.</dd>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <dt class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Jak</dt>
+          <dd class="text-gray-700 text-sm leading-relaxed">Dedykowany serwer (VPS), pomiar server-side, integracje i automatyzacje, w zakresie uzgodnionym przed wdrożeniem.</dd>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-brutal-static">
+          <dt class="text-xs font-bold text-accent uppercase tracking-wider mb-2">Po co</dt>
+          <dd class="text-gray-700 text-sm leading-relaxed">Żeby dane z tych systemów zbierać i łączyć w środowisku Twojej firmy, na serwerze, który należy do Ciebie.</dd>
+        </div>
+      </dl>
     </div>
   </section>
 

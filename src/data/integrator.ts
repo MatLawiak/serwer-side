@@ -6,7 +6,21 @@
 
 export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
+
+// Dokąd prowadzi „Wypróbuj 7 dni za darmo” (hero, cennik, CTA). Rejestracja
+// jest w panelu, zakładka „Załóż konto”. Panel pokazuje ją tylko przy
+// SIGNUP_ENABLED=true; od 2026-11-10 flaga jest wyłączona do czasu
+// produkcyjnych kluczy Stripe i P24, więc gość widzi na razie samo logowanie.
+// Panel nie ma adresu otwierającego od razu zakładkę rejestracji.
+export const SIGNUP_URL = PANEL_URL;
+
+// Film w oknie „Sprawdź, jak to wygląda” (YouTube: watch?v=, youtu.be/,
+// shorts/). Pusty = okno pokazuje informację, że film jest w przygotowaniu.
+export const DEMO_VIDEO_URL = '';
 export const PREMIUM_URL = '/uslugi/infrastruktura-premium/';
+// Widoczna nazwa oferty pod PREMIUM_URL (adres bez zmian). VPS to sposób
+// realizacji usługi, nie osobny produkt.
+export const SERVER_SIDE_LABEL = 'Rozwiązania server-side';
 
 export type Plan = {
   id: string;
@@ -28,7 +42,7 @@ export const plans: Plan[] = [
     unit: 'netto / miesiąc',
     lead: 'Dla jednej firmy albo własnych kampanii.',
     cta: 'Wypróbuj 7 dni',
-    href: `${TRIAL_URL}&plan=starter`,
+    href: SIGNUP_URL,
   },
   {
     id: 'agencja',
@@ -37,7 +51,7 @@ export const plans: Plan[] = [
     unit: 'netto / miesiąc',
     lead: 'Odkryj, które kreacje przynoszą zakwalifikowanego leada.',
     cta: 'Wypróbuj 7 dni',
-    href: `${TRIAL_URL}&plan=agencja`,
+    href: SIGNUP_URL,
     featured: true,
     badge: 'Najczęściej wybierany',
   },
@@ -48,20 +62,22 @@ export const plans: Plan[] = [
     unit: 'netto / miesiąc',
     lead: 'Dla agencji z dużą liczbą klientów.',
     cta: 'Wypróbuj 7 dni',
-    href: `${TRIAL_URL}&plan=scale`,
+    href: SIGNUP_URL,
   },
   {
     id: 'custom',
-    name: 'Custom / VPS Premium',
+    name: 'Custom / Rozwiązania server-side',
     price: 'Wycena',
     unit: 'indywidualna',
-    lead: 'Własny serwer, pomiar i automatyzacje szyte na miarę.',
+    lead: 'Własne środowisko danych: pomiar, integracje i automatyzacje.',
     cta: 'Dowiedz się więcej',
     href: PREMIUM_URL,
   },
 ];
 
-const PO_ZATWIERDZENIU = 'po zatwierdzeniu przez Meta i Google';
+// Zapis z AI działa na produkcji od 23.10.2026 (App Review Meta i weryfikacja
+// Google przeszły); nowa kampania powstaje wstrzymana, włącza ją człowiek.
+const SZKIC = 'nowa kampania czeka wstrzymana, włączasz ją Ty';
 const W_PRZYGOTOWANIU = 'w przygotowaniu';
 
 // Wiersz tabeli cennika. `values` idzie w kolejności `plans`: true = jest,
@@ -80,7 +96,7 @@ export const featureRows: FeatureRow[] = [
   { text: 'Codzienny raport na e-mail i Slacka', values: [true, true, true, true] },
   { text: 'Podpowiedzi, co zmienić w kampaniach', values: [true, true, true, true] },
   { text: 'Rozmowa z AI o kampaniach (Claude)', note: 'ChatGPT wkrótce', values: [true, true, true, true] },
-  { text: 'Edycja i tworzenie kampanii przez AI', note: PO_ZATWIERDZENIU, values: [true, true, true, true] },
+  { text: 'Edycja i tworzenie kampanii przez AI', note: SZKIC, values: [true, true, true, true] },
   { text: 'Ocena leadów z CRM albo arkusza przy każdej reklamie', values: [false, true, true, true] },
   { text: 'Oceny leadów z formularzy wracają do Meta (Conversions API)', values: [false, true, true, true] },
   { text: 'Przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },

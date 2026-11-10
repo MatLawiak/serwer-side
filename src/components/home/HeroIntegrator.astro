@@ -4,7 +4,7 @@
 // agencji: raport i podpowiedzi na pierwszym planie, bez żargonu.
 import { Image } from 'astro:assets';
 import zrodla from '../../assets/integrator/zrodla-danych.png';
-import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
+import { PANEL_URL, SIGNUP_URL } from '../../data/integrator';
 ---
 
 <section class="bg-primary text-white pt-16 pb-14 md:pt-24 md:pb-20 overflow-hidden">
@@ -20,27 +20,31 @@ import { PANEL_URL, TRIAL_URL } from '../../data/integrator';
         <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-3">
           Przestań przeklikiwać skomplikowane panele. Co rano dostajesz krótki raport: co dowozi wyniki, a co przepala budżet. Do tego gotowe rekomendacje oparte na doświadczeniu specjalisty.
         </p>
-        {/* Tworzenie i zmiana kampanii czeka na zatwierdzenie aplikacji, a ChatGPT
-            na logowanie OAuth; dopisek stoi tuż pod obietnicą, bo tę stronę
-            oglądają też recenzenci Meta i Google. */}
+        {/* Zapis z AI działa od 23.10.2026 (App Review Meta i weryfikacja Google
+            przeszły); ChatGPT czeka na logowanie OAuth. Dopisek stoi tuż pod
+            obietnicą, bo tę stronę oglądają też recenzenci Meta i Google. */}
         <p class="text-base text-gray-300 max-w-2xl mb-2">
-          Twórz nowe kampanie i zmieniaj obecne w zwykłej rozmowie, prosto ze swojego asystenta AI (Claude lub ChatGPT).
+          Twórz nowe kampanie i zmieniaj obecne w zwykłej rozmowie, prosto ze swojego asystenta AI (Claude).
         </p>
         <p class="text-xs text-amber-300/90 max-w-2xl mb-8">
-          Pytania o wyniki działają dziś w Claude. Zmiany w kampaniach uruchomimy po zatwierdzeniu aplikacji przez Meta i Google, ChatGPT wkrótce.
+          Nowa kampania czeka wstrzymana, włączasz ją Ty. ChatGPT wkrótce.
         </p>
         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-          <a href={TRIAL_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg text-base btn-brutal-light">
+          <a href={SIGNUP_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg text-base btn-brutal-light">
             Wypróbuj 7 dni za darmo
           </a>
-          <a href="/kontakt" class="inline-block text-center bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-7 py-3.5 rounded-lg text-base transition-colors">
-            Umów demo
-          </a>
+          <button type="button" data-demo-open aria-haspopup="dialog" class="inline-block text-center bg-transparent border-2 border-white/30 hover:border-accent hover:text-accent text-white font-semibold px-7 py-3.5 rounded-lg text-base transition-colors">
+            Sprawdź, jak to wygląda
+          </button>
           <a href={PANEL_URL} class="inline-flex items-center justify-center gap-2 text-gray-300 hover:text-accent font-semibold px-4 py-3.5 transition-colors">
             Zaloguj się
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
         </div>
+        <a href="#dla-kogo" class="inline-flex items-center gap-1.5 mt-5 text-sm font-semibold text-accent hover:underline">
+          Dla kogo jest Integrator?
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </a>
       </div>
 
       <div class="lg:col-span-5 relative">

@@ -5,11 +5,12 @@
 
 <div
   id="sticky-cta"
-  class="fixed bottom-0 left-0 right-0 z-40 translate-y-full transition-transform duration-300 ease-out"
+  class="fixed bottom-0 left-0 right-0 z-40 translate-y-full opacity-0 transition-[transform,opacity] duration-300 ease-out"
   role="complementary"
   aria-label="Pasek CTA"
 >
-  <div class="bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.1)] border-t-2 border-primary/15">
+  <div class="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-transparent to-white/80 pointer-events-none"></div>
+  <div class="bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.1)] border-t border-gray-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       <p class="hidden md:block text-sm text-gray-700 font-medium">
         Sprawdź, ile danych tracisz →
@@ -49,11 +50,11 @@
         (entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) {
-              bar.classList.remove('translate-y-full');
-              bar.classList.add('translate-y-0');
+              bar.classList.remove('translate-y-full', 'opacity-0');
+              bar.classList.add('translate-y-0', 'opacity-100');
             } else {
-              bar.classList.remove('translate-y-0');
-              bar.classList.add('translate-y-full');
+              bar.classList.remove('translate-y-0', 'opacity-100');
+              bar.classList.add('translate-y-full', 'opacity-0');
             }
           });
         },
@@ -62,8 +63,8 @@
       observer.observe(sentinel);
 
       closeBtn?.addEventListener('click', () => {
-        bar.classList.remove('translate-y-0');
-        bar.classList.add('translate-y-full');
+        bar.classList.remove('translate-y-0', 'opacity-100');
+        bar.classList.add('translate-y-full', 'opacity-0');
         sessionStorage.setItem('sticky-cta-dismissed', '1');
         setTimeout(() => bar.remove(), 300);
       });

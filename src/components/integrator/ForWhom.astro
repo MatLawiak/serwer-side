@@ -1,0 +1,69 @@
+---
+// Sekcja #dla-kogo: dwie karty z konkretnymi wskazaniami dla dwóch grup
+// odbiorców. Bez fikcyjnych historii. Każde zdanie opisuje funkcję, która
+// działa w aplikacji (stan kodu integratora 2026-11). Na stronie głównej
+// pod kartami jest link do /integrator (`showMore`).
+interface Props {
+  showMore?: boolean;
+}
+const { showMore = false } = Astro.props;
+
+const grupy = [
+  {
+    title: 'Prowadzisz własną firmę',
+    lead: 'Reklamujesz się sam i nie chcesz uczyć się dwóch Menedżerów reklam.',
+    points: [
+      'Wyniki Google Ads i Meta Ads w jednym miejscu, zrozumiałym językiem.',
+      'Co rano krótki raport: co działa, a co przepala budżet.',
+      'Kampanię przygotujesz w rozmowie z Claude. Czeka wstrzymana, włączasz ją Ty.',
+      'Audyt GTM pokaże, czy zgłoszenia ze strony są poprawnie mierzone.',
+    ],
+    plan: 'Plan Starter: 1 klient, 49 zł netto miesięcznie.',
+  },
+  {
+    title: 'Pracujesz w agencji lub jako freelancer',
+    lead: 'Prowadzisz kampanie kilku klientów i chcesz mniej ręcznych kontroli.',
+    points: [
+      'Wszyscy klienci w jednym miejscu, każdy z osobnymi kontami i dostępem.',
+      'Raport poranny wskazuje konta, które dziś wymagają uwagi.',
+      'Audyt GTM nowego klienta bez ręcznego przeglądania kontenera.',
+      'Ocena leadów z CRM albo arkusza przy każdej reklamie (od planu Agencja / Pro).',
+    ],
+    plan: 'Plan Agencja / Pro: do 10 klientów. Scale: do 50.',
+  },
+];
+---
+
+<section id="dla-kogo" class="py-16 md:py-20 scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold text-accent uppercase tracking-wider">Dla kogo</span>
+      <h2 class="text-2xl md:text-3xl font-bold mt-3 mb-3">Dla kogo jest Integrator?</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Dla tych, którzy prowadzą kampanie sami, i dla tych, którzy prowadzą je dla innych.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {grupy.map((g) => (
+        <div class="bg-white rounded-2xl p-6 md:p-8 card-brutal-static flex flex-col">
+          <h3 class="text-xl md:text-2xl font-bold text-primary mb-2">{g.title}</h3>
+          <p class="text-gray-600 mb-5">{g.lead}</p>
+          <ul class="space-y-3 text-sm text-gray-700 flex-1">
+            {g.points.map((p) => (
+              <li class="flex gap-2.5"><span class="text-accent shrink-0" aria-hidden="true">✓</span><span>{p}</span></li>
+            ))}
+          </ul>
+          <p class="mt-6 pt-4 border-t border-gray-200 text-sm text-gray-500">{g.plan}</p>
+        </div>
+      ))}
+    </div>
+
+    {showMore && (
+      <p class="text-center mt-10">
+        <a href="/integrator" class="inline-flex items-center gap-2 font-semibold text-accent hover:underline">
+          Dowiedz się więcej o Integratorze
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
+      </p>
+    )}
+  </div>
+</section>

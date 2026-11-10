@@ -1,13 +1,13 @@
 ---
 const currentPath = Astro.url.pathname;
 
-const PANEL_URL = 'https://integrator.serwer-side.pl';
+import { PANEL_URL, PREMIUM_URL, SERVER_SIDE_LABEL } from '../data/integrator';
 
+// Wiedza ukryta w menu (2026-11): artykuły, ich adresy i mapa strony zostają.
 const links = [
   { href: '/', label: 'Strona główna' },
   { href: '/integrator', label: 'Integrator' },
-  { href: '/uslugi/infrastruktura-premium/', label: 'Usługi Premium (VPS)' },
-  { href: '/wiedza', label: 'Wiedza' },
+  { href: PREMIUM_URL, label: SERVER_SIDE_LABEL },
   { href: '/o-mnie', label: 'O mnie' },
   { href: '/kontakt', label: 'Kontakt' },
 ];

@@ -1,13 +1,13 @@
 ---
 // Scena „rozmowa z AI”: ilustracja z Gemini i przykładowa rozmowa zwykłym
 // językiem, bez nazw narzędzi i parametrów. Pierwsza wymiana (pytanie
-// o wyniki) działa dziś; druga (zmiana budżetu) jest oznaczona jako
-// przyszła, bo zapis czeka na zatwierdzenie aplikacji przez Meta i Google.
+// o wyniki) i druga (zmiana budżetu) działają dziś: zapis z AI jest
+// włączony od 23.10.2026 (App Review Meta i weryfikacja Google przeszły).
 import { Image } from 'astro:assets';
 import mcp from '../../assets/integrator/mcp-claude.png';
 ---
 
-<section class="py-16 md:py-20 bg-primary text-white border-t border-white/10">
+<section class="py-16 md:py-20 bg-primary text-white border-t border-white/10 overflow-x-clip">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="grid lg:grid-cols-2 gap-10 items-center">
       <div class="relative">
@@ -44,11 +44,6 @@ import mcp from '../../assets/integrator/mcp-claude.png';
                 Najlepiej działa „Mieszkania z ogrodem” w Meta Ads: zgłoszenia są tam o jedną trzecią tańsze niż średnio u tego klienta. Najsłabiej wypada „Rabat 5%” w Google Ads. Proponuję przesunąć część budżetu.
               </p>
             </div>
-            <div class="flex items-center gap-3 pt-1">
-              <span class="h-px flex-1 bg-white/10"></span>
-              <span class="text-[11px] px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-300 bg-amber-400/10">wkrótce</span>
-              <span class="h-px flex-1 bg-white/10"></span>
-            </div>
             <div class="flex gap-3">
               <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold shrink-0">Ty</span>
               <p class="bg-white/8 rounded-xl rounded-tl-sm px-3 py-2 text-gray-100">Podnieś budżet tej najlepszej.</p>
@@ -68,8 +63,8 @@ import mcp from '../../assets/integrator/mcp-claude.png';
             <p class="text-gray-300">Pytania o wyniki, reklamy i podpowiedzi dla każdego klienta. Dziś z Claude, ChatGPT wkrótce.</p>
           </li>
           <li class="bg-white/5 border border-white/10 rounded-xl p-4">
-            <p class="text-amber-300 text-xs font-semibold mb-1">Wkrótce</p>
-            <p class="text-gray-300">Zmiana budżetu i wstrzymanie kampanii jednym zdaniem. Uruchomimy, gdy Meta i Google zatwierdzą aplikację.</p>
+            <p class="text-emerald-300 text-xs font-semibold mb-1">Działa dziś</p>
+            <p class="text-gray-300">Zmiana budżetu i wstrzymanie kampanii jednym zdaniem. Nowa kampania czeka wstrzymana na Twoją decyzję.</p>
           </li>
         </ul>
         <p class="mt-4 text-sm text-gray-400">

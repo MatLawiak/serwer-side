@@ -1,0 +1,91 @@
+---
+// Okno „Sprawdź, jak to wygląda”: film o Integratorze nad stroną.
+// Otwiera je każdy element z atrybutem `data-demo-open`.
+// - <dialog> + showModal(): fokus w oknie, Escape zamyka (zdarzenie cancel).
+// - Film ładuje się dopiero po otwarciu (iframe wstawiany w skrypcie),
+//   a po zamknięciu iframe jest usuwany, co zatrzymuje odtwarzanie.
+// - Po zamknięciu fokus wraca na przycisk, który okno otworzył.
+// Link do filmu: DEMO_VIDEO_URL w src/data/integrator.ts. Pusty = okno mówi,
+// że film jest w przygotowaniu (nie podstawiamy przypadkowego nagrania).
+import { DEMO_VIDEO_URL } from '../../data/integrator';
+
+const videoId = DEMO_VIDEO_URL.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([\w-]{11})/)?.[1] ?? '';
+---
+
+<dialog
+  id="demo-modal"
+  aria-labelledby="demo-modal-title"
+  data-video-id={videoId}
+  class="demo-modal w-[min(960px,calc(100vw-2rem))] max-w-none p-0 rounded-2xl bg-[#0f172a] text-white border border-white/10 shadow-2xl shadow-black/60"
+>
+  <div class="flex items-center justify-between gap-4 px-4 sm:px-5 py-3 border-b border-white/10">
+    <h2 id="demo-modal-title" class="font-semibold text-base sm:text-lg">Integrator w praktyce</h2>
+    <button type="button" data-demo-close class="w-10 h-10 -mr-2 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent" aria-label="Zamknij film">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+  </div>
+
+  {videoId ? (
+    <div class="relative aspect-video bg-black" data-demo-frame></div>
+  ) : (
+    <div class="px-5 sm:px-8 py-12 sm:py-16 text-center">
+      <p class="text-lg font-semibold mb-2">Film jest w przygotowaniu.</p>
+      <p class="text-gray-400 mb-6">Chcesz zobaczyć Integrator wcześniej? Pokażemy go na krótkiej rozmowie.</p>
+      <a href="/kontakt?usluga=integrator" class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal-light">Napisz do nas</a>
+    </div>
+  )}
+</dialog>
+
+<style>
+  .demo-modal::backdrop {
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(2px);
+  }
+  .demo-modal[open] {
+    margin: auto;
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('demo-modal') as HTMLDialogElement | null;
+  if (modal) {
+    const frame = modal.querySelector<HTMLElement>('[data-demo-frame]');
+    const videoId = modal.dataset.videoId || '';
+    let opener: HTMLElement | null = null;
+
+    const open = (trigger: HTMLElement) => {
+      opener = trigger;
+      if (frame && videoId && !frame.firstChild) {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+        iframe.title = 'Integrator w praktyce';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.className = 'absolute inset-0 w-full h-full';
+        frame.appendChild(iframe);
+      }
+      modal.showModal();
+      document.body.classList.add('overflow-hidden');
+    };
+
+    // Zamknięcie z każdej drogi (przycisk, Escape, tło) kończy w zdarzeniu close.
+    modal.addEventListener('close', () => {
+      if (frame) frame.replaceChildren();
+      document.body.classList.remove('overflow-hidden');
+      opener?.focus();
+      opener = null;
+    });
+    modal.querySelector('[data-demo-close]')?.addEventListener('click', () => modal.close());
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-demo-open]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        open(el);
+      });
+    });
+  }
+</script>
