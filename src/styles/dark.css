@@ -175,7 +175,13 @@
   border-color: rgba(248, 113, 113, 0.35);
 }
 
-/* Menu po przewinięciu: na jasnych stronach robi się białe, tu zostaje ciemne. */
+/* Menu: ciemne od razu po wejściu na stronę (jak po przewinięciu), z cienką
+ * linią na dole. Na jasnych stronach po przewinięciu robi się białe. */
+.theme-dark #main-nav {
+  background-color: rgba(19, 28, 51, 0.92);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
 .theme-dark #main-nav.bg-white\/95 {
   background-color: rgba(19, 28, 51, 0.92);
   border-color: rgba(255, 255, 255, 0.1);
