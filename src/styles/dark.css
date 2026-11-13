@@ -146,6 +146,36 @@
   background-color: rgba(6, 182, 212, 0.12);
 }
 
+/* Tekst artykułów i dokumentów prawnych (Tailwind Typography, klasa .prose).
+ * Zmienne wtyczki przestawione na ciemne tło; nagłówki i pogrubienia białe,
+ * bo klasy prose-headings:text-primary i prose-strong:text-primary dają
+ * granat, nieczytelny na granatowym tle. */
+.theme-dark main .prose {
+  --tw-prose-body: #cbd5e1;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-lead: #cbd5e1;
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: #ffffff;
+  --tw-prose-counters: #94a3b8;
+  --tw-prose-bullets: #64748b;
+  --tw-prose-hr: rgba(255, 255, 255, 0.12);
+  --tw-prose-quotes: #e2e8f0;
+  --tw-prose-quote-borders: rgba(6, 182, 212, 0.5);
+  --tw-prose-captions: #94a3b8;
+  --tw-prose-kbd: #ffffff;
+  --tw-prose-code: #ffffff;
+  --tw-prose-pre-code: #e2e8f0;
+  --tw-prose-pre-bg: rgba(255, 255, 255, 0.05);
+  --tw-prose-th-borders: rgba(255, 255, 255, 0.2);
+  --tw-prose-td-borders: rgba(255, 255, 255, 0.1);
+}
+.theme-dark main .prose :is(h1, h2, h3, h4, h5, h6, strong, b, th) {
+  color: #ffffff;
+}
+.theme-dark main .border-stone-200 {
+  border-color: var(--dark-line);
+}
+
 /* Kolory stanu: jasne tła pastelowe zamienione na półprzezroczyste */
 .theme-dark main .bg-amber-50 {
   background-color: rgba(251, 191, 36, 0.1);
@@ -154,10 +184,12 @@
   color: #fcd34d;
 }
 .theme-dark main .bg-emerald-100,
+.theme-dark main .bg-green-100,
 .theme-dark main .bg-green-50 {
   background-color: rgba(52, 211, 153, 0.15);
 }
 .theme-dark main .text-emerald-700,
+.theme-dark main .text-green-600,
 .theme-dark main .text-green-700 {
   color: #6ee7b7;
 }

@@ -4,8 +4,8 @@ const currentPath = Astro.url.pathname;
 import { PANEL_URL, PREMIUM_URL, SERVER_SIDE_LABEL } from '../data/integrator';
 
 // Wiedza ukryta w menu (2026-11): artykuły, ich adresy i mapa strony zostają.
+// Bez pozycji „Strona główna”: na start prowadzi logo, link jest też w stopce.
 const links = [
-  { href: '/', label: 'Strona główna' },
   { href: '/integrator', label: 'Integrator' },
   { href: PREMIUM_URL, label: SERVER_SIDE_LABEL },
   { href: '/o-mnie', label: 'O mnie' },

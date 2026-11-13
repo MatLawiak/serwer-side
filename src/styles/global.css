@@ -103,3 +103,13 @@ body {
   font-size: 0.8rem;
   flex-shrink: 0;
 }
+
+/* Artykuły i dokumenty na telefonie: szeroka tabela przewija się w swojej
+ * ramce zamiast rozpychać stronę, długie adresy w `code` się łamią. */
+.prose table {
+  display: block;
+  overflow-x: auto;
+}
+.prose code {
+  overflow-wrap: anywhere;
+}
