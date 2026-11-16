@@ -13,7 +13,6 @@ import PricingTable from '../components/integrator/PricingTable.astro';
 import DataUse from '../components/integrator/DataUse.astro';
 import ForWhom from '../components/integrator/ForWhom.astro';
 import DemoModal from '../components/integrator/DemoModal.astro';
-import ConnectClaude from '../components/integrator/ConnectClaude.astro';
 import { PANEL_URL, SIGNUP_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
 
 export const prerender = true;
@@ -90,9 +89,6 @@ const faq = [
       </div>
     </div>
   </section>
-
-  {/* Połącz z Claude: cel przycisków „Wypróbuj bezpłatnie” i reklam */}
-  <ConnectClaude />
 
   {/* Jak to działa: animowany schemat zamiast opisu krok po kroku */}
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>
