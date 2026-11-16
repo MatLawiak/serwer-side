@@ -1,0 +1,95 @@
+---
+// Sekcja „Połącz z Claude” (/integrator#polacz): tu kończy się lejek z reklamy.
+// Konto w integratorze zakłada się na ekranie zgody, na który Claude przekierowuje
+// po kliknięciu Connect, więc ta sekcja zastępuje rejestrację w panelu.
+// Telefon: aplikacja Claude nie otwiera okna konektora z linku (2026-11-16,
+// sprawdzone na koncie Free), a ruch z reklam Meta jest głównie mobilny.
+// Dlatego na wąskim ekranie najpierw „wyślij sobie link” na komputer,
+// a połączenie w przeglądarce telefonu jest drugą drogą.
+import { CLAUDE_INSTALL_URL, CONNECTOR_NAME, MCP_URL } from '../../data/integrator';
+
+const kroki = [
+  'Kliknij „Dodaj do Claude”. Otworzy się claude.ai z wypełnionym oknem konektora.',
+  'Kliknij Add, a potem Connect.',
+  'Załóż konto w Integratorze albo zaloguj się i zatwierdź dostęp.',
+  'Napisz w Claude: „Cześć, integrator, co słychać?”',
+];
+---
+
+<section id="polacz" class="py-16 md:py-20 bg-primary text-white scroll-mt-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <h2 class="text-2xl md:text-3xl font-bold mb-3">Połącz Integrator z Claude</h2>
+    <p class="text-gray-300 mb-8">Konto zakładasz w trakcie łączenia. Okres próbny jest bezpłatny i nie wymaga karty.</p>
+
+    <div class="md:hidden mb-8 rounded-xl border border-accent/40 bg-accent/10 p-5">
+      <p class="font-semibold mb-2">Jesteś na telefonie?</p>
+      <p class="text-gray-300 text-sm mb-4">Aplikacja Claude nie dodaje konektorów z linku. Najszybciej zrobisz to na komputerze, więc wyślij sobie ten link. Możesz też połączyć w przeglądarce telefonu: zaloguj się tam do Claude, a Integrator pojawi się potem w aplikacji.</p>
+      <div class="flex flex-col gap-3">
+        <button type="button" data-connect-share class="text-center bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg btn-brutal-light">Wyślij sobie link</button>
+        <a href={CLAUDE_INSTALL_URL} rel="noopener" class="text-center bg-white/5 hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-lg btn-brutal-light">Połącz w przeglądarce</a>
+      </div>
+      <p data-connect-share-status class="text-sm text-accent mt-3" aria-live="polite"></p>
+    </div>
+
+    <ol class="space-y-3 mb-8">
+      {kroki.map((krok, i) => (
+        <li class="flex gap-3">
+          <span class="shrink-0 w-7 h-7 rounded-full bg-accent/20 text-accent text-sm font-bold flex items-center justify-center">{i + 1}</span>
+          <span class="text-gray-200 pt-0.5">{krok}</span>
+        </li>
+      ))}
+    </ol>
+
+    <a href={CLAUDE_INSTALL_URL} rel="noopener" class="hidden md:inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Dodaj do Claude</a>
+
+    <div class="mt-10 rounded-xl border border-white/10 bg-white/5 p-5 text-sm text-gray-300">
+      <p class="mb-3">Link nie działa? W Claude otwórz Ustawienia → Konektory → Dodaj własny konektor i wpisz:</p>
+      <dl class="grid sm:grid-cols-[auto_1fr] gap-x-4 gap-y-2 mb-3">
+        <dt class="text-gray-400">Nazwa</dt>
+        <dd class="font-mono text-white break-all">{CONNECTOR_NAME}</dd>
+        <dt class="text-gray-400">Adres</dt>
+        <dd class="flex items-center gap-3 flex-wrap">
+          <span class="font-mono text-white break-all">{MCP_URL}</span>
+          <button type="button" data-connect-copy={MCP_URL} class="text-accent font-semibold hover:underline">Kopiuj</button>
+        </dd>
+      </dl>
+      <p class="text-gray-400">Działa na koncie Claude Free, Pro i Max. Na Claude Team i Enterprise konektor dodaje właściciel organizacji.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const status = document.querySelector<HTMLElement>('[data-connect-share-status]');
+  const pokaz = (tekst: string) => { if (status) status.textContent = tekst; };
+  const kopiuj = async (tekst: string) => {
+    try {
+      await navigator.clipboard.writeText(tekst);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  document.querySelector('[data-connect-share]')?.addEventListener('click', async () => {
+    const url = `${location.origin}/integrator#polacz`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Połącz Integrator z Claude', url });
+        return;
+      } catch (blad) {
+        // Zamknięte okno udostępniania to nie błąd.
+        if (blad instanceof DOMException && blad.name === 'AbortError') return;
+      }
+    }
+    pokaz(await kopiuj(url) ? 'Link skopiowany. Wklej go sobie w mailu albo w komunikatorze.' : url);
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-connect-copy]').forEach((przycisk) => {
+    przycisk.addEventListener('click', async () => {
+      if (await kopiuj(przycisk.dataset.connectCopy ?? '')) {
+        przycisk.textContent = 'Skopiowano';
+        setTimeout(() => { przycisk.textContent = 'Kopiuj'; }, 2000);
+      }
+    });
+  });
+</script>

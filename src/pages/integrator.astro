@@ -13,6 +13,7 @@ import PricingTable from '../components/integrator/PricingTable.astro';
 import DataUse from '../components/integrator/DataUse.astro';
 import ForWhom from '../components/integrator/ForWhom.astro';
 import DemoModal from '../components/integrator/DemoModal.astro';
+import ConnectClaude from '../components/integrator/ConnectClaude.astro';
 import { PANEL_URL, SIGNUP_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
 
 export const prerender = true;
@@ -32,7 +33,7 @@ const faq = [
   },
   {
     q: 'Z jakimi narzędziami AI to działa?',
-    a: 'Dziś z Claude (aplikacja Claude Desktop i Claude Code). Obsługa ChatGPT jest w przygotowaniu. Podłączenie to wklejenie jednego klucza, który dostajesz w panelu i który możesz w każdej chwili wyłączyć.',
+    a: 'Dziś z Claude: na stronie claude.ai, w aplikacji Claude Desktop, w telefonie i w Claude Code. Integrator dodajesz w Claude jako konektor jednym linkiem, a dostęp zatwierdzasz logowaniem, bez kopiowania kluczy. Połączenie wyłączysz w każdej chwili w panelu. Obsługa ChatGPT jest w przygotowaniu.',
   },
   {
     q: 'Czy Integrator może coś zmienić w moich kampaniach?',
@@ -89,6 +90,9 @@ const faq = [
       </div>
     </div>
   </section>
+
+  {/* Połącz z Claude: cel przycisków „Wypróbuj bezpłatnie” i reklam */}
+  <ConnectClaude />
 
   {/* Jak to działa: animowany schemat zamiast opisu krok po kroku */}
   <div class="bg-primary"><div class="max-w-6xl mx-auto px-4 sm:px-6"><hr class="border-white/10" /></div></div>

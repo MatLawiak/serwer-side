@@ -7,13 +7,23 @@
 export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
 
-// Dokąd prowadzi „Wypróbuj bezpłatnie” (hero, cennik, CTA). Strona nie podaje
-// liczby dni: długość próby i kod promocyjny są w panelu i w regulaminie. Rejestracja
-// jest w panelu, zakładka „Załóż konto”. Panel pokazuje ją tylko przy
-// SIGNUP_ENABLED=true; od 2026-11-10 flaga jest wyłączona do czasu
-// produkcyjnych kluczy Stripe i P24, więc gość widzi na razie samo logowanie.
-// Panel nie ma adresu otwierającego od razu zakładkę rejestracji.
-export const SIGNUP_URL = PANEL_URL;
+// Dokąd prowadzi „Wypróbuj bezpłatnie” (hero, cennik, CTA). Od 2026-11-16 konto
+// zakłada się z ekranu zgody Claude (CONNECTOR_SIGNUP_ENABLED w integratorze),
+// a rejestracja w samym panelu jest zamknięta (SIGNUP_ENABLED=false), więc
+// przyciski prowadzą do sekcji „Połącz z Claude” na /integrator.
+export const SIGNUP_URL = '/integrator#polacz';
+
+// Konektor Claude. Link otwiera w claude.ai okno „Add custom connector”
+// z wpisaną nazwą i adresem (dokumentacja Claude, custom connector install
+// link). Aplikacja na telefonie go nie obsługuje: tam trzeba zalogować się
+// do Claude w przeglądarce. Te same wartości są w integratorze w
+// core/claude_link.py i w mailu powitalnym; zmiana tu = zmiana tam.
+export const CONNECTOR_NAME = 'Integrator serwer-side.pl';
+export const MCP_URL = 'https://integrator-api.serwer-side.pl/mcp';
+export const CLAUDE_INSTALL_URL =
+  'https://claude.ai/customize/connectors?modal=add-custom-connector' +
+  `&connectorName=${encodeURIComponent(CONNECTOR_NAME)}` +
+  `&connectorUrl=${encodeURIComponent(MCP_URL)}`;
 
 // Film w oknie „Sprawdź, jak to wygląda” (YouTube: watch?v=, youtu.be/,
 // shorts/). Pusty = okno pokazuje informację, że film jest w przygotowaniu.
