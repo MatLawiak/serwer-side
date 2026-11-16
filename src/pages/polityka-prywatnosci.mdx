@@ -2,7 +2,7 @@
 layout: ../layouts/LegalPage.astro
 title: Polityka prywatności
 description: Jak serwer-side.pl i Integrator danych reklamowych przetwarzają dane osobowe, pliki cookies i dane z Meta oraz Google Ads. Usuwanie danych na żądanie.
-updated: 23 października 2026 r.
+updated: 19 listopada 2026 r.
 ---
 
 export const prerender = true;
@@ -35,6 +35,8 @@ Podstawą jest Twoja zgoda (art. 6 ust. 1 lit. a RODO). Możesz ją w każdej ch
 
 Nie używamy na tej stronie pikseli reklamowych Meta ani tagów remarketingowych Google Ads.
 
+**Panel Integratora** (integrator.serwer-side.pl) zapisuje wyłącznie ciasteczko sesji logowania, niezbędne do działania usługi, i nie używa statystyk ani narzędzi reklamowych. Filmy instruktażowe w panelu odtwarzamy z domeny youtube-nocookie.com, która nie zapisuje plików cookies przed uruchomieniem filmu.
+
 ## 4. Integrator danych reklamowych
 
 Integrator (integrator.serwer-side.pl) to narzędzie dla firm, głównie agencji marketingowych, które łączy dane z kont reklamowych Meta (Facebook, Instagram) i Google Ads z oceną leadów przez handlowca i pokazuje, ile kosztuje zakwalifikowany klient z każdej reklamy.
@@ -50,6 +52,10 @@ Przy zakładaniu konta przetwarzamy adres e-mail, imię i nazwisko (jeśli je po
 **Dane do faktury i płatności.** Gdy zamawiasz Plan, przetwarzamy nazwę firmy, NIP, adres, e-mail do faktur i status nabywcy, a także historię płatności. Dane karty i rachunku bankowego obsługują wyłącznie operatorzy płatności (Stripe, Przelewy24); my ich nie widzimy. Fakturę wystawiamy w systemie inFakt i, gdy przepisy tego wymagają, w Krajowym Systemie e-Faktur. Podstawą jest umowa i obowiązki podatkowe (art. 6 ust. 1 lit. b i c RODO).
 
 **Informacje marketingowe.** Wiadomości o nowościach i ofertach wysyłamy wyłącznie za Twoją zgodą (art. 6 ust. 1 lit. a RODO i art. 398 ustawy Prawo komunikacji elektronicznej). Zgodę wycofasz w panelu (System → Dane i konto) albo linkiem w wiadomości.
+
+**Wiadomości o usłudze.** Informacje o zmianach w Integratorze, nowych wersjach i pracach serwisowych wysyłamy administratorom przestrzeni e-mailem i pokazujemy w panelu bez osobnej zgody, bo to część wykonywania umowy (art. 6 ust. 1 lit. b RODO). Treści ofertowe dołączamy wyłącznie do wiadomości dla osób ze zgodą marketingową.
+
+**Zgłoszenia problemów.** Gdy zgłaszasz problem w panelu (Pomoc → Zgłoś problem) albo przez asystenta AI, przetwarzamy opis, nazwę ekranu, wybranego klienta, załączone pliki (do 3 zrzutów ekranu albo plików PDF) i Twój adres e-mail, żeby odpowiedzieć i naprawić błąd (art. 6 ust. 1 lit. b RODO). Zgłoszenie trafia do nas e-mailem, a załączniki przechowujemy w Cloudflare R2. Zgłoszenia przechowujemy 12 miesięcy od zamknięcia sprawy. Zanim dołączysz zrzut ekranu, zasłoń na nim dane kontaktowe leadów.
 
 ### 4.2 Dane pobierane z Meta i Google
 
@@ -68,7 +74,12 @@ Dane z kont reklamowych służą do tego, żeby:
 - pokazać użytkownikowi raporty kosztów i wyników kampanii jego klientów;
 - porównać wyniki kampanii z oceną leadów przez handlowca (koszt zakwalifikowanego leada);
 - wysyłać codzienny skrót kampanii e-mailem i, jeśli użytkownik go włączy, na wskazany kanał Slack;
-- wykonać w koncie reklamowym ograniczone działania, **wyłącznie na wyraźne polecenie użytkownika** (w rozmowie z asystentem AI albo kliknięciem w panelu): zmienić budżet dzienny kampanii (wzrost najwyżej o 20% w ciągu 24 godzin), wstrzymać kampanię, zestaw reklam albo reklamę, utworzyć nową kampanię jako wstrzymany szkic, a w Meta zmienić teksty reklamy, która się nie wyświetla. Pełny katalog i ograniczenia opisuje [Regulamin](/regulamin), § 7. Integrator nie uruchamia, nie wznawia i nie usuwa kampanii. Każde takie działanie trafia do dziennika dostępnego dla użytkownika;
+- wykonać w koncie reklamowym ograniczone działania, **wyłącznie na wyraźne polecenie użytkownika** (w rozmowie z asystentem AI albo kliknięciem w panelu): zmienić budżet dzienny kampanii (wzrost najwyżej o 20% w ciągu 24 godzin albo do kwotowego sufitu ustawionego przez użytkownika), wstrzymać kampanię, zestaw reklam, reklamę, grupę reklam albo słowo kluczowe, utworzyć jako wstrzymane nową kampanię (w Google także Performance Max), zestaw reklam, reklamę, grupę reklam i słowa kluczowe, w Meta zmienić teksty reklamy, która się nie wyświetla, przesłać wskazaną grafikę do biblioteki konta, utworzyć działanie konwersji Google Ads, piksel albo formularz błyskawiczny Meta;
+- na polecenie użytkownika ułożyć tagi śledzenia (piksel Meta, tag Google, konwersje Google Ads) w kontenerze Google Tag Manager klienta, do którego klient dał dostęp naszemu kontu usługi, w osobnym obszarze roboczym, i opublikować je dopiero po podglądzie zmian i osobnym potwierdzeniu. Tagów klienta nie zmieniamy ani nie usuwamy.
+
+Pełny katalog i ograniczenia opisuje [Regulamin](/regulamin), § 7. Integrator nie uruchamia, nie wznawia i nie usuwa kampanii, zestawów reklam, reklam, grup reklam ani słów kluczowych. Każde takie działanie trafia do dziennika dostępnego dla użytkownika. Integrator może też:
+
+- przekazywać do arkusza Google albo systemu CRM klienta leady z danymi kontaktowymi i pobierać z nich ocenę handlowca, jeśli klient je podłączy;
 - pokazywać alerty ochrony budżetu: codziennie porównujemy wydatki zestawów reklam i kampanii z regułą ustawioną przez użytkownika. Alert jest tylko propozycją, a wstrzymanie wymaga kliknięcia człowieka.
 
 ### 4.4 Kto jest administratorem danych z leadów
@@ -84,7 +95,7 @@ Za dane osobowe z leadów i dane klientów agencji odpowiada agencja albo reklam
 Dane trafiają do modelu językowego tylko w dwóch sytuacjach:
 
 1. **Codzienny skrót kampanii.** Wyniki kampanii (nazwy kampanii i reklam, koszty, wskaźniki i ich odchylenia) przekazujemy usłudze Gemini API firmy Google, która pisze z nich opis słowny. W skrócie oznaczamy go jako wygenerowany przez AI. Nie przekazujemy danych osobowych z leadów. Korzystamy z płatnej wersji usługi, w której Google nie używa treści zapytań do trenowania ani ulepszania swoich modeli. Skrót można wyłączyć w panelu (System → Powiadomienia).
-2. **Asystent AI wybrany przez użytkownika.** Gdy użytkownik sam podłączy model językowy do Integratora przez protokół MCP, model dostaje dane, o które zapyta w imieniu użytkownika. Dostawca modelu przetwarza je wtedy na warunkach umowy zawartej przez użytkownika.
+2. **Asystent AI wybrany przez użytkownika.** Gdy użytkownik sam podłączy model językowy do Integratora przez protokół MCP (kluczem albo połączeniem OAuth zatwierdzonym w panelu), model dostaje dane, o które zapyta w imieniu użytkownika, bez danych kontaktowych z leadów. Dostawca modelu przetwarza je wtedy na warunkach umowy zawartej przez użytkownika.
 
 **Google:** Korzystanie przez Integrator z informacji otrzymanych z interfejsów API Google i przekazywanie ich do innych aplikacji jest zgodne z [Zasadami dotyczącymi danych użytkownika w usługach API Google](https://developers.google.com/terms/api-services-user-data-policy), w tym z wymogami ograniczonego użytkowania (Limited Use).
 
@@ -92,9 +103,9 @@ Dane trafiają do modelu językowego tylko w dwóch sytuacjach:
 
 ### 4.6 Jak chronimy dane
 
-Tokeny dostępu i dane kontaktowe z leadów szyfrujemy kopertowo, a klucze główne leżą w usłudze Google Cloud KMS w Warszawie. Dane każdej firmy są odizolowane w bazie danych regułami bezpieczeństwa na poziomie wierszy (Row-Level Security), więc jedna agencja nie zobaczy danych drugiej nawet przy błędzie w aplikacji. Dostęp modelu językowego wymaga osobnego klucza, który użytkownik może w każdej chwili odwołać, a prawo zmian w kontach reklamowych nadaje się osobnym połączeniem.
+Tokeny dostępu i dane kontaktowe z leadów szyfrujemy kopertowo, a klucze główne leżą w usłudze Google Cloud KMS w Warszawie. Dane każdej firmy są odizolowane w bazie danych regułami bezpieczeństwa na poziomie wierszy (Row-Level Security), więc jedna agencja nie zobaczy danych drugiej nawet przy błędzie w aplikacji. Dostęp modelu językowego wymaga osobnego klucza albo zgody OAuth udzielonej w panelu; oba użytkownik może w każdej chwili odwołać, a prawo zmian w kontach reklamowych nadaje się osobnym połączeniem.
 
-Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech. Infrastruktura Integratora podlega prawu Unii Europejskiej. Nie udostępniamy danych organom państw spoza EOG, chyba że wymaga tego prawo Unii lub państwa członkowskiego; tokeny i dane kontaktowe są szyfrowane w spoczynku, a klucze przechowujemy w Google Cloud KMS w Warszawie.
+Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech. Ten punkt jest informacją o jurysdykcji i środkach ochrony, o której mowa w art. 28 rozporządzenia (UE) 2023/2854 (akt w sprawie danych). Infrastruktura Integratora podlega prawu Unii Europejskiej. Nie udostępniamy danych organom państw spoza EOG, chyba że wymaga tego prawo Unii lub państwa członkowskiego; tokeny i dane kontaktowe są szyfrowane w spoczynku, a klucze przechowujemy w Google Cloud KMS w Warszawie.
 
 ### 4.7 Jak długo przechowujemy dane Integratora
 
@@ -102,6 +113,8 @@ Baza danych działa w Irlandii (Unia Europejska), a serwer aplikacji w Niemczech
 - dane kontaktowe z leadów: do 180 dni, potem usuwamy je automatycznie;
 - dziennik działań w kontach reklamowych i zapis akceptacji dokumentów: przez czas korzystania z usługi, a po jej zakończeniu 3 lata od końca roku, w którym umowa wygasła (obrona przed roszczeniami); z dziennika usuwamy wtedy adresy e-mail osób;
 - tokeny dostępu: do odłączenia konta albo usunięcia danych;
+- kopie zapasowe bazy danych (dane kontaktowe leadów i tokeny w postaci zaszyfrowanej): 30 dni;
+- zgłoszenia problemów z załącznikami: 12 miesięcy od zamknięcia sprawy;
 - faktury i dane płatności: do upływu okresu przedawnienia zobowiązania podatkowego, co do zasady 5 lat od końca roku kalendarzowego, w którym upłynął termin płatności podatku;
 - dane konta użytkownika: przez czas trwania umowy i do upływu terminów przedawnienia roszczeń;
 - logi techniczne i bezpieczeństwa (adres IP, czas logowania, działania w panelu): do 12 miesięcy, w naszym prawnie uzasadnionym interesie, czyli dla bezpieczeństwa usługi (art. 6 ust. 1 lit. f RODO);
@@ -113,13 +126,13 @@ This section describes how Integrator handles data received from Google APIs (Go
 
 **Data we access.** With the scope `https://www.googleapis.com/auth/adwords` Integrator accesses only the Google Ads accounts that the user selects after signing in with Google: account and campaign names, ad groups, ads and asset groups (ad texts and image addresses), keywords, daily performance metrics (impressions, clicks, cost, conversions), conversion action names, and campaign budgets and statuses.
 
-**How we use it.** To show reports to the user and, only at the user's explicit request, to change a campaign's daily budget (at most +20% within 24 hours), pause a campaign or create a new campaign as a paused draft. Integrator never enables campaigns. If the user sets a budget protection rule, Integrator compares daily campaign costs with that rule and shows an alert in the dashboard; a campaign is paused only when the user clicks the button in the alert.
+**How we use it.** To show reports to the user and, only at the user's explicit request: to change a campaign's daily budget (at most +20% within 24 hours, or up to a daily cap the user sets for the account; a campaign raised above +20% is paused in the same step), pause a campaign, ad group or keyword, create a paused Search or Performance Max campaign draft, paused ad groups, ads and keywords (including negative keywords) in an ad group the user names, upload an image the user provides to the account's asset library, and create a conversion action. Integrator never enables, resumes or removes campaigns, ad groups, ads or keywords. If the user sets a budget protection rule, Integrator compares daily campaign costs with that rule and shows an alert in the dashboard; a campaign is paused only when the user clicks the button in the alert.
 
 **With whom we share, transfer or disclose Google user data.** We do not sell Google user data and we do not share it with anyone for advertising, marketing or profiling. Google user data is disclosed only to:
 
 - the user who connected the Google Ads account and the members of the same workspace in Integrator whom that user invited;
-- our service providers, who process it on our behalf and only to run Integrator, under data processing agreements: Hetzner Online GmbH (application server, Germany), Supabase (database, Ireland), Cloudflare (secure connection to our server and storage of raw API responses), Google Cloud (encryption keys in Cloud KMS; the Gemini API receives campaign names and metrics to write the text of the daily summary, on a paid tier that does not use the data to train models), Resend (sending the daily summary e-mail) and Slack (only if the user connects their own Slack channel);
-- the AI assistant that the user chooses to connect to Integrator through MCP (for example Claude by Anthropic): only the data the assistant requests on the user's behalf, processed under the user's own agreement with that provider;
+- our service providers, who process it on our behalf and only to run Integrator, under data processing agreements: Hetzner Online GmbH (application server, Germany), Supabase (database, Ireland), Cloudflare (secure connection to our server, storage of raw API responses and encrypted database backups kept for 30 days), Google Cloud (encryption keys in Cloud KMS; the Gemini API receives campaign names and metrics to write the text of the daily summary, on a paid tier that does not use the data to train models), Resend (sending the daily summary e-mail) and Slack (only if the user connects their own Slack channel);
+- the AI assistant that the user chooses to connect to Integrator through MCP, with a key or an OAuth connection the user approves in the dashboard (for example Claude by Anthropic): only the data the assistant requests on the user's behalf, processed under the user's own agreement with that provider;
 - public authorities, when we are required to do so by law.
 
 None of these recipients may use Google user data for advertising or to train artificial intelligence models.
@@ -136,13 +149,14 @@ Odbiorców danych dzielimy na trzy grupy, bo każda przetwarza dane na innej pod
 
 - Supabase: baza danych Integratora, region Irlandia;
 - Hetzner Online GmbH: serwer aplikacji, Niemcy;
-- Cloudflare: bezpieczne połączenie z serwerem Integratora oraz przechowywanie kopii surowych odpowiedzi API (kopie nie zawierają danych kontaktowych z leadów);
+- Cloudflare: bezpieczne połączenie z serwerem Integratora, przechowywanie kopii surowych odpowiedzi API (bez danych kontaktowych z leadów) oraz kopii zapasowych bazy danych, w których dane kontaktowe leadów są zaszyfrowane (30 dni);
 - Google Cloud KMS: klucze szyfrujące, region Warszawa (usługa nie przechowuje samych danych).
 
 **b) Podmioty przetwarzające dane, których jesteśmy administratorem** (konta użytkowników, korespondencja, rozliczenia, strona):
 
 - Supabase: logowanie do Integratora, region Irlandia;
-- Resend: wysyłka e-maili z Integratora (zaproszenia, codzienny skrót bez danych z leadów), region Irlandia;
+- Resend: wysyłka e-maili z Integratora (zaproszenia, codzienny skrót bez danych z leadów, wiadomości o usłudze, zgłoszenia problemów), region Irlandia;
+- Cloudflare R2: załączniki zgłoszeń problemów;
 - Slack: wyłącznie gdy użytkownik sam wskaże swój kanał do codziennego skrótu;
 - Google: Gemini API (opis codziennego skrótu, bez danych z leadów), Google Analytics (statystyki strony, za zgodą);
 - Cloudflare: hosting strony serwer-side.pl;
@@ -155,7 +169,7 @@ Odbiorców danych dzielimy na trzy grupy, bo każda przetwarza dane na innej pod
 - Stripe Payments Europe, Limited (Irlandia): płatności kartą i abonament odnawiany; administrator danych płatniczych w zakresie przepisów o usługach płatniczych i przeciwdziałaniu praniu pieniędzy;
 - PayPro S.A. (Poznań), operator serwisu Przelewy24: płatności jednorazowe (BLIK, przelew); administrator w zakresie usług płatniczych.
 
-Dane kont reklamowych wracają też do Meta i Google, gdy użytkownik zleci działanie w koncie reklamowym albo włączy przekazywanie ocen leadów do Meta (Conversions API).
+Dane kont reklamowych wracają też do Meta i Google, gdy użytkownik zleci działanie w koncie reklamowym albo w kontenerze Google Tag Manager, albo włączy przekazywanie ocen leadów do Meta (Conversions API). Leady trafiają do arkusza Google albo systemu CRM klienta, jeśli klient je podłączy; dostawcy tych narzędzi przetwarzają dane na warunkach umowy z klientem.
 
 ## 6. Przekazywanie danych poza Europejski Obszar Gospodarczy
 
