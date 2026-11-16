@@ -7,7 +7,8 @@
 export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
 
-// Dokąd prowadzi „Wypróbuj 7 dni za darmo” (hero, cennik, CTA). Rejestracja
+// Dokąd prowadzi „Wypróbuj bezpłatnie” (hero, cennik, CTA). Strona nie podaje
+// liczby dni: długość próby i kod promocyjny są w panelu i w regulaminie. Rejestracja
 // jest w panelu, zakładka „Załóż konto”. Panel pokazuje ją tylko przy
 // SIGNUP_ENABLED=true; od 2026-11-10 flaga jest wyłączona do czasu
 // produkcyjnych kluczy Stripe i P24, więc gość widzi na razie samo logowanie.
@@ -41,7 +42,7 @@ export const plans: Plan[] = [
     price: '49 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla jednej firmy albo własnych kampanii.',
-    cta: 'Wypróbuj 7 dni',
+    cta: 'Wypróbuj bezpłatnie',
     href: SIGNUP_URL,
   },
   {
@@ -50,7 +51,7 @@ export const plans: Plan[] = [
     price: '99 zł',
     unit: 'netto / miesiąc',
     lead: 'Odkryj, które kreacje przynoszą zakwalifikowanego leada.',
-    cta: 'Wypróbuj 7 dni',
+    cta: 'Wypróbuj bezpłatnie',
     href: SIGNUP_URL,
     featured: true,
     badge: 'Najczęściej wybierany',
@@ -61,7 +62,7 @@ export const plans: Plan[] = [
     price: '199 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla agencji z dużą liczbą klientów.',
-    cta: 'Wypróbuj 7 dni',
+    cta: 'Wypróbuj bezpłatnie',
     href: SIGNUP_URL,
   },
   {
