@@ -2,16 +2,16 @@
 // Strona produktu Integrator. Jest też „stroną główną aplikacji” w ekranie
 // zgody Google (projekt „Raporty”): recenzent szuka tu opisu aplikacji,
 // sposobu użycia danych Google i linku do polityki prywatności. Sekcja
-// zgodności (DataUse) musi zostać i mówić prawdę o tym, co robi panel.
+// DataUse zeszła ze strony 2026-11-26 (decyzja użytkownika), ale pod FAQ
+// zostaje akapit o zgodzie i Limited Use z linkiem do polityki prywatności,
+// gdzie jest pełny opis (pkt o Google, po polsku i po angielsku). Nie usuwaj go.
 // Język: dla właściciela agencji, nie dla programisty.
 import Layout from '../layouts/Layout.astro';
-import DigestPreview from '../components/integrator/DigestPreview.astro';
 import HeroReel from '../components/integrator/HeroReel.astro';
 import FeatureTiles from '../components/integrator/FeatureTiles.astro';
 import LeadQualityChart from '../components/integrator/LeadQualityChart.astro';
 import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import PricingTable from '../components/integrator/PricingTable.astro';
-import DataUse from '../components/integrator/DataUse.astro';
 import ForWhom from '../components/integrator/ForWhom.astro';
 import DemoModal from '../components/integrator/DemoModal.astro';
 import { PANEL_URL, SIGNUP_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
@@ -121,25 +121,6 @@ const faq = [
     </div>
   </section>
 
-  {/* Codzienny raport: podgląd przeniesiony z hero, gdy weszła tam rolka */}
-  <section class="bg-primary text-white py-16 md:py-20 overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-3">Codzienny raport</h2>
-        <p class="text-gray-300 text-lg leading-relaxed">
-          Integrator zbiera wyniki kampanii z obu platform i codziennie wysyła Ci krótki raport z prostymi podpowiedziami: które kampanie wspierać, a które wstrzymać.
-        </p>
-      </div>
-      <div class="relative">
-        <div class="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
-        <DigestPreview class="relative" />
-      </div>
-    </div>
-  </section>
-
-  {/* Dane Google i Meta: sekcja dla użytkowników i recenzentów platform */}
-  <DataUse />
-
   {/* Cennik */}
   <section id="cennik" class="py-16 md:py-20 scroll-mt-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -148,7 +129,7 @@ const faq = [
         <p class="text-gray-600 max-w-2xl mx-auto">Płacisz miesięcznie, rezygnujesz w dowolnej chwili. Akademia Integratora jest w każdym planie.</p>
       </div>
       <PricingTable />
-      <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION} Raporty, podpowiedzi i rozmowa z AI są w każdym planie, a ocena leadów od planu Agencja / Pro.</p>
+      <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION} Raporty, podpowiedzi, rozmowa z AI, Akademia i ocena leadów w arkuszu są w każdym planie, a ocena leadów z CRM w planie Scale.</p>
       <p class="text-center text-xs text-gray-500 mt-3 max-w-2xl mx-auto">{VAT_NOTE}</p>
     </div>
   </section>
@@ -170,6 +151,12 @@ const faq = [
           </details>
         ))}
       </div>
+      {/* Zostaje po zdjęciu sekcji DataUse: opis użycia danych Google dla recenzentów. */}
+      <p class="mt-10 text-xs text-gray-500 leading-relaxed text-center">
+        Integrator łączy się z Google Ads API i Meta Marketing API wyłącznie za zgodą użytkownika, przez logowanie Google i Facebook. Korzystanie z danych z interfejsów API Google jest zgodne z
+        <a href="https://developers.google.com/terms/api-services-user-data-policy" class="text-accent hover:underline" rel="noopener">Zasadami dotyczącymi danych użytkownika w usługach API Google</a>,
+        w tym z wymogami ograniczonego użytkowania (Limited Use). Szczegóły: <a href="/polityka-prywatnosci" class="text-accent hover:underline">Polityka prywatności</a>.
+      </p>
     </div>
   </section>
 

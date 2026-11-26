@@ -59,6 +59,9 @@ export type Plan = {
   href: string;
   featured?: boolean;
   badge?: string;
+  // Cztery najważniejsze punkty na karcie planu, wypisane wprost (bez
+  // „wszystko ze Startera”); pełna lista jest w porównaniu pod kartami.
+  points: string[];
 };
 
 export const plans: Plan[] = [
@@ -70,6 +73,12 @@ export const plans: Plan[] = [
     lead: 'Dla jednej firmy albo własnych kampanii.',
     cta: 'Załóż konto',
     href: SIGNUP_URL,
+    points: [
+      '1 klient, 1 osoba',
+      'Meta Ads i Google Ads w jednym panelu',
+      'Raport co rano i podpowiedzi',
+      'Claude i ChatGPT, Akademia w cenie',
+    ],
   },
   {
     id: 'agencja',
@@ -81,6 +90,12 @@ export const plans: Plan[] = [
     href: SIGNUP_URL,
     featured: true,
     badge: 'Najczęściej wybierany',
+    points: [
+      'Do 10 klientów i 3 osób w zespole',
+      'Raport co rano dla każdego klienta',
+      'Kampanie z Claude i ChatGPT',
+      'Ocena leadów w arkuszu, oceny wracają do Mety',
+    ],
   },
   {
     id: 'scale',
@@ -90,6 +105,12 @@ export const plans: Plan[] = [
     lead: 'Dla agencji z dużą liczbą klientów.',
     cta: 'Załóż konto',
     href: SIGNUP_URL,
+    points: [
+      'Do 50 klientów i 10 osób w zespole',
+      'Ocena leadów także z CRM',
+      'Kampanie z Claude i ChatGPT',
+      'Raport co rano dla każdego klienta',
+    ],
   },
   {
     id: 'custom',
@@ -99,6 +120,12 @@ export const plans: Plan[] = [
     lead: 'Własne środowisko danych: pomiar, integracje i automatyzacje.',
     cta: 'Dowiedz się więcej',
     href: PREMIUM_URL,
+    points: [
+      'Twój własny serwer w UE',
+      'Pomiar konwersji po stronie serwera',
+      'Automatyzacje i dodatkowe źródła danych',
+      'Integrator w pełnym zakresie',
+    ],
   },
 ];
 
@@ -112,6 +139,8 @@ const W_PRZYGOTOWANIU = 'w przygotowaniu';
 // wypisana przy każdym planie, żeby nie trzeba było zgadywać, czy wyższy
 // plan zawiera to, co niższy. `note` to dopisek o stanie funkcji.
 export type FeatureRow = {
+  // Kategoria w porównaniu pod kartami planów; wiersze tej samej grupy stoją razem.
+  group: string;
   text: string;
   note?: string;
   values: (boolean | string)[];
@@ -120,25 +149,25 @@ export type FeatureRow = {
 export const featureRows: FeatureRow[] = [
   // Limity i funkcje według core/billing/plans.py w integratorze (2026-11-26):
   // arkusz ocen i Conversions API w każdym planie, CRM tylko w Scale.
-  { text: 'Liczba klientów', values: ['1', 'do 10', 'do 50', 'według ustaleń'] },
-  { text: 'Liczba osób w zespole', values: ['1', 'do 3', 'do 10', 'według ustaleń'] },
-  { text: 'Meta Ads i Google Ads w jednym panelu', values: [true, true, true, true] },
-  { text: 'Codzienny raport na e-mail i Slacka', values: [true, true, true, true] },
-  { text: 'Podpowiedzi, co zmienić w kampaniach', values: [true, true, true, true] },
-  { text: 'Rozmowa z AI o kampaniach (Claude i ChatGPT)', values: [true, true, true, true] },
-  { text: 'Edycja i tworzenie kampanii przez AI', note: SZKIC, values: [true, true, true, true] },
-  { text: 'Akademia Integratora: lekcje o API w kampaniach, GTM i pracy z AI', values: [true, true, true, true] },
-  { text: 'Ocena leadów w arkuszu Google przy każdej reklamie', values: [true, true, true, true] },
-  { text: 'Oceny leadów wracają do Meta (Conversions API)', values: [true, true, true, true] },
-  { text: 'Ocena leadów z CRM', values: [false, false, true, true] },
-  { text: 'Przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
-  { text: 'Panel kontroli ustawień kont (Health Check)', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
-  { text: 'Osobny dostęp AI dla każdego klienta', values: [false, false, true, true] },
-  { text: 'Priorytetowe odświeżanie danych', note: W_PRZYGOTOWANIU, values: [false, false, true, true] },
-  { text: 'Twój własny serwer w UE', values: [false, false, false, true] },
-  { text: 'Pomiar konwersji po stronie serwera', values: [false, false, false, true] },
-  { text: 'Automatyzacje na Twoim serwerze', values: [false, false, false, true] },
-  { text: 'Dodatkowe źródła: TikTok Ads, Microsoft Ads i inne', values: [false, false, false, true] },
+  { group: 'Panel i raporty', text: 'Liczba klientów', values: ['1', 'do 10', 'do 50', 'według ustaleń'] },
+  { group: 'Panel i raporty', text: 'Liczba osób w zespole', values: ['1', 'do 3', 'do 10', 'według ustaleń'] },
+  { group: 'Panel i raporty', text: 'Meta Ads i Google Ads w jednym panelu', values: [true, true, true, true] },
+  { group: 'Panel i raporty', text: 'Codzienny raport na e-mail i Slacka', values: [true, true, true, true] },
+  { group: 'Panel i raporty', text: 'Podpowiedzi, co zmienić w kampaniach', values: [true, true, true, true] },
+  { group: 'Panel i raporty', text: 'Panel kontroli ustawień kont (Health Check)', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
+  { group: 'Panel i raporty', text: 'Priorytetowe odświeżanie danych', note: W_PRZYGOTOWANIU, values: [false, false, true, true] },
+  { group: 'AI i kampanie', text: 'Rozmowa z AI o kampaniach (Claude i ChatGPT)', values: [true, true, true, true] },
+  { group: 'AI i kampanie', text: 'Edycja i tworzenie kampanii przez AI', note: SZKIC, values: [true, true, true, true] },
+  { group: 'AI i kampanie', text: 'Akademia Integratora: lekcje o API w kampaniach, GTM i pracy z AI', values: [true, true, true, true] },
+  { group: 'AI i kampanie', text: 'Osobny dostęp AI dla każdego klienta', values: [false, false, true, true] },
+  { group: 'Jakość leadów', text: 'Ocena leadów w arkuszu Google przy każdej reklamie', values: [true, true, true, true] },
+  { group: 'Jakość leadów', text: 'Oceny leadów wracają do Meta (Conversions API)', values: [true, true, true, true] },
+  { group: 'Jakość leadów', text: 'Ocena leadów z CRM', values: [false, false, true, true] },
+  { group: 'Jakość leadów', text: 'Przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
+  { group: 'Twój serwer', text: 'Twój własny serwer w UE', values: [false, false, false, true] },
+  { group: 'Twój serwer', text: 'Pomiar konwersji po stronie serwera', values: [false, false, false, true] },
+  { group: 'Twój serwer', text: 'Automatyzacje na Twoim serwerze', values: [false, false, false, true] },
+  { group: 'Twój serwer', text: 'Dodatkowe źródła: TikTok Ads, Microsoft Ads i inne', values: [false, false, false, true] },
 ];
 
 // Klauzula VAT pod cennikiem, ta sama co w Regulaminie (§ 5 ust. 6) i w panelu

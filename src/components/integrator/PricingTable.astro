@@ -1,99 +1,103 @@
 ---
-// Cennik jako tabela porównawcza: każda funkcja ma wiersz, każdy plan kolumnę.
-// Wcześniejsze karty pisały „wszystko ze Startera”, co kazało czytelnikowi
-// samemu składać listę; tu przy każdym planie widać wprost, co w nim jest.
-// Na telefonie tabela się nie mieści, więc każdy plan dostaje kartę z tą samą
-// pełną listą (pozycje spoza planu są wyszarzone, a nie pominięte).
+// Cennik (2026-11-26): cztery karty planów w stylu kafli „Co dostajesz”
+// (ciemna karta, zaokrąglenie, Agencja wyróżniona ramką), a pod nimi pełne
+// porównanie zwinięte w „Porównaj wszystkie funkcje”, pogrupowane w kategorie.
+// Karta wypisuje wprost cztery najważniejsze punkty planu: wcześniejsze karty
+// pisały „wszystko ze Startera”, co kazało czytelnikowi samemu składać listę.
+// Komponent jest na /integrator i na stronie głównej.
 import { plans, featureRows } from '../../data/integrator';
 
-const btn = (featured?: boolean) =>
-  featured
-    ? 'bg-accent hover:bg-accent-dark text-white btn-brutal'
-    : 'bg-white hover:bg-stone-50 text-primary btn-brutal';
+const grupy = [...new Set(featureRows.map((r) => r.group))].map((g) => ({
+  nazwa: g,
+  wiersze: featureRows.filter((r) => r.group === g),
+}));
 ---
 
-{/* Tabela: od 1024 px */}
-<div class="hidden lg:block bg-white rounded-xl card-brutal-static overflow-hidden">
-  <table class="w-full text-sm border-collapse table-fixed">
-    <colgroup>
-      <col class="w-[28%]" />
-      {plans.map(() => <col class="w-[18%]" />)}
-    </colgroup>
-    <thead>
-      <tr class="align-top">
-        <th scope="col" class="p-5 text-left text-xs font-bold text-gray-500 uppercase tracking-wider align-bottom">Funkcja</th>
-        {plans.map((p) => (
-          <th scope="col" class:list={['p-5 text-left font-normal border-l border-gray-200', p.featured && 'bg-accent/10']}>
-            {/* Stałe wysokości plakietki, nazwy i opisu: ceny i przyciski stoją w jednej linii. */}
-            <span class="block h-7">
-              {p.badge && (
-                <span class="inline-block bg-accent text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">{p.badge}</span>
-              )}
-            </span>
-            <span class="block text-base font-bold text-primary min-h-[3rem]">{p.name}</span>
-            <span class="block text-xs text-gray-500 mt-1 min-h-[3.25rem]">{p.lead}</span>
-            <span class="block text-2xl font-extrabold text-primary mt-3">{p.price}</span>
-            <span class="block text-xs text-gray-500 mb-4">{p.unit}</span>
-            <a href={p.href} class:list={['block text-center font-semibold px-3 py-2.5 rounded-lg transition-colors', btn(p.featured)]}>{p.cta}</a>
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {featureRows.map((r, i) => (
-        <tr class:list={['border-t border-gray-200', i % 2 === 0 && 'bg-stone-50/60']}>
-          <th scope="row" class="px-5 py-3.5 text-left font-medium text-gray-800">
-            {r.text}
-            {r.note && (
-              <span class="block mt-1 w-fit text-[11px] font-normal leading-tight px-2 py-0.5 rounded-full border border-amber-500/40 text-amber-700 bg-amber-50">{r.note}</span>
-            )}
-          </th>
-          {r.values.map((v, j) => (
-            <td class:list={['px-5 py-3.5 text-center border-l border-gray-200', plans[j].featured && 'bg-accent/10']}>
-              {v === true ? (
-                <span class="inline-flex w-6 h-6 rounded-full bg-accent text-white items-center justify-center text-xs font-bold" aria-label="jest w planie">✓</span>
-              ) : v === false ? (
-                <span class="opacity-25" aria-label="brak w planie">–</span>
-              ) : (
-                <span class="font-bold text-primary">{v}</span>
-              )}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
-{/* Karty: poniżej 1024 px */}
-<div class="lg:hidden grid sm:grid-cols-2 gap-5">
-  {plans.map((p, j) => (
-    <div class:list={['relative bg-white rounded-xl p-6 flex flex-col', p.featured ? 'card-brutal-accent' : 'card-brutal-static']}>
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-3">
+  {plans.map((p) => (
+    <div
+      class:list={[
+        'relative bg-primary text-white rounded-2xl p-6 flex flex-col',
+        // Wyróżniona karta: styl strony (turkusowa ramka i cień), nie `ring`,
+        // bo cień `card-brutal-static` przykrywa pierścień z Tailwinda.
+        p.featured ? 'card-brutal-accent' : 'card-brutal-static',
+      ]}
+    >
       {p.badge && (
-        <span class="absolute -top-3 left-6 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">{p.badge}</span>
+        <span class="absolute -top-3 left-6 bg-accent text-white text-[11px] font-bold px-3 py-1 rounded-full">{p.badge}</span>
       )}
-      <h3 class="text-lg font-bold text-primary">{p.name}</h3>
-      <p class="text-sm text-gray-500 mt-1 mb-4">{p.lead}</p>
-      <p class="text-3xl font-extrabold text-primary">{p.price}</p>
-      <p class="text-sm text-gray-500 mb-5">{p.unit}</p>
-      <ul class="space-y-2.5 text-sm mb-6 flex-grow">
-        {featureRows.map((r) => {
-          const v = r.values[j];
-          return (
-            <li class:list={['flex items-start gap-2', v === false ? 'text-gray-400' : 'text-gray-700']}>
-              <span class:list={['font-bold mt-0.5 w-4 shrink-0 text-center', v === false ? 'text-gray-300' : 'text-accent']} aria-hidden="true">{v === false ? '–' : '✓'}</span>
-              <span>
-                {typeof v === 'string' ? <>{r.text}: <strong class="text-primary">{v}</strong></> : r.text}
-                {v === false && <span class="sr-only"> (brak w planie)</span>}
-                {r.note && v !== false && (
-                  <span class="block mt-1 w-fit text-[11px] leading-tight px-2 py-0.5 rounded-full border border-amber-500/40 text-amber-700 bg-amber-50">{r.note}</span>
-                )}
-              </span>
-            </li>
-          );
-        })}
+      <h3 class="text-lg font-bold">{p.name}</h3>
+      <p class="text-sm text-gray-400 mt-1 min-h-[2.75rem]">{p.lead}</p>
+      <p class="text-3xl font-extrabold mt-4">{p.price}</p>
+      <p class="text-xs text-gray-400 mb-5">{p.unit}</p>
+      <ul class="space-y-2.5 text-sm text-gray-200 mb-6 flex-1">
+        {p.points.map((pt) => (
+          <li class="flex gap-2.5">
+            <span class="mt-0.5 inline-flex w-5 h-5 shrink-0 rounded-full bg-accent/20 text-accent items-center justify-center text-[11px] font-bold" aria-hidden="true">✓</span>
+            <span>{pt}</span>
+          </li>
+        ))}
       </ul>
-      <a href={p.href} class:list={['text-center font-semibold px-5 py-3 rounded-lg transition-colors', btn(p.featured)]}>{p.cta}</a>
+      <a
+        href={p.href}
+        class:list={[
+          'block text-center font-semibold px-4 py-3 rounded-lg transition-colors',
+          p.featured ? 'bg-accent hover:bg-accent-dark text-white btn-brutal-light' : 'bg-white/5 hover:bg-white/10 text-white border border-white/15',
+        ]}
+      >{p.cta}</a>
     </div>
   ))}
 </div>
+
+<details class="group mt-8 bg-primary text-white rounded-2xl card-brutal-static overflow-hidden">
+  <summary class="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer font-semibold hover:bg-white/5 transition-colors">
+    <span>Porównaj wszystkie funkcje</span>
+    <svg class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </summary>
+  <div class="overflow-x-auto border-t border-white/10">
+    <table class="w-full min-w-[720px] text-sm border-collapse table-fixed">
+      <colgroup>
+        <col class="w-[32%]" />
+        {plans.map(() => <col class="w-[17%]" />)}
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Funkcja</th>
+          {plans.map((p) => (
+            <th scope="col" class:list={['px-3 py-4 text-center font-bold', p.featured && 'bg-accent/10 text-accent']}>{p.name.split(' / ')[0]}</th>
+          ))}
+        </tr>
+      </thead>
+      {grupy.map((g) => (
+        <tbody>
+          <tr class="border-t border-white/10">
+            <th scope="colgroup" colspan={plans.length + 1} class="px-6 pt-5 pb-2 text-left text-[11px] font-bold text-gray-400 uppercase tracking-wider">{g.nazwa}</th>
+          </tr>
+          {g.wiersze.map((r) => (
+            <tr class="border-t border-white/5">
+              <th scope="row" class="px-6 py-3 text-left font-medium text-gray-200">
+                {r.text}
+                {r.note && (
+                  <span class="block mt-1 w-fit text-[11px] font-normal leading-tight px-2 py-0.5 rounded-full border border-amber-400/40 text-amber-300">{r.note}</span>
+                )}
+              </th>
+              {r.values.map((v, j) => (
+                <td class:list={['px-3 py-3 text-center', plans[j].featured && 'bg-accent/10']}>
+                  {v === true ? (
+                    <span class="inline-flex w-5 h-5 rounded-full bg-accent/20 text-accent items-center justify-center text-[11px] font-bold" aria-label="jest w planie">✓</span>
+                  ) : v === false ? (
+                    <span class="text-gray-600" aria-label="brak w planie">–</span>
+                  ) : (
+                    <span class="font-bold">{v}</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      ))}
+    </table>
+  </div>
+</details>
