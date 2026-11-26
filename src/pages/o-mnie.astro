@@ -4,8 +4,8 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
   dark
-  title="O mnie — Specjalista server-side tracking | serwer-side.pl"
-  description="Specjalizuję się we wdrożeniach server-side tracking: GTM Server-Side, GA4, Meta CAPI, Google Ads Enhanced Conversions."
+  title="O mnie: specjalista server-side tracking | serwer-side.pl"
+  description="Wdrażam server-side tracking: GTM Server-Side, GA4, Meta Conversions API i konwersje rozszerzone Google Ads. Autor Integratora danych reklamowych."
 >
   {/* Header */}
   <section class="bg-primary text-white py-16 md:py-20">
@@ -27,9 +27,9 @@ import Layout from '../layouts/Layout.astro';
       <div class="mb-12">
         <h2 class="text-2xl font-bold mb-4">Kim jestem</h2>
         <p class="text-gray-600 text-lg leading-relaxed">
-          Pomagam firmom odzyskiwać dane o konwersjach, które tracą przez ograniczenia
-          przeglądarek, adblocki i regulacje prywatności. Specjalizuję się we wdrożeniach
-          GTM Server-Side, konfiguracji GA4, Meta Conversions API i Google Ads Enhanced Conversions.
+          Pomagam firmom odzyskać dane o konwersjach, które gubią się przez blokady
+          w przeglądarkach, adblocki i przepisy o prywatności. Wdrażam GTM Server-Side,
+          konfiguruję GA4, Meta Conversions API i konwersje rozszerzone w Google Ads.
         </p>
       </div>
 
@@ -37,21 +37,25 @@ import Layout from '../layouts/Layout.astro';
       <div class="mb-12">
         <h2 class="text-2xl font-bold mb-4">Dlaczego server-side tracking</h2>
         <p class="text-gray-600 leading-relaxed mb-4">
-          Przez lata pracowałem z analityką internetową i reklamami online. Widziałem,
-          jak firmy podejmują decyzje budżetowe na podstawie danych, które są niekompletne —
-          czasem nawet o 40%. Kiedy server-side tracking zaczął nabierać znaczenia, zrozumiałem,
-          że to jest przyszłość śledzenia danych w sieci.
+          Od lat pracuję z analityką i reklamami w internecie. Wiele razy widziałem, jak firma
+          dzieli budżet na podstawie danych, w których brakuje nawet 40% konwersji. Kampania
+          wygląda wtedy na słabszą, niż jest, a pieniądze trafiają tam, gdzie nie powinny.
         </p>
         <p class="text-gray-600 leading-relaxed mb-4">
-          Zdecydowałem się wyspecjalizować w tej dziedzinie, bo wierzę, że lepsze dane =
-          lepsze decyzje = lepsze wyniki. Nie chodzi o zbieranie danych dla samych danych —
-          chodzi o to, żeby Twoje algorytmy reklamowe miały pełny obraz i mogły efektywnie
-          wydawać Twój budżet.
+          Server-side tracking rozwiązuje to u źródła: zdarzenia idą z serwera, a nie tylko
+          z przeglądarki, więc mniej z nich ginie po drodze. Dlatego się w nim wyspecjalizowałem.
+          Nie zbieram danych dla samych danych. Chodzi o to, żeby algorytmy Meta i Google widziały
+          pełny obraz i lepiej wydawały Twój budżet.
+        </p>
+        <p class="text-gray-600 leading-relaxed mb-4">
+          Każdy klient dostaje własny serwer VPS z Google Tag Manager Server-Side. Stawiam go,
+          konfiguruję i utrzymuję, a dane i kontrola nad nimi zostają u Ciebie, nie u zewnętrznego
+          dostawcy.
         </p>
         <p class="text-gray-600 leading-relaxed">
-          Pracuję z Google Tag Manager Server-Side na dedykowanych VPS-ach dla klientów.
-          Stawiam, konfiguruję i utrzymuję całą infrastrukturę, dzięki czemu Twoje dane
-          i kontrola zostają po Twojej stronie, a nie u zewnętrznego dostawcy.
+          Z tej pracy wyrósł <a href="/integrator" class="text-accent font-semibold hover:underline">Integrator</a>:
+          panel, który zbiera wyniki kampanii z Meta Ads i Google Ads, co rano wysyła raport
+          i pozwala prowadzić kampanie z Claude albo ChatGPT.
         </p>
       </div>
 
@@ -63,7 +67,7 @@ import Layout from '../layouts/Layout.astro';
             { title: 'Google Tag Manager Server-Side', desc: 'Wdrożenia od zera i migracje.' },
             { title: 'Meta Conversions API', desc: 'Zgłoszenia, zakupy i cała ścieżka sklepu internetowego.' },
             { title: 'Google Analytics 4 i Google Ads', desc: 'Measurement Protocol i konwersje rozszerzone.' },
-            { title: 'Automatyzacje na własnym serwerze', desc: 'Połączenie formularzy, CRM, poczty i sklepu na dedykowanym VPS.' },
+            { title: 'Automatyzacje na własnym serwerze', desc: 'Formularze, CRM, poczta i sklep połączone na Twoim serwerze VPS.' },
           ].map((s, i) => (
             <li class="bg-white rounded-xl p-5 card-brutal-static flex gap-4">
               <span class="shrink-0 w-9 h-9 rounded-lg bg-accent/10 text-accent-dark font-extrabold text-sm flex items-center justify-center" aria-hidden="true">
