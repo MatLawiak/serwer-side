@@ -33,7 +33,7 @@ const faq = [
   },
   {
     q: 'Z jakimi narzędziami AI to działa?',
-    a: 'Dziś z Claude: na stronie claude.ai, w aplikacji Claude Desktop, w telefonie i w Claude Code. Integrator dodajesz w Claude jako konektor jednym linkiem, a dostęp zatwierdzasz logowaniem, bez kopiowania kluczy. Połączenie wyłączysz w każdej chwili w panelu. Obsługa ChatGPT jest w przygotowaniu.',
+    a: 'Z Claude i z ChatGPT. Integrator dodajesz jako konektor, a dostęp zatwierdzasz logowaniem, bez kopiowania kluczy. Jedna zgoda w panelu obejmuje oba narzędzia, a połączenie wyłączysz w każdej chwili.',
   },
   {
     q: 'Czy Integrator może coś zmienić w moich kampaniach?',
@@ -41,7 +41,11 @@ const faq = [
   },
   {
     q: 'Na czym polega ocena leadów?',
-    a: 'To opcja w planie Agencja / Pro dla firm, które zbierają zgłoszenia. Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe, a Integrator pokazuje, z których reklam przyszły. Nie musisz jej włączać, raporty i rekomendacje działają bez niej.',
+    a: 'To opcja dla firm, które zbierają zgłoszenia. Handlowiec oznacza w arkuszu Google (każdy plan) albo w CRM (plan Scale), które zgłoszenia były wartościowe, a Integrator pokazuje, z których reklam przyszły. Nie musisz jej włączać, raporty i rekomendacje działają bez niej.',
+  },
+  {
+    q: 'Skąd mam wiedzieć o nowych funkcjach?',
+    a: 'Nowości widzisz w panelu i dostajesz mailem. Lekcje o wykorzystaniu API w kampaniach, GTM i pracy z AI są w Akademii, w każdym planie.',
   },
   {
     q: 'Gdzie są przechowywane dane?',
@@ -67,7 +71,7 @@ const faq = [
             Meta Ads i Google Ads w jednym panelu. <span class="text-accent">Co rano wiesz, co zmienić.</span>
           </h1>
           <p class="text-gray-300 text-lg md:text-xl mb-8">
-            Integrator zbiera wyniki kampanii z obu platform i codziennie wysyła Ci krótki raport z prostymi podpowiedziami: które kampanie wspierać, a które wstrzymać.
+            Integrator zbiera wyniki kampanii z Meta Ads i Google Ads i co rano wysyła Ci przejrzysty raport, bez „ulepszeń” podsuwanych przez platformy, które częściej podnoszą wydatki niż wyniki. Kampanie poprawiasz w rozmowie z Claude albo ChatGPT, a do Menedżera reklam zaglądasz rzadziej.
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
             <a href={SIGNUP_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
@@ -106,10 +110,10 @@ const faq = [
       {/* Opcja dodatkowa: ocena zgłoszeń */}
       <div class="mt-8 bg-stone-50 rounded-xl p-6 md:p-8 card-brutal-static grid md:grid-cols-2 gap-8 items-center">
         <div>
-          <span class="inline-block bg-accent/10 text-accent-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">Od planu Agencja / Pro</span>
+          <span class="inline-block bg-accent/10 text-accent-dark text-xs font-semibold px-3 py-1 rounded-full mb-3">W każdym planie</span>
           <h3 class="text-xl font-bold mb-2">Więcej zgłoszeń nie znaczy więcej klientów</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
-            Handlowiec oznacza w arkuszu Google albo w CRM, które zgłoszenia były wartościowe. Integrator pokazuje, z których reklam przyszły. Włączasz, jeśli chcesz.
+            Handlowiec oznacza w arkuszu Google, a w planie Scale także w CRM, które zgłoszenia były wartościowe. Integrator pokazuje, z których reklam przyszły, i odsyła oceny do Mety. Włączasz, jeśli chcesz.
           </p>
         </div>
         <LeadQualityChart />

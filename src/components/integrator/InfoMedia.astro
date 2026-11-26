@@ -1,0 +1,58 @@
+---
+// Infografika Integratora (Remotion, 2026-11-26): obraz WebP albo krótka pętla
+// MP4 z plakatem. Pliki w public/integrator/infografiki/, bez napisów na obrazie:
+// tytuł i opis są w HTML obok. Pętla nie ma `autoplay`: rusza, gdy jest
+// widoczna, i staje, gdy znika, więc strona nie pobiera filmów na starcie.
+// Przy `prefers-reduced-motion: reduce` zostaje sam plakat.
+interface Props {
+  name: string;
+  alt: string;
+  video?: boolean;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  class?: string;
+}
+const {
+  name, alt, video = false, width = 1200, height = 750,
+  sizes = '(min-width: 1024px) 380px, 90vw', class: className = '',
+} = Astro.props;
+const base = `/integrator/infografiki/${name}`;
+---
+
+{video ? (
+  <video
+    class:list={['info-loop w-full h-auto block', className]}
+    muted loop playsinline preload="none"
+    poster={`${base}-poster.webp`}
+    width={width} height={height}
+    aria-label={alt}
+  >
+    <source src={`${base}.mp4`} type="video/mp4" />
+  </video>
+) : (
+  <img
+    src={`${base}.webp`}
+    srcset={`${base}.webp ${width}w, ${base}@2x.webp ${width * 2}w`}
+    sizes={sizes}
+    width={width} height={height}
+    loading="lazy" decoding="async"
+    alt={alt}
+    class:list={['w-full h-auto block', className]}
+  />
+)}
+
+<script>
+  const ruch = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const filmy = document.querySelectorAll<HTMLVideoElement>('video.info-loop');
+  if (filmy.length && !ruch.matches && 'IntersectionObserver' in window) {
+    const obserwator = new IntersectionObserver((wpisy) => {
+      wpisy.forEach((w) => {
+        const film = w.target as HTMLVideoElement;
+        if (w.isIntersecting) film.play().catch(() => {});
+        else film.pause();
+      });
+    }, { threshold: 0.25 });
+    filmy.forEach((f) => obserwator.observe(f));
+  }
+</script>

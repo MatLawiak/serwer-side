@@ -118,14 +118,19 @@ export type FeatureRow = {
 };
 
 export const featureRows: FeatureRow[] = [
+  // Limity i funkcje według core/billing/plans.py w integratorze (2026-11-26):
+  // arkusz ocen i Conversions API w każdym planie, CRM tylko w Scale.
   { text: 'Liczba klientów', values: ['1', 'do 10', 'do 50', 'według ustaleń'] },
+  { text: 'Liczba osób w zespole', values: ['1', 'do 3', 'do 10', 'według ustaleń'] },
   { text: 'Meta Ads i Google Ads w jednym panelu', values: [true, true, true, true] },
   { text: 'Codzienny raport na e-mail i Slacka', values: [true, true, true, true] },
   { text: 'Podpowiedzi, co zmienić w kampaniach', values: [true, true, true, true] },
-  { text: 'Rozmowa z AI o kampaniach (Claude)', note: 'ChatGPT wkrótce', values: [true, true, true, true] },
+  { text: 'Rozmowa z AI o kampaniach (Claude i ChatGPT)', values: [true, true, true, true] },
   { text: 'Edycja i tworzenie kampanii przez AI', note: SZKIC, values: [true, true, true, true] },
-  { text: 'Ocena leadów z CRM albo arkusza przy każdej reklamie', values: [false, true, true, true] },
-  { text: 'Oceny leadów z formularzy wracają do Meta (Conversions API)', values: [false, true, true, true] },
+  { text: 'Akademia Integratora: lekcje o API w kampaniach, GTM i pracy z AI', values: [true, true, true, true] },
+  { text: 'Ocena leadów w arkuszu Google przy każdej reklamie', values: [true, true, true, true] },
+  { text: 'Oceny leadów wracają do Meta (Conversions API)', values: [true, true, true, true] },
+  { text: 'Ocena leadów z CRM', values: [false, false, true, true] },
   { text: 'Przesyłanie nowych leadów do CRM', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
   { text: 'Panel kontroli ustawień kont (Health Check)', note: W_PRZYGOTOWANIU, values: [false, true, true, true] },
   { text: 'Osobny dostęp AI dla każdego klienta', values: [false, false, true, true] },
