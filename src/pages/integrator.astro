@@ -28,8 +28,8 @@ const faq = [
     a: 'Nie. Logujesz się przez Facebook i Google, zaznaczasz konta i gotowe. Niczego nie instalujesz na stronie. Pierwsze konto podłączymy razem podczas krótkiej rozmowy.',
   },
   {
-    q: 'Jak działa bezpłatny okres próbny?',
-    a: 'Zakładasz konto w panelu i od razu korzystasz bez opłat i bez podawania karty. Długość okresu próbnego widzisz przy rejestracji i w regulaminie, a kod promocyjny od partnera albo z filmu go wydłuża. Okres próbny nie zamienia się sam w płatny plan.',
+    q: 'Czy mogę sprawdzić Integrator bez opłaty?',
+    a: 'Tak, z kodem promocyjnym. Kod z filmu albo od partnera wpisujesz przy zakładaniu konta i przez przypisaną do niego liczbę dni korzystasz bez opłat i bez karty. Bez kodu po założeniu konta wybierasz plan. Okres bez opłaty nie zamienia się sam w płatny plan.',
   },
   {
     q: 'Z jakimi narzędziami AI to działa?',
@@ -53,7 +53,7 @@ const faq = [
 <Layout
   dark
   title="Integrator danych reklamowych: Meta Ads i Google Ads w jednym panelu | serwer-side.pl"
-  description="Wyniki kampanii Meta Ads i Google Ads w jednym panelu, codzienny raport na e-mail albo Slacka i proste podpowiedzi, co zmienić. Podłącz swoje narzędzie AI. Bezpłatny okres próbny, bez karty."
+  description="Wyniki kampanii Meta Ads i Google Ads w jednym panelu, codzienny raport na e-mail albo Slacka i proste podpowiedzi, co zmienić. Podłącz swoje narzędzie AI. Od 49 zł miesięcznie, Akademia w każdym planie."
 >
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20 overflow-hidden">
@@ -71,13 +71,13 @@ const faq = [
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
             <a href={SIGNUP_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
-              Wypróbuj bezpłatnie
+              Załóż konto
             </a>
             <a href={PANEL_URL} class="inline-block text-center bg-white/5 hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
               Zaloguj się do panelu
             </a>
           </div>
-          <p class="text-gray-400 text-sm mt-4">Bez karty · Pierwsze konto podłączymy razem · Dane w UE</p>
+          <p class="text-gray-400 text-sm mt-4">Od 49 zł miesięcznie · Pierwsze konto podłączymy razem · Dane w UE</p>
           <a href="#dla-kogo" class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent hover:underline">
             Dla kogo jest Integrator?
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -141,7 +141,7 @@ const faq = [
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-12">
         <h2 class="text-2xl md:text-3xl font-bold mb-3">Cennik</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Każdy plan zaczyna się od bezpłatnego okresu próbnego. Płacisz miesięcznie, rezygnujesz w dowolnej chwili.</p>
+        <p class="text-gray-600 max-w-2xl mx-auto">Płacisz miesięcznie, rezygnujesz w dowolnej chwili. Akademia Integratora jest w każdym planie.</p>
       </div>
       <PricingTable />
       <p class="text-center text-sm text-gray-500 mt-8 max-w-2xl mx-auto">{CLIENT_DEFINITION} Raporty, podpowiedzi i rozmowa z AI są w każdym planie, a ocena leadów od planu Agencja / Pro.</p>
@@ -173,9 +173,9 @@ const faq = [
   <section class="py-16 md:py-20 bg-primary text-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
       <h2 class="text-2xl md:text-3xl font-bold mb-4">Zobacz jutro rano pierwszy raport ze swoich kampanii</h2>
-      <p class="text-gray-300 mb-8">Bezpłatny okres próbny, bez karty. Pierwsze konto podłączymy razem.</p>
+      <p class="text-gray-300 mb-8">Integrator i Akademia od 49 zł miesięcznie. Pierwsze konto podłączymy razem.</p>
       <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href={SIGNUP_URL} class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Wypróbuj bezpłatnie</a>
+        <a href={SIGNUP_URL} class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Załóż konto</a>
         <button type="button" data-demo-open aria-haspopup="dialog" class="inline-block bg-white/5 hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-lg text-lg btn-brutal-light">Sprawdź, jak to wygląda</button>
       </div>
     </div>

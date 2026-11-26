@@ -7,8 +7,8 @@
 export const PANEL_URL = 'https://integrator.serwer-side.pl';
 export const TRIAL_URL = '/kontakt?usluga=integrator';
 
-// Dokąd prowadzi „Wypróbuj bezpłatnie” (hero, cennik, CTA). Strona nie podaje
-// liczby dni: długość próby i kod promocyjny są w panelu i w regulaminie.
+// Dokąd prowadzi „Załóż konto” (hero, cennik, CTA). Od 26.11.2026 nie ma próby
+// dla każdego: dni bez opłaty daje tylko kod promocyjny (regulamin § 5 ust. 1).
 // Sekcję „Połącz z Claude” (link instalacyjny konektora) zdjęliśmy 2026-11-16
 // do czasu wpisu w katalogu konektorów Anthropic: link z zewnątrz pokazuje
 // czerwone ostrzeżenie i po kliknięciu z innej strony każe się logować.
@@ -68,7 +68,7 @@ export const plans: Plan[] = [
     price: '49 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla jednej firmy albo własnych kampanii.',
-    cta: 'Wypróbuj bezpłatnie',
+    cta: 'Załóż konto',
     href: SIGNUP_URL,
   },
   {
@@ -77,7 +77,7 @@ export const plans: Plan[] = [
     price: '99 zł',
     unit: 'netto / miesiąc',
     lead: 'Odkryj, które kreacje przynoszą zakwalifikowanego leada.',
-    cta: 'Wypróbuj bezpłatnie',
+    cta: 'Załóż konto',
     href: SIGNUP_URL,
     featured: true,
     badge: 'Najczęściej wybierany',
@@ -88,7 +88,7 @@ export const plans: Plan[] = [
     price: '199 zł',
     unit: 'netto / miesiąc',
     lead: 'Dla agencji z dużą liczbą klientów.',
-    cta: 'Wypróbuj bezpłatnie',
+    cta: 'Załóż konto',
     href: SIGNUP_URL,
   },
   {
