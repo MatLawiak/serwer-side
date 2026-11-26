@@ -1,0 +1,60 @@
+---
+// Pionowa rolka w hero /integrator/. Przy wejściu na stronę stoi sama okładka
+// (WebP, kilkanaście KB), a odtwarzacz Bunny wstawiamy dopiero po kliknięciu:
+// strona nie pobiera skryptów odtwarzacza ani strumienia od razu, a telefon
+// dostaje potem jakość dobraną do łącza (HLS 240p–1080p).
+// Referrer: Bunny wpuszcza tylko serwer-side.pl, więc iframe nie może mieć
+// polityki `no-referrer` ani `same-origin` (żądanie wyglądałoby jak wejście
+// bez strony i dostałoby 403).
+import { HERO_REEL } from '../../data/integrator';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<figure class={`flex flex-col items-center gap-3 m-0 ${className}`}>
+  <div
+    class="relative w-[min(100%,315px)] aspect-[9/16] rounded-[22px] overflow-hidden border border-white/10 bg-[#131a2e] shadow-2xl shadow-black/50"
+    data-reel
+    data-src={HERO_REEL.embedUrl}
+  >
+    <button
+      type="button"
+      data-reel-play
+      aria-label={HERO_REEL.label}
+      class="absolute inset-0 w-full h-full p-0 border-0 bg-transparent cursor-pointer rounded-[22px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+    >
+      <img
+        src={`${HERO_REEL.poster}-540.webp`}
+        srcset={`${HERO_REEL.poster}-360.webp 360w, ${HERO_REEL.poster}-540.webp 540w`}
+        sizes="(max-width: 360px) 100vw, 315px"
+        width="540"
+        height="960"
+        alt=""
+        fetchpriority="high"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
+    </button>
+  </div>
+  <figcaption class="text-xs text-gray-400 text-center">{HERO_REEL.caption}</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-reel]').forEach((box) => {
+    const play = box.querySelector<HTMLButtonElement>('[data-reel-play]');
+    play?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = box.dataset.src || '';
+      iframe.title = play.getAttribute('aria-label') || 'Film';
+      iframe.allow = 'accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.className = 'absolute inset-0 w-full h-full border-0';
+      play.replaceWith(iframe);
+      iframe.focus();
+    });
+  });
+</script>

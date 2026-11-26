@@ -30,6 +30,20 @@ export const CLAUDE_INSTALL_URL =
 // Film w oknie „Sprawdź, jak to wygląda” (YouTube: watch?v=, youtu.be/,
 // shorts/). Pusty = okno pokazuje informację, że film jest w przygotowaniu.
 export const DEMO_VIDEO_URL = '';
+
+// Rolka w hero /integrator/ (2026-11-26). Bunny Stream, biblioteka
+// „serwer-side-publiczne” (822008): bez tokenów, odtwarzanie tylko ze stron
+// serwer-side.pl i www.serwer-side.pl, strumień bez strony zablokowany.
+// Lekcje Akademii są w osobnej bibliotece z tokenem, w panelu. Okładka leży
+// w public/img/integrator/ (WebP 360 i 540 px z okładki z Remotion).
+export const HERO_REEL = {
+  embedUrl:
+    'https://player.mediadelivery.net/embed/822008/f930059f-dedd-4805-a21d-1e5443a08d58' +
+    '?autoplay=true&preload=true&responsive=true',
+  poster: '/img/integrator/rolka-kampania-od-zera',
+  label: 'Odtwórz film: kampania od zera, 54 sekundy',
+  caption: 'Kampania od zera w 54 sekundy',
+};
 export const PREMIUM_URL = '/uslugi/infrastruktura-premium/';
 // Widoczna nazwa oferty pod PREMIUM_URL (adres bez zmian). VPS to sposób
 // realizacji usługi, nie osobny produkt.

@@ -6,6 +6,7 @@
 // Język: dla właściciela agencji, nie dla programisty.
 import Layout from '../layouts/Layout.astro';
 import DigestPreview from '../components/integrator/DigestPreview.astro';
+import HeroReel from '../components/integrator/HeroReel.astro';
 import FeatureTiles from '../components/integrator/FeatureTiles.astro';
 import LeadQualityChart from '../components/integrator/LeadQualityChart.astro';
 import IntegratorFlow from '../components/home/IntegratorFlow.astro';
@@ -82,10 +83,8 @@ const faq = [
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
         </div>
-        <div class="relative">
-          <div class="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
-          <DigestPreview class="relative" />
-        </div>
+        {/* Rolka zamiast podglądu raportu (2026-11-26); raport niżej, w sekcji „Codzienny raport” */}
+        <HeroReel />
       </div>
     </div>
   </section>
@@ -114,6 +113,22 @@ const faq = [
           </p>
         </div>
         <LeadQualityChart />
+      </div>
+    </div>
+  </section>
+
+  {/* Codzienny raport: podgląd przeniesiony z hero, gdy weszła tam rolka */}
+  <section class="bg-primary text-white py-16 md:py-20 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3">Codzienny raport</h2>
+        <p class="text-gray-300 text-lg leading-relaxed">
+          Integrator zbiera wyniki kampanii z obu platform i codziennie wysyła Ci krótki raport z prostymi podpowiedziami: które kampanie wspierać, a które wstrzymać.
+        </p>
+      </div>
+      <div class="relative">
+        <div class="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+        <DigestPreview class="relative" />
       </div>
     </div>
   </section>
