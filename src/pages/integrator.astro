@@ -6,6 +6,11 @@
 // zostaje akapit o zgodzie i Limited Use z linkiem do polityki prywatności,
 // gdzie jest pełny opis (pkt o Google, po polsku i po angielsku). Nie usuwaj go.
 // Język: dla właściciela agencji, nie dla programisty.
+// Od 2026-11-27 to strona główna serwisu: / przekierowuje tu 301
+// (astro.config.mjs, public/_redirects). Adresu /integrator/ nie zmieniaj,
+// bo stoi w zatwierdzonym ekranie zgody Google. Strona ma jednoznacznie
+// mówić o dwóch rzeczach: Integrator danych reklamowych i rozwiązania
+// server-side (sekcja PremiumTeaser).
 import Layout from '../layouts/Layout.astro';
 import HeroReel from '../components/integrator/HeroReel.astro';
 import FeatureTiles from '../components/integrator/FeatureTiles.astro';
@@ -14,9 +19,54 @@ import IntegratorFlow from '../components/home/IntegratorFlow.astro';
 import PricingTable from '../components/integrator/PricingTable.astro';
 import ForWhom from '../components/integrator/ForWhom.astro';
 import DemoModal from '../components/integrator/DemoModal.astro';
-import { PANEL_URL, SIGNUP_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
+import PremiumTeaser from '../components/home/PremiumTeaser.astro';
+import { PANEL_URL, SIGNUP_URL, PREMIUM_URL, CLIENT_DEFINITION, VAT_NOTE } from '../data/integrator';
 
 export const prerender = true;
+
+// Dane strukturalne dla wyszukiwarek: serwis, firma, produkt i usługa.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://serwer-side.pl/#organization',
+      name: 'serwer-side.pl',
+      url: 'https://serwer-side.pl/integrator/',
+      logo: 'https://serwer-side.pl/logo-server-side.png',
+      email: 'kontakt@serwer-side.pl',
+      telephone: '+48 782 126 983',
+      description: 'Integrator danych reklamowych oraz rozwiązania server-side: pomiar konwersji po stronie serwera i automatyzacje.',
+      sameAs: ['https://www.linkedin.com/in/mateuszlawiak/', 'https://www.instagram.com/serwer.side/'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://serwer-side.pl/#website',
+      name: 'serwer-side.pl: Integrator danych reklamowych i rozwiązania server-side',
+      url: 'https://serwer-side.pl/',
+      inLanguage: 'pl-PL',
+      publisher: { '@id': 'https://serwer-side.pl/#organization' },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Integrator danych reklamowych',
+      url: 'https://serwer-side.pl/integrator/',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      description: 'Łączy Meta Ads i Google Ads w jeden przejrzysty interfejs. Kampaniami zarządzasz z poziomu ChatGPT albo Claude.',
+      offers: { '@type': 'Offer', price: '49', priceCurrency: 'PLN' },
+      publisher: { '@id': 'https://serwer-side.pl/#organization' },
+    },
+    {
+      '@type': 'Service',
+      name: 'Rozwiązania server-side',
+      serviceType: 'Server-side tracking, pomiar konwersji po stronie serwera, automatyzacje',
+      url: new URL(PREMIUM_URL, 'https://serwer-side.pl').href,
+      areaServed: 'PL',
+      provider: { '@id': 'https://serwer-side.pl/#organization' },
+    },
+  ],
+};
 
 const faq = [
   {
@@ -56,22 +106,23 @@ const faq = [
 
 <Layout
   dark
-  title="Integrator danych reklamowych: Meta Ads i Google Ads w jednym panelu | serwer-side.pl"
-  description="Wyniki kampanii Meta Ads i Google Ads w jednym panelu, codzienny raport na e-mail albo Slacka i proste podpowiedzi, co zmienić. Podłącz swoje narzędzie AI. Od 49 zł miesięcznie, Akademia w każdym planie."
+  title="Integrator danych reklamowych i rozwiązania server-side | serwer-side.pl"
+  description="Integrator danych reklamowych łączy Meta Ads i Google Ads w jeden interfejs, a kampaniami zarządzasz z ChatGPT albo Claude. Do tego pomiar server-side na Twoim serwerze."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   {/* Hero */}
   <section class="bg-primary text-white py-16 md:py-20 overflow-hidden">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <span class="inline-block bg-accent/20 text-accent text-xs font-semibold px-3 py-1 rounded-full mb-5 uppercase tracking-wider">
-            Integrator danych reklamowych
+            Meta Ads · Google Ads · ChatGPT · Claude
           </span>
           <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-5">
-            Meta Ads i Google Ads w jednym panelu. <span class="text-accent">Co rano wiesz, co zmienić.</span>
+            Integrator danych reklamowych. <span class="text-accent">Zapomnij o skomplikowanych panelach.</span>
           </h1>
           <p class="text-gray-300 text-lg md:text-xl mb-8">
-            Integrator zbiera wyniki kampanii z Meta Ads i Google Ads i co rano wysyła Ci przejrzysty raport, bez „ulepszeń” podsuwanych przez platformy, które częściej podnoszą wydatki niż wyniki. Kampanie poprawiasz w rozmowie z Claude albo ChatGPT, a do Menedżera reklam zaglądasz rzadziej.
+            Integrator łączy różne systemy reklamowe w jeden przejrzysty interfejs, a kampaniami zarządzasz z poziomu ChatGPT albo Claude. Zadajesz pytanie, Integrator wyciąga potrzebne dane i rekomenduje najlepsze rozwiązanie dla każdej platformy.
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
             <a href={SIGNUP_URL} class="inline-block text-center bg-accent hover:bg-accent-dark text-white font-semibold px-7 py-3.5 rounded-lg btn-brutal-light">
@@ -86,6 +137,9 @@ const faq = [
             Dla kogo jest Integrator?
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
           </a>
+          <p class="text-gray-400 text-sm mt-3">
+            Potrzebujesz pomiaru na własnym serwerze? <a href="#server-side" class="text-accent hover:underline">Zobacz rozwiązania server-side</a>
+          </p>
         </div>
         {/* Rolka zamiast podglądu raportu (2026-11-26); raport niżej, w sekcji „Codzienny raport” */}
         <HeroReel />
@@ -159,6 +213,9 @@ const faq = [
       </p>
     </div>
   </section>
+
+  {/* Rozwiązania server-side: druga oferta serwisu, cel odnośnika z hero */}
+  <div id="server-side" class="scroll-mt-20"><PremiumTeaser /></div>
 
   {/* CTA */}
   <section class="py-16 md:py-20 bg-primary text-white">

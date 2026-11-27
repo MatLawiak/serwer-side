@@ -66,6 +66,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://serwer-side.pl/og-image.png" />
+    <slot name="head" />
   </head>
   <body class:list={['min-h-screen flex flex-col bg-white', dark && 'theme-dark']}>
     <!-- Google Tag Manager (noscript) -->
